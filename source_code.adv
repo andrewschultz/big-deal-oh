@@ -1,0 +1,237 @@
+start_at = "demo_meadow"
+start_theme = my_theme
+
+#cch.py makes sure of things
+
+game_information {
+   game_name                    = Big Deal, Oh!
+   game_version                 = 1.0.0
+   game_shortname               = BDO
+   written_by                   = Andrew Schultz
+   uuid                         = b3c1f8e2-5d4a-4f9b-8c3d-2a7e5f6a9b1c
+   year_of_release              = 2026
+   copyright_message            = Free to distribute, voluntary payments welcome
+   short_synopsis               = EctoComp 2026 Petite Mort entry, in the vein of {l_wp} and {l_ut}
+}
+
+
+## Defines locations in the world
+
+strings {
+   # top level
+   this_game : string "<Big Deal, Oh!<#f80>>" ;
+   l_qt : string "<Quirky Test<#0f0>>[http://andrewschultz.itch.io/us-too]" ;
+   l_talp : string "<TALP<#f80>>[https://itch.io/jam/talp]" ;
+   l_talp_2026 : string "<TALP 2026<#f80>>[https://itch.io/jam/talp2026]" ;
+
+   # basics
+   my_score : string "{score}/{max_score}" ;
+   custom_unknown_verb_error : dynamic_string {( "Nothing special happens. You can use {vm_verbs} for a general overview of standard verbs." )} ;
+   exits_err : dynamic_string {( "Can't go that way." )} ;
+
+   # parser stuff
+   nospecial_custom : string "You see no specific item like that--time limits mean I couldn't implement noncritical things. To examine a room, <LOOK<#0f0>>. Note that the parser may not recognize adjectives as synonyms, so using a noun works best." ;
+   yn_or_12_or_14 : dynamic_string {( (verb_is "save" || verb_is "load") ? "Please choose from 1 to 4." : in_number_choice ? "Please choose 1 or 2." : "Please choose YES/Y or NO/N." )}
+
+   # noting stuff
+   one_time : string "<ONE-TIME NOTE: <#f0f>>" ;
+   key_enter : string "the <ENTER<#f88>>/<RETURN<#f88>> key" ;
+
+   # meta-verbs
+   vm_about : string "<ABOUT<#f80>>" ;
+   vm_credits : string "<CREDITS<#f80>>" ;
+   vm_think : string "<THINK<#f80>>" ;
+   vm_verbs : string "<VERBS<#f80>>" ;
+   vm_versions : string "<VERSIONS<#f80>>" ;
+
+   # standard top level stuff
+   xme : string "<X ME<#0f0>>" ;
+
+   # room(s)
+   demo_meadow_loc : string "Here in the Demo Meadow you're not sure what you're supposed to be doing." ;
+   demo_meadow_header : string "<Demo Meadow<#ff0>>" ;
+
+   # item(s)
+}
+
+integers {
+   score : integer "0" ;
+   max_score : integer "12" ;
+}
+
+booleans {
+   # game state (noncritical)
+   me_x_yet : boolean "false" ;
+   showed_first_note : boolean "false" ;
+   warn_score_header : boolean "false" ;
+   won_yet : boolean "false" scope="survivor" ;
+   in_number_choice : boolean "false" ;
+
+   # dynamic booleans
+   think_any : dynamic_boolean {( 1 == 0 )} ;
+
+   # option(s)
+
+   # blocker dynamic booleans
+
+   show_overlay : boolean "true" ;
+}
+
+vocabulary {
+}
+
+locations {
+   demo_meadow : location "{demo_meadow_loc}" header="{demo_meadow_header}" graphic="demo_meadow_1" {
+      on_command {
+      }
+   }
+}
+
+# Defines things in the world (scenery cannot be carried)
+objects {
+}
+
+#connections {
+
+#}
+
+barriers {
+}
+
+subroutines {
+   add_point : subroutine {
+      : print "<Your score has just gone up by a point!<#ff0>>" ;
+	  : increment "score" ;
+	  : update_graphic ;
+   }
+   say_half : subroutine {
+      : print "You got half right." ;
+   }
+
+   check_options : subroutine {
+   }
+
+}
+
+themes {
+   my_theme : theme {
+      status_bar {
+         : header_text ;
+         : dynamic_text "my_score" ;
+      }
+      theme_settings {
+         parser_delay  = 0
+      }
+      colors {
+         status_bar_pen   = 15
+         status_bar_paper = #222
+      }
+      system_messages {
+
+   i_cant_do_that = That's a valid command, but not right here and now.
+   not_present = You can't see ${entity} here.
+   ask_new_game                                   = Would you like to restart {wowt}?
+   ask_quit                                       = \"Sign out. *SIGH*, nowt!\", you mutter under your breath.\"\nDo you wish to quit {wowt}?
+   invalid_choice                                 = {yn_or_12_or_14}
+   post_quit = I hope you enjoyed the experience. Pressing {key_enter} will restart {wowt}.
+   unknown_verb                                   = {custom_unknown_verb_error}
+   you_cant_go_that_direction                     = {exits_err}
+   you_see_nothing_special = {nospecial_custom}
+   you_see_nothing_special_2 = {nospecial_custom}
+      }
+   }
+}
+
+## Print the objective when the game starts
+
+on_startup {
+   : print "{this_game}: a {l_talp} entry.";
+   : if (won_yet) {
+      : print "Thanks for replaying, but this is a reminder to look at the other {ecomp} entries, too!" ;
+      : press_any_key ;
+   }
+   : print "Intro." ;
+   : press_any_key ;
+   : clear_screen;
+}
+
+## Execute this every time a player moves or redescribes a location
+
+on_describe {
+}
+
+## Test VERB NOUN that the player types and executes conditional actions
+
+on_command {
+   : match "xyzzy _" {
+      : print "A low voice booms \"Vexing howls? Hexing?! VOWELS!\"";
+      : done ;
+   }
+   : gosub "check_options" ;
+
+   : match "about _" {
+   }
+
+   : match "credits _;credit _" {
+   }
+
+   : match "help _;hint _;hints _" {
+   }
+
+   : match "history _;version _;versions _" {
+   }
+
+   : match "score _" {
+      : print "You've currently scored {score} of {max_score} total points. There are no bonus points." ;
+      : if (!warn_score_header) {
+         : print "{one_time}This is tracked in the upper left." ;
+         : set_true "warn_score_header" ;
+      }
+   }
+
+   : match "think _" {
+      : if (!think_any) {
+         : print "You haven't had any good ideas you weren't able to execute yet." ;
+         : done ;
+      }
+   }
+
+   : match "verbs _;verb _" {
+   }
+
+   : match "take _;drop _" {
+      : print "You don't need to TAKE or DROP anything here. It's all done for you." ;
+      : done ;
+   }
+
+   : match "x me;x myself" {
+      : if (!me_x_yet) {
+      } : else {
+      }
+      : done ;
+   }
+   : if (me_x_yet) {
+   }
+}
+
+on_tick {
+   : if (!showed_first_note) {
+      : print "{one_time}{vm_about} will give general game information. {vm_verbs} will describe {wowt}'s stripped-down parser." ;
+      : set_true "showed_first_note" ;
+   }
+}
+
+on_render {
+   : if (!show_overlay) {
+      : done ;
+   }
+}
+
+assets {
+   graphics {
+      r_blank : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAYAQMAAAAvTrFnAAAAA1BMVEX//wCKxvRFAAAAD0lEQVR4XmPAAKNgFIwCAAMYAAFrMpCEAAAAAElFTkSuQmCC" ;
+      demo_meadow_1 : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoAQMAAAArNLbKAAAAA1BMVEUAAACnej3aAAAAE0lEQVR4XmPAC0bBKBgFo2AUAAAFKAABhzzafQAAAABJRU5ErkJggg==" ;
+      demo_meadow_rand_1 : base64_png "iVBORw0KGgoAAAANSUhEUgAAABUAAAAPAQMAAAAxlBYoAAAABlBMVEUAAAD///+l2Z/dAAAALUlEQVR4XmMAgfr/Hxhc3AUYQvMDgBhChwAxWDw8gCEXiHPA9AcG30CIOBAAAP4GEalNIq2XAAAAAElFTkSuQmCC" ;
+      demo_meadow_rand_2 : base64_png "iVBORw0KGgoAAAANSUhEUgAAABUAAAAPAQMAAAAxlBYoAAAABlBMVEUAAAD///+l2Z/dAAAALElEQVR4XmMAgfr/Hxhc3AUYQvMDgBhChwAxSNyzPIAhGogjwTSQLwgRBwIAAdsRs8NGrrsAAAAASUVORK5CYII=" ;
+   }
+}
