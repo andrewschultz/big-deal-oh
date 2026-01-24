@@ -99,11 +99,24 @@ barriers {
 }
 
 subroutines {
+
+   add_bonus : subroutine {
+      : if (score_notify) {
+         : print "<You just found a bonus point!<#ff0>>" ;
+         : if (bonus_score == 0) {
+            : print "{note_once}{qt} contains several bonus points that are uncued on the first playthrough. {vd_sco} will let you know how many you've found, and {vd_bon} will list where you found them." ;
+         }
+      }
+      : increment "bonus_score" ;
+      : update_graphic ;
+   }
+
    add_point : subroutine {
       : print "<Your score has just gone up by a point!<#ff0>>" ;
-	  : increment "score" ;
-	  : update_graphic ;
+      : increment "score" ;
+      : update_graphic ;
    }
+
    say_half : subroutine {
       : print "You got half right." ;
    }
@@ -182,7 +195,7 @@ on_command {
    }
 
    : match "score _" {
-      : print "You've currently scored {score} of {max_score} total points. There are no bonus points." ;
+      : print "You've currently scored {score} of {max_score} total core points. You have scored {bonus_score} of {max_bonus_score} bonus points." ;
       : if (!warn_score_header) {
          : print "{one_time}This is tracked in the upper left." ;
          : set_true "warn_score_header" ;
