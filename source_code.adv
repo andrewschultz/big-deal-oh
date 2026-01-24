@@ -55,6 +55,7 @@ strings {
    rocky_caves_header : string "<Rocky Caves<#ff0>>" ;
 
    # puzzle text
+   puz_point_cocky_raves : string "<Cocky raves<#f80>>" ;
    puz_point_real_stench : string "<real stench<#f80>>" ;
    puz_point_stool_tall : string "<stool (tall)<#f80>>" ;
 
@@ -82,6 +83,7 @@ booleans {
 
    # game state (point scoring)
    point_tool_stall : boolean "false" ;
+   point_rocky_caves : boolean "false" ;
    point_steel_wrench : boolean "false" ;
 
    # bonus point(s)
@@ -114,6 +116,23 @@ locations {
                : print "The {puz_stool_tall} shakes and falls over and rolls around more than you thought possible. As it does, its legs point to a passage you haven't seen before, to the south." ;
                : set_true "point_tool_stall" ;
                : gosub "add_point" ;
+            }
+         }
+         : if (listen_demo_meadow) {
+            : match "rocky caves" {
+               : if (point_rocky_caves) {
+                  : print "Already done!" ;
+               }
+               : print "Narrative text." ;
+               : set_true "point_rocky_caves" ;
+               : gosub "add_point" ;
+               : done ;
+            }
+            : if (!point_rocky_caves) {
+               : match "rocky _;_ caves" {
+                  : gosub "say_half" ;
+                  : done ;
+               }
             }
          }
          : match "listen _" {
