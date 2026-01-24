@@ -51,6 +51,11 @@ strings {
    demo_meadow_loc : string "Here in the Demo Meadow you're not sure what you're supposed to be doing." ;
    demo_meadow_header : string "<Demo Meadow<#ff0>>" ;
 
+   rocky_caves_loc : dynamic_string {( point_steel_wrench ? "They're just caves now. They don't smell weird." : "There's a {puz_point_real_stench} here." )} ;
+   rocky_caves_header : string "<Rocky Caves<#ff0>>" ;
+
+   # puzzle text
+   puz_point_real_stench : string "<real stench<#f80>>" ;
    # item(s)
 }
 
@@ -68,6 +73,9 @@ booleans {
    in_number_choice : boolean "false" ;
 
    # dynamic booleans
+
+   # game state (point scoring)
+   point_steel_wrench : boolean "false" ;
    think_any : dynamic_boolean {( 1 == 0 )} ;
 
    # option(s)
@@ -85,17 +93,50 @@ locations {
       on_command {
       }
    }
+   rocky_caves : location "{rocky_caves_loc}" header="rocky_caves_header" {
+      on_command {
+	      : if (!point_steel_wrench) {
+            : match "steel wrench" {
+               : if (point_steel_wrench) {
+                  : print "Already done!" ;
+                  : done ;
+               }
+               : print "Narrative text." ;
+               : set_true "point_steel_wrench" ;
+               : gosub "add_point" ;
+               : done ;
+            }
+            : match "steel _;_ wrench" {
+               : gosub "say_half" ;
+               : done ;
+            }
+	      }
+	   }
+   }
 }
 
 # Defines things in the world (scenery cannot be carried)
 objects {
 }
 
-#connections {
+connections {
 
-#}
+   from, direction, to = [
+
+      demo_meadow, southwest, rocky_caves
+
+   ]
+
+}
 
 barriers {
+
+   block_init_sw : block {
+      location = rocky_caves
+      block_when_not = point_rocky_caves
+      message = Maybe something's that way, but you need to look for something concrete.
+   }
+
 }
 
 subroutines {
