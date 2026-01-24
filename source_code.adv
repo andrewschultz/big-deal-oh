@@ -258,6 +258,22 @@ on_command {
       : done ;
    }
 
+   : match "dig below" {
+      : if (bonus_point_dig_below) {
+         : print "You already looked forward to what you needed to do." ;
+      }
+      : print "Narrative text." ;
+      : set_true "bonus_point_dig_below" ;
+      : gosub "add_point" ;
+      : done ;
+   }
+   : if (!bonus_point_dig_below) {
+      : match "dig _;_ below" {
+         : gosub "say_half" ;
+         : done ;
+      }
+   }
+
    : match "x me;x myself" {
       : if (!me_x_yet) {
       } : else {
