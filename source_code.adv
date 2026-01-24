@@ -48,7 +48,7 @@ strings {
    xme : string "<X ME<#0f0>>" ;
 
    # room(s)
-   demo_meadow_loc : string "Here in the Demo Meadow you're not sure what you're supposed to be doing." ;
+   demo_meadow_loc : dynamic_string {( "Here in the Demo Meadow you're not sure what you're supposed to be doing." + (point_tool_stall ? "\nA stool (tall) sits here." : "" ) )} ;
    demo_meadow_header : string "<Demo Meadow<#ff0>>" ;
 
    rocky_caves_loc : dynamic_string {( point_steel_wrench ? "They're just caves now. They don't smell weird." : "There's a {puz_point_real_stench} here." )} ;
@@ -56,6 +56,7 @@ strings {
 
    # puzzle text
    puz_point_real_stench : string "<real stench<#f80>>" ;
+   puz_point_stool_tall : string "<stool (tall)<#f80>>" ;
    # item(s)
 }
 
@@ -75,7 +76,11 @@ booleans {
    # dynamic booleans
 
    # game state (point scoring)
+   point_tool_stall : boolean "false" ;
    point_steel_wrench : boolean "false" ;
+   # dynamic booleans for ease of coding
+   stall_in_meadow : dynamic_boolean {( !point_tool_stall )} ;
+
    think_any : dynamic_boolean {( 1 == 0 )} ;
 
    # option(s)
@@ -91,6 +96,17 @@ vocabulary {
 locations {
    demo_meadow : location "{demo_meadow_loc}" header="{demo_meadow_header}" graphic="demo_meadow_1" {
       on_command {
+         : if (!point_tool_stall) {
+            : match "_ stool;_ tall" {
+               : print "You're not sure why you think of the {puz_stool_tall} that way instead of a tall stool. It's a bit weird, here." ;
+               : done ;
+            }
+            : match "tool stall" {
+               : print "The {puz_stool_tall} shakes and falls over and rolls around more than you thought possible. As it does, its legs point to a passage you haven't seen before, to the south." ;
+               : set_true "point_tool_stall" ;
+               : gosub "add_point" ;
+            }
+         }
       }
    }
    rocky_caves : location "{rocky_caves_loc}" header="rocky_caves_header" {
@@ -113,6 +129,8 @@ locations {
 	      }
 	   }
    }
+   tool_stall : location "" header="" {
+   }
 }
 
 # Defines things in the world (scenery cannot be carried)
@@ -124,6 +142,7 @@ connections {
    from, direction, to = [
 
       demo_meadow, southwest, rocky_caves
+      demo_meadow, south, tool_stall
 
    ]
 
@@ -134,6 +153,12 @@ barriers {
    block_init_sw : block {
       location = rocky_caves
       block_when_not = point_rocky_caves
+      message = Maybe something's that way, but you need to look for something concrete.
+   }
+
+   block_init_s : block {
+      location = tool_stall
+      block_when_not = point_tool_stall
       message = Maybe something's that way, but you need to look for something concrete.
    }
 
