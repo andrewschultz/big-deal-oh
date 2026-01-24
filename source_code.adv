@@ -57,12 +57,16 @@ strings {
    # puzzle text
    puz_point_real_stench : string "<real stench<#f80>>" ;
    puz_point_stool_tall : string "<stool (tall)<#f80>>" ;
+
    # item(s)
 }
 
 integers {
    score : integer "0" ;
-   max_score : integer "12" ;
+   max_score : integer "3" ;
+
+   bonus_score : integer "0" ;
+   max_bonus_score : integer "1" ;
 }
 
 booleans {
@@ -78,13 +82,17 @@ booleans {
    # game state (point scoring)
    point_tool_stall : boolean "false" ;
    point_steel_wrench : boolean "false" ;
+
+   # bonus point(s)
+   bonus_point_dig_below : boolean "false" scope="survivor";
+
    # dynamic booleans for ease of coding
    stall_in_meadow : dynamic_boolean {( !point_tool_stall )} ;
 
    think_any : dynamic_boolean {( 1 == 0 )} ;
 
    # option(s)
-
+   score_notify : boolean "true" scope="survivor" ;
    # blocker dynamic booleans
 
    show_overlay : boolean "true" ;
