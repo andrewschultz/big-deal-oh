@@ -182,16 +182,16 @@ themes {
       }
       system_messages {
 
-   i_cant_do_that = That's a valid command, but not right here and now.
-   not_present = You can't see ${entity} here.
-   ask_new_game                                   = Would you like to restart {wowt}?
-   ask_quit                                       = \"Sign out. *SIGH*, nowt!\", you mutter under your breath.\"\nDo you wish to quit {wowt}?
-   invalid_choice                                 = {yn_or_12_or_14}
-   post_quit = I hope you enjoyed the experience. Pressing {key_enter} will restart {wowt}.
-   unknown_verb                                   = {custom_unknown_verb_error}
-   you_cant_go_that_direction                     = {exits_err}
-   you_see_nothing_special = {nospecial_custom}
-   you_see_nothing_special_2 = {nospecial_custom}
+         i_cant_do_that = That's a valid command, but not right here and now.
+         not_present = You can't see ${entity} here.
+         ask_new_game                                   = Would you like to restart {wowt}?
+         ask_quit                                       = \"Sign out. *SIGH*, nowt!\", you mutter under your breath.\"\nDo you wish to quit {wowt}?
+         invalid_choice                                 = {yn_or_12_or_14}
+         post_quit = I hope you enjoyed the experience. Pressing {key_enter} will restart {wowt}.
+         unknown_verb                                   = {custom_unknown_verb_error}
+         you_cant_go_that_direction                     = {exits_err}
+         you_see_nothing_special = {nospecial_custom}
+         you_see_nothing_special_2 = {nospecial_custom}
       }
    }
 }
@@ -285,7 +285,5 @@ assets {
    graphics {
       r_blank : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAYAQMAAAAvTrFnAAAAA1BMVEX//wCKxvRFAAAAD0lEQVR4XmPAAKNgFIwCAAMYAAFrMpCEAAAAAElFTkSuQmCC" ;
       demo_meadow_1 : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoAQMAAAArNLbKAAAAA1BMVEUAAACnej3aAAAAE0lEQVR4XmPAC0bBKBgFo2AUAAAFKAABhzzafQAAAABJRU5ErkJggg==" ;
-      demo_meadow_rand_1 : base64_png "iVBORw0KGgoAAAANSUhEUgAAABUAAAAPAQMAAAAxlBYoAAAABlBMVEUAAAD///+l2Z/dAAAALUlEQVR4XmMAgfr/Hxhc3AUYQvMDgBhChwAxWDw8gCEXiHPA9AcG30CIOBAAAP4GEalNIq2XAAAAAElFTkSuQmCC" ;
-      demo_meadow_rand_2 : base64_png "iVBORw0KGgoAAAANSUhEUgAAABUAAAAPAQMAAAAxlBYoAAAABlBMVEUAAAD///+l2Z/dAAAALElEQVR4XmMAgfr/Hxhc3AUYQvMDgBhChwAxSNyzPIAhGogjwTSQLwgRBwIAAdsRs8NGrrsAAAAASUVORK5CYII=" ;
    }
 }
