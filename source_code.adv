@@ -77,7 +77,8 @@ booleans {
    won_yet : boolean "false" scope="survivor" ;
    in_number_choice : boolean "false" ;
 
-   # dynamic booleans
+   # game state (critical)
+   listen_demo_meadow : boolean "false" ;
 
    # game state (point scoring)
    point_tool_stall : boolean "false" ;
@@ -113,6 +114,17 @@ locations {
                : print "The {puz_stool_tall} shakes and falls over and rolls around more than you thought possible. As it does, its legs point to a passage you haven't seen before, to the south." ;
                : set_true "point_tool_stall" ;
                : gosub "add_point" ;
+            }
+         }
+         : match "listen _" {
+            : if (point_rocky_caves) {
+               : print "Quieter, with the cocky raves gone." ;
+               : done ;
+            } : else_if (!listen_demo_meadow) {
+               : print "You listen around a bit, and then you hear them. {puz_point_cocky_raves}. Mocking you for not being able to go anywhere interesting." ;
+               : set_true "listen_demo_meadow" ;
+            } : else {
+               : print "{puz_cocky_raves} continue to mock you." ;
             }
          }
       }
