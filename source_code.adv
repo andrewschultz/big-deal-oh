@@ -178,7 +178,7 @@ locations {
 	      }
 	   }
    }
-   tool_stall : location "{loc_tool_stall}" header="{header_tool_stall}" {
+   tool_stall : location "{loc_tool_stall}" header="{header_tool_stall}" graphic="r_tool_stall" {
       on_command {
          : match "leery owner" {
             : if (point_leery_owner) {
@@ -406,6 +406,7 @@ assets {
       # rooms
       r_blank : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAYAQMAAAAvTrFnAAAAA1BMVEX//wCKxvRFAAAAD0lEQVR4XmPAAKNgFIwCAAMYAAFrMpCEAAAAAElFTkSuQmCC" ;
       r_demo_meadow : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAG1BMVEUAAAAAgAAAwADgYODgoKAA/wD//wD/gAAA//9RtPXwAAACBUlEQVR4XuySsYoAIQxEBxTN5wT8AQs/xMo6na3lffZFrrjdVTDHFXfFpgkEhnlhBh9/PP8L4AV4AV6AF+AFwM9lv5CvIjSy+ifaHLtZXmjL0gJZ/R1t/KNVXvwOYLRabf4jMa/HLmKUl5w3EYxQgw1gOHa8HKNEscl99huAEVpo1eafXOLFv8cuNv/iywIw9H80SwfHcIyU6HGMgt5Ncp9RCi0RzP9h6uD8H88Ozv9h6uD8H/4OMABUBTgnMACwAiR+HEUBuljkWQGuCXzgK/0WQgVZ0k/OMeiRfo9RQJb0i/cZdAOY7QdqVYQDwWw/wKwI32az/YCIIhzks/1AzopAN4BWm85c9RQ/J525+BK/dJ255BR/Ljq6rhl8tk/uKA7EQBQsmF9s38ADyg26gIM+gBjo3JFiZ3393UaBZTF4DAvaDbZBCor3oBElNGUguwXc9e2kCES3gOsTGmBuAY+DugDiFnB7UlTJOZNnUkbfDzFG4kCKVNDMsIVkh3URQUaS1HU/GZdQ50kPN8Al1KFOYriEuhzXBZdQxypJueZ7nqbkYAtrU6shOlxjm0SXh31YH2/ymqRE5kzBejmfQl1u4RB3kot9Wh+lSVJ4QlUn3+v8PU2/hm3yx3Xa8Gm9OO8GadNrWIP2gn/xBYoDHSF7xoaOkL0/u3WE6M5s/eDvL/C/wBdc60qrYUm1NgAAAABJRU5ErkJggg==" ;
+      r_tool_stall : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAGFBMVEUAAACAAADAwMCAQADggECAgID/AAD//wA/25nTAAAArUlEQVR4XuzQwQkCQQxGYcEKrGGxgTyCBcx28JMKBqYBgW1fmasXRZ1c8ir4eCfgzHftbW/AGB0A3figXwDaM4JOF/LQcV8LmAc8NEYXktYD2Da7hgjckcgC+ASQATDweQCBcNYfAGMeyASQDfBAKANgWPKB1wpQgAIUoACXt/sToAAFeIw0BzBQH5DkAAMl6oOh5QCmke4AA6WR7gCmAXbAqAMMlEa6A5hGugMAAJk1y3RMVc4AAAAASUVORK5CYII=" ;
 
       # scenery
       s_meadow_haha : base64_png "iVBORw0KGgoAAAANSUhEUgAAACIAAAAYAQMAAAClaL1KAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAAIJJREFUCB0FwLEKAWEAAOBPitRfMpoMXuA2gxcx3nQvYDHouge4LF7AI6h7AHdIFoNRKTeZLAaldCWYQfcFkxztT45pldP62TM4bE58q/pIci1LknfWZlmXYxaxOVEcmkzkdMlEIbljlTaZ3jp9lobFPGG4K2JGjwL92xbhBuEMHfgDhpcoRuzCRnsAAAAASUVORK5CYII=" ;
