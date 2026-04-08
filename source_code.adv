@@ -101,7 +101,7 @@ booleans {
    stall_in_meadow : dynamic_boolean {( !point_tool_stall )} ;
 
    # think-based booleans
-   think_any : dynamic_boolean {( 1 == 0 )} ;
+   think_any : dynamic_boolean {( think_leery_owner )} ;
 
    # option(s)
    score_notify : boolean "true" scope="survivor" ;
@@ -344,6 +344,9 @@ on_command {
       : if (!think_any) {
          : print "You haven't had any good ideas you weren't able to execute yet." ;
          : done ;
+      }
+      : if (think_leery_owner) {
+         : print "You called the leery owner in the tool stall but didn't have anything to trade." ;
       }
    }
 
