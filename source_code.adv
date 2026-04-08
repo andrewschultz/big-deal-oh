@@ -401,6 +401,9 @@ on_render {
    : if (is_at "demo_meadow" && (!point_rocky_caves && listen_demo_meadow)) {
       : overlay "s_meadow_haha" x="38" y="2" ;
    }
+   : if (is_at "tool_stall" && !point_leery_owner) {
+      : overlay "s_tool_eerie_loner" x="20" y="6" ;
+   }
 }
 
 assets {
@@ -414,5 +417,6 @@ assets {
       # scenery
       s_meadow_haha : base64_png "iVBORw0KGgoAAAANSUhEUgAAACIAAAAYAQMAAAClaL1KAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAAIJJREFUCB0FwLEKAWEAAOBPitRfMpoMXuA2gxcx3nQvYDHouge4LF7AI6h7AHdIFoNRKTeZLAaldCWYQfcFkxztT45pldP62TM4bE58q/pIci1LknfWZlmXYxaxOVEcmkzkdMlEIbljlTaZ3jp9lobFPGG4K2JGjwL92xbhBuEMHfgDhpcoRuzCRnsAAAAASUVORK5CYII=" ;
       s_meadow_stool : base64_png "iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAABKklEQVR4nO2YUQ7DIAiGcdm97M3Um8nJ2MNm05haQNbpmv6JL81g337AaR0Rwcx6jAbg9LQEp5RE9ocQXO93OE2Jm0Ax7gc0nmuAxYArXAtGqk+8FHL6HrxWievEvUOyl6spIhKtGCNpnvfG1Gv6HhQBqkoiUAjBSdvjGg6OlAmQK72mlC1d28FfiAX89gQXScv//w6O1vSAphM1AAAinnqpUQFuYXLOomOT9x5SSrQsSwceA1imrIB571egnLPKuW3sNie3S7AOnrHFALyBi7tHnxs6JJL+ZR1ERKrLY1Hdx5xEQ7LXgxawkkdSYhawJENEqkui3WK6fqD2PtFzr7Dk6hoS7QHCci6c/q/uBpToqF2mADyUdUI1qyfv9A7egFap3g+O0PQOvgCblwBNMoukoAAAAABJRU5ErkJggg==" ;
+      s_tool_eerie_loner : base64_png "iVBORw0KGgoAAAANSUhEUgAAABoAAAAiBAMAAACzTdQ9AAAAElBMVEUAgAAAAAAAAP+AAAD/AAD///85z4jPAAAAAXRSTlMAQObYZgAAAK9JREFUeF5lztENwyAMRVGsLsCLxACJ1P9WqBvgAZB4+69SOwRIVYuPnFxHIZyTc36FMY8f5Q9Zl0g+41CqxiXeBbKVKSG1GtaqpRVH+mswAQPaWitXRXK1/qkkaivWzpjYG1L1VOEqERZRIfSJYtGOFC2qMbgQRFVd4udqdf6dyjKU6DOVbd5AF45z9nhK7An2akQXtr1LfDe6OjdbngpA16obpsJ2IC7Z6k3id/kCA6EsRFjZ3X0AAAAASUVORK5CYII=" ;
    }
 }
