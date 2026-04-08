@@ -146,6 +146,7 @@ locations {
             } : else_if (!listen_demo_meadow) {
                : print "You listen around a bit, and then you hear them. {puz_point_cocky_raves}. Mocking you for not being able to go anywhere interesting." ;
                : set_true "listen_demo_meadow" ;
+               : update_graphic ;
             } : else {
                : print "{puz_point_cocky_raves} continue to mock you." ;
             }
@@ -366,6 +367,9 @@ on_render {
    : if (is_at "demo_meadow" && !point_tool_stall) {
       : overlay "s_meadow_stool" x="166" y="0" ;
    }
+   : if (is_at "demo_meadow" && (!point_rocky_caves && listen_demo_meadow)) {
+      : overlay "s_meadow_haha" x="38" y="2" ;
+   }
 }
 
 assets {
@@ -376,6 +380,7 @@ assets {
       r_demo_meadow : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAG1BMVEUAAAAAgAAAwADgYODgoKAA/wD//wD/gAAA//9RtPXwAAACBUlEQVR4XuySsYoAIQxEBxTN5wT8AQs/xMo6na3lffZFrrjdVTDHFXfFpgkEhnlhBh9/PP8L4AV4AV6AF+AFwM9lv5CvIjSy+ifaHLtZXmjL0gJZ/R1t/KNVXvwOYLRabf4jMa/HLmKUl5w3EYxQgw1gOHa8HKNEscl99huAEVpo1eafXOLFv8cuNv/iywIw9H80SwfHcIyU6HGMgt5Ncp9RCi0RzP9h6uD8H88Ozv9h6uD8H/4OMABUBTgnMACwAiR+HEUBuljkWQGuCXzgK/0WQgVZ0k/OMeiRfo9RQJb0i/cZdAOY7QdqVYQDwWw/wKwI32az/YCIIhzks/1AzopAN4BWm85c9RQ/J525+BK/dJ255BR/Ljq6rhl8tk/uKA7EQBQsmF9s38ADyg26gIM+gBjo3JFiZ3393UaBZTF4DAvaDbZBCor3oBElNGUguwXc9e2kCES3gOsTGmBuAY+DugDiFnB7UlTJOZNnUkbfDzFG4kCKVNDMsIVkh3URQUaS1HU/GZdQ50kPN8Al1KFOYriEuhzXBZdQxypJueZ7nqbkYAtrU6shOlxjm0SXh31YH2/ymqRE5kzBejmfQl1u4RB3kot9Wh+lSVJ4QlUn3+v8PU2/hm3yx3Xa8Gm9OO8GadNrWIP2gn/xBYoDHSF7xoaOkL0/u3WE6M5s/eDvL/C/wBdc60qrYUm1NgAAAABJRU5ErkJggg==" ;
 
       # scenery
+      s_meadow_haha : base64_png "iVBORw0KGgoAAAANSUhEUgAAACIAAAAYAQMAAAClaL1KAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAAIJJREFUCB0FwLEKAWEAAOBPitRfMpoMXuA2gxcx3nQvYDHouge4LF7AI6h7AHdIFoNRKTeZLAaldCWYQfcFkxztT45pldP62TM4bE58q/pIci1LknfWZlmXYxaxOVEcmkzkdMlEIbljlTaZ3jp9lobFPGG4K2JGjwL92xbhBuEMHfgDhpcoRuzCRnsAAAAASUVORK5CYII=" ;
       s_meadow_stool : base64_png "iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAABKklEQVR4nO2YUQ7DIAiGcdm97M3Um8nJ2MNm05haQNbpmv6JL81g337AaR0Rwcx6jAbg9LQEp5RE9ocQXO93OE2Jm0Ax7gc0nmuAxYArXAtGqk+8FHL6HrxWievEvUOyl6spIhKtGCNpnvfG1Gv6HhQBqkoiUAjBSdvjGg6OlAmQK72mlC1d28FfiAX89gQXScv//w6O1vSAphM1AAAinnqpUQFuYXLOomOT9x5SSrQsSwceA1imrIB571egnLPKuW3sNie3S7AOnrHFALyBi7tHnxs6JJL+ZR1ERKrLY1Hdx5xEQ7LXgxawkkdSYhawJENEqkui3WK6fqD2PtFzr7Dk6hoS7QHCci6c/q/uBpToqF2mADyUdUI1qyfv9A7egFap3g+O0PQOvgCblwBNMoukoAAAAABJRU5ErkJggg==" ;
    }
 }
