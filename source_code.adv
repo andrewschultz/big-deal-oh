@@ -96,6 +96,7 @@ booleans {
    # dynamic booleans for ease of coding
    stall_in_meadow : dynamic_boolean {( !point_tool_stall )} ;
 
+   # think-based booleans
    think_any : dynamic_boolean {( 1 == 0 )} ;
 
    # option(s)
@@ -214,7 +215,7 @@ subroutines {
       : if (score_notify) {
          : print "<You just found a bonus point!<#ff0>>" ;
          : if (bonus_score == 0) {
-            : print "{note_once}{qt} contains several bonus points that are uncued on the first playthrough. {vd_sco} will let you know how many you've found, and {vd_bon} will list where you found them." ;
+            : print "{one_time}{this_game} contains several bonus points that are uncued on the first playthrough. {vd_sco} will let you know how many you've found, and {vd_bon} will list where you found them." ;
          }
       }
       : increment "bonus_score" ;
@@ -254,9 +255,9 @@ themes {
          i_cant_do_that = That's a valid command, but not right here and now.
          not_present = You can't see ${entity} here.
          ask_new_game                                   = Would you like to restart {wowt}?
-         ask_quit                                       = \"Sign out. *SIGH*, nowt!\", you mutter under your breath.\"\nDo you wish to quit {wowt}?
+         ask_quit                                       = A voice behind the fourth wall pleads \"I quit? QUIET!\"\nDo you wish to quit {this_game}?
          invalid_choice                                 = {yn_or_12_or_14}
-         post_quit = I hope you enjoyed the experience. Pressing {key_enter} will restart {wowt}.
+         post_quit = I hope you enjoyed the experience. Pressing {key_enter} will restart {this_game}.
          unknown_verb                                   = {custom_unknown_verb_error}
          you_cant_go_that_direction                     = {exits_err}
          you_see_nothing_special = {nospecial_custom}
