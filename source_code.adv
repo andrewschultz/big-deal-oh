@@ -48,11 +48,15 @@ strings {
    xme : string "<X ME<#0f0>>" ;
 
    # room(s)
-   demo_meadow_loc : dynamic_string {( "Here in the Demo Meadow you're not sure what you're supposed to be doing." + (point_tool_stall ? "\nA stool (tall) sits here." : "" ) )} ;
-   demo_meadow_header : string "<Demo Meadow<#ff0>>" ;
+   loc_demo_meadow : dynamic_string {( "Here in the Demo Meadow {meadow_status}." + (point_tool_stall ? "\nThere's a passage south where the stool (tall) was." : "\nA {puz_point_stool_tall} sits here. It seems out of place." ) )} ;
+   header_demo_meadow : string "<Demo Meadow<#ff0>>" ;
+   meadow_status : dynamic_string {( point_rocky_caves && point_tool_stall ? "found two passages, south and southwest" : point_rocky_caves ? "you have found a path to the rocky caves to the southwest" : listen_demo_meadow ? "you hear some {puz_point_cocky_raves}" : "you're not sure what you're supposed to be doing" )} ;
 
-   rocky_caves_loc : dynamic_string {( point_steel_wrench ? "They're just caves now. They don't smell weird." : "There's a {puz_point_real_stench} here." )} ;
-   rocky_caves_header : string "<Rocky Caves<#ff0>>" ;
+   loc_rocky_caves : dynamic_string {( point_steel_wrench ? "They're just caves now. They don't smell weird." : "There's a {puz_point_real_stench} here." )} ;
+   header_rocky_caves : string "<Rocky Caves<#ff0>>" ;
+
+   loc_tool_stall : dynamic_string {( "You're in a tool stall. The exit is back north." )} ;
+   header_tool_stall : string "<Tool Stall<#ff0>>" ;
 
    # puzzle text
    puz_point_cocky_raves : string "<Cocky raves<#f80>>" ;
@@ -105,15 +109,15 @@ vocabulary {
 }
 
 locations {
-   demo_meadow : location "{demo_meadow_loc}" header="{demo_meadow_header}" graphic="demo_meadow_1" {
+   demo_meadow : location "{loc_demo_meadow}" header="{header_demo_meadow}" graphic="r_demo_meadow" {
       on_command {
          : if (!point_tool_stall) {
             : match "_ stool;_ tall" {
-               : print "You're not sure why you think of the {puz_stool_tall} that way instead of a tall stool. It's a bit weird, here." ;
+               : print "You're not sure why you think of the {puz_point_stool_tall} that way instead of a tall stool. It's a bit weird, here. You can't exactly take it, and it doesn't lead anywhere, either. " ;
                : done ;
             }
             : match "tool stall" {
-               : print "The {puz_stool_tall} shakes and falls over and rolls around more than you thought possible. As it does, its legs point to a passage you haven't seen before, to the south." ;
+               : print "The {puz_point_stool_tall} shakes and falls over and rolls around more than you thought possible. As it does, its legs point to a passage you haven't seen before, to the south." ;
                : set_true "point_tool_stall" ;
                : gosub "add_point" ;
             }
@@ -143,12 +147,12 @@ locations {
                : print "You listen around a bit, and then you hear them. {puz_point_cocky_raves}. Mocking you for not being able to go anywhere interesting." ;
                : set_true "listen_demo_meadow" ;
             } : else {
-               : print "{puz_cocky_raves} continue to mock you." ;
+               : print "{puz_point_cocky_raves} continue to mock you." ;
             }
          }
       }
    }
-   rocky_caves : location "{rocky_caves_loc}" header="rocky_caves_header" {
+   rocky_caves : location "{loc_rocky_caves}" header="{header_rocky_caves}" {
       on_command {
 	      : if (!point_steel_wrench) {
             : match "steel wrench" {
