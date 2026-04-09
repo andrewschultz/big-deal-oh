@@ -38,10 +38,18 @@ strings {
    key_enter : string "the <ENTER<#f88>>/<RETURN<#f88>> key" ;
    note_cue_tutorial : string "<TUTORIAL CUE:<#f0f>> " ;
 
+   # diagnostic verbs
+
+   vd_i : string "<I<#f80>>" ;
+   vd_inv : string "<INV<#f80>>" ;
+   vd_i_long : string "<INVENTORY<#f80>>" ;
+   vd_i_three : string "{vd/i}/{vd_inv}/{vd_i_long}" ;
+   vd_score : string "<SCORE<#f80>>" ;
+   vd_think : string "<THINK<#f80>>" ;
+
    # meta-verbs
    vm_about : string "<ABOUT<#f80>>" ;
    vm_credits : string "<CREDITS<#f80>>" ;
-   vm_think : string "<THINK<#f80>>" ;
    vm_verbs : string "<VERBS<#f80>>" ;
    vm_versions : string "<VERSIONS<#f80>>" ;
 
@@ -98,6 +106,17 @@ booleans {
    tutorial_4_inventory : boolean "false" ;
    tutorial_5_think : boolean "false" ;
    tutorial_6_tool_stall : boolean "false" ;
+   tutorial_7_south_first : boolean "false" ;
+   tutorial_8_leery_owner_1 : boolean "false" ;
+   tutorial_9_north : boolean "false" ;
+   tutorial_10_listen : boolean "false" ;
+   tutorial_11_rocky_caves : boolean "false" ;
+   tutorial_12_southwest : boolean "false" ;
+   tutorial_13_smell : boolean "false" ;
+   tutorial_14_steel_wrench : boolean "false" ;
+   tutorial_15_northeast : boolean "false" ;
+   tutorial_16_south_twice : boolean "false" ;
+   tutorial_17_leery_owner_2 : boolean "false" ;
    tutorial_done : boolean "false" ;
 
    # game state (point scoring)
@@ -494,6 +513,39 @@ on_tick {
          : print "{note_cue_tutorial}First, you should type {vm_about} to see general information about {this_game}." ;
       } : else_if (!tutorial_2_verbs) {
          : print "{note_cue_tutorial}Now you've typed {vm_about}, You should type {vm_verbs} next to see basic commands for {this_game}." ;
+      } : else_if (!tutorial_3_x_me) {
+         : print "{note_cue_tutorial}Now you've seen basic info, you should examine yourself with {xme}." ;
+      } : else_if (!tutorial_4_inventory) {
+         : print "{note_cue_tutorial}Now you've examined yourself, you should type {vd_i_three} to verify the new item is in your inventory." ;
+      } : else_if (!tutorial_5_think) {
+         : print "{note_cue_tutorial}Now you've taken inventory, you should type {vd_think} next to recap odd things you've seen." ;
+      } : else_if (!tutorial_6_tool_stall) {
+         : print "{note_cue_tutorial}Now you've taken inventory, you should figure what to do with the {puz_point_stool_tall}." ;
+      } : else_if (!tutorial_7_south_first) {
+         : print "{note_cue_tutorial}Now you've removed the stool, you should go south to check what's there." ;
+      } : else_if (!tutorial_8_leery_owner_1) {
+         : print "{note_cue_tutorial}Now you've made it to the tool stall, you may want to ask the eerie loner for someone." ;
+      } : else_if (!tutorial_9_north) {
+         : print "{note_cue_tutorial}Now you know what you need, you should go back north." ;
+      } : else_if (!tutorial_10_listen) {
+         : print "{note_cue_tutorial}Now you're back in the meadow, try LISTENing." ;
+      } : else_if (!tutorial_11_rocky_caves) {
+         : print "{note_cue_tutorial}Now you've heard the cocky raves, you need to figure what they're cluing." ;
+      } : else_if (!tutorial_12_southwest) {
+         : print "{note_cue_tutorial}Now you've found the rocky caves, you should explore them to the southwest." ;
+      } : else_if (!tutorial_13_smell) {
+         : print "{note_cue_tutorial}The real stench is overpowering. Perhaps you should SMELL it." ;
+      } : else_if (!tutorial_14_steel_wrench) {
+         : print "{note_cue_tutorial}You need to figure out what the real stench might be hiding." ;
+      } : else_if (!tutorial_15_northeast) {
+         : print "{note_cue_tutorial}Now you've got the steel wrench, you should retreat NORTHEAST." ;
+      } : else_if (!tutorial_16_south_twice) {
+         : print "{note_cue_tutorial}Now you've got the steel wrench, you should continue SOUTH." ;
+      } : else_if (!tutorial_17_leery_owner_2) {
+         : print "{note_cue_tutorial}Now you have something appropriate for the tool stall, you should ask to summon the person in charge. If you forget who that is, {vd_think}." ;
+      } : else {
+         : print "Oh no! You should be done with the tutorial. That's a small bug I'd like to know about." ;
+         : set_false "tutorial_0_in_tutorial" ;
       }
    }
 }
