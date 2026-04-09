@@ -36,6 +36,7 @@ strings {
    # noting stuff
    one_time : string "<ONE-TIME NOTE: <#f0f>>" ;
    key_enter : string "the <ENTER<#f88>>/<RETURN<#f88>> key" ;
+   note_cue_tutorial : string "<TUTORIAL CUE:<#f0f>> " ;
 
    # meta-verbs
    vm_about : string "<ABOUT<#f80>>" ;
@@ -452,9 +453,9 @@ on_command {
       }
    }
 
-   : match "x me;x myself" {
+   : match "x me;x myself;x self" {
       : if (tutorial_0_in_tutorial && !tutorial_1_about) {
-         : print "That's a good first thing to do, but let's go with {vm_about} for the basics." ;
+         : print "{xme} is good to do very early on, but for the purposes of the tutorial, there are a couple general information commands first." ;
          : done ;
       }
       : set_true "tutorial_3_x_me" ;
@@ -481,6 +482,13 @@ on_tick {
          : print "You aren't holding anything, but you haven't really searched yourself with X ME." ;
       } : else {
          : print {( "You " + (carried() == 0 ? "only" : "also" ) + " have the {i_widget}." )} ;
+      }
+   }
+   : if (tutorial_0_in_tutorial) {
+      : if (!tutorial_1_about) {
+         : print "{note_cue_tutorial}First, you should type {vm_about} to see general information about {this_game}." ;
+      } : else_if (!tutorial_2_verbs) {
+         : print "{note_cue_tutorial}Now you've typed {vm_about}, You should type {vm_verbs} next to see basic commands for {this_game}." ;
       }
    }
 }
