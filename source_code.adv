@@ -21,8 +21,8 @@ strings {
    # top level
    this_game : string "<Big Deal, Oh!<#f80>>" ;
    l_qt : string "<Quirky Test<#0f0>>[http://andrewschultz.itch.io/us-too]" ;
-   l_talp : string "<TALP<#f80>>[https://itch.io/jam/talp]" ;
-   l_talp_2026 : string "<TALP 2026<#f80>>[https://itch.io/jam/talp2026]" ;
+   l_talp : string "<TALP<#0f0>>[https://itch.io/jam/talp]" ;
+   l_talp_2026 : string "<TALP 2026<#0f0>>[https://itch.io/jam/talp2026]" ;
 
    # basics
    my_score : string "{score}/{max_score}" ;
@@ -43,7 +43,7 @@ strings {
    vd_i : string "<I<#f80>>" ;
    vd_inv : string "<INV<#f80>>" ;
    vd_i_long : string "<INVENTORY<#f80>>" ;
-   vd_i_three : string "{vd/i}/{vd_inv}/{vd_i_long}" ;
+   vd_i_three : string "{vd_i}/{vd_inv}/{vd_i_long}" ;
    vd_score : string "<SCORE<#f80>>" ;
    vd_think : string "<THINK<#f80>>" ;
 
@@ -260,13 +260,13 @@ connections {
 
 barriers {
 
-   block_init_sw : block {
+   block_0_meadow_rockycaves : block {
       location = rocky_caves
       block_when_not = point_rocky_caves
       message = Maybe something's that way, but you need to look for something concrete.
    }
 
-   block_init_s : block {
+   block_0_meadow_toolstall : block {
       location = tool_stall
       block_when_not = point_tool_stall
       message = Maybe something's that way, but you need to look for something concrete.
@@ -323,7 +323,7 @@ subroutines {
          : if (tutorial_0_in_tutorial)
          {
             : if (!tutorial_4_inventory) {
-               : print "{vm_think} is part of the tutorial, but it will occur later on." ;
+               : print "{vd_think} is part of the tutorial, but it will occur later on." ;
                : done ;
             }
             : set_true "tutorial_5_think" ;
@@ -424,7 +424,7 @@ themes {
 ## Print the objective when the game starts
 
 on_startup {
-   : print "{this_game}: a {l_talp} entry.";
+   : print "{this_game}: a {l_talp_2026} entry.";
    : if (have_won) {
       : print "Thanks for replaying, but this is a reminder to look at the other {l_talp_26} entries, too!" ;
       : press_any_key ;
@@ -493,7 +493,7 @@ on_command {
 
 on_tick {
    : if (!showed_first_note) {
-      : print {( "{one_time}{vm_about} will give general game information. {vm_verbs} will describe {this_game}'s stripped-down parser." + (tutorial_0_in_tutorial ? "In fact, typing {vm_about} is the first step of the tutorial." : "" ) )} ;
+      : print {( "{one_time}{vm_about} will give general game information. {vm_verbs} will describe {this_game}'s stripped-down parser." + (tutorial_0_in_tutorial ? " In fact, typing {vm_about} is the first step of the tutorial." : "" ) )} ;
       : set_true "showed_first_note" ;
       : done ;
    }
@@ -530,11 +530,11 @@ on_tick {
       } : else_if (!tutorial_10_listen) {
          : print "{note_cue_tutorial}Now you're back in the meadow, try LISTENing." ;
       } : else_if (!tutorial_11_rocky_caves) {
-         : print "{note_cue_tutorial}Now you've heard the cocky raves, you need to figure what they're cluing." ;
+         : print "{note_cue_tutorial}Now you've heard the {puz_point_cocky_raves}, you need to figure what they're cluing." ;
       } : else_if (!tutorial_12_southwest) {
          : print "{note_cue_tutorial}Now you've found the rocky caves, you should explore them to the southwest." ;
       } : else_if (!tutorial_13_smell) {
-         : print "{note_cue_tutorial}The real stench is overpowering. Perhaps you should SMELL it." ;
+         : print "{note_cue_tutorial}You need to use one of your senses. There are five." ;
       } : else_if (!tutorial_14_steel_wrench) {
          : print "{note_cue_tutorial}You need to figure out what the real stench might be hiding." ;
       } : else_if (!tutorial_15_northeast) {
