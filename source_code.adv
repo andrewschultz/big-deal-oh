@@ -94,6 +94,7 @@ booleans {
    tutorial_2_x_me : boolean "false" ;
    tutorial_3_inventory : boolean "false" ;
    tutorial_4_think : boolean "false" ;
+   tutorial_5_tool_stall : boolean "false" ;
    tutorial_done : boolean "false" ;
 
    # game state (point scoring)
@@ -133,8 +134,13 @@ locations {
                : done ;
             }
             : match "tool stall" {
+               : if (tutorial_0_in_tutorial && !tutorial_4_think) {
+                  : print "That's how to score the first point, but we're in the tutorial right now, so there are other things to do." ;
+                  : done ;
+               }
                : print "The {puz_point_stool_tall} shakes and falls over and rolls around more than you thought possible. As it does, its legs point to a passage you haven't seen before, to the south." ;
                : set_true "point_tool_stall" ;
+               : set_true "tutorial_5_tool_stall" ;
                : gosub "add_point" ;
             }
          }
