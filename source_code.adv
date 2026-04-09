@@ -87,6 +87,9 @@ booleans {
    # game state (critical)
    listen_demo_meadow : boolean "false" ;
 
+   # game state (tutorials)
+   tutorial_1_about : boolean "false" ;
+
    # game state (point scoring)
    point_tool_stall : boolean "false" ;
    point_rocky_caves : boolean "false" ;
@@ -260,6 +263,50 @@ subroutines {
       : print "You got half right." ;
    }
 
+   check_meta : subroutine {
+      : match "about _" {
+         : print "{this_game} was written for {l_talp_2026}, another annual edition of {l_talp}." ;
+         : print "It is in the spirit of {l_qt} and reuses a lot of the code." ;
+         : set_true "tutorial_1_about" ;
+         : done ;
+      }
+
+      : match "credits _;credit _" {
+         : print "Nothing yet." ;
+         : done ;
+      }
+
+      : match "help _;hint _;hints _" {
+         : done ;
+      }
+
+      : match "history _;version _;versions _" {
+         : done ;
+      }
+
+   : match "score _" {
+      : print "You've currently scored {score} of {max_score} total core points. You have scored {bonus_score} of {max_bonus_score} bonus points." ;
+      : if (!warn_score_header) {
+         : print "{one_time}This is tracked in the upper left." ;
+         : set_true "warn_score_header" ;
+      }
+   }
+
+   : match "think _" {
+      : if (!think_any) {
+         : print "You haven't had any good ideas you weren't able to execute yet." ;
+         : done ;
+      }
+      : if (think_leery_owner) {
+         : print "You called the leery owner in the tool stall but didn't have anything to trade." ;
+      }
+   }
+
+   : match "verbs _;verb _" {
+   }
+
+   }
+
    check_options : subroutine {
    }
 
@@ -319,40 +366,9 @@ on_command {
       : print "A low voice booms \"Vexing howls? Hexing?! VOWELS!\"";
       : done ;
    }
+
+   : gosub "check_meta" ;
    : gosub "check_options" ;
-
-   : match "about _" {
-   }
-
-   : match "credits _;credit _" {
-   }
-
-   : match "help _;hint _;hints _" {
-   }
-
-   : match "history _;version _;versions _" {
-   }
-
-   : match "score _" {
-      : print "You've currently scored {score} of {max_score} total core points. You have scored {bonus_score} of {max_bonus_score} bonus points." ;
-      : if (!warn_score_header) {
-         : print "{one_time}This is tracked in the upper left." ;
-         : set_true "warn_score_header" ;
-      }
-   }
-
-   : match "think _" {
-      : if (!think_any) {
-         : print "You haven't had any good ideas you weren't able to execute yet." ;
-         : done ;
-      }
-      : if (think_leery_owner) {
-         : print "You called the leery owner in the tool stall but didn't have anything to trade." ;
-      }
-   }
-
-   : match "verbs _;verb _" {
-   }
 
    : match "take _;drop _" {
       : print "You don't need to TAKE or DROP anything here. It's all done for you." ;
