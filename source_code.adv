@@ -66,6 +66,7 @@ strings {
    puz_point_stool_tall : string "<stool (tall)<#f80>>" ;
 
    # item(s)
+   i_widget : string "<wild digit-dialed widget<#c8c>>" ;
 }
 
 integers {
@@ -88,7 +89,10 @@ booleans {
    listen_demo_meadow : boolean "false" ;
 
    # game state (tutorials)
+   tutorial_0_in_tutorial : boolean "false" ;
    tutorial_1_about : boolean "false" ;
+   tutorial_2_x_me : boolean "false" ;
+   tutorial_done : boolean "false" ;
 
    # game state (point scoring)
    point_tool_stall : boolean "false" ;
@@ -101,6 +105,7 @@ booleans {
 
    # think variables
    think_leery_owner : boolean "false" ;
+
    # dynamic booleans for ease of coding
    stall_in_meadow : dynamic_boolean {( !point_tool_stall )} ;
 
@@ -392,12 +397,20 @@ on_command {
    }
 
    : match "x me;x myself" {
+      : if (tutorial_0_in_tutorial && !tutorial_1_about) {
+         : print "That's a good first thing to do, but let's go with {vm_about} for the basics." ;
+         : done ;
+      }
+      : set_true "tutorial_2_x_me" ;
       : if (!me_x_yet) {
+         : print "You search around your body and notice your phone is gone." ;
+         : print "\"Fie! Moan! My phone!\" you cry out. Weird, you're not used to talking like that." ;
+         : print "You clutch at various places on your body, and you're surprised to find something very odd indeed turn up." ;
+         : print "It's a {i_widget}." ;
       } : else {
+         : print "You find nothing else on your person. You can't locate your phone, either." ;
       }
       : done ;
-   }
-   : if (me_x_yet) {
    }
 }
 
