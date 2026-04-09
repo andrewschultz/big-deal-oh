@@ -93,6 +93,7 @@ booleans {
    tutorial_1_about : boolean "false" ;
    tutorial_2_x_me : boolean "false" ;
    tutorial_3_inventory : boolean "false" ;
+   tutorial_4_think : boolean "false" ;
    tutorial_done : boolean "false" ;
 
    # game state (point scoring)
@@ -292,6 +293,14 @@ subroutines {
       }
 
       : match "think _" {
+         : if (tutorial_0_in_tutorial)
+         {
+            : if (!tutorial_3_inventory) {
+               : print "{vm_think} is part of the tutorial, but it will occur later on." ;
+               : done ;
+            }
+            : set_true "tutorial_4_think" ;
+         }
          : if (!think_any) {
             : print "You haven't had any good ideas you weren't able to execute yet." ;
             : done ;
