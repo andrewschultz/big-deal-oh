@@ -82,7 +82,7 @@ booleans {
    me_x_yet : boolean "false" ;
    showed_first_note : boolean "false" ;
    warn_score_header : boolean "false" ;
-   won_yet : boolean "false" scope="survivor" ;
+   have_won : boolean "false" scope="survivor" ;
    in_number_choice : boolean "false" ;
 
    # game state (critical)
@@ -340,6 +340,27 @@ subroutines {
    check_options : subroutine {
    }
 
+#########################################tutorial
+
+   tutorial_choice : subroutine {
+      : if (have_won) {
+         : return ;
+      }
+      : ask_bool {
+         question   = {qt} has a tutorial mode for the first few puzzles. If you wish to use it, you need to request it before the game starts. Would you like to use it?
+         yes_answer = Yes, I'd like to use the tutorial.
+         no_answer  = No, I don't need the tutorial.
+         var        = tutorial_0_in_tutorial
+      }
+      : if (tutorial_0_in_tutorial) {
+         : print "Tutorial mode is now on. You can switch it off, but once you do, you can't switch it on again." ;
+      } : else {
+         : print "Tutorial mode is disabled. If you wish to try it, you will need to restart it." ;
+      }
+      : press_any_key ;
+      : clear_screen ;
+   }
+
 }
 
 themes {
@@ -375,13 +396,13 @@ themes {
 
 on_startup {
    : print "{this_game}: a {l_talp} entry.";
-   : if (won_yet) {
-      : print "Thanks for replaying, but this is a reminder to look at the other {ecomp} entries, too!" ;
+   : if (have_won) {
+      : print "Thanks for replaying, but this is a reminder to look at the other {l_talp_26} entries, too!" ;
       : press_any_key ;
+      : clear_screen ;
+   } : else {
+      : gosub "tutorial_choice" ;
    }
-   : print "Intro." ;
-   : press_any_key ;
-   : clear_screen;
 }
 
 ## Execute this every time a player moves or redescribes a location
