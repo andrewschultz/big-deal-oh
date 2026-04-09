@@ -90,6 +90,7 @@ booleans {
    listen_demo_meadow : boolean "false" ;
 
    # game state (tutorials)
+   skip_tutorial_cue : boolean "false" ; # not a tutorial but skip every-turn note when it is implied
    tutorial_0_in_tutorial : boolean "false" ;
    tutorial_1_about : boolean "false" ;
    tutorial_2_verbs : boolean "false" ;
@@ -178,7 +179,7 @@ locations {
    }
    rocky_caves : location "{loc_rocky_caves}" header="{header_rocky_caves}" {
       on_command {
-	      : if (!point_steel_wrench) {
+         : if (!point_steel_wrench) {
             : match "steel wrench" {
                : if (point_steel_wrench) {
                   : print "Already done!" ;
@@ -193,8 +194,8 @@ locations {
                : gosub "say_half" ;
                : done ;
             }
-	      }
-	   }
+         }
+      }
    }
    tool_stall : location "{loc_tool_stall}" header="{header_tool_stall}" graphic="r_tool_stall" {
       on_command {
@@ -349,7 +350,7 @@ subroutines {
    check_options : subroutine {
    }
 
-#########################################tutorial
+   #########################################tutorial
 
    tutorial_choice : subroutine {
       : if (have_won) {
@@ -453,8 +454,9 @@ on_command {
    }
 
    : match "x me;x myself;x self" {
-      : if (tutorial_0_in_tutorial && !tutorial_1_about) {
-         : print "{xme} is good to do very early on, but for the purposes of the tutorial, there are a couple general information commands first." ;
+      : if (tutorial_0_in_tutorial && !tutorial_2_verbs) {
+         : print {( "{xme} is good to do very early on, but for the purposes of the tutorial, there are a couple general information commands first. Try " + ( tutorial_1_about ? "{vm_verbs}" : "{vm_about}" ) + "." )} ;
+         : set_true "skip_tutorial_cue" ;
          : done ;
       }
       : set_true "tutorial_3_x_me" ;
@@ -484,6 +486,10 @@ on_tick {
       }
    }
    : if (tutorial_0_in_tutorial) {
+      : if (skip_tutorial_cue) {
+         : set_false "skip_tutorial_cue" ;
+         : done ;
+      }
       : if (!tutorial_1_about) {
          : print "{note_cue_tutorial}First, you should type {vm_about} to see general information about {this_game}." ;
       } : else_if (!tutorial_2_verbs) {
