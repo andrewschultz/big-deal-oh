@@ -92,6 +92,7 @@ booleans {
    tutorial_0_in_tutorial : boolean "false" ;
    tutorial_1_about : boolean "false" ;
    tutorial_2_x_me : boolean "false" ;
+   tutorial_3_inventory : boolean "false" ;
    tutorial_done : boolean "false" ;
 
    # game state (point scoring)
@@ -268,6 +269,39 @@ subroutines {
       : print "You got half right." ;
    }
 
+   check_diagnostics : subroutine {
+      : match "i _" {
+         : if (tutorial_0_in_tutorial && !tutorial_2_x_me) {
+            : print "We'll want to take inventory eventually in this tutorial, but there are even more basic things first." ;
+            : done ;
+         }
+         : mask {
+            : set_true "tutorial_3_inventory" ;
+         }
+         : if (carried() == 0) {
+            : print "" ;
+         }
+      }
+
+      : match "score _" {
+         : print "You've currently scored {score} of {max_score} total core points. You have scored {bonus_score} of {max_bonus_score} bonus points." ;
+         : if (!warn_score_header) {
+            : print "{one_time}This is tracked in the upper left." ;
+            : set_true "warn_score_header" ;
+         }
+      }
+
+      : match "think _" {
+         : if (!think_any) {
+            : print "You haven't had any good ideas you weren't able to execute yet." ;
+            : done ;
+         }
+         : if (think_leery_owner) {
+            : print "You called the leery owner in the tool stall but didn't have anything to trade." ;
+         }
+      }
+   }
+
    check_meta : subroutine {
       : match "about _" {
          : print "{this_game} was written for {l_talp_2026}, another annual edition of {l_talp}." ;
@@ -289,26 +323,8 @@ subroutines {
          : done ;
       }
 
-   : match "score _" {
-      : print "You've currently scored {score} of {max_score} total core points. You have scored {bonus_score} of {max_bonus_score} bonus points." ;
-      : if (!warn_score_header) {
-         : print "{one_time}This is tracked in the upper left." ;
-         : set_true "warn_score_header" ;
+      : match "verbs _;verb _" {
       }
-   }
-
-   : match "think _" {
-      : if (!think_any) {
-         : print "You haven't had any good ideas you weren't able to execute yet." ;
-         : done ;
-      }
-      : if (think_leery_owner) {
-         : print "You called the leery owner in the tool stall but didn't have anything to trade." ;
-      }
-   }
-
-   : match "verbs _;verb _" {
-   }
 
    }
 
@@ -372,6 +388,7 @@ on_command {
       : done ;
    }
 
+   : gosub "check_diagnostics" ;
    : gosub "check_meta" ;
    : gosub "check_options" ;
 
@@ -418,6 +435,13 @@ on_tick {
    : if (!showed_first_note) {
       : print "{one_time}{vm_about} will give general game information. {vm_verbs} will describe {wowt}'s stripped-down parser." ;
       : set_true "showed_first_note" ;
+   }
+   : match "i _" {
+      : if (!tutorial_2_x_me) {
+         : print "You aren't holding anything, but you haven't really searched yourself with X ME." ;
+      } : else {
+         : print {( "You " + (carried() == 0 ? "only" : "also" ) + " have the {i_widget}." )} ;
+      }
    }
 }
 
