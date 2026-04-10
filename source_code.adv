@@ -230,7 +230,7 @@ locations {
                : print "Quieter, with the cocky raves gone." ;
                : done ;
             } : else_if (!listen_demo_meadow) {
-               : if (!tutorial_9_north) {
+               : if (tutorial_0_in_tutorial && !tutorial_9_north) {
                   : print "You'll want to do that later in the tutorial, but not yet." ;
                   : done ;
                }
@@ -609,7 +609,6 @@ on_command {
          : set_true "skip_tutorial_cue" ;
          : done ;
       }
-      : set_true "tutorial_3_x_me" ;
       : if (!me_x_yet) {
          : print "You search around your body and notice your phone is gone." ;
          : print "\"Fie! Moan! My phone!\" you cry out. Weird, you're not used to talking like that." ;
@@ -618,6 +617,8 @@ on_command {
       } : else {
          : print "You find nothing else on your person. You can't locate your phone, either." ;
       }
+      : set_true "tutorial_3_x_me" ;
+      : set_true "me_x_yet" ;
       : done ;
    }
 }
