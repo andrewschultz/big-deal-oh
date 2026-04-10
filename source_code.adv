@@ -73,6 +73,7 @@ strings {
    puz_point_eerie_loner : string "<eerie loner<#f80>>" ;
    puz_point_real_stench : string "<real stench<#f80>>" ;
    puz_point_stool_tall : string "<stool (tall)<#f80>>" ;
+   puz_point_tight_rules : string "<right tools<#f80>>" ;
 
    # item(s)
    i_widget : string "<wild digit-dialed widget<#c8c>>" ;
@@ -80,7 +81,7 @@ strings {
 
 integers {
    score : integer "0" ;
-   max_score : integer "4" ;
+   max_score : integer "5" ;
 
    bonus_score : integer "0" ;
    max_bonus_score : integer "1" ;
@@ -125,6 +126,7 @@ booleans {
    point_rocky_caves : boolean "false" ;
    point_steel_wrench : boolean "false" ;
    point_leery_owner : boolean "false" ;
+   point_tight_rules : boolean "false" ;
 
    # bonus point(s)
    bonus_point_dig_below : boolean "false" scope="survivor";
@@ -236,6 +238,26 @@ locations {
    }
    tool_stall : location "{loc_tool_stall}" header="{header_tool_stall}" graphic="r_tool_stall" {
       on_command {
+         : if (point_leery_owner) {
+            : match "tight rules" {
+               : if (point_tight_rules) {
+                  : print "You already mastered the tight rules needed to use the right tools." ;
+                  : done ;
+               }
+               : print "You say you're willing to use the tools properly and take the time to be taught. The leery owner is pleased with this, or at least less displeased than you expected." ;
+               : print "But it takes a while. Once you're done, the eerie loner pops back in to complain about how terrible things are outside." ;
+               : print "\"Boy,\" says the owner. \"Usually the loner just generally grouses quietly. But if they actually spoke up, things must be bad. Better go check.\"" ;
+               : set_true "point_tight_rules" ;
+               : gosub "add_point" ;
+               : done ;
+            }
+            : if (!point_tight_rules) {
+               : match "tight _;_ rules" {
+                  : gosub "say_half" ;
+                  : done ;
+               }
+            }
+         }
          : match "leery owner" {
             : if (point_leery_owner) {
                : print "You already summoned the owner!" ;
