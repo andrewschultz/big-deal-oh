@@ -96,6 +96,7 @@ booleans {
 
    # game state (critical)
    listen_demo_meadow : boolean "false" ;
+   smell_rocky_caves : boolean "false" ;
 
    # game state (tutorials)
    skip_tutorial_cue : boolean "false" ; # not a tutorial but skip every-turn note when it is implied
@@ -198,20 +199,37 @@ locations {
    }
    rocky_caves : location "{loc_rocky_caves}" header="{header_rocky_caves}" {
       on_command {
-         : if (!point_steel_wrench) {
-            : match "steel wrench" {
-               : if (point_steel_wrench) {
-                  : print "Already done!" ;
-                  : done ;
-               }
-               : print "Narrative text." ;
-               : set_true "point_steel_wrench" ;
-               : gosub "add_point" ;
                : done ;
             }
-            : match "steel _;_ wrench" {
-               : gosub "say_half" ;
-               : done ;
+         }
+         : match "smell _" {
+            : if (point_steel_wrench) {
+               : print "No smell any more." ;
+            } : else_if (!smell_rocky_caves) {
+               : print "You smell something. Something bad. A {puz_point_real_stench}." ;
+               : set_true "smell_rocky_caves" ;
+               : set_true "tutorial_13_smell" ;
+            } : else {
+               : print "Still that real stench." ;
+            }
+         }
+         : if (smell_rocky_caves) {
+            : if (!point_steel_wrench) {
+               : match "steel wrench" {
+                  : if (point_steel_wrench) {
+                     : print "Already done!" ;
+                     : done ;
+                  }
+                  : print "Narrative text." ;
+                  : set_true "point_steel_wrench" ;
+                  : set_true "tutorial_14_steel_wrench" ;
+                  : gosub "add_point" ;
+                  : done ;
+               }
+               : match "steel _;_ wrench" {
+                  : gosub "say_half" ;
+                  : done ;
+               }
             }
          }
       }
