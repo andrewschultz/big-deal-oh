@@ -187,6 +187,7 @@ locations {
                }
                : print "Narrative text." ;
                : set_true "point_rocky_caves" ;
+               : set_true "tutorial_11_rocky_caves" ;
                : gosub "add_point" ;
                : done ;
             }
@@ -202,8 +203,13 @@ locations {
                : print "Quieter, with the cocky raves gone." ;
                : done ;
             } : else_if (!listen_demo_meadow) {
-               : print "You listen around a bit, and then you hear them. {puz_point_cocky_raves}. Mocking you for not being able to go anywhere interesting." ;
+               : if (!tutorial_9_north) {
+                  : print "You'll want to do that later in the tutorial, but not yet." ;
+                  : done ;
+               }
+               : print {( "What's that? Cocky raves! Saying you won't find any" + (point_tool_stall ? " other" : "" ) + " way out of the meadow." )} ;
                : set_true "listen_demo_meadow" ;
+               : set_true "tutorial_10_listen" ;
                : update_graphic ;
             } : else {
                : print "{puz_point_cocky_raves} continue to mock your inability to go anywhere interesting." ;
@@ -303,6 +309,7 @@ locations {
             : if (!point_steel_wrench) {
                : print "The eerie loner grumbles \"Can't disturb the owner unless you have something for them.\"" ;
                : set_true "think_leery_owner" ;
+               : set_true "tutorial_8_leery_owner_1" ;
                : done ;
             }
             : print "The eerie loner grumbles. You show the steel wrench.\n\"All right, I'll get 'em.\" The loner leaves, their job done for the day. The leery owner comes out." ;
