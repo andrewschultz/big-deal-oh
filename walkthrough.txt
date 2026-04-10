@@ -1,6 +1,12 @@
 Walkthrough for Big Deal, Oh! by Andrew Schultz
 
-You can probably guess the bonus point from the title.
+You can probably guess one bonus point from the title.
+
+Use these if you are running tutorial mode.
+
+> ABOUT
+
+> VERBS
 
 > X ME
 
@@ -12,21 +18,25 @@ Weird. You never use language like that.
 
 > I
 
-You have a chain. It feels uncomfortable wrapped around you.
+> THINK
 
-The stool, tall looks suspicious.
+This will give you clues what to do.
+
+But how to make concrete progress? The stool, tall looks suspicious.
 
 > TOOL STALL (1)
 
-We can't do anything to the south yet.
+We can't do anything to the south yet. The tutorial has us go south, get the point, and go back north.
 
-But if you've followed the tutorial, you'll know to LISTEN.
+The tutorial then tells you to pay attention to the description. It suggests an action.
+
+> LISTEN
 
 Cocky raves!
 
 > ROCKY CAVES (1)
 
-> SW
+> D
 
 You can't sense anything here. Or, rather, you haven't. You can't look around, but maybe you can try other senses.
 
@@ -36,7 +46,7 @@ A real stench!
 
 > STEEL WRENCH (1)
 
-> NE
+> U
 
 > S
 
@@ -44,4 +54,14 @@ The eerie loner doesn't want to have anything to do with you. Unless you have bu
 
 > LEERY OWNER (1)
 
-If you didn't have the wrench, the owner wouldn't want to see you.
+If you didn't have the wrench, the owner wouldn't want to see you. Now there are the right tools, but not anyone can just use them. You have a bit to learn.
+
+> TIGHT RULES (1)
+
+This takes a while, so ...
+
+> N
+
+The scenery changed significantly! Flaming towers!
+
+> TAMING FLOWERS (1)
