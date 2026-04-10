@@ -4,7 +4,7 @@
 	<map>
 		<room id="1" name="Demo Meadow" subtitle="" x="-64" y="-32" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isStartRoom="yes" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
 		<room id="2" name="Rocky Caves" subtitle="" x="-224" y="96" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
-		<line id="3" name="" description="" style="dashed">
+		<line id="3" name="" description="" style="dashed" startText="down" endText="up">
 			<dock index="0" id="1" port="sw" />
 			<dock index="1" id="2" port="ne" />
 		</line>
@@ -13,7 +13,23 @@
 			<dock index="0" id="1" port="s" />
 			<dock index="1" id="4" port="n" />
 		</line>
-		<room id="6" name="Foldin' Gate" subtitle="" x="-64" y="-160" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
+		<room id="6" name="Foldin' Gate" subtitle="" x="96" y="-160" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
+		<room id="7" name="Streaky Cove" subtitle="" x="-224" y="-160" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
+		<room id="8" name="Towers N" subtitle="" x="-64" y="-160" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
+		<line id="9" name="" description="" style="dashed">
+			<dock index="0" id="1" port="n" />
+			<dock index="1" id="8" port="s" />
+		</line>
+		<room id="10" name="Towers E" subtitle="" x="96" y="-32" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
+		<line id="11" name="" description="" style="dashed">
+			<dock index="0" id="1" port="e" />
+			<dock index="1" id="10" port="w" />
+		</line>
+		<room id="12" name="Towers W" subtitle="" x="-224" y="-32" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
+		<line id="13" name="" description="" style="dashed">
+			<dock index="0" id="1" port="w" />
+			<dock index="1" id="12" port="e" />
+		</line>
 	</map>
 	<settings>
 		<colors>
