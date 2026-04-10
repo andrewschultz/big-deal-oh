@@ -163,7 +163,7 @@ locations {
                : done ;
             }
          }
-         : match "sw _" {
+         : match "d _" {
             : if (tutorial_0_in_tutorial && point_steel_wrench) {
                : print "You don't need to go back to the rocky caves for the tutorial. You got what you needed." ;
                : done ;
@@ -257,7 +257,7 @@ locations {
    }
    rocky_caves : location "{loc_rocky_caves}" header="{header_rocky_caves}" {
       on_command {
-         : match "ne _" {
+         : match "u _" {
             : if (tutorial_0_in_tutorial && !point_steel_wrench) {
                : print "You have something to retrieve before going back to the demo meadow." ;
                : done ;
@@ -379,7 +379,7 @@ connections {
 
    from, direction, to = [
 
-      demo_meadow, southwest, rocky_caves
+      demo_meadow, down, rocky_caves
       demo_meadow, south, tool_stall
 
    ]
