@@ -64,7 +64,7 @@ strings {
    loc_rocky_caves : dynamic_string {( point_steel_wrench ? "They're just caves now. They don't smell weird." : "There's a {puz_point_real_stench} here." )} ;
    header_rocky_caves : string "<Rocky Caves<#ff0>>" ;
 
-   loc_tool_stall : dynamic_string {( "You're in a tool stall. The exit is back north. Nearby you see " + (point_leery_owner ? "the owner, no longer leery." : "an {puz_point_eerie_loner}") + "." )} ;
+   loc_tool_stall : dynamic_string {( "You're in a tool stall. The exit is back north. Nearby you see " + (point_leery_owner ? "the owner, no longer leery" : "an {puz_point_eerie_loner}") + (point_tight_rules || !point_leery_owner ? "" : ". That sign indicates the {puz_point_right_tools} are available, but you haven't figured how to ask for them yet") + "." )} ;
    header_tool_stall : string "<Tool Stall<#ff0>>" ;
 
    # puzzle text
@@ -73,9 +73,11 @@ strings {
    puz_point_eerie_loner : string "<eerie loner<#f80>>" ;
    puz_point_real_stench : string "<real stench<#f80>>" ;
    puz_point_stool_tall : string "<stool (tall)<#f80>>" ;
-   puz_point_tight_rules : string "<right tools<#f80>>" ;
+   puz_point_right_tools : string "<right tools<#f80>>" ;
    puz_point_flaming_towers : string "<flaming towers<#f80>>" ;
 
+   tht_leery_owner : string "<LEERY OWNER<#f80>>" ;
+   tht_tool_stall : dynamic_string {( is_at "tool_stall" ? "here" : "in the tool stall" )} ;
 
    # item(s)
    i_widget : string "<wild digit-dialed widget<#c8c>>" ;
@@ -139,6 +141,7 @@ booleans {
    think_leery_owner : boolean "false" ;
 
    # dynamic booleans for ease of coding
+   known_leery_owner : dynamic_boolean {( think_leery_owner || point_leery_owner )} ;
    flaming_towers_present : dynamic_boolean {( placed_flaming_towers && !point_taming_flowers )} ;
 
    # think-based booleans
@@ -461,7 +464,7 @@ subroutines {
             : done ;
          }
          : if (think_leery_owner) {
-            : print "You called the leery owner in the tool stall but didn't have anything to trade." ;
+            : print "You called for the {tht_leery_owner} in the tool stall but didn't have anything to trade." ;
          }
       }
    }
@@ -697,7 +700,7 @@ on_render {
       : if (!point_leery_owner) {
          : overlay "s_tool_eerie_loner" x="20" y="6" ;
       } : else {
-         : overlay "s_tool_right_tools" x="20" y="6" ;
+         : overlay "s_tool_right_tools" x="210" y="0" ;
       }
    }
 }
