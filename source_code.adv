@@ -152,6 +152,18 @@ vocabulary {
 locations {
    demo_meadow : location "{loc_demo_meadow}" header="{header_demo_meadow}" graphic="r_demo_meadow" {
       on_command {
+         : match "s _" {
+            : if (tutorial_0_in_tutorial && tutorial_9_north && !point_steel_wrench) {
+               : print "You don't need to go back to the tool stall yet. You don't have what you need at the moment." ;
+               : done ;
+            }
+         }
+         : match "sw _" {
+            : if (tutorial_0_in_tutorial && point_steel_wrench) {
+               : print "You don't need to go back to the rocky caves for the tutorial. You got what you needed." ;
+               : done ;
+            }
+         }
          : if (!point_tool_stall) {
             : match "_ stool;_ tall" {
                : print "You're not sure why you think of the {puz_point_stool_tall} that way instead of a tall stool. It's a bit weird, here. You can't exactly take it, and it doesn't lead anywhere, either. " ;
@@ -198,9 +210,19 @@ locations {
             }
          }
       }
+      on_describe {
+         : if (point_steel_wrench) {
+            : set_true "tutorial_15_northeast" ;
+         } : else_if (think_leery_owner) {
+            : set_true "tutorial_9_north" ;
+         }
+      }
    }
    rocky_caves : location "{loc_rocky_caves}" header="{header_rocky_caves}" {
       on_command {
+         : match "ne _" {
+            : if (tutorial_0_in_tutorial && !point_steel_wrench) {
+               : print "You have something to retrieve before going back to the demo meadow." ;
                : done ;
             }
          }
@@ -235,9 +257,24 @@ locations {
             }
          }
       }
+      on_describe {
+         : set_true "tutorial_12_southwest" ;
+      }
    }
    tool_stall : location "{loc_tool_stall}" header="{header_tool_stall}" graphic="r_tool_stall" {
       on_command {
+         : match "n _" {
+            : if (tutorial_0_in_tutorial) {
+               : if (!think_leery_owner) {
+                  : print "For the purposes of this tutorial, you need to figure whom to ask the eerie loner for before going back north." ;
+                  : done ;
+			   }
+               : if (point_steel_wrench && !point_leery_owner) {
+                  : print "For the purposes of this tutorial, you need to figure whom to ask the eerie loner for before going back north." ;
+                  : done ;
+			   }
+            }
+         }
          : if (point_leery_owner) {
             : match "tight rules" {
                : if (point_tight_rules) {
@@ -278,6 +315,12 @@ locations {
                : gosub "say_half" ;
                : done ;
             }
+         }
+      }
+      on_describe {
+         : set_true "tutorial_7_south_first" ;
+         : if (point_steel_wrench) {
+            : set_true "tutorial_16_south_twice" ;
          }
       }
    }
