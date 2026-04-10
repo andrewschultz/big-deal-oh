@@ -305,8 +305,15 @@ locations {
                : set_true "think_leery_owner" ;
                : done ;
             }
-            : print "Narrative text." ;
+            : print "The eerie loner grumbles. You show the steel wrench.\n\"All right, I'll get 'em.\" The loner leaves, their job done for the day. The leery owner comes out." ;
             : set_true "point_leery_owner" ;
+            : set_false "think_leery_owner" ;
+            : set_true "tutorial_17_leery_owner_2" ;
+            : if (tutorial_0_in_tutorial) {
+               : print "Congratulations! You finished the tutorial." ;
+               : set_false "tutorial_0_in_tutorial" ;
+            }
+            : update_graphic ;
             : gosub "add_point" ;
             : done ;
          }
