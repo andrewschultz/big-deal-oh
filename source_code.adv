@@ -372,6 +372,12 @@ locations {
          }
       }
    }
+   west_area : location "{loc_west_area}" header="{header_west_area}" {
+   }
+   east_area : location "{loc_west_area}" header="{header_west_area}" {
+   }
+   north_area : location "{loc_west_area}" header="{header_west_area}" {
+   }
 }
 
 # Defines things in the world (scenery cannot be carried)
@@ -384,6 +390,10 @@ connections {
 
       demo_meadow, down, rocky_caves
       demo_meadow, south, tool_stall
+
+      demo_meadow, north, north_area
+      demo_meadow, east, east_area
+      demo_meadow, west, west_area
 
    ]
 
@@ -401,6 +411,42 @@ barriers {
       location = tool_stall
       block_when_not = point_tool_stall
       message = Maybe something's that way, but you need to look for something concrete.
+   }
+
+   block_0_meadow_west_area : block {
+      location = west_area
+      block_when_not = point_tight_rules
+      message = Maybe something's that way, but you need to look for something concrete.
+   }
+
+   block_0_meadow_east_area : block {
+      location = east_area
+      block_when_not = point_tight_rules
+      message = Maybe something's that way, but you need to look for something concrete.
+   }
+
+   block_0_meadow_north_area : block {
+      location = north_area
+      block_when_not = point_tight_rules
+      message = Maybe something's that way, but you need to look for something concrete.
+   }
+
+   block_1_meadow_west_area : block {
+      location = west_area
+      block_when_not = point_taming_flowers
+      message = You need to neutralize the flaming towers first.
+   }
+
+   block_1_meadow_east_area : block {
+      location = east_area
+      block_when_not = point_taming_flowers
+      message = You need to neutralize the flaming towers first.
+   }
+
+   block_1_meadow_north_area : block {
+      location = north_area
+      block_when_not = point_taming_flowers
+      message = You need to neutralize the flaming towers first.
    }
 
 }
