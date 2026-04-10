@@ -74,6 +74,8 @@ strings {
    puz_point_real_stench : string "<real stench<#f80>>" ;
    puz_point_stool_tall : string "<stool (tall)<#f80>>" ;
    puz_point_tight_rules : string "<right tools<#f80>>" ;
+   puz_point_flaming_towers : string "<flaming towers<#f80>>" ;
+
 
    # item(s)
    i_widget : string "<wild digit-dialed widget<#c8c>>" ;
@@ -81,7 +83,7 @@ strings {
 
 integers {
    score : integer "0" ;
-   max_score : integer "5" ;
+   max_score : integer "6" ;
 
    bonus_score : integer "0" ;
    max_bonus_score : integer "1" ;
@@ -98,6 +100,7 @@ booleans {
    # game state (critical)
    listen_demo_meadow : boolean "false" ;
    smell_rocky_caves : boolean "false" ;
+   placed_flaming_towers : boolean "false" ;
 
    # game state (tutorials)
    skip_tutorial_cue : boolean "false" ; # not a tutorial but skip every-turn note when it is implied
@@ -127,6 +130,7 @@ booleans {
    point_steel_wrench : boolean "false" ;
    point_leery_owner : boolean "false" ;
    point_tight_rules : boolean "false" ;
+   point_taming_flowers : boolean "false" ;
 
    # bonus point(s)
    bonus_point_dig_below : boolean "false" scope="survivor";
@@ -135,6 +139,7 @@ booleans {
    think_leery_owner : boolean "false" ;
 
    # dynamic booleans for ease of coding
+   flaming_towers_present : dynamic_boolean {( placed_flaming_towers && !point_taming_flowers )} ;
 
    # think-based booleans
    think_any : dynamic_boolean {( think_leery_owner )} ;
@@ -180,6 +185,25 @@ locations {
                : gosub "add_point" ;
             }
          }
+         : if (flaming_towers_present) {
+            : match "taming flowers" {
+               : if (point_taming_flowers) {
+                  : print "Already done!" ;
+                  : done ;
+               }
+               : print "You look for taming flowers. You figure weapons won't work. What sort of flowers would tame fire? Why, cold ones. You find ones that look really frosty, and what do you know? They feel frosty, too!\nYou walk up to each tower, and the flowers stand up surprisingly well to the heat. The towers dissolve in heaps of ash. You can go north and east and west now." ;
+               : set_true "point_taming_flowers" ;
+               : gosub "add_point" ;
+               : update_graphic ;
+               : done ;
+            }
+            : if (!point_taming_flowers) {
+               : match "taming _;_ flowers" {
+                  : gosub "say_half" ;
+                  : done ;
+               }
+            }
+         }
          : if (listen_demo_meadow) {
             : match "rocky caves" {
                : if (point_rocky_caves) {
@@ -221,6 +245,13 @@ locations {
             : set_true "tutorial_15_northeast" ;
          } : else_if (think_leery_owner) {
             : set_true "tutorial_9_north" ;
+         }
+		 : if (flaming_towers_present) {
+		    : print "Those flaming towers are still flaming, exposing passage north, east and west but not letting you by." ;
+		 } : else_if (point_tight_rules && !placed_flaming_towers) {
+            : set_true "placed_flaming_towers" ;
+            : print "It must have been a while since you went through the tight rules. Flaming towers have now popped up to the north, east and west!" ;
+            : update_graphic ;
          }
       }
    }
@@ -655,7 +686,12 @@ on_render {
       : overlay "s_meadow_stool" x="164" y="0" ;
    }
    : if (is_at "demo_meadow" && (!point_rocky_caves && listen_demo_meadow)) {
-      : overlay "s_meadow_haha" x="38" y="2" ;
+      : overlay "s_meadow_haha" x="2" y="2" ;
+   }
+   : if (is_at "demo_meadow" && flaming_towers_present) {
+      : overlay "s_meadow_flaming_towers" x="0" y="0" ;
+      : overlay "s_meadow_flaming_towers" x="82" y="0" ;
+      : overlay "s_meadow_flaming_towers" x="164" y="0" ;
    }
    : if (is_at "tool_stall") {
       : if (!point_leery_owner) {
@@ -671,10 +707,11 @@ assets {
 
       # rooms
       r_blank : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAYAQMAAAAvTrFnAAAAA1BMVEX//wCKxvRFAAAAD0lEQVR4XmPAAKNgFIwCAAMYAAFrMpCEAAAAAElFTkSuQmCC" ;
-      r_demo_meadow : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAG1BMVEUAAAAAgAAAwADgYODgoKAA/wD//wD/gAAA//9RtPXwAAACBUlEQVR4XuySsYoAIQxEBxTN5wT8AQs/xMo6na3lffZFrrjdVTDHFXfFpgkEhnlhBh9/PP8L4AV4AV6AF+AFwM9lv5CvIjSy+ifaHLtZXmjL0gJZ/R1t/KNVXvwOYLRabf4jMa/HLmKUl5w3EYxQgw1gOHa8HKNEscl99huAEVpo1eafXOLFv8cuNv/iywIw9H80SwfHcIyU6HGMgt5Ncp9RCi0RzP9h6uD8H88Ozv9h6uD8H/4OMABUBTgnMACwAiR+HEUBuljkWQGuCXzgK/0WQgVZ0k/OMeiRfo9RQJb0i/cZdAOY7QdqVYQDwWw/wKwI32az/YCIIhzks/1AzopAN4BWm85c9RQ/J525+BK/dJ255BR/Ljq6rhl8tk/uKA7EQBQsmF9s38ADyg26gIM+gBjo3JFiZ3393UaBZTF4DAvaDbZBCor3oBElNGUguwXc9e2kCES3gOsTGmBuAY+DugDiFnB7UlTJOZNnUkbfDzFG4kCKVNDMsIVkh3URQUaS1HU/GZdQ50kPN8Al1KFOYriEuhzXBZdQxypJueZ7nqbkYAtrU6shOlxjm0SXh31YH2/ymqRE5kzBejmfQl1u4RB3kot9Wh+lSVJ4QlUn3+v8PU2/hm3yx3Xa8Gm9OO8GadNrWIP2gn/xBYoDHSF7xoaOkL0/u3WE6M5s/eDvL/C/wBdc60qrYUm1NgAAAABJRU5ErkJggg==" ;
+      r_demo_meadow : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAG1BMVEUAAAAAgAAAwADgYODgoKAA/wD//wD/gAAA//9RtPXwAAACEUlEQVR4XsTVMW5EIQwE0JGCbB8nR6DwQVy5djety3/sZKVNUkWwEtpPQzlPGAZcb1lt/wW8CaBlNwO07FZAF+teAEHcC6ASNwIuZYHoGwFQKu0FQNvpGVCrAOwCJM4KAKqSSuwCzgpARRVA0PYAHRknJ1CkkixuAxKJc4BSrdICtJ4kWwJSzglaq1VLyWcl95irHpAMJPqQQK35EPzlrwGQlLRDgL5Mi/Zz8MOHrQCdmRIB4JAAf0UEhy8BF5Aix26CfRvwmz99DUAKIoBEnq0kg2P4XD/DyJTMjDwMaJ8+sQaESIQEIHG0kTHGdHdbAiRaJCRzVcn7/9dz+nM6sP6OxTofgv38j88l0eHAGJiOJaAvk0jrF/I3AD7cfT42ewK+iimD04qBGIgOaJX7dwcx+D4wDSzgAoRBLaT/EpKATzGLV8HwdXzo4YexlcOJxMeX5+yY7H65daD11npv5zLGgmcGcnYg6D4g2r731ru3fhNQHYiS50TB7/N3j56DgGNbM6vQIZg4o4fH3nqkn/AS8Lm8tqzCEEVwTo+9I/2El4Bj+ZksQQBmlOSTOjwzTngNeK2fS1YgRIkU8D/9b+66rVsWYAgCzEChrD/xBkIySZRMXtUf+QaMgNGMNK/qo79gq8AwiUa60cv64A4cJRhGI+XBuj64hEcNhoeMkV7VnwrIDBHp+baA87a8IeAB+A376ErDYNZtVQAAAABJRU5ErkJggg==" ;
       r_tool_stall : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAGFBMVEUAAACAAADAwMCAQADggECAgID/AAD//wA/25nTAAAArUlEQVR4XuzQwQkCQQxGYcEKrGGxgTyCBcx28JMKBqYBgW1fmasXRZ1c8ir4eCfgzHftbW/AGB0A3figXwDaM4JOF/LQcV8LmAc8NEYXktYD2Da7hgjckcgC+ASQATDweQCBcNYfAGMeyASQDfBAKANgWPKB1wpQgAIUoACXt/sToAAFeIw0BzBQH5DkAAMl6oOh5QCmke4AA6WR7gCmAXbAqAMMlEa6A5hGugMAAJk1y3RMVc4AAAAASUVORK5CYII=" ;
 
       # scenery
+      s_meadow_flaming_towers : base64_png "iVBORw0KGgoAAAANSUhEUgAAACQAAAAoBAMAAABk7EXQAAAAElBMVEX///8AAACAAADAwMDw8PD/gABU/IfLAAAAAXRSTlMAQObYZgAAARNJREFUeF5l0M1txEAIhmFy4B472gIGiQKiVLDSFsAivf23kmFY2/nBc7AfwSc8UqWC9EuIHG/agpwWGi2onHP0VNDERJ1UGhIvCqGmiYpQRVsjENCa2LafJ5i0j+06TojGbke52bO2OMgXjSLdzro9t21ScAy6GzZAkEnQNJ9Y8U2kT6e2580scayK96JqgxaGaNH6zBLPd6Hvb1p3DeF1EXtFj7nY0CXKDHPP8fXxOaQrSEujuk4SDKO74kU33DqLJb1/WpXHlWWUgrYhvVSSHIOyLwOeclJFG1nbN7HWtEygSWJ1eXoOfRH76nLMOcJyZbkZchRuXeOkmx+/fVHiOR6P+0X7FPtDZkX33+T/u+yibynQV4eqAf8hAAAAAElFTkSuQmCC" ;
       s_meadow_haha : base64_png "iVBORw0KGgoAAAANSUhEUgAAACIAAAAYAQMAAAClaL1KAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAAIJJREFUCB0FwLEKAWEAAOBPitRfMpoMXuA2gxcx3nQvYDHouge4LF7AI6h7AHdIFoNRKTeZLAaldCWYQfcFkxztT45pldP62TM4bE58q/pIci1LknfWZlmXYxaxOVEcmkzkdMlEIbljlTaZ3jp9lobFPGG4K2JGjwL92xbhBuEMHfgDhpcoRuzCRnsAAAAASUVORK5CYII=" ;
       s_meadow_stool : base64_png "iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAABKklEQVR4nO2YUQ7DIAiGcdm97M3Um8nJ2MNm05haQNbpmv6JL81g337AaR0Rwcx6jAbg9LQEp5RE9ocQXO93OE2Jm0Ax7gc0nmuAxYArXAtGqk+8FHL6HrxWievEvUOyl6spIhKtGCNpnvfG1Gv6HhQBqkoiUAjBSdvjGg6OlAmQK72mlC1d28FfiAX89gQXScv//w6O1vSAphM1AAAinnqpUQFuYXLOomOT9x5SSrQsSwceA1imrIB571egnLPKuW3sNie3S7AOnrHFALyBi7tHnxs6JJL+ZR1ERKrLY1Hdx5xEQ7LXgxawkkdSYhawJENEqkui3WK6fqD2PtFzr7Dk6hoS7QHCci6c/q/uBpToqF2mADyUdUI1qyfv9A7egFap3g+O0PQOvgCblwBNMoukoAAAAABJRU5ErkJggg==" ;
       s_tool_eerie_loner : base64_png "iVBORw0KGgoAAAANSUhEUgAAABoAAAAiBAMAAACzTdQ9AAAAElBMVEUAgAAAAAAAAP+AAAD/AAD///85z4jPAAAAAXRSTlMAQObYZgAAAK9JREFUeF5lztENwyAMRVGsLsCLxACJ1P9WqBvgAZB4+69SOwRIVYuPnFxHIZyTc36FMY8f5Q9Zl0g+41CqxiXeBbKVKSG1GtaqpRVH+mswAQPaWitXRXK1/qkkaivWzpjYG1L1VOEqERZRIfSJYtGOFC2qMbgQRFVd4udqdf6dyjKU6DOVbd5AF45z9nhK7An2akQXtr1LfDe6OjdbngpA16obpsJ2IC7Z6k3id/kCA6EsRFjZ3X0AAAAASUVORK5CYII=" ;
