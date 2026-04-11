@@ -95,7 +95,7 @@ integers {
 
 booleans {
    # game state (noncritical)
-   me_x_yet : boolean "false" ;
+   xme_yet : boolean "false" ;
    showed_first_note : boolean "false" ;
    warn_score_header : boolean "false" ;
    have_won : boolean "false" scope="survivor" ;
@@ -251,9 +251,9 @@ locations {
          } : else_if (think_leery_owner) {
             : set_true "tutorial_9_north" ;
          }
-		 : if (flaming_towers_present) {
-		    : print "Those flaming towers are still flaming, exposing passage north, east and west but not letting you by." ;
-		 } : else_if (point_tight_rules && !placed_flaming_towers) {
+         : if (flaming_towers_present) {
+            : print "Those flaming towers are still flaming, exposing passage north, east and west but not letting you by." ;
+         } : else_if (point_tight_rules && !placed_flaming_towers) {
             : set_true "placed_flaming_towers" ;
             : print "It must have been a while since you went through the tight rules. Flaming towers have now popped up to the north, east and west!" ;
             : update_graphic ;
@@ -310,11 +310,11 @@ locations {
                : if (!think_leery_owner) {
                   : print "For the purposes of this tutorial, you need to figure whom to ask the eerie loner for before going back north." ;
                   : done ;
-			   }
+               }
                : if (point_steel_wrench && !point_leery_owner) {
                   : print "For the purposes of this tutorial, you need to figure whom to ask the eerie loner for before going back north." ;
                   : done ;
-			   }
+               }
             }
          }
          : if (point_leery_owner) {
@@ -657,7 +657,7 @@ on_command {
          : set_true "skip_tutorial_cue" ;
          : done ;
       }
-      : if (!me_x_yet) {
+      : if (!xme_yet) {
          : print "You search around your body and notice your phone is gone." ;
          : print "\"Fie! Moan! My phone!\" you cry out. Weird, you're not used to talking like that." ;
          : print "You clutch at various places on your body, and you're surprised to find something very odd indeed turn up." ;
@@ -666,7 +666,7 @@ on_command {
          : print "You find nothing else on your person. You still can't locate your phone, but who knows, it may turn up some day. Perhaps when you least expect it." ;
       }
       : set_true "tutorial_3_x_me" ;
-      : set_true "me_x_yet" ;
+      : set_true "xme_yet" ;
       : done ;
    }
 }
