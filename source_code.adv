@@ -107,6 +107,13 @@ integers {
    bonus_score : integer "0" ;
    max_bonus_score : integer "1" ;
 
+   # hinting. Magic numbers are 1 = do later, 0 = done, -1 = nothing to do
+   # note items are listed in backwards order of how we do things
+   widget_num : dynamic_integer {( is_at "demo_meadow" ? widget_demo_meadow : is_at "tool_stall" ? widget_tool_stall : is_at "rocky_caves" ? widget_rocky_caves : -1 )} ;
+   widget_rocky_caves : dynamic_integer {( point_steel_wrench ? 0 : smell_rocky_caves ? 56 : 1 )} ;
+   widget_tool_stall : dynamic_integer {( point_tight_rules ? 0 : point_leery_owner ? 55 : point_steel_wrench ? 55 : -55 )} ;
+   widget_demo_meadow : dynamic_integer {( point_taming_flowers ? 0 : placed_flaming_towers ? 67 : cocky_raves_present ? 55 : (!point_tool_stall) ? 45 : 1 )} ;
+
    #auxiliary
    tempint : integer "0" ;
    counter : integer "0" ;
@@ -291,6 +298,7 @@ booleans {
 
    # dynamic booleans for ease of coding
    known_leery_owner : dynamic_boolean {( think_leery_owner || point_leery_owner )} ;
+   cocky_raves_present : dynamic_boolean {( listen_demo_meadow && !point_rocky_caves )} ;
    flaming_towers_present : dynamic_boolean {( placed_flaming_towers && !point_taming_flowers )} ;
 
    # think-relevant booleans
@@ -310,8 +318,10 @@ booleans {
 
    # option(s)
    score_notify : boolean "true" scope="survivor" ;
+
    # blocker dynamic booleans
 
+   widget_blurry : boolean "false" ;
    show_overlay : boolean "true" ;
 }
 
@@ -1006,6 +1016,27 @@ on_command {
    : if (!bonus_point_dig_below) {
       : match "dig _;_ below" {
          : gosub "say_half" ;
+
+   : if (xme_yet) {
+      : match "_ widget;_ digit;_ dialed;_ wild" {
+         : set_integer var="tempint" {( widget_num )} ;
+         : set_false "widget_blurry" ;
+         : if (tempint == -1 ) {
+            : print "Some weird random negative number. Nothing to do here, period." ;
+            : done ;
+         }
+         : if (tempint < 0) {
+            : set_integer var="tempint" {( 0 - tempint )} ;
+            : set_true "widget_blurry" ;
+         }
+         : print "On the widget, you see the number {tempint}." ;
+         : if (widget_blurry) {
+            : print "The number seems a bit blurry." ;
+         } : else_if (tempint == 0) {
+            : print "Probably means nothing left to do here." ;
+         } : else_if (tempint == 1) {
+            : print "Maybe there's nothing constructive to do right now." ;
+         }
          : done ;
       }
    }
