@@ -715,7 +715,7 @@ subroutines {
       : if (!have_won) {
          : print "{custom_unknown_verb_error}" ;
          : if (!bonus_obfuscated_note_yet) {
-            : print "{note_once}well, not exactly. You've discovered half of a bonus point. But the first time through, {qt} won't be hinting them, so as not to distract you from the main quest. If you continue after the win-and-restart, you'll get a nudge, since it's assumed you know the main way through." ;
+            : print "{one_time}well, not exactly. You've discovered half of a bonus point. But the first time through, {qt} won't be hinting them, so as not to distract you from the main quest. If you continue after the win-and-restart, you'll get a nudge, since it's assumed you know the main way through." ;
             : set_true "bonus_obfuscated_note_yet" ;
          }
          : done ;
@@ -724,7 +724,7 @@ subroutines {
       : decrement "tempint" ;
       : gosub "say_half" ;
       : if (!bonus_half_note) {
-         : print "{note_once}since you've been through once, I will assume you know all the core points and are hunting for bonus points. This wasn't available the first time through, to avoid distracting you from the main game." ;
+         : print "{one_time}since you've been through once, I will assume you know all the core points and are hunting for bonus points. This wasn't available the first time through, to avoid distracting you from the main game." ;
          : set_true "bonus_half_note" ;
       }
       : set_false "half_bonus" ;
@@ -748,7 +748,7 @@ subroutines {
       : match "score _" {
          : print "You've currently scored {score} of {max_score} total core points. You have scored {bonus_score} of {max_bonus_score} bonus points." ;
          : if (!warn_score_header) {
-            : print "{one_time}This is tracked in the upper left." ;
+            : print "{one_time}The core score is tracked in the upper right as well." ;
             : set_true "warn_score_header" ;
          }
       }
