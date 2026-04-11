@@ -82,7 +82,19 @@ strings {
 
    # think text
    tht_leery_owner : string "<LEERY OWNER<#f80>>" ;
-   tht_tool_stall : dynamic_string {( is_at "tool_stall" ? "here" : "in the tool stall" )} ;
+   already_got_check : dynamic_string {( already_got_command ? " Though you already got the full command, which you can revisit with {vd_think}." : "" )} ;
+   for_bonus : dynamic_string {( half_bonus ? " for a bonus point" : "" )} ;
+
+   #conditional location text
+   here_demo_meadow : dynamic_string {( is_at "demo_meadow" ? "here" : "in the demo meadow" )} ;
+   here_rocky_caves : dynamic_string {( is_at "rocky_caves" ? "here" : "in the rocky caves" )} ;
+   here_tool_stall : dynamic_string {( is_at "tool_stall" ? "here" : "in the tool stall" )} ;
+
+   # Interpretive
+   noguess : string "<(unknown)<#888>>" ;
+   noguess_c_1 : dynamic_string {( unneeded_half ? "<(unneeded)<#888>>" : "<(unknown)<#888>>" )} ;
+   think_here_also : dynamic_string {( think_text_yet ? "Also, here" : "Here" )} ;
+   number_as_word : dynamic_string {( collection_get { collection -> ("num_to_word") index -> ( commands_figured ) } )} ;
 
    # item(s)
    i_widget : string "<wild digit-dialed widget<#c8c>>" ;
@@ -94,6 +106,136 @@ integers {
 
    bonus_score : integer "0" ;
    max_bonus_score : integer "1" ;
+
+   #auxiliary
+   tempint : integer "0" ;
+   counter : integer "0" ;
+
+   # for half THINK
+   part_core_score : dynamic_integer {( ((collection_get{ collection -> ("got_first_core") index -> ( counter ) } == "true") ? 1 : 0) + ((collection_get{ collection -> ("got_second_core") index -> ( counter ) } == "true") ? 2 : 0) )} ; # this is a really bad hack, but I couldn't find a concise way to code things. Maybe I could use a dynamic boolean.
+   part_bonus_score : dynamic_integer {( ((collection_get{ collection -> ("got_first_bonus") index -> ( counter ) } == "true") ? 1 : 0) + ((collection_get{ collection -> ("got_second_bonus") index -> ( counter ) } == "true") ? 2 : 0) )} ; # this is a really bad hack, but I couldn't find a concise way to code things. Maybe I could use a dynamic boolean.
+
+   commands_figured : dynamic_integer {( (think_leery_owner ? 1 : 0) )} ;
+
+}
+
+collections {
+
+   num_to_word : list {
+      items = [
+         "zero",
+         "one",
+         "two",
+         "three",
+         "four",
+         "five",
+         "six",
+         "seven"
+      ]
+   };
+
+   tried_combo_core : list {
+      items = [
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false"
+      ]
+   }
+
+   situations_core : list {
+      items = [
+         "{here_demo_meadow}",
+         "{here_rocky_caves}",
+         "{here_demo_meadow}",
+         "{here_tool_stall}",
+         "{here_tool_stall}",
+         "{here_demo_meadow}"
+      ]
+   }
+
+   got_first_core : list {
+      items = [
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false"
+      ]
+   }
+
+   think_first_core : list {
+      items = [
+         "<ROCKY<#f80>>",
+         "<STEEL<#f80>>",
+         "<TOOL<#f80>>",
+         "<LEERY<#f80>>",
+         "<TIGHT<#f80>>",
+         "<TAMING<#f80>>"
+      ]
+   }
+
+   got_second_core : list {
+      items = [
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false"
+      ]
+   }
+
+   think_second_core : list {
+      items = [
+         "<CAVES<#f80>>",
+         "<WRENCH<#f80>>",
+         "<STALL<#f80>>",
+         "<OWNER<#f80>>",
+         "<RULES<#f80>>",
+         "<FLOWERS<#f80>>"
+      ]
+   }
+
+   tried_combo_bonus : list {
+      items = [
+         "false"
+      ]
+   }
+
+   situations_bonus : list {
+      items = [
+         "anywhere"
+      ]
+   }
+
+   got_first_bonus : list {
+      items = [
+         "false"
+      ]
+   }
+
+   think_first_bonus : list {
+      items = [
+         "<DIG<#f80>>"
+      ]
+   }
+
+   got_second_bonus : list {
+      items = [
+         "false"
+      ]
+   }
+
+   think_second_bonus : list {
+      items = [
+         "<BELOW<#f80>>"
+      ]
+   }
+
 }
 
 booleans {
@@ -151,8 +293,20 @@ booleans {
    known_leery_owner : dynamic_boolean {( think_leery_owner || point_leery_owner )} ;
    flaming_towers_present : dynamic_boolean {( placed_flaming_towers && !point_taming_flowers )} ;
 
-   # think-based booleans
+   # think-relevant booleans
+   already_got_command : boolean "false" ;
    think_any : dynamic_boolean {( think_leery_owner )} ;
+   first_half : boolean "false" ;
+   half_bonus : boolean "false" ;
+   bonus_obfuscated_note_yet : boolean "false" ;
+   bonus_half_note : boolean "false" ;
+   think_core_yet : boolean "false" ;
+   think_text_yet : boolean "false" ;
+   print_core_nag_after : boolean "false" ;
+   solved_both_parts_core_nag : boolean "false" ;
+
+   in_bonus_half : boolean "false" ;
+   unneeded_half : dynamic_boolean {( tempint == 0 && !in_bonus_half )} ;
 
    # option(s)
    score_notify : boolean "true" scope="survivor" ;
@@ -189,10 +343,20 @@ locations {
                   : print "That's how to score the first point, but we're in the tutorial right now, so there are other things to do." ;
                   : done ;
                }
+               : collection_modify { collection = "tried_combo_core" index -> (2) content -> ("true") } ;
                : print "The {puz_point_stool_tall} shakes and falls over and rolls around more than you thought possible. As it does, its legs point to a passage you haven't seen before, to the south." ;
                : set_true "point_tool_stall" ;
                : set_true "tutorial_6_tool_stall" ;
                : gosub "add_point" ;
+            }
+            : match "tool _;_ stall" {
+               : set_integer var="tempint" "2" ;
+               : set_false "first_half" ;
+               : match "tool _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
             }
          }
          : if (flaming_towers_present) {
@@ -201,6 +365,7 @@ locations {
                   : print "You already picked some taming flowers!" ;
                   : done ;
                }
+               : collection_modify { collection = "tried_combo_core" index -> (5) content -> ("true") } ;
                : print "You look for taming flowers. You figure weapons won't work. What sort of flowers would tame fire? Why, cold ones. You find ones that look really frosty, and what do you know? They feel frosty, too!\nYou walk up to each tower, and the flowers stand up surprisingly well to the heat. The towers dissolve in heaps of ash. You can go north and east and west now." ;
                : set_true "point_taming_flowers" ;
                : gosub "add_point" ;
@@ -209,6 +374,11 @@ locations {
             }
             : if (!point_taming_flowers) {
                : match "taming _;_ flowers" {
+                  : set_integer var="tempint" "5" ;
+                  : set_false "first_half" ;
+                  : match "taming _" {
+                     : set_true "first_half" ;
+                  }
                   : gosub "say_half" ;
                   : done ;
                }
@@ -216,6 +386,7 @@ locations {
          }
          : if (listen_demo_meadow) {
             : match "rocky caves" {
+               : collection_modify { collection = "tried_combo_core" index -> (0) content -> ("true") } ;
                : if (point_rocky_caves) {
                   : print "You already know where the rocky caves are." ;
                }
@@ -227,6 +398,11 @@ locations {
             }
             : if (!point_rocky_caves) {
                : match "rocky _;_ caves" {
+                  : set_integer var="tempint" "0" ;
+                  : set_false "first_half" ;
+                  : match "rocky _" {
+                     : set_true "first_half" ;
+                  }
                   : gosub "say_half" ;
                   : done ;
                }
@@ -291,6 +467,7 @@ locations {
                      : print "You already got the steel wrench!" ;
                      : done ;
                   }
+                  : collection_modify { collection = "tried_combo_core" index -> (1) content -> ("true") } ;
                   : print "The stench is more bearable now you know what you're looking for. But you've still had quite enough of it -- you had to go into its heart -- once you acquire said wrench." ;
                   : set_true "point_steel_wrench" ;
                   : set_true "tutorial_14_steel_wrench" ;
@@ -298,6 +475,11 @@ locations {
                   : done ;
                }
                : match "steel _;_ wrench" {
+                  : set_integer var="tempint" "1" ;
+                  : set_false "first_half" ;
+                  : match "steel _" {
+                     : set_true "first_half" ;
+                  }
                   : gosub "say_half" ;
                   : done ;
                }
@@ -328,6 +510,7 @@ locations {
                   : print "You already mastered the tight rules needed to use the right tools." ;
                   : done ;
                }
+               : collection_modify { collection = "tried_combo_core" index -> (4) content -> ("true") } ;
                : print "You say you're willing to use the tools properly and take the time to be taught. The leery owner is pleased with this, or at least less displeased than you expected." ;
                : print "But it takes a while. Once you're done, the eerie loner pops back in to complain about how terrible things are outside." ;
                : print "\"Boy,\" says the owner. \"Usually the loner just generally grouses quietly. But if they actually spoke up, things must be bad. Better go check.\"" ;
@@ -337,6 +520,11 @@ locations {
             }
             : if (!point_tight_rules) {
                : match "tight _;_ rules" {
+                  : set_integer var="tempint" "4" ;
+                  : set_false "first_half" ;
+                  : match "tight _" {
+                     : set_true "first_half" ;
+                  }
                   : gosub "say_half" ;
                   : done ;
                }
@@ -347,6 +535,7 @@ locations {
                : print "You already summoned the owner!" ;
                : done ;
             }
+            : collection_modify { collection = "tried_combo_core" index -> (3) content -> ("true") } ;
             : if (!point_steel_wrench) {
                : print "The eerie loner grumbles \"Can't disturb the owner unless you have something for them.\"" ;
                : set_true "think_leery_owner" ;
@@ -367,6 +556,11 @@ locations {
          }
          : if (!point_leery_owner) {
             : match "leery _;_ owner" {
+               : set_integer var="tempint" "3" ;
+               : set_false "first_half" ;
+               : match "leery _" {
+                  : set_true "first_half" ;
+               }
                : gosub "say_half" ;
                : done ;
             }
@@ -478,7 +672,53 @@ subroutines {
    }
 
    say_half : subroutine {
-      : print "You got half right." ;
+      : match "* -;- *" {
+         : print "Feels right, but what to pair that word with?" ;
+         : done ;
+      }
+      : cycle key = "one_right" predictable_order = "true" skip_interval = "0" max_loops = "1" {
+      : print "One of those words felt right, but the other didn't. You must be halfway there{for_bonus}.{already_got_check}" ;
+      : print "Again, you feel like you got halfway there{for_bonus}.{already_got_check}" ;
+         on_exhausted {
+            : print "One word right, one word wrong{for_bonus}.{already_got_check}" ;
+         }
+      }
+      : if (first_half) {
+         : if (half_bonus) {
+            : collection_modify { collection = "got_first_bonus" index -> (tempint) content -> ("true") ; }
+         } : else {
+            : collection_modify { collection = "got_first_core" index -> (tempint) content -> ("true") ; }
+         }
+      } : else {
+         : if (half_bonus) {
+            : collection_modify { collection = "got_second_bonus" index -> (tempint) content -> ("true") ; }
+         } : else {
+            : collection_modify { collection = "got_second_core" index -> (tempint) content -> ("true") ; }
+         }
+      }
+      : set_false "already_got_command" ;
+      : if (!half_bonus) {
+         : done ;
+      }
+   }
+   say_half_b : subroutine {
+      : if (!have_won) {
+         : print "{custom_unknown_verb_error}" ;
+         : if (!bonus_obfuscated_note_yet) {
+            : print "{note_once}well, not exactly. You've discovered half of a bonus point. But the first time through, {qt} won't be hinting them, so as not to distract you from the main quest. If you continue after the win-and-restart, you'll get a nudge, since it's assumed you know the main way through." ;
+            : set_true "bonus_obfuscated_note_yet" ;
+         }
+         : done ;
+      }
+      : set_true "half_bonus" ;
+      : decrement "tempint" ;
+      : gosub "say_half" ;
+      : if (!bonus_half_note) {
+         : print "{note_once}since you've been through once, I will assume you know all the core points and are hunting for bonus points. This wasn't available the first time through, to avoid distracting you from the main game." ;
+         : set_true "bonus_half_note" ;
+      }
+      : set_false "half_bonus" ;
+      : done ;
    }
 
    check_diagnostics : subroutine {
@@ -512,6 +752,7 @@ subroutines {
             }
             : set_true "tutorial_5_think" ;
          }
+         : gosub "diagnostic_think_core_half" ;
          : if (!think_any) {
             : print "You haven't had any good ideas you weren't able to execute yet." ;
             : done ;
@@ -554,6 +795,29 @@ subroutines {
    check_options : subroutine {
    }
 
+
+   #########################################hint and tutorial
+
+   diagnostic_think_core_half : subroutine {
+      : set_integer var="counter" "0" ;
+      : set_false "think_core_yet" ;
+      : while (counter < max_score) {
+         : if ((collection_get{ collection -> ("tried_combo_core") index -> ( counter )} == "false")) {
+            : if (part_core_score > 0) {
+               : if (!think_core_yet) {
+                  : print "{think_here_also} is a summary of correct bonus command half-guesses:" ;
+                  : set_true "think_core_yet" ;
+                  : set_true "think_text_yet" ;
+               }
+               : print {( (part_core_score != 2 ? (collection_get{ collection -> ("think_first_core") index -> (counter) }) : "{noguess_c_1}") + " " + (part_core_score >= 2 ? (collection_get{ collection -> ("think_second_core") index -> (counter) }) : "{noguess}") + " " + (collection_get{ collection -> ("situations_core") index -> (counter) }) )} ;
+               : if (!solved_both_parts_core_nag && part_core_score == 3) {
+                  : set_true "print_core_nag_after" ;
+                  }
+               }
+            }
+         : increment "counter" ;
+      }
+   }
 
    #########################################hint and tutorial
 
