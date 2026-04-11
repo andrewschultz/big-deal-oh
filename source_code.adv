@@ -38,8 +38,11 @@ strings {
    key_enter : string "the <ENTER<#f88>>/<RETURN<#f88>> key" ;
    note_cue_tutorial : string "<TUTORIAL CUE:<#f0f>> " ;
 
-   # diagnostic verbs
+   # sense verbs
+   v_listen : string "<LISTEN<#0f0>>" ;
+   v_listen_hear : string "<LISTEN<#0f0>> or <HEAR<#0f0>>" ;
 
+   # diagnostic verbs
    vd_i : string "<I<#f80>>" ;
    vd_inv : string "<INV<#f80>>" ;
    vd_i_long : string "<INVENTORY<#f80>>" ;
@@ -100,6 +103,8 @@ booleans {
    warn_score_header : boolean "false" ;
    have_won : boolean "false" scope="survivor" ;
    in_number_choice : boolean "false" ;
+   hint_zero_warn : boolean "false" ;
+   hinted_yet : boolean "false" ;
 
    # game state (critical)
    listen_demo_meadow : boolean "false" ;
@@ -531,6 +536,7 @@ subroutines {
       }
 
       : match "help _;hint _;hints _" {
+         : gosub "hint_function" ;
          : done ;
       }
 
@@ -548,7 +554,96 @@ subroutines {
    check_options : subroutine {
    }
 
-   #########################################tutorial
+
+   #########################################hint and tutorial
+
+   hint_function : subroutine {
+      : if (!hinted_yet) {
+         : print "{one_time}{this_game} makes a reasonable guess of the next puzzle you can solve in the current room. If nothing turns up, you may wish to go elsewhere." ;
+         : set_true "hinted_yet" ;
+      }
+      : set_true "skip_tutorial_cue" ;
+      : if (tutorial_0_in_tutorial && !tutorial_5_think) {
+         : print "There are several things you can do here. Get to step 4 of the tutorial, then ask for hints again." ;
+         : set_true "hint_zero_warn" ;
+         : done ;
+      }
+      : if (score == 0 && !xme_yet) {
+         : print "Before I give hints, I'd like you to try {xme}, a standard action to start text adventures. It will give a clue." ;
+         : done ;
+      }
+      : if (is_at "demo_meadow") {
+         : if (!point_tool_stall) {
+            : cycle key = "hint_tool_stall" predictable_order = "true" skip_interval = "0" {
+               : print "The {puz_point_tool_stall} is out of place in a meadow and oddly worded for a reason." ;
+               : print "You may notice something about some location names and expressions." ;
+               : print "Demo meadow. Fie Moan My Phone, if you examined yourself. The item is a {i_widget}." ;
+               : print "Spoonerisms are the mechanic." ;
+               : print "Flip the sounds at the start of the words to get a..." ;
+               : print "TOOL STALL." ;
+            }
+            : done ;
+         }
+         : if (!listen_demo_meadow) {
+            : print "{v_listen} for what to do next." ;
+            : done ;
+         }
+         : if (!point_cocky_raves) {
+            : cycle key = "hint_rocky_caves" predictable_order = "true" skip_interval = "0" {
+               : print "The {puz_point_cocky_raves} sure find it funny you can't find a way out." ;
+               : print "But of course the {puz_point_cocky_raves} are hiding something you may be able to figure out." ;
+               : print "COCKY RAVES are nearby." ;
+            }
+            : done ;
+         }
+      } : else_if (is_at "tool_stall") {
+         : if (!point_steel_wrench) {
+            : print "You need to do something elsewhere first to make progress here." ;
+            : done ;
+         }
+         : if (!point_leery_owner) {
+            : cycle key = "hint_leery_owner" predictable_order = "true" skip_interval = "0" {
+               : print "The {puz_point_eerie_loner} isn't the person you need to speak to, but they can summon the person who is." ;
+               : print "The {puz_point_eerie_loner} isn't big on positivity, either." ;
+               : print "Who is the manager? Something that rhymes with loner, someone in charge." ;
+               : print "You need to talk to the OWNER of this establishment." ;
+               : print "But the eerie loner is suspicious of you." ;
+               : print "LEERY, in other words." ;
+               : print "Ask for the {tht_leery_owner}." ;
+            }
+            : done ;
+         }
+         : if (!point_tight_rules) {
+            : cycle key = "hint_tight_rules" predictable_order = "true" skip_interval = "0" {
+               : print "The {puz_point_eerie_loner} isn't the person you need to speak to, but they can summon the person who is." ;
+               : print "The {puz_point_eerie_loner} isn't big on positivity, either." ;
+               : print "Who is the manager? Something that rhymes with loner, someone in charge." ;
+               : print "You need to talk to the OWNER of this establishment." ;
+               : print "But the eerie loner is suspicious of you." ;
+               : print "LEERY, in other words." ;
+               : print "Ask for the LEERY OWNER." ;
+            }
+            : done ;
+         }
+      } : else_if (is_at "rocky_caves") {
+         : if (!smell_rocky_caves) {
+            : cycle key = "hint_rocky_caves_smell" predictable_order = "true" skip_interval = "0" {
+               : print "Time to use a different sense. It's damp and dark here. You can't really see and don't want to taste, but what other sense can you use?" ;
+               : print "You can SMELL." ;
+               : done ;
+            }
+         }
+         : if (!point_steel_wrench) {
+            : cycle key = "hint_steel_wrench" predictable_order = "true" skip_interval = "0" {
+               : print "That real stench may prevent less hardy adventurers from finding something, but maybe if you looked for something specific, you'd find it." ;
+               : print {( point_tool_stall ? "The tool stall you unveiled needs an item." : listen_demo_meadow ? "The stool (tall) back in the meadow leads somewhere that could give you a clue." )} ;
+               : done ;
+            }
+         }
+      }
+      : print "I can't point to anything here and now.";
+      : done ;
+   }
 
    tutorial_choice : subroutine {
       : if (have_won) {
