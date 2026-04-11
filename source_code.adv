@@ -198,7 +198,7 @@ locations {
          : if (flaming_towers_present) {
             : match "taming flowers" {
                : if (point_taming_flowers) {
-                  : print "Already done!" ;
+                  : print "You already picked some taming flowers!" ;
                   : done ;
                }
                : print "You look for taming flowers. You figure weapons won't work. What sort of flowers would tame fire? Why, cold ones. You find ones that look really frosty, and what do you know? They feel frosty, too!\nYou walk up to each tower, and the flowers stand up surprisingly well to the heat. The towers dissolve in heaps of ash. You can go north and east and west now." ;
@@ -288,10 +288,10 @@ locations {
             : if (!point_steel_wrench) {
                : match "steel wrench" {
                   : if (point_steel_wrench) {
-                     : print "Already done!" ;
+                     : print "You already got the steel wrench!" ;
                      : done ;
                   }
-                  : print "Narrative text." ;
+                  : print "The stench is more bearable now you know what you're looking for. But you've still had quite enough of it -- you had to go into its heart -- once you acquire said wrench." ;
                   : set_true "point_steel_wrench" ;
                   : set_true "tutorial_14_steel_wrench" ;
                   : gosub "add_point" ;
@@ -588,7 +588,7 @@ subroutines {
             : print "{v_listen} for what to do next." ;
             : done ;
          }
-         : if (!point_cocky_raves) {
+         : if (!point_rocky_caves) {
             : cycle key = "hint_rocky_caves" predictable_order = "true" skip_interval = "0" {
                : print "The {puz_point_cocky_raves} sure find it funny you can't find a way out." ;
                : print "But of course the {puz_point_cocky_raves} are hiding something you may be able to figure out." ;
@@ -636,7 +636,7 @@ subroutines {
          : if (!point_steel_wrench) {
             : cycle key = "hint_steel_wrench" predictable_order = "true" skip_interval = "0" {
                : print "That real stench may prevent less hardy adventurers from finding something, but maybe if you looked for something specific, you'd find it." ;
-               : print {( point_tool_stall ? "The tool stall you unveiled needs an item." : listen_demo_meadow ? "The stool (tall) back in the meadow leads somewhere that could give you a clue." )} ;
+               : print {( point_tool_stall ? "The tool stall you unveiled needs an item." : "The stool (tall) back in the meadow leads somewhere that could give you a clue." )} ;
                : done ;
             }
          }
