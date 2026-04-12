@@ -95,13 +95,13 @@ strings {
    header_tool_stall : string "<Tool Stall<#ff0>>" ;
 
    # puzzle text
-   puz_point_cocky_raves : string "<Cocky raves<#f80>>" ;
-   puz_point_cocky_raves_l : string "<cocky raves<#f80>>" ;
-   puz_point_eerie_loner : string "<eerie loner<#f80>>" ;
-   puz_point_real_stench : string "<real stench<#f80>>" ;
-   puz_point_stool_tall : string "<stool (tall)<#f80>>" ;
-   puz_point_right_tools : string "<right tools<#f80>>" ;
-   puz_point_flaming_towers : string "<flaming towers<#f80>>" ;
+   puz_point_cocky_raves : dynamic_string {( opt_color_coding ? "<Cocky raves<#f80>>" : "Cocky raves" )} ;
+   puz_point_cocky_raves_l : dynamic_string {( opt_color_coding ? "<cocky raves<#f80>>" : "cocky raves" )} ;
+   puz_point_eerie_loner : dynamic_string {( opt_color_coding ? "<eerie loner<#f80>>" : "eerie loner" )} ;
+   puz_point_real_stench : dynamic_string {( opt_color_coding ? "<real stench<#f80>>" : "real stench" )} ;
+   puz_point_stool_tall : dynamic_string {( opt_color_coding ? "<stool (tall)<#f80>>" : "stool (tall)" )} ;
+   puz_point_right_tools : dynamic_string {( opt_color_coding ? "<right tools<#f80>>" : "right tools" )} ;
+   puz_point_flaming_towers : dynamic_string {( opt_color_coding ? "<flaming towers<#f80>>" : "flaming towers" )} ;
 
    # think text
    tht_leery_owner : string "<LEERY OWNER<#f80>>" ;
@@ -721,7 +721,7 @@ subroutines {
          : print "<Your score has just gone up by a point!<#ff0>>" ;
       }
       : if (score == 0) {
-         : print "{one_time}you can turn off score notifications with {opt_notify} NO. The score is always tracked in the upper right." ;
+         : print "{one_time}you can toggle score notifications with {opt_notify} {yn}. The score is always tracked in the upper right." ;
       }
       : increment "score" ;
       : update_graphic ;
