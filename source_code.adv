@@ -46,6 +46,11 @@ strings {
    dir_u : string "<UP<#f80>>" ;
    dir_d : string "<DOWN<#f80>>" ;
 
+   # options
+   yn : string "<YES<#f88>>/<Y<#f88>> or <NO<#f88>>/<N<#f88>>" ;
+   opt_ch : string "<CH<#88f>> or <COLORHINT<#88f>>" ;
+   opt_notify : string "<NOTIFY<#88f>>" ;
+
    # sense verbs
    v_feel : string "<FEEL<#0f0>>" ;
    v_listen : string "<LISTEN<#0f0>>" ;
@@ -116,6 +121,10 @@ strings {
 
    # item(s)
    i_widget : string "<wild digit-dialed widget<#c8c>>" ;
+
+   # auxiliary variable(s)
+   tempopt : string "" ;
+
 }
 
 integers {
@@ -336,7 +345,8 @@ booleans {
    unneeded_half : dynamic_boolean {( tempint == 0 && !in_bonus_half )} ;
 
    # option(s)
-   score_notify : boolean "true" scope="survivor" ;
+   opt_color_coding : boolean "false" ;
+   opt_score_notify : boolean "true" scope="survivor" ;
 
    # blocker dynamic booleans
 
@@ -345,6 +355,9 @@ booleans {
 }
 
 vocabulary {
+
+   : verb / aliases = [ch, colorhint]
+
 }
 
 locations {
@@ -693,7 +706,7 @@ barriers {
 subroutines {
 
    add_bonus : subroutine {
-      : if (score_notify) {
+      : if (opt_score_notify) {
          : print "<You just found a bonus point!<#ff0>>" ;
          : if (bonus_score == 0) {
             : print "{one_time}{this_game} contains several bonus points that are uncued on the first playthrough. {vd_sco} will let you know how many you've found, and {vd_bon} will list where you found them." ;
@@ -704,7 +717,12 @@ subroutines {
    }
 
    add_point : subroutine {
-      : print "<Your score has just gone up by a point!<#ff0>>" ;
+      : if (opt_score_notify) {
+         : print "<Your score has just gone up by a point!<#ff0>>" ;
+      }
+      : if (score == 0) {
+         : print "{one_time}you can turn off score notifications with {opt_notify} NO. The score is always tracked in the upper right." ;
+      }
       : increment "score" ;
       : update_graphic ;
    }
@@ -853,8 +871,34 @@ subroutines {
    }
 
    check_options : subroutine {
+      : match "notify _" {
+         : gosub "options_notify" ;
+      }
    }
 
+   option_err_stub : subroutine {
+      : match "_ -" {
+         : print "Toggling {tempopt} without an argument ({yn}) is not supported." ;
+         : done ;
+      }
+      : print "Toggling {tempopt} requires one of {yn} as an argument." ;
+      : done ;
+   }
+
+   options_notify : subroutine {
+      : match "notify yes" {
+         : print "Score notify is now on.";
+         : set_true "opt_score_notify";
+         : done ;
+      }
+      : match "notify no" {
+         : print "Score notify is now off.";
+         : set_false "opt_score_notify";
+         : done ;
+      }
+      : set_string var="tempopt" text="{opt_notify}" ;
+      : gosub "option_err_stub" ;
+   }
 
    #########################################hint and tutorial
 
