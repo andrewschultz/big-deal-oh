@@ -38,9 +38,19 @@ strings {
    key_enter : string "the <ENTER<#f88>>/<RETURN<#f88>> key" ;
    note_cue_tutorial : string "<TUTORIAL CUE:<#f0f>> " ;
 
+   # directions
+   dir_n : string "<NORTH<#f80>>" ;
+   dir_s : string "<SOUTH<#f80>>" ;
+   dir_e : string "<EAST<#f80>>" ;
+   dir_w : string "<WEST<#f80>>" ;
+   dir_u : string "<UP<#f80>>" ;
+   dir_d : string "<DOWN<#f80>>" ;
+
    # sense verbs
+   v_feel : string "<FEEL<#0f0>>" ;
    v_listen : string "<LISTEN<#0f0>>" ;
    v_listen_hear : string "<LISTEN<#0f0>> or <HEAR<#0f0>>" ;
+   v_smell : string "<SMELL<#0f0>>" ;
 
    # diagnostic verbs
    vd_i : string "<I<#f80>>" ;
@@ -794,7 +804,7 @@ subroutines {
    check_meta : subroutine {
       : match "about _" {
          : print "{this_game} was written for {l_talp_2026}, another annual edition of {l_talp}." ;
-         : print "It is in the spirit of {l_qt} and reuses a lot of the code." ;
+         : print "It is in the spirit of {l_qt} and reuses a lot of the code. However, this year I'm trying to get in with the theme of Archaeology, even if my knowledge of that field is rudimentary." ;
          : set_true "tutorial_1_about" ;
          : done ;
       }
@@ -827,6 +837,15 @@ subroutines {
       }
 
       : match "verbs _;verb _" {
+         : print "{this_game} uses a reduced parser, though you need to guess certain commands to score points." ;
+         : print "Many commands are noun-based, so you don't have to guess the verb for relatively common actions, e.g. PUSH THING and USE THING are the same." ;
+         : print "Many commands are noun-based, so you don't have to guess the verb for relatively common actions, e.g. PUSH THING and USE THING are the same." ;
+         : print "You can use the basic directions {dir_n}, {dir_s}, {dir_e}, {dir_w}, {dir_u} and {dir_d}, abbreviated to a single letter e,g, <N<#f80>>/<S<#f80>>/<E<#f80>>/<W<#f80>>/<U<#f80>>/<D<#f80>>." ;
+         : print "You will also want to use the senses, including {v_listen}, {v_smell} and {v_feel}." ;
+         : print "You can <X<#f80>> something to examine it, though for most scenery in this game, you can use a noun, and any verb works." ;
+         : print "<L<#f80>> for look refreshes the screen." ;
+         : print "For the most part, <TAKE<#f80>> and <DROP<#f80>> aren't used, as the game automatically picks up what you need and destroys it when done. But they may be part of a puzzle." ; #?? establish whem
+         : print "Verbs outside of the game world are listed in {vm_meta}, {vm_diag}(NOSTIC), and {vm_options}. Intuitive abbreviations often work." ;
          : set_true "tutorial_2_verbs" ;
          : done ;
       }
