@@ -871,6 +871,9 @@ subroutines {
    }
 
    check_options : subroutine {
+      : match "ch _" {
+         : gosub "options_colorhint" ;
+      }
       : match "notify _" {
          : gosub "options_notify" ;
       }
@@ -883,6 +886,21 @@ subroutines {
       }
       : print "Toggling {tempopt} requires one of {yn} as an argument." ;
       : done ;
+   }
+
+   options_colorhint : subroutine {
+      : match "ch yes" {
+         : print "Now {cch} is activated." ;
+         : set_true "opt_color_coding" ;
+         : done ;
+      }
+      : match "ch no" {
+         : print "Now {cch} is deactivated." ;
+         : set_false "opt_color_coding" ;
+         : done ;
+      }
+      : set_string var="tempopt" text="{opt_ch}" ;
+      : gosub "option_err_stub" ;
    }
 
    options_notify : subroutine {
@@ -1020,7 +1038,7 @@ subroutines {
       : ask_bool {
          question   = {this_game} has a tutorial mode for the first few puzzles. If you wish to use it, you need to request it before the game starts. Would you like to use it?
          yes_answer = Yes, I'd like to use the tutorial.
-         no_answer  = No, I don't need the tutorial.
+         no_answer  = No, I'd rather skip the tutorial.
          var        = tutorial_0_in_tutorial
       }
       : if (tutorial_0_in_tutorial) {
@@ -1028,6 +1046,21 @@ subroutines {
       } : else {
          : print "Tutorial mode is disabled. If you wish to try it, you will need to restart it." ;
       }
+      : press_any_key ;
+      : clear_screen ;
+   }
+
+   colorclue_choice : subroutine {
+      : if (have_won) {
+         : return ;
+      }
+      : ask_bool {
+         question   = {this_game} also puts critical words in <PURPLE<#f0f>> to help you know what to work with. The option can be changed in-game with CH YES/NO (on/off are reserved by Adventuron.)
+         yes_answer = Yes, I'd like to use color-coded hinting.
+         no_answer  = No, I'd prefer not to use color-coded hinting.
+         var        = opt_color_coding
+      }
+      : print {( "Color-coded hinting is " + (opt_color_coding ? "now available." : "disabled.") + " We're ready to start the game, now!" )} ;
       : press_any_key ;
       : clear_screen ;
    }
@@ -1073,6 +1106,7 @@ on_startup {
       : clear_screen ;
    } : else {
       : gosub "tutorial_choice" ;
+      : gosub "colorclue_choice" ;
    }
 }
 
