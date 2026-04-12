@@ -73,7 +73,7 @@ strings {
    meadow_passages: dynamic_string {( point_taming_flowers ? "You've found passages north, west and east that lead away. You probably don't need to go back south or in" : (!point_rocky_caves && !point_tool_stall) ? "You haven't found anywhere to go from here yet" : !point_rocky_caves ? "You can go south to the tool stall" : !point_tool_stall ? "You can go down to the rocky caves" : "You can go south to the tool stall and down to the rocky caves" )} ;
    header_demo_meadow : string "<Demo Meadow<#ff0>>" ;
 
-   loc_rocky_caves : dynamic_string {( point_steel_wrench ? "The rocky caves are just caves now. You're used to the smell, but you have nothing more to do here." : smell_rocky_caves ? "The {puz_point_real_stench} is almost overpowering. Could any good possibly come from it?" : "It's damp and dark in here. Yet the dampness and darkness reveal little. Perhaps another sense..." )} ;
+   loc_rocky_caves : dynamic_string {( (point_steel_wrench ? "The rocky caves are just caves now. You're used to the smell, but you have nothing more to do here." : smell_rocky_caves ? "The {puz_point_real_stench} is almost overpowering. Could any good possibly come from it?" : "It's damp and dark in here. Yet the dampness and darkness reveal little. Perhaps another sense...") + "\nThere's a sunshine-shun sign here, probably just to reiterate the caves are too dark to explore deeply." )} ;
    header_rocky_caves : string "<Rocky Caves<#ff0>>" ;
 
    loc_tool_stall : dynamic_string {( "You're in a tool stall. The exit is back north. Nearby you see " + (point_leery_owner ? "the owner, no longer leery" : "an {puz_point_eerie_loner}") + (point_tight_rules || !point_leery_owner ? "" : ". That sign indicates the {puz_point_right_tools} are available, but you haven't figured how to ask for them yet") + "." )} ;
@@ -262,6 +262,7 @@ booleans {
    in_number_choice : boolean "false" ;
    hint_zero_warn : boolean "false" ;
    hinted_yet : boolean "false" ;
+   sunshine_xed : boolean "false" ;
 
    # game state (critical)
    listen_demo_meadow : boolean "false" ;
@@ -468,7 +469,11 @@ locations {
             }
          }
          : match "_ sunshine;_ shun;_ sign;_ sun;_ shine" {
-            : print "The sign is just there for local flavor. It might not be the most obvious hint, but having something that's a spoonerism of itself is my way of saying, okay, nothing to do here." ; 
+            : print "It's a drawing of a sun with a red X over it. It's just there for local flavor." ;
+            : if (!sunshine_xed) {
+               : print "{one_time}when something is a spoonerism of itself, like the Demo Meadow, it's there for local flavor or humor. Authors try to balance having Extra Stuff to Look At with not distracting you too much, and I tried to establish this convention in {this_game}. I hope it works." ;
+               : set_true "sunshine_xed" ;
+            }
             : done ;
          }
          : match "smell _" {
