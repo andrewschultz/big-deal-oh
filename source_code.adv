@@ -80,13 +80,13 @@ strings {
    # room(s)
    loc_demo_meadow : string "Here in the Demo Meadow {meadow_status}.\n{meadow_passages}." ;
    meadow_status : dynamic_string {( point_rocky_caves ? "it's quiet again after you got rid of the cocky raves" : listen_demo_meadow ? "you hear some {puz_point_cocky_raves_l}" : "it feels relatively quiet, and yet, not as quiet and peaceful as it should be" )} ;
-   meadow_passages: dynamic_string {( point_taming_flowers ? "You've found passages north, west and east that lead away. You probably don't need to go back south or in" : (!point_rocky_caves && !point_tool_stall) ? "You haven't found anywhere to go from here yet" : !point_rocky_caves ? "You can go south to the tool stall" : !point_tool_stall ? "You can go down to the rocky caves" : "You can go south to the tool stall and down to the rocky caves" )} ;
+   meadow_passages: dynamic_string {( point_taming_flowers ? "You've found passages {dir_n}, {dir_e} and {dir_w} that lead away. You probably don't need to go back {dir_s} or in" : (!point_rocky_caves && !point_tool_stall) ? "You haven't found anywhere to go from here yet" : !point_rocky_caves ? "You can go {dir_s} to the tool stall" : !point_tool_stall ? "You can go {dir_d} to the rocky caves" : "You can go {dir_s} to the tool stall and {dir_d} to the rocky caves" )} ;
    header_demo_meadow : string "<Demo Meadow<#ff0>>" ;
 
    loc_rocky_caves : dynamic_string {( (point_steel_wrench ? "The rocky caves are just caves now. You're used to the smell, but you have nothing more to do here." : smell_rocky_caves ? "The {puz_point_real_stench} is almost overpowering. Could any good possibly come from it?" : "It's damp and dark in here. Yet the dampness and darkness reveal little. Perhaps another sense...") + "\nThere's a sunshine-shun sign here, probably just to reiterate the caves are too dark to explore deeply." )} ;
    header_rocky_caves : string "<Rocky Caves<#ff0>>" ;
 
-   loc_tool_stall : dynamic_string {( "You're in a tool stall. The exit is back north. Nearby you see " + (point_leery_owner ? "the owner, no longer leery" : "an {puz_point_eerie_loner}") + (point_tight_rules || !point_leery_owner ? "" : ". That sign indicates the {puz_point_right_tools} are available, but you haven't figured how to ask for them yet") + "." )} ;
+   loc_tool_stall : dynamic_string {( "You're in a tool stall. The exit is back {dir_n}. Nearby you see " + (point_leery_owner ? "the owner, no longer leery" : "an {puz_point_eerie_loner}") + (point_tight_rules || !point_leery_owner ? "" : ". That sign indicates the {puz_point_right_tools} are available, but you haven't figured how to ask for them yet") + "." )} ;
    header_tool_stall : string "<Tool Stall<#ff0>>" ;
 
    # puzzle text
@@ -373,7 +373,7 @@ locations {
                   : done ;
                }
                : collection_modify { collection = "tried_combo_core" index -> (2) content -> ("true") } ;
-               : print "The {puz_point_stool_tall} shakes and falls over and rolls around more than you thought possible. As it does, its legs point to a passage you haven't seen before, to the south." ;
+               : print "The {puz_point_stool_tall} shakes and falls over and rolls around more than you thought possible. As it does, its legs point to a passage you haven't seen before, to the {dir_s}." ;
                : set_true "point_tool_stall" ;
                : set_true "tutorial_6_tool_stall" ;
                : gosub "add_point" ;
@@ -395,7 +395,7 @@ locations {
                   : done ;
                }
                : collection_modify { collection = "tried_combo_core" index -> (5) content -> ("true") } ;
-               : print "You look for taming flowers. You figure weapons won't work. What sort of flowers would tame fire? Why, cold ones. You find ones that look really frosty, and what do you know? They feel frosty, too!\nYou walk up to each tower, and the flowers stand up surprisingly well to the heat. The towers dissolve in heaps of ash. You can go north and east and west now." ;
+               : print "You look for taming flowers. You figure weapons won't work. What sort of flowers would tame fire? Why, cold ones. You find ones that look really frosty, and what do you know? They feel frosty, too!\nYou walk up to each tower, and the flowers stand up surprisingly well to the heat. The towers dissolve in heaps of ash. You can go {dir_n} and {dir_e} and {dir_w} now." ;
                : set_true "point_taming_flowers" ;
                : gosub "add_point" ;
                : update_graphic ;
@@ -419,7 +419,7 @@ locations {
                : if (point_rocky_caves) {
                   : print "You already know where the rocky caves are." ;
                }
-               : print "The cockiness seems to recede as you look around with a purpose. Then you find it. A passage down to rocky caves!" ;
+               : print "The cockiness seems to recede as you look around with a purpose. Then you find it. A passage {dir_d} to rocky caves!" ;
                : set_true "point_rocky_caves" ;
                : set_true "tutorial_11_rocky_caves" ;
                : gosub "add_point" ;
@@ -462,10 +462,10 @@ locations {
             : set_true "tutorial_9_north" ;
          }
          : if (flaming_towers_present) {
-            : print "Those flaming towers are still flaming, exposing passage north, east and west but not letting you by." ;
+            : print "Those flaming towers are still flaming, exposing passage {dir_n}, {dir_e} and {dir_w} but not letting you by." ;
          } : else_if (point_tight_rules && !placed_flaming_towers) {
             : set_true "placed_flaming_towers" ;
-            : print "It must have been a while since you went through the tight rules. Flaming towers have now popped up to the north, east and west!" ;
+            : print "It must have been a while since you went through the tight rules. Flaming towers have now popped up to the {dir_n}, {dir_e} and {dir_w}!" ;
             : update_graphic ;
          }
       }
@@ -533,11 +533,11 @@ locations {
          : match "n _" {
             : if (tutorial_0_in_tutorial) {
                : if (!think_leery_owner) {
-                  : print "For the purposes of this tutorial, you need to figure whom to ask the eerie loner for before going back north." ;
+                  : print "For the purposes of this tutorial, you need to figure whom to ask the eerie loner for before going back {dir_n}." ;
                   : done ;
                }
                : if (point_steel_wrench && !point_leery_owner) {
-                  : print "For the purposes of this tutorial, you need to figure whom to ask the eerie loner for before going back north." ;
+                  : print "For the purposes of this tutorial, you need to figure whom to ask the eerie loner for before going back {dir_n}." ;
                   : done ;
                }
             }
@@ -1151,11 +1151,11 @@ on_tick {
       } : else_if (!tutorial_6_tool_stall) {
          : print "{note_cue_tutorial}Now you've taken inventory, you should figure what to do with the {puz_point_stool_tall}." ;
       } : else_if (!tutorial_7_south_first) {
-         : print "{note_cue_tutorial}Now you've removed the stool, you should go south to check what's there." ;
+         : print "{note_cue_tutorial}Now you've removed the stool, you should go {dir_s} to check what's there." ;
       } : else_if (!tutorial_8_leery_owner_1) {
          : print "{note_cue_tutorial}Now you've made it to the tool stall, you may want to ask the eerie loner for someone." ;
       } : else_if (!tutorial_9_north) {
-         : print "{note_cue_tutorial}Now you know what you need, you should go back north." ;
+         : print "{note_cue_tutorial}Now you know what you need, you should go back {dir_n}." ;
       } : else_if (!tutorial_10_listen) {
          : print "{note_cue_tutorial}Now you're back in the meadow, try LISTENing." ;
       } : else_if (!tutorial_11_rocky_caves) {
@@ -1169,7 +1169,7 @@ on_tick {
       } : else_if (!tutorial_15_northeast) {
          : print "{note_cue_tutorial}Now you've got the steel wrench, you should retreat NORTHEAST." ;
       } : else_if (!tutorial_16_south_twice) {
-         : print "{note_cue_tutorial}Now you've got the steel wrench, you should continue SOUTH." ;
+         : print "{note_cue_tutorial}Now you've got the steel wrench, you should continue {dir_s}." ;
       } : else_if (!tutorial_17_leery_owner_2) {
          : print "{note_cue_tutorial}Now you have something appropriate for the tool stall, you should ask to summon the person in charge. If you forget who that is, {vd_think}." ;
       } : else {
