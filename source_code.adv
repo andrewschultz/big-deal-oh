@@ -53,8 +53,16 @@ strings {
    # meta-verbs
    vm_about : string "<ABOUT<#f80>>" ;
    vm_credits : string "<CREDITS<#f80>>" ;
+   vm_diag : string "<DIAG<#f80>>" ;
+   vm_history : string "<HISTORY<#f80>>" ;
+   vm_meta : string "<META<#f80>>" ;
+   vm_options : string "<OPTIONS<#f80>>" ;
    vm_verbs : string "<VERBS<#f80>>" ;
-   vm_versions : string "<VERSIONS<#f80>>" ;
+
+   # top-level meta-commands
+   vs_quit : string "<QUIT<#f80>>" ;
+   vs_restart : string "<RESTART<#f80>>" ;
+   vs_tss : string "<TSTART<#f80>> and <TSTOP<#f80>>" ;
 
    # standard top level stuff
    xme : string "<X ME<#0f0>>" ;
@@ -785,8 +793,8 @@ subroutines {
          : done ;
       }
 
-      : match "credits _;credit _" {
-         : print "Nothing yet." ;
+      : match "credits _;credit _;creds _;cred _" {
+         : print "Nothing yet. But obviously this will grow, and I need to fix this, and if you're testing now, you'll be in here!" ;
          : done ;
       }
 
@@ -796,6 +804,19 @@ subroutines {
       }
 
       : match "history _;version _;versions _" {
+         : print "So far there has been only one release, for {l_talp_2026}." ;
+         : done ;
+      }
+
+      : match "meta _" {
+         : print "{vm_about} gives general information." ;
+         : print "{vm_credits} credits people and entities who helped make {this_game} or fix various flaws." ;
+         : print "{vm_diag} lists diagnostic verbs." ;
+         : print "{vm_diag} lists version history and major changes that necessitated each version." ;
+         : print "{vm_meta}, this command, lists meta-commands, or commands that list other commands." ;
+         : print "{vm_options} lists options." ;
+         : print "{vm_verbs} describes verbs the parser uses." ;
+         : print "Native commands unique to Adventuron include {vs_tss}, which start and stop a transcript, which help the programmer find bugs, technical or narrative. {vs_quit} and {vs_restart} are common across text adventure systems. SAVE and RESTORE work as well." ;
          : done ;
       }
 
