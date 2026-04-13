@@ -124,6 +124,7 @@ strings {
 
    # auxiliary variable(s)
    tempopt : string "" ;
+   txt_on_off : dynamic_string {( opt_on_off ? "<ON<#f0f>>" : "<OFF<#f0f>>" )} ;
 
 }
 
@@ -282,6 +283,7 @@ booleans {
    hint_zero_warn : boolean "false" ;
    hinted_yet : boolean "false" ;
    sunshine_xed : boolean "false" ;
+   on_off_note : boolean "false" ;
 
    # game state (critical)
    listen_demo_meadow : boolean "false" ;
@@ -345,8 +347,9 @@ booleans {
    unneeded_half : dynamic_boolean {( tempint == 0 && !in_bonus_half )} ;
 
    # option(s)
-   opt_color_coding : boolean "false" ;
+   opt_color_coding : boolean "false" scope="survivor" ;
    opt_score_notify : boolean "true" scope="survivor" ;
+   opt_on_off : boolean "false" ;
 
    # blocker dynamic booleans
 
@@ -356,7 +359,8 @@ booleans {
 
 vocabulary {
 
-   : verb / aliases = [ch, colorhint]
+   : verb / aliases = [ch, colorhint] ;
+   : verb / aliases = [opt, opts, option, options] ;
 
 }
 
@@ -855,6 +859,18 @@ subroutines {
          : done ;
       }
 
+      : match "options _" {
+         : set_boolean var="opt_on_off" {( opt_color_coding )} ;
+         : print {( "{opt_ch}: turns color coded hinting on or off. Currently it is {txt_on_off}." )} ;
+         : set_boolean var="opt_on_off" {( opt_score_notify )} ;
+         : print {( "{opt_notify}: turns score notification on or off. Currently it is {txt_on_off}." )} ;
+         : if (!on_off_note) {
+            : print "{one_time}: {yn} toggles options. ON and OFF would be more logical, but Adventuron reserves ON for internal use. {this_game} also does not toggle an option if you type it alone." ;
+            : set_true "on_off_note" ;
+         }
+         : done ;
+      }
+
       : match "verbs _;verb _" {
          : print "{this_game} uses a reduced parser, though you need to guess certain commands to score points." ;
          : print "Many commands are noun-based, so you don't have to guess the verb for relatively common actions, e.g. PUSH THING and USE THING are the same." ;
@@ -890,6 +906,7 @@ subroutines {
    }
 
    options_colorhint : subroutine {
+      : set_boolean var="opt_on_off" {( opt_color_coding )} ;
       : match "ch yes" {
          : print "Now {cch} is activated." ;
          : set_true "opt_color_coding" ;
@@ -905,6 +922,7 @@ subroutines {
    }
 
    options_notify : subroutine {
+      : set_boolean var="opt_on_off" {( opt_score_notify )} ;
       : match "notify yes" {
          : print "Score notify is now on.";
          : set_true "opt_score_notify";
