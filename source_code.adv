@@ -280,6 +280,28 @@ collections {
       ]
    }
 
+   bonus_status : list {
+      items = [
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0
+      ]
+   };
+
 }
 
 booleans {
@@ -348,9 +370,12 @@ booleans {
    bonus_obfuscated_note_yet : boolean "false" ;
    bonus_half_note : boolean "false" ;
    think_core_yet : boolean "false" ;
+   think_bonus_yet : boolean "false" ;
    think_text_yet : boolean "false" ;
+   print_bonus_nag_after : boolean "false" scope="survivor" ;
    print_core_nag_after : boolean "false" ;
    solved_both_parts_core_nag : boolean "false" ;
+   solved_both_parts_bonus_nag : boolean "false" ;
 
    in_bonus_half : boolean "false" ;
    unneeded_half : dynamic_boolean {( tempint == 0 && !in_bonus_half )} ;
@@ -825,6 +850,17 @@ subroutines {
             : set_true "tutorial_5_think" ;
          }
          : gosub "diagnostic_think_core_half" ;
+         : gosub "diagnostic_think_bonus_half" ;
+         : if (print_core_nag_after) {
+            : print "{note_once}You have figured each half of a point-scoring command, but you haven't typed them both together. That still might not work if you haven't prepared by solving other puzzles, but if that's the case, {vd_think} will remind you with context until it does." ;
+            : set_true "solved_both_parts_core_nag" ;
+            : set_false "print_core_nag_after" ;
+         }
+         : if (print_bonus_nag_after) {
+            : print "{note_once}You have figured each half of a bonus point scoring command, but you haven't typed them both together. {vd_think} will remind you of this try until it works, though game state changes may make, or have made, this undoable until you replay." ;
+            : set_true "solved_both_parts_bonus_nag" ;
+            : set_false "print_bonus_nag_after" ;
+         }
          : if (!think_any) {
             : print "You haven't had any good ideas you weren't able to execute yet." ;
             : done ;
@@ -969,6 +1005,29 @@ subroutines {
             }
          : increment "counter" ;
       }
+   }
+
+   diagnostic_think_bonus_half : subroutine {
+      : set_integer var="counter" "0" ;
+      : set_false "think_bonus_yet" ;
+      : set_true "in_bonus_half" ;
+      : while (counter < max_bonus_score) {
+         : if ((collection_get{ collection -> ("bonus_status") index -> ( counter )} == "0")) {
+            : if (part_bonus_score > 0) {
+               : if (!think_bonus_yet) {
+                  : print "{think_here_also} is a summary of correct bonus command half-guesses:" ;
+                  : set_true "think_text_yet" ;
+                  : set_true "think_bonus_yet" ;
+                  }
+               : print {( (part_bonus_score != 2 ? (collection_get{ collection -> ("think_first_bonus") index -> (counter) }) : "{noguess}") + " " + (part_bonus_score >= 2 ? (collection_get{ collection -> ("think_second_bonus") index -> (counter) }) : "{noguess}") + " " + (collection_get{ collection -> ("situations_bonus") index -> (counter) }) )} ;
+               : if (!solved_both_parts_bonus_nag && part_bonus_score == 3) {
+                  : set_true "print_bonus_nag_after" ;
+                  }
+               }
+            }
+         : increment "counter" ;
+      }
+      : set_false "in_bonus_half" ;
    }
 
    #########################################hint and tutorial
