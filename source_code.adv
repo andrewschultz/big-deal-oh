@@ -403,6 +403,7 @@ booleans {
    can_reveal_block_opt : dynamic_boolean {( score > 0 || option_asked_once || have_won )} ;
 
    # blocker dynamic booleans
+   doneblock_rocky_caves : dynamic_boolean {( point_steel_wrench && opt_block_done )} ;
 
    widget_blurry : boolean "false" ;
    show_overlay : boolean "true" ;
@@ -809,6 +810,14 @@ barriers {
       location = outer_tower
       block_when_not = point_taming_flowers
       message = You need to neutralize the flaming towers first.
+   }
+
+###########################block_done
+
+   block_done_meadow_rocky_caves : block {
+      location = rocky_caves
+      block_when = doneblock_rocky_caves
+	  message = You are done in the rocky caves.
    }
 
 }
