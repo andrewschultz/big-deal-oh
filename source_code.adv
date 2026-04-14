@@ -48,8 +48,11 @@ strings {
 
    # options
    yn : string "<YES<#f88>>/<Y<#f88>> or <NO<#f88>>/<N<#f88>>" ;
-   opt_ch : string "<CH<#88f>> or <COLORHINT<#88f>>" ;
-   opt_notify : string "<NOTIFY<#88f>>" ;
+   optt_block_on : string "<WALL EH<#88f>> (on)" ;
+   optt_block_off : string "<ALL WAY<#88f>> (off)" ;
+   optt_block : string "{optt_block_on} and {optt_block_off}" ;
+   optt_ch : string "<CH<#88f>> or <COLORHINT<#88f>>" ;
+   optt_notify : string "<NOTIFY<#88f>>" ;
 
    # sense verbs
    v_feel : string "<FEEL<#0f0>>" ;
@@ -400,9 +403,12 @@ booleans {
    unneeded_half : dynamic_boolean {( tempint == 0 && !in_bonus_half )} ;
 
    # option(s)
+   option_asked_once : boolean "false" scope="survivor" ;
+   opt_block_done : boolean "false" scope="survivor" ;
    opt_color_coding : boolean "false" scope="survivor" ;
    opt_score_notify : boolean "true" scope="survivor" ;
    opt_on_off : boolean "false" ;
+   can_reveal_block_opt : dynamic_boolean {( score > 0 || option_asked_once || have_won )} ;
 
    # blocker dynamic booleans
 
@@ -819,7 +825,7 @@ subroutines {
 
    note_score_upper_right : subroutine {
       : if (!noted_upper_right) {
-         : print "{one_time}you can toggle score notifications with {opt_notify} {yn}. The score is always tracked in the upper right." ;
+         : print "{one_time}you can toggle score notifications with {optt_notify} {yn}. The score is always tracked in the upper right." ;
          : set_true "noted_upper_right" ;
       }
    }
@@ -980,13 +986,20 @@ subroutines {
 
       : match "options _" {
          : set_boolean var="opt_on_off" {( opt_color_coding )} ;
-         : print {( "{opt_ch}: turns color coded hinting on or off. Currently it is {txt_on_off}." )} ;
+         : print "{optt_ch}: turns color coded hinting on or off. Currently it is {txt_on_off}." ;
          : set_boolean var="opt_on_off" {( opt_score_notify )} ;
-         : print {( "{opt_notify}: turns score notification on or off. Currently it is {txt_on_off}." )} ;
+         : print "{optt_notify}: turns score notification on or off. Currently it is {txt_on_off}." ;
+         : if (!can_reveal_block_opt) {
+            : print "There's one more option, but knowing it could spoil the game mechanic before you want to. So you'll need to type {vm_options} again to see it." ;
+         } : else {
+            : set_boolean var="opt_on_off" {( opt_block_done )} ;
+            : print {( "{optt_block}: blocks off places with nothing left to do. Currently it is set to " + (opt_block_done ? optt_block_on : optt_block_off) + "." )} ;
+         }
          : if (!on_off_note) {
             : print "{one_time}: {yn} toggles options. ON and OFF would be more logical, but Adventuron reserves ON for internal use. {this_game} also does not toggle an option if you type it alone." ;
             : set_true "on_off_note" ;
          }
+         : set_true "option_asked_once" ;
          : done ;
       }
 
@@ -1013,6 +1026,16 @@ subroutines {
       : match "notify _" {
          : gosub "options_notify" ;
       }
+      : match "all way" {
+         : print {( "Blocking done areas is " + (!opt_block_done ? "already" : "now" ) + " off." )} ;
+         : set_false "opt_block_done" ;
+         : done ;
+      }
+      : match "wall eh" {
+         : print {( "Blocking done areas is " + (opt_block_done ? "already" : "now" ) + " on." )} ;
+         : set_true "opt_block_done" ;
+         : done ;
+      }
    }
 
    option_err_stub : subroutine {
@@ -1036,7 +1059,7 @@ subroutines {
          : set_false "opt_color_coding" ;
          : done ;
       }
-      : set_string var="tempopt" text="{opt_ch}" ;
+      : set_string var="tempopt" text="{optt_ch}" ;
       : gosub "option_err_stub" ;
    }
 
@@ -1052,7 +1075,7 @@ subroutines {
          : set_false "opt_score_notify";
          : done ;
       }
-      : set_string var="tempopt" text="{opt_notify}" ;
+      : set_string var="tempopt" text="{optt_notify}" ;
       : gosub "option_err_stub" ;
    }
 
