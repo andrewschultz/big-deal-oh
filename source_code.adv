@@ -106,7 +106,7 @@ strings {
    loc_outer_tower : string "Here in the outer tower you can only go back south for now." ;
    header_outer_tower : string "<Outer Tower<#ff0>>" ;
 
-   # puzzle text (alphabetize)
+   # puzzle text (core) (alphabetize)
 
    puz_point_bush_pest : dynamic_string {( opt_color_coding ? "<bush pest<#f80>>" : "bush pest" )} ;
    puz_point_cocky_raves : dynamic_string {( opt_color_coding ? "<Cocky raves<#f80>>" : "Cocky raves" )} ;
@@ -123,7 +123,7 @@ strings {
    already_got_check : dynamic_string {( already_got_command ? " Though you already got the full command, which you can revisit with {vd_think}." : "" )} ;
    for_bonus : dynamic_string {( half_bonus ? " for a bonus point" : "" )} ;
 
-   #conditional location text (alphabetize)
+   #conditional location text (core) (alphabetize)
    here_backin_cabin : dynamic_string {( is_at "backin_cabin" ? "here" : "in the backin' cabin" )} ;
    here_demo_meadow : dynamic_string {( is_at "demo_meadow" ? "here" : "in the demo meadow" )} ;
    here_newbies_boonies : dynamic_string {( is_at "backin_cabin" ? "here" : "in the newbies' boonies" )} ;
@@ -234,10 +234,10 @@ collections {
          "<STEEL<#f80>>",
          "<TOOL<#f80>>",
          "<LEERY<#f80>>",
-         "<LEERY<#f80>>",
          "<TIGHT<#f80>>",
-         "<TAMING<#f80>>"
-         "<PUSH<#f80>>"
+         "<TAMING<#f80>>",
+         "<PUSH<#f80>>",
+         "<PULL<#f80>>"
       ]
    }
 
@@ -259,11 +259,11 @@ collections {
          "<CAVES<#f80>>",
          "<WRENCH<#f80>>",
          "<STALL<#f80>>",
-         "<STALL<#f80>>",
          "<OWNER<#f80>>",
          "<RULES<#f80>>",
-         "<FLOWERS<#f80>>"
-         "<BEST<#f80>>"
+         "<FLOWERS<#f80>>",
+         "<BEST<#f80>>",
+         "<FILE<#f80>>"
       ]
    }
 
@@ -355,15 +355,17 @@ booleans {
    tutorial_17_leery_owner_2 : boolean "false" ;
    tutorial_done : boolean "false" ;
 
-   # game state (point scoring)
-   point_tool_stall : boolean "false" ;
+   # game state (point scoring) (alphabetical)
+   point_bake_tons : boolean "false" ;
+   point_drop_chain : boolean "false" ;
+   point_leery_owner : boolean "false" ;
+   point_pull_file : boolean "false" ;
+   point_push_best : boolean "false" ;
    point_rocky_caves : boolean "false" ;
    point_steel_wrench : boolean "false" ;
-   point_leery_owner : boolean "false" ;
-   point_tight_rules : boolean "false" ;
    point_taming_flowers : boolean "false" ;
-   point_push_best : boolean "false" ;
-   point_pull_file : boolean "false" ;
+   point_tight_rules : boolean "false" ;
+   point_tool_stall : boolean "false" ;
 
    # bonus point(s)
    bonus_point_dig_below : boolean "false" scope="survivor";
