@@ -86,6 +86,10 @@ strings {
    xme : string "<X ME<#0f0>>" ;
 
    # room(s)
+
+   loc_app_mall : dynamic_string {( "Here in the mall they're selling apps. " + (bonus_point_map_all ? "But you got the one you needed." : "Which one might be right for you?" ) + "\nA jock clerk mans the vending area.\nYou can go back north." )} ;
+   header_app_mall : string "<App Mall<#ff0>>" ;
+
    loc_demo_meadow : string "Here in the Demo Meadow {meadow_status}.\n{meadow_passages}." ;
    meadow_status : dynamic_string {( point_rocky_caves ? "it's quiet again after you got rid of the cocky raves" : listen_demo_meadow ? "you hear some {puz_point_cocky_raves_l}" : "it feels relatively quiet, and yet, not as quiet and peaceful as it should be" )} ;
    meadow_passages: dynamic_string {( point_taming_flowers ? "You've found passages {dir_n}, {dir_e} and {dir_w} that lead away. You probably don't need to go back {dir_s} or in" : (!point_rocky_caves && !point_tool_stall) ? "You haven't found anywhere to go from here yet" : !point_rocky_caves ? "You can go {dir_s} to the tool stall" : !point_tool_stall ? "You can go {dir_d} to the rocky caves" : "You can go {dir_s} to the tool stall and {dir_d} to the rocky caves" )} ;
@@ -118,6 +122,9 @@ strings {
    puz_point_real_stench : dynamic_string {( opt_color_coding ? "<real stench<#f80>>" : "real stench" )} ;
    puz_point_stool_tall : dynamic_string {( opt_color_coding ? "<stool (tall)<#f80>>" : "stool (tall)" )} ;
 
+   # puzzle text (bonus) (alphabetize)
+   puz_point_map_all : dynamic_string {( opt_color_coding && have_won ? "<app mall<#f80>>" : "app mall" )} ;
+
    # think text
    tht_leery_owner : string "<LEERY OWNER<#f80>>" ;
    already_got_check : dynamic_string {( already_got_command ? " Though you already got the full command, which you can revisit with {vd_think}." : "" )} ;
@@ -129,6 +136,9 @@ strings {
    here_newbies_boonies : dynamic_string {( is_at "backin_cabin" ? "here" : "in the newbies' boonies" )} ;
    here_rocky_caves : dynamic_string {( is_at "rocky_caves" ? "here" : "in the rocky caves" )} ;
    here_tool_stall : dynamic_string {( is_at "tool_stall" ? "here" : "in the tool stall" )} ;
+
+   #conditional location text (bonus) (alphabetize)
+   here_app_mall : dynamic_string {( is_at "app_mall" ? "here" : "in the app mall" )} ;
 
    # Interpretive
    noguess : string "<(unknown)<#888>>" ;
@@ -150,7 +160,7 @@ integers {
    max_score : integer "8" ;
 
    bonus_score : integer "0" ;
-   max_bonus_score : integer "1" ;
+   max_bonus_score : integer "3" ;
 
    # hinting. Magic numbers are 1 = do later, 0 = done, -1 = nothing to do
    # note items are listed in backwards order of how we do things
@@ -269,37 +279,43 @@ collections {
 
    tried_combo_bonus : list {
       items = [
+         "false",
          "false"
       ]
    }
 
    situations_bonus : list {
       items = [
-         "anywhere"
+         "anywhere",
+         "{here_app_mall}"
       ]
    }
 
    got_first_bonus : list {
       items = [
+         "false",
          "false"
       ]
    }
 
    think_first_bonus : list {
       items = [
-         "<DIG<#f80>>"
+         "<DIG<#f80>>",
+         "<MAP<#f80>>"
       ]
    }
 
    got_second_bonus : list {
       items = [
+         "false",
          "false"
       ]
    }
 
    think_second_bonus : list {
       items = [
-         "<BELOW<#f80>>"
+         "<BELOW<#f80>>",
+         "<ALL<#f80>>"
       ]
    }
 
@@ -367,8 +383,9 @@ booleans {
    point_tight_rules : boolean "false" ;
    point_tool_stall : boolean "false" ;
 
-   # bonus point(s)
-   bonus_point_dig_below : boolean "false" scope="survivor";
+   # bonus point(s) (alphabetize)
+   bonus_point_dig_below : boolean "false" scope="survivor" ;
+   bonus_point_map_all : boolean "false" scope="survivor" ;
 
    # think variables
    think_leery_owner : boolean "false" ;
@@ -420,6 +437,29 @@ vocabulary {
 
 locations {
    app_mall : location "{loc_app_mall}" header="{header_app_mall}" graphic="r_0_blank" {
+      on_command {
+         : match "map all" {
+            : if (bonus_point_map_all) {
+               : print "You already gained map-all capabilities!" ;
+               : done ;
+            }
+            : print "The clerk jock nods. \"Yup, good, pratical, simple. I think it'll serve you well. From now on, just say MAP whenever you want to map something.\"" ;
+            : set_true "bonus_point_map_all" ;
+            : gosub "add_point" ;
+            : done ;
+         }
+         : if (!bonus_point_map_all) {
+            : match "map _;_ all" {
+               : set_integer var="tempint" "1" ;
+               : set_false "first_half" ;
+               : match "map _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half_b" ;
+               : done ;
+            }
+         }
+      }
    }
    cache_shack : location "{loc_cache_shack}" header="{header_cache_shack}" graphic="r_0_blank" {
    }
