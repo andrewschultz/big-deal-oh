@@ -106,24 +106,27 @@ strings {
    loc_outer_tower : string "Here in the outer tower you can only go back south for now." ;
    header_outer_tower : string "<Outer Tower<#ff0>>" ;
 
-   # puzzle text
+   # puzzle text (alphabetize)
+
    puz_point_bush_pest : dynamic_string {( opt_color_coding ? "<bush pest<#f80>>" : "bush pest" )} ;
    puz_point_cocky_raves : dynamic_string {( opt_color_coding ? "<Cocky raves<#f80>>" : "Cocky raves" )} ;
    puz_point_cocky_raves_l : dynamic_string {( opt_color_coding ? "<cocky raves<#f80>>" : "cocky raves" )} ;
    puz_point_eerie_loner : dynamic_string {( opt_color_coding ? "<eerie loner<#f80>>" : "eerie loner" )} ;
-   puz_point_real_stench : dynamic_string {( opt_color_coding ? "<real stench<#f80>>" : "real stench" )} ;
-   puz_point_stool_tall : dynamic_string {( opt_color_coding ? "<stool (tall)<#f80>>" : "stool (tall)" )} ;
-   puz_point_right_tools : dynamic_string {( opt_color_coding ? "<right tools<#f80>>" : "right tools" )} ;
    puz_point_flaming_towers : dynamic_string {( opt_color_coding ? "<flaming towers<#f80>>" : "flaming towers" )} ;
    puz_point_pull_file : dynamic_string {( opt_color_coding ? "<full pile<#f80>>" : "pull file" )} ;
+   puz_point_right_tools : dynamic_string {( opt_color_coding ? "<right tools<#f80>>" : "right tools" )} ;
+   puz_point_real_stench : dynamic_string {( opt_color_coding ? "<real stench<#f80>>" : "real stench" )} ;
+   puz_point_stool_tall : dynamic_string {( opt_color_coding ? "<stool (tall)<#f80>>" : "stool (tall)" )} ;
 
    # think text
    tht_leery_owner : string "<LEERY OWNER<#f80>>" ;
    already_got_check : dynamic_string {( already_got_command ? " Though you already got the full command, which you can revisit with {vd_think}." : "" )} ;
    for_bonus : dynamic_string {( half_bonus ? " for a bonus point" : "" )} ;
 
-   #conditional location text
+   #conditional location text (alphabetize)
+   here_backin_cabin : dynamic_string {( is_at "backin_cabin" ? "here" : "in the backin' cabin" )} ;
    here_demo_meadow : dynamic_string {( is_at "demo_meadow" ? "here" : "in the demo meadow" )} ;
+   here_newbies_boonies : dynamic_string {( is_at "backin_cabin" ? "here" : "in the newbies' boonies" )} ;
    here_rocky_caves : dynamic_string {( is_at "rocky_caves" ? "here" : "in the rocky caves" )} ;
    here_tool_stall : dynamic_string {( is_at "tool_stall" ? "here" : "in the tool stall" )} ;
 
@@ -302,17 +305,6 @@ collections {
 
    bonus_status : list {
       items = [
-         0,
-         0,
-         0,
-         0,
-         0,
-         0,
-         0,
-         0,
-         0,
-         0,
-         0,
          0,
          0,
          0,
@@ -1484,7 +1476,7 @@ assets {
    graphics {
 
       # rooms
-      r_blank : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAYAQMAAAAvTrFnAAAAA1BMVEX//wCKxvRFAAAAD0lEQVR4XmPAAKNgFIwCAAMYAAFrMpCEAAAAAElFTkSuQmCC" ;
+      r_0_blank : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAYAQMAAAAvTrFnAAAAA1BMVEX//wCKxvRFAAAAD0lEQVR4XmPAAKNgFIwCAAMYAAFrMpCEAAAAAElFTkSuQmCC" ;
       r_backin_cabin : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAFVBMVEUAAACAAAAAgACAQACAgID//wD///8a8Fr9AAAB6klEQVR4XrzSsQ3EIAwFUOuIGMQFNZIXoPAg6IrsP8Il5yQ/yIKCAne2YvL4gva5qmSlRVXLPl+zgCD/ygaIywFVAChEeTkgAECkReJiQKW7VIueiMWAIJL3WEWyGUTiUkCVB2AJHO1SQHCAYQRpDsBp/ALwBqzpH8RpBsDMgwCQABFtRSyCr1/CsIMi3Netpf4LAGBTNUA+d9yWDVMfRZ3/8VmDADxA4gHwgnvmhqkBcLvrLwNipXcZwBq+ygWAmT+dms+Sc3t0EFSTgHxwCtgD1QuAz3rup6/SAOz6V8OdNah83gTRC+/caIMDqBZpI2AE4AWYcroBv/bKIAVCGIaiGQdc6w1CgK4FjyK9QIG5/xGmMA71x2gchHYzbyP9oD6+IaInFodBmQBYBd9Av0y22LUQBBLs4soZCyib0K5AALMWwkC0uLqF51OByWwSQl0LWT2BIpyfpwK6giSGAYaBXnvLdHhm8kBxjRGSttSOYXsLzQ4TVCCasG+FDEk5gtkV4CJuPiiJJxBOBDpfQLpikMTAFZBjAb4yAyy/QU5LCK8/wc9lGvq8mjESuSOA+ALj0DcWyAaVBQgYswEhlRvIEEZ/geozMNaegQ1rAxjVFhgebQUytEDUYAZi6xmIS+NPEGNzgeWOwBtW622Kp1hJtQAAAABJRU5ErkJggg==" ;
       r_demo_meadow : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAG1BMVEUAAAAAgAAAwADgYODgoKAA/wD//wD/gAAA//9RtPXwAAACEUlEQVR4XsTVMW5EIQwE0JGCbB8nR6DwQVy5djety3/sZKVNUkWwEtpPQzlPGAZcb1lt/wW8CaBlNwO07FZAF+teAEHcC6ASNwIuZYHoGwFQKu0FQNvpGVCrAOwCJM4KAKqSSuwCzgpARRVA0PYAHRknJ1CkkixuAxKJc4BSrdICtJ4kWwJSzglaq1VLyWcl95irHpAMJPqQQK35EPzlrwGQlLRDgL5Mi/Zz8MOHrQCdmRIB4JAAf0UEhy8BF5Aix26CfRvwmz99DUAKIoBEnq0kg2P4XD/DyJTMjDwMaJ8+sQaESIQEIHG0kTHGdHdbAiRaJCRzVcn7/9dz+nM6sP6OxTofgv38j88l0eHAGJiOJaAvk0jrF/I3AD7cfT42ewK+iimD04qBGIgOaJX7dwcx+D4wDSzgAoRBLaT/EpKATzGLV8HwdXzo4YexlcOJxMeX5+yY7H65daD11npv5zLGgmcGcnYg6D4g2r731ru3fhNQHYiS50TB7/N3j56DgGNbM6vQIZg4o4fH3nqkn/AS8Lm8tqzCEEVwTo+9I/2El4Bj+ZksQQBmlOSTOjwzTngNeK2fS1YgRIkU8D/9b+66rVsWYAgCzEChrD/xBkIySZRMXtUf+QaMgNGMNK/qo79gq8AwiUa60cv64A4cJRhGI+XBuj64hEcNhoeMkV7VnwrIDBHp+baA87a8IeAB+A376ErDYNZtVQAAAABJRU5ErkJggg==" ;
       r_newbies_boonies : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoCAMAAAAmJNS7AAAAM1BMVEUAAACAAACbdlPgAIA0jDEAAP/StIz//wD///8AAIAAQADggEAA///AwMCAgICAQAD/AAAe7YP6AAAC5ElEQVR4XuyX0W7DIAxF/WYDtN3/f+3mtNVtSRbAjSPQdhRFEfCSwzUA5T+OQYAs5IFhPwEC5F/AiBlhvFwEQMGoGeHMSnMKqD5pkxUJ3+kpAQFHKjh1HYV7fuAj4PSItI8DfQKKSRtJgADpFqBYFsEzFThkxVICg2JOpknARZ/Jse8CymVWAfHOZ+eAegSuY/+/Yj8JTh2BCHzvAtdxBYBGAbKwEkA0aQCA4RACAfT8DDPtlvGd3/qrApCAoGRAlJRCwG1b0oPzbvSxZLO/VLBTAuEJBKQkSRoFCJGQ0DF7+aEC0APWAsIrbwIk5VfIOwFMRFyPQlyzM6AmIJRkJSVRAaJlAGc333WCFwGMKBgFxA4BYQsVAKDMWQASgA9FDAKqBrD0f5VoK/1QCKDsLQATjygoIn0C9jrR8l1LGeU4CMNQMIDLVpaqd//b1mS9GGynKcBOESTK10ytFFJCABLKOGoAKSF78PIuGI3XSnmNG+gSP0QsnxqAhIfwfKzQLxwgI55mR/0AWqjUBUpdIvoLZbwvAC+PIKNQ96Iv+ADU8fdkZ2mAskCCfoW6KKj+ib4FMK4F4N0oiHT1VxqWdGOAaaJAITh/FyBy/u/n/Sg8tjQ86dsA3A0wCYk/wfnHAJFzAdiPAgV95T8CTAuJP8H59wMYhwqwPPtRaBfd6EH5cEUC4FMB7PrvBbjeQe03o9BICcCE4En8gbMBdtf/fCDAmSI6ADYKWUOs8CAwIs7fdekGiP5rgOd8NUCkEUBeWTMYGCrIYANoBgA5nD7UX5j/gAYI3BOB2UpksfBlAPQDCCgOuG30twnIuJ6AVbsRAHkA2uB1cWQCELdF9c0/BujX0F23gFlz159oqJAHjSuSzgQQ/2pt+j3/a/PxMYCpVAaFPOGKJOV4gKLpZ/lpitcFjgRo+5P6r1BKdnb4DhgtgL4SqRsTGNzxH7b0A8QEixtC48Z2Xhs0jO5PwB3/Pd0AscAbavZ4jXr5mBEAAAAASUVORK5CYII=" ;
