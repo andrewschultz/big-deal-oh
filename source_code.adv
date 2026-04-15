@@ -107,7 +107,7 @@ strings {
    loc_backin_cabin   : dynamic_string {( "Here by the backin' cabin, " + (point_pull_file ? "the full pile has been cleaned significantly, and now you see passages in all four directions." : "you can only go back west for now. A full pile spills from the backin' cabin. Whoever put it there obviously was trying to help you, but they may have tried too hard." ) )} ;
    header_backin_cabin : string "<Backin' Cabin<#ff0>>" ;
 
-   loc_outer_tower : string "Here in the outer tower you can only go back south for now." ;
+   loc_outer_tower : string "Here in the outer tower you can only go back south for now. Actually, this is a lie. You can explore to the north, as a tester. But nothing's implemented yet beyond a location-based puzzle." ;
    header_outer_tower : string "<Outer Tower<#ff0>>" ;
 
    # puzzle text (core) (alphabetize)
@@ -445,7 +445,7 @@ locations {
             }
             : print "The clerk jock nods. \"Yup, good, pratical, simple. I think it'll serve you well. From now on, just say MAP whenever you want to map something.\"" ;
             : set_true "bonus_point_map_all" ;
-            : gosub "add_point" ;
+            : gosub "add_bonus" ;
             : done ;
          }
          : if (!bonus_point_map_all) {
@@ -461,7 +461,7 @@ locations {
          }
       }
    }
-   cache_shack : location "{loc_cache_shack}" header="{header_cache_shack}" graphic="r_0_blank" {
+   cache_shack : location "{loc_cache_shack}" header="{header_cache_shack}" graphic="r_cache_shack" {
    }
    collation_location : location "{loc_collation_location}" header="COLLATION LOCATION" graphic="r_0_blank" {
    }
@@ -496,6 +496,8 @@ locations {
                : set_true "point_tool_stall" ;
                : set_true "tutorial_6_tool_stall" ;
                : gosub "add_point" ;
+               : update_graphic ;
+               : done ;
             }
             : match "tool _;_ stall" {
                : set_integer var="tempint" "2" ;
