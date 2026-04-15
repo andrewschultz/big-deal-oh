@@ -941,7 +941,7 @@ barriers {
    block_done_meadow_rocky_caves : block {
       location = rocky_caves
       block_when = doneblock_rocky_caves
-	  message = You are done in the rocky caves.
+      message = You are done in the rocky caves.
    }
 
 }
@@ -1042,18 +1042,18 @@ subroutines {
          : if (!bonus_point_map_all) {
             : print "You haven't gained access to the internal game map command yet. It's not critical to win, though." ;
             : done ;
-		   }
-		   : set_true "drawing_map" ;
-		   : clear_screen ;
-		   : update_graphic "m_0_blank" ;
+           }
+           : set_true "drawing_map" ;
+           : clear_screen ;
+           : update_graphic "m_0_blank" ;
            : press_any_key ;
-		   : set_false "drawing_map" ;
-		   : if (!map_note) {
-		      : print "{note_once}there are no one-way paths. If you have activated the option to block completed rooms, they will be in <GREY<#888>>." ;
-		      : set_true "map_note" ;
-		   }
-		   : update_graphic ;
-		: done ;
+           : set_false "drawing_map" ;
+           : if (!map_note) {
+              : print "{note_once}there are no one-way paths. If you have activated the option to block completed rooms, they will be in <GREY<#888>>." ;
+              : set_true "map_note" ;
+           }
+           : update_graphic ;
+        : done ;
       }
 
       : match "score _" {
