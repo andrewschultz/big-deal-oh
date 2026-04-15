@@ -1503,6 +1503,8 @@ on_command {
       : done ;
    }
 
+   # the 4 below here are point scoring events that need general rejects
+
    : match "drop _" {
       : set_boolean var="already_flag" {( point_drop_chain )} ;
       : print "{standard_puzzle_check}" ;
@@ -1521,6 +1523,23 @@ on_command {
    : match "push _" {
       : set_boolean var="already_flag" {( point_push_best )} ;
       : print "{standard_puzzle_check}" ;
+   }
+
+   : match "leery _;rocky _;steel _;taming _;tool _;tight _" { #obfuscation of non solutions, regular points
+      : print "{custom_unknown_verb_error}" ;
+      : done ;
+   }
+
+   # bonus point obfuscations -- note MAP is taken care of elsewhere
+
+   : match "dig _" { # also an obfuscation of a bonus point
+      : print "The archaeology theme suggests digging, but it'll mostly be done implicitly. Mostly." ;
+      : done ;
+   }
+
+   : match "clock _" { #obfuscation of non solutions, bonus points
+      : print "{custom_unknown_verb_error}" ;
+      : done ;
    }
 
 }
