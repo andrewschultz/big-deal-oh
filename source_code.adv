@@ -87,7 +87,7 @@ strings {
 
    # room(s)
 
-   loc_app_mall : dynamic_string {( "Here in the mall they're selling apps. " + (bonus_point_map_all ? "But you got the one you needed." : "Which one might be right for you?" ) + "\nA jock clerk mans the vending area.\nYou can go back north." )} ;
+   loc_app_mall : dynamic_string {( "Here in the mall they're offering apps--well, you ask the nice jock clerk at the front desk for a code or whatever. Apparently they need to make sure you're sane enough, or something." + (bonus_point_map_all ? "But you got the one you needed." : "Which one might be right for you?" ) + "\nA jock clerk mans the vending area.\nYou can go back north." + (bonus_point_clock_jerk ? "\nAnd yet the atmosphere isn't quite right. You can probably leave " + (bonus_point_map_all ? "now" : "once") + " you've got what you want, but then there always seems to be more to tidy up." )} ;
    header_app_mall : string "<App Mall<#ff0>>" ;
 
    loc_demo_meadow : string "Here in the Demo Meadow {meadow_status}.\n{meadow_passages}." ;
@@ -388,6 +388,7 @@ booleans {
    # bonus point(s) (alphabetize)
    bonus_point_dig_below : boolean "false" scope="survivor" ;
    bonus_point_map_all : boolean "false" scope="survivor" ;
+   bonus_point_clock_jerk : boolean "false" ;
 
    # think variables
    think_leery_owner : boolean "false" ;
@@ -450,7 +451,7 @@ locations {
                : print "You already gained map-all capabilities!" ;
                : done ;
             }
-            : print "The clerk jock nods. \"Yup, good, pratical, simple. I think it'll serve you well. From now on, just say MAP whenever you want to map something.\"" ;
+            : print "The jock clerk nods. \"Yup, good, practical, simple. I think it'll serve you well. From now on, just say MAP whenever you want to map something.\"" ;
             : set_true "bonus_point_map_all" ;
             : gosub "add_bonus" ;
             : done ;
@@ -463,6 +464,31 @@ locations {
                   : set_true "first_half" ;
                }
                : gosub "say_half_b" ;
+               : done ;
+            }
+         }
+         : match "clock jerk" {
+            : if (bonus_point_clock_jerk) {
+               : print "You already alerted the clerk to the riff-raff. They will know what to do if said riff-raff return." ;
+               : done ;
+            }
+            : print "You suggest a plan of action to the clerk, to get rid of the marginally audible kvetching. They wonder if it is too drastic. No, no, it is just right." ;
+            : print "You locate the source of the kvetching about how apps sold here are too simplistic and dumb people shouldn't have luxuries that make their lives simple. The jock clerk looks determined before pulling out ..." ;
+            : press_any_key ;
+            : print "A stopwatch. All jocks have that, to test speed or endurance or whatever. The kvetcher still goes on. Tick, tick, goes the stopwatch. After five minutes the kvetcher asks if the clerk has anything better to do. The clerk asks back: pal, you've been complaining for more than five minutes. Oh no! That's different! They are spreading wisdom to the masses! You know, the ones who don't deserve efficiency!" ;
+            : print "The jock clerk has little to say. The ticking of the stopwatch finally makes the kvetcher snap. \"ANYTHING to get away from that noise.\" And they do run away. The jock clerk thanks you for your help, embarrassed they didn't think of that themselves. But they'll know for next time." ;
+            : set_true "bonus_point_clock_jerk" ;
+            : gosub "add_bonus" ;
+            : done ;
+         }
+         : if (!bonus_point_clock_jerk) {
+            : match "clock _;_ jerk" {
+               : set_integer var="tempint" "2" ;
+               : set_false "first_half" ;
+               : match "clock _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
                : done ;
             }
          }
