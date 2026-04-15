@@ -420,7 +420,6 @@ booleans {
    opt_block_done : boolean "false" scope="survivor" ;
    opt_color_coding : boolean "false" scope="survivor" ;
    opt_score_notify : boolean "true" scope="survivor" ;
-   opt_on_off : boolean "false" ;
    can_reveal_block_opt : dynamic_boolean {( score > 0 || option_asked_once || have_won )} ;
 
    # blocker dynamic booleans
@@ -428,6 +427,10 @@ booleans {
 
    widget_blurry : boolean "false" ;
    show_overlay : boolean "true" ;
+
+   # auxiliary variables
+   opt_on_off : boolean "false" ;
+   already_flag : boolean "true" ;
 }
 
 vocabulary {
@@ -1425,11 +1428,6 @@ on_command {
    : gosub "check_meta" ;
    : gosub "check_options" ;
 
-   : match "take _;drop _" {
-      : print "You don't need to TAKE or DROP anything here. It's all done for you." ;
-      : done ;
-   }
-
    : match "dig below" {
       : if (bonus_point_dig_below) {
          : print "You already looked forward to what you needed to do." ;
@@ -1494,6 +1492,27 @@ on_command {
       : set_true "xme_yet" ;
       : done ;
    }
+
+   : match "drop _" {
+      : set_boolean var="already_flag" {( point_drop_chain )} ;
+      : print "{standard_puzzle_check}" ;
+   }
+
+   : match "take _" {
+      : set_boolean var="already_flag" {( point_bake_tons )} ;
+      : print "{standard_puzzle_check}" ;
+   }
+
+   : match "pull _" {
+      : set_boolean var="already_flag" {( point_pull_file )} ;
+      : print "{standard_puzzle_check}" ;
+   }
+
+   : match "push _" {
+      : set_boolean var="already_flag" {( point_push_best )} ;
+      : print "{standard_puzzle_check}" ;
+   }
+
 }
 
 on_tick {
