@@ -343,6 +343,8 @@ booleans {
    hinted_yet : boolean "false" ;
    sunshine_xed : boolean "false" ;
    on_off_note : boolean "false" ;
+   drawing_map : boolean "false" ;
+   map_note : boolean "false" ;
 
    # game state (critical)
    listen_demo_meadow : boolean "false" ;
@@ -436,6 +438,8 @@ vocabulary {
 }
 
 locations {
+   ailer_lair : location "{loc_ailer_lair}" header="{header_ailer_lair}" graphic="r_0_blank" {
+   }
    app_mall : location "{loc_app_mall}" header="{header_app_mall}" graphic="r_0_blank" {
       on_command {
          : match "map all" {
@@ -591,7 +595,15 @@ locations {
          }
       }
    }
+   foldin_gate : location "{loc_foldin_gate}" header="{header_foldin_gate}" graphic="r_0_blank" {
+   }
+   gnawing_awning : location "{loc_gnawing_awning}" header="{header_gnawing_awning}" graphic="r_0_blank" {
+   }
+   jeerin_region : location "{loc_jeerin_region}" header="{header_jeerin_region}" graphic="r_0_blank" {
+   }
    mooting_tombing : location "{loc_mooting_tombing}" header="{header_mooting_tombing}" graphic="r_0_blank" {
+   }
+   oopster_stupor : location "{loc_oopster_stupor}" header="{header_oopster_stupor}" graphic="r_0_blank" {
    }
    rocky_caves : location "{loc_rocky_caves}" header="{header_rocky_caves}" graphic="r_rocky_caves" {
       on_command {
@@ -652,6 +664,10 @@ locations {
       }
    }
    streaky_cove : location "{loc_streaky_cove}" header="{header_streaky_cove}" graphic="r_0_blank" {
+   }
+   taller_altar : location "{loc_taller_altar}" header="{header_taller_altar}" graphic="r_0_blank" {
+   }
+   tenser_center : location "{loc_tenser_center}" header="{header_tenser_center}" graphic="r_0_blank" {
    }
    tool_stall : location "{loc_tool_stall}" header="{header_tool_stall}" graphic="r_tool_stall" {
       on_command {
@@ -816,13 +832,24 @@ connections {
       demo_meadow, east, backin_cabin
       demo_meadow, west, newbies_boonies
 
-      backin_cabin, north, mooting_tombing
+      backin_cabin, north, collation_location
       backin_cabin, east, yankin_canyon
       backin_cabin, south, streaky_cove
 
       newbies_boonies, west, cache_shack
-      newbies_boonies, north, collation_location
+      newbies_boonies, north, mooting_tombing
       newbies_boonies, south, chattin_em_plain
+
+      outer_tower, north, tenser_center
+
+      tenser_center, east, taller_altar
+      tenser_center, west, gnawing_awning
+      tenser_center, north, oopster_stupor
+
+      gnawing_awning, north, ailer_lair
+      taller_altar, north, jeerin_region
+
+      oopster_stupor, north, foldin_gate
 
       tool_stall, south, app_mall
 
@@ -980,6 +1007,24 @@ subroutines {
          : if (carried() == 0) {
             : print "" ;
          }
+      }
+
+      : match "map _" {
+         : if (!bonus_point_map_all) {
+            : print "You haven't gained access to the internal game map command yet. It's not critical to win, though." ;
+            : done ;
+		   }
+		   : set_true "drawing_map" ;
+		   : clear_screen ;
+		   : update_graphic "m_0_blank" ;
+           : press_any_key ;
+		   : set_false "drawing_map" ;
+		   : if (!map_note) {
+		      : print "{note_once}there are no one-way paths. If you have activated the option to block completed rooms, they will be in <GREY<#888>>." ;
+		      : set_true "map_note" ;
+		   }
+		   : update_graphic ;
+		: done ;
       }
 
       : match "score _" {
@@ -1511,6 +1556,89 @@ on_tick {
 }
 
 on_render {
+   : if (drawing_map) {
+      : if (has_visited("demo_meadow")) {
+         : overlay "m_0_visited" x="81" y="85" ;
+         : overlay "m_demo_meadow" x="81" y="85" ;
+      }
+      : if (has_visited("tool_stall")) {
+         : overlay "m_0_visited" x="81" y="106" ;
+         : overlay "m_tool_stall" x="81" y="106" ;
+      }
+      : if (has_visited("app_mall")) {
+         : overlay "m_0_visited" x="81" y="127" ;
+         : overlay "m_app_mall" x="81" y="127" ;
+      }
+      : if (has_visited("rocky_caves")) {
+         : overlay "m_0_visited" x="41" y="127" ;
+         : overlay "m_rocky_caves" x="41" y="127" ;
+      }
+      : if (has_visited("newbies_boonies")) {
+         : overlay "m_0_visited" x="41" y="85" ;
+         : overlay "m_newbies_boonies" x="41" y="85" ;
+      }
+      : if (has_visited("backin_cabin")) {
+         : overlay "m_0_visited" x="121" y="85" ;
+         : overlay "m_backin_cabin" x="121" y="85" ;
+      }
+      : if (has_visited("mooting_tombing")) {
+         : overlay "m_0_visited" x="41" y="64" ;
+         : overlay "m_mooting_tombing" x="41" y="64" ;
+      }
+      : if (has_visited("collation_location")) {
+         : overlay "m_0_visited" x="121" y="64" ;
+         : overlay "m_collation_location" x="121" y="64" ;
+      }
+      : if (has_visited("chattin_em_plain")) {
+         : overlay "m_0_visited" x="41" y="106" ;
+         : overlay "m_chattin_em_plain" x="41" y="106" ;
+      }
+      : if (has_visited("streaky_cove")) {
+         : overlay "m_0_visited" x="121" y="106" ;
+         : overlay "m_streaky_cove" x="121" y="106" ;
+      }
+      : if (has_visited("cache_shack")) {
+         : overlay "m_0_visited" x="1" y="85" ;
+         : overlay "m_cache_shack" x="1" y="85" ;
+      }
+      : if (has_visited("yankin_canyon")) {
+         : overlay "m_0_visited" x="161" y="85" ;
+         : overlay "m_yankin_canyon" x="161" y="106" ;
+      }
+      : if (has_visited("outer_tower")) {
+         : overlay "m_0_visited" x="81" y="64" ;
+         : overlay "m_outer_tower" x="81" y="64" ;
+      }
+      : if (has_visited("tenser_center")) {
+         : overlay "m_0_visited" x="81" y="43" ;
+         : overlay "m_tenser_center" x="81" y="43" ;
+      }
+      : if (has_visited("gnawing_awning")) {
+         : overlay "m_0_visited" x="41" y="43" ;
+         : overlay "m_gnawing_awning" x="41" y="43" ;
+      }
+      : if (has_visited("ailer_lair")) {
+         : overlay "m_0_visited" x="41" y="22" ;
+         : overlay "m_ailer_lair" x="41" y="22" ;
+      }
+      : if (has_visited("taller_altar")) {
+         : overlay "m_0_visited" x="121" y="43" ;
+         : overlay "m_taller_altar" x="121" y="43" ;
+      }
+      : if (has_visited("jeerin_region")) {
+         : overlay "m_0_visited" x="121" y="22" ;
+         : overlay "m_jeerin_region" x="121" y="22" ;
+      }
+      : if (has_visited("oopster_stupor")) {
+         : overlay "m_0_visited" x="81" y="22" ;
+         : overlay "m_oopster_stupor" x="81" y="22" ;
+      }
+      : if (has_visited("foldin_gate")) {
+         : overlay "m_0_visited" x="81" y="1" ;
+         : overlay "m_foldin_gate" x="81" y="1" ;
+      }
+      : done ;
+   }
    : if (!show_overlay) {
       : done ;
    }
@@ -1551,6 +1679,34 @@ on_render {
 
 assets {
    graphics {
+
+      # mapping basics
+      m_0_blank : base64_png "iVBORw0KGgoAAAANSUhEUgAAAMIAAACNAQMAAADfITfLAAAAA1BMVEXStIxN0HgzAAAAGklEQVR4Xu3AMQEAAADCIPuntsNuWAIAAAAHDlIAAaEwo0sAAAAASUVORK5CYII=" ;
+      m_0_closed : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAAA1BMVEWAgICQdD0xAAAAC0lEQVR4XmOgFAAAAEEAAdV4Dl4AAAAASUVORK5CYII=" ;
+      m_0_visited : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAAA1BMVEUAAACnej3aAAAAC0lEQVR4XmOgFAAAAEEAAdV4Dl4AAAAASUVORK5CYII=" ;
+
+      # mapping, room text
+      m_ailer_lair : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAACNJREFUCFtjYACDV2VAYpUrCmt1KQMUqEcACdUQFJZpCEQOAD73CDjs3u03AAAAAElFTkSuQmCC" ;
+      m_app_mall : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAACdJREFUCFtjYAAD2TtAQjQEzhKAEWCgeQlIhAaBCBDLFcRyjYbIAQDP3Aam3H7MQAAAAABJRU5ErkJggg==" ;
+      m_backin_cabin : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADNJREFUCB1jYAABtuLQCwysIaEBDGwlqQ4glgMDWzCQgIC80w0MDF2rgETfKRgrC8QCAgCiHA5FAtA0sAAAAABJRU5ErkJggg==" ;
+      m_cache_shack : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADNJREFUCB1jYACDO1cbGBhFRRkYGGVloSyGK0AxMGBcPQsoprUISOxeDBRZBWKtAoqBAACGcA1vHnIRzwAAAABJRU5ErkJggg==" ;
+      m_chattin_em_plain : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADtJREFUCB1jYAABqdi7JQxKIZ0hDMp3OgNArAAGKRABBpHOy2MYghYtDWGQWrw8hEFISRXIUjINAUsCAOwkDkDo9UhdAAAAAElFTkSuQmCC" ;
+      m_collation_location : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADlJREFUCFtjZAACRr1UdRNGLw8GCUYvz/8SEJbemh0RjGBZ4ZZ76YxCkxv0GYWm1ulDWNJVE9aDZQGSrQ2QYMt02AAAAABJRU5ErkJggg==" ;
+      m_demo_meadow : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADZJREFUCB1jYACDM8uB1MpQILEWRKwUBRJnxYEECHDlnVvBIOq1CkjkAQlBr1UBDIJZ5wLAkgCNJw149Tf9/gAAAABJRU5ErkJggg==" ;
+      m_foldin_gate : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADRJREFUCFtjYAABtpfTHRhYVoY6MLCtDGUAsYDE26kMUJBeBiRaVYDEdjUgMRXESlWDyAEAgFUKPG/wiHMAAAAASUVORK5CYII=" ;
+      m_gnawing_awning : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAAEBJREFUCB1jZAACRuN4ybeMThkM3xijEj4wMXrFL4xiNCpf6McIlmVZzryJkWsBwzVGvjkMbIxcHhHPQMQ2sCwA78IOrvRx8n8AAAAASUVORK5CYII=" ;
+      m_jeerin_region : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADhJREFUCB1jYAABxtzpDgyMnqFAIncqkOsZysDAnAskwIAtLe4BA6tH0AIGtmwgweoJItLiFoAlAVTkC4F+l+W6AAAAAElFTkSuQmCC" ;
+      m_mooting_tombing : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAAD5JREFUCFtjYAACRpFbf9cyie2J52AC8niYfjAw/GBicGH4wgCWtY40P8t0Xew+SFaBh4Xhx4NfTIwMChBZANiuDpnGAeoYAAAAAElFTkSuQmCC" ;
+      m_newbies_boonies : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADtJREFUCFtjYAAB2VWnMxhEtVZ5MIiuOp3AICqySoFBdAqQBQY8714nMHCtWuXAwLNqNZilABQDskAAABduEQTCzslxAAAAAElFTkSuQmCC" ;
+      m_oopster_stupor : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAAD9JREFUCB1jYAAB2bu7NzCIhgppMIjGTgayAiZpMMhenLwCLMnA9urdAQYWr1ULGNi8Xh1gYPLqArL8+haAZQEhBBEv5KFSdwAAAABJRU5ErkJggg==" ;
+      m_outer_tower : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADJJREFUCB1jYAABxqu3gUTIpAYgMRvGujOrASzJwLxrLVBCa6UDkACxND2BLEtfB7AsAMpWDTed+6xtAAAAAElFTkSuQmCC" ;
+      m_pricked_crypt : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADlJREFUCFtjYAAB2cnhCQyiISEBDLJT0gMYBEEswWCgGBgwbtrdwMCktZKBgcnQEkhoKgLFVipCJAF20ApHqfnlHQAAAABJRU5ErkJggg==" ;
+      m_rocky_caves : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADpJREFUCFtjYAABZomrDgxMS0UdGJhVJRqALBEgMeNKAwME3I1tYGAUDWRgYJSNBLJEJgAlrsyFyAIAeOoMRLF23PgAAAAASUVORK5CYII=" ;
+      m_streaky_cove : base64_png "iVBORw0KGgoAAAANSUhEUgAAABwAAAANAQMAAACASZzpAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADhJREFUCB1jYACBvHOvFjC4rFi1gCHl3BsHBpUVqxwYUtYBCQi4G8HAwCgaACJALJEJQOE7MyByAFtbDy+9uFopAAAAAElFTkSuQmCC" ;
+      m_taller_altar : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAAC1JREFUCFtjYAAB9pK5DQxMIRMdGJgQrLC7DmBJBsbrZUAiKBRIXIKzokIhkgCeiAuG8CanZAAAAABJRU5ErkJggg==" ;
+      m_tenser_center : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADJJREFUCB1jYAAB5u25DQyMqp4ODIymYJYmmOUAlmRgzHvbwMDkBZRlyvKFshizfCGyAFmrCqNwYj8rAAAAAElFTkSuQmCC" ;
+      m_tool_stall : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANCAYAAADISGwcAAAAbklEQVR4nNWTUQrAIAxDm+H9r5x9OcvGaiqTsn5Z0PhSDUhaZTVpFzAoSUg9CUX6kAC6mBe9XyBeuAawsX4M4N9d6d9kqlMwnwDAy01fR70/9wmA2TMFURqSpQFEbkSn6wAzh9snkHWY/AflKTgBoXU7GaMhmi8AAAAASUVORK5CYII=" ;
+      m_yankin_canyon : base64_png "iVBORw0KGgoAAAANSUhEUgAAABkAAAANCAYAAABcrsXuAAAAeUlEQVR4nL1TWwrAMAhLxu5/5eynD9qps2NroIg0Eq0pJeFvHAAAUrdYj5dn65qIBYlhnq1rIhJBaiDUbjzM/EAwP4l1/9RIgS/yIbjDXWeXK6PPz+Dlcwz43cIShz2suivg+zuJlmq5McB7dy1g/CdJS5oIare46wIK/F0XxUoAdAAAAABJRU5ErkJggg==" ;
 
       # rooms
       r_0_blank : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAYAQMAAAAvTrFnAAAAA1BMVEX//wCKxvRFAAAAD0lEQVR4XmPAAKNgFIwCAAMYAAFrMpCEAAAAAElFTkSuQmCC" ;
