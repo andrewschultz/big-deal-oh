@@ -32,6 +32,7 @@ strings {
    # parser stuff
    nospecial_custom : string "You see no specific item like that--time limits mean I couldn't implement noncritical things. To examine a room, <LOOK<#0f0>>. Note that the parser may not recognize adjectives as synonyms, so using a noun works best." ;
    yn_or_12_or_14 : dynamic_string {( (verb_is "save" || verb_is "load") ? "Please choose from 1 to 4." : in_number_choice ? "Please choose 1 or 2." : "Please choose YES/Y or NO/N." )}
+   standard_puzzle_check : dynamic_string {( "That's a standard verb often used for parsers, but " + (already_flag ? "you already found where to use it" : "you haven't found the one place to use it in this game yet") + "." )} ;
 
    # noting stuff
    one_time : string "<ONE-TIME NOTE: <#f0f>>" ;
@@ -1601,9 +1602,9 @@ on_tick {
       : done ;
    }
    : match "i _" {
-      : if (!tutorial_3_x_me) {
+      : if (!tutorial_3_x_me && carried() == 0) {
          : print "You aren't holding anything, but you haven't really searched yourself with {xme}." ;
-      } : else {
+      } : else_if (carried() == 0) {
          : print {( "You " + (carried() == 0 ? "only" : "also" ) + " have the {i_widget}." )} ;
       }
    }
