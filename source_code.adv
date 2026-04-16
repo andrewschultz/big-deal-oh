@@ -87,7 +87,7 @@ strings {
 
    # room(s)
 
-   loc_app_mall : dynamic_string {( "Here in the mall they're offering apps--well, you ask the nice jock clerk at the front desk for a code or whatever. Apparently they need to make sure you're sane enough, or something." + (bonus_point_map_all ? "But you got the one you needed." : "Which one might be right for you?" ) + "\nA jock clerk mans the vending area.\nYou can go back north." + (bonus_point_clock_jerk ? "\nAnd yet the atmosphere isn't quite right. You can probably leave " + (bonus_point_map_all ? "now" : "once") + " you've got what you want, but then there always seems to be more to tidy up." )} ;
+   loc_app_mall : dynamic_string {( "Here in the mall they're offering apps--well, you ask the nice jock clerk at the front desk for a code or whatever. Apparently they need to make sure you're sane enough, or something." + (bonus_point_map_all ? "But you got the one you needed." : "Which one might be right for you?" ) + "\nA jock clerk mans the vending area.\nYou can go back north." + (!bonus_point_clock_jerk ? "\nAnd yet the atmosphere isn't quite right. You can probably leave " + (bonus_point_map_all ? "now" : "once") + " you've got what you want, but then there always seems to be more to tidy up." : "" ) )} ;
    header_app_mall : string "<App Mall<#ff0>>" ;
 
    loc_demo_meadow : string "Here in the Demo Meadow {meadow_status}.\n{meadow_passages}." ;
@@ -95,8 +95,11 @@ strings {
    meadow_passages: dynamic_string {( point_taming_flowers ? "You've found passages {dir_n}, {dir_e} and {dir_w} that lead away. You probably don't need to go back {dir_s} or in" : (!point_rocky_caves && !point_tool_stall) ? "You haven't found anywhere to go from here yet" : !point_rocky_caves ? "You can go {dir_s} to the tool stall" : !point_tool_stall ? "You can go {dir_d} to the rocky caves" : "You can go {dir_s} to the tool stall and {dir_d} to the rocky caves" )} ;
    header_demo_meadow : string "<Demo Meadow<#ff0>>" ;
 
-   loc_foldin_gate : string "You're at the foldin' gate. You can go back south." ;
+   loc_foldin_gate : string "You're at the foldin' gate. You can go back south. You can't go north and win the game yet." ;
    header_foldin_gate : string "<Foldin' Gate<#ff0>>" ;
+
+   loc_outer_tower : string "Here at the outer tower, barbed wire stretches all around. It looks like you could maybe eventually unlock the tower to go north, though, since it has a keyhole in it. It looks like you'll want to, because the grass really IS greener on the other side! Or maybe you'll need to prep by going back south first." ;
+   header_outer_tower : string "<Outer Tower<#ff0>>" ;
 
    loc_rocky_caves : dynamic_string {( (point_steel_wrench ? "The rocky caves are just caves now. You're used to the smell, but you have nothing more to do here." : smell_rocky_caves ? "The {puz_point_real_stench} is almost overpowering. Could any good possibly come from it?" : "It's damp and dark in here. Yet the dampness and darkness reveal little. Perhaps another sense...") + "\nThere's a sunshine-shun sign here, probably just to reiterate the caves are too dark to explore deeply." )} ;
    header_rocky_caves : string "<Rocky Caves<#ff0>>" ;
@@ -109,9 +112,6 @@ strings {
 
    loc_backin_cabin   : dynamic_string {( "Here by the backin' cabin, " + (point_pull_file ? "the full pile has been cleaned significantly, and now you see passages in all four directions." : "you can only go back west for now. A full pile spills from the backin' cabin. Whoever put it there obviously was trying to help you, but they may have tried too hard." ) )} ;
    header_backin_cabin : string "<Backin' Cabin<#ff0>>" ;
-
-   loc_outer_tower : string "Here in the outer tower you can only go back south for now. Actually, this is a lie. You can explore to the north, as a tester. But nothing's implemented yet beyond a location-based puzzle." ;
-   header_outer_tower : string "<Outer Tower<#ff0>>" ;
 
    # puzzle text (core) (alphabetize)
 
@@ -843,7 +843,7 @@ locations {
          }
       }
    }
-   outer_tower : location "{loc_outer_tower}" header="{header_outer_tower}" {
+   outer_tower : location "{loc_outer_tower}" header="{header_outer_tower}" graphic="r_outer_tower" {
    }
    yankin_canyon : location "{loc_yankin_canyon}" header="{header_yankin_canyon}" graphic="r_0_blank" {
    }
@@ -1792,6 +1792,7 @@ assets {
       r_demo_meadow : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAG1BMVEUAAAAAgAAAwADgYODgoKAA/wD//wD/gAAA//9RtPXwAAACEUlEQVR4XsTVMW5EIQwE0JGCbB8nR6DwQVy5djety3/sZKVNUkWwEtpPQzlPGAZcb1lt/wW8CaBlNwO07FZAF+teAEHcC6ASNwIuZYHoGwFQKu0FQNvpGVCrAOwCJM4KAKqSSuwCzgpARRVA0PYAHRknJ1CkkixuAxKJc4BSrdICtJ4kWwJSzglaq1VLyWcl95irHpAMJPqQQK35EPzlrwGQlLRDgL5Mi/Zz8MOHrQCdmRIB4JAAf0UEhy8BF5Aix26CfRvwmz99DUAKIoBEnq0kg2P4XD/DyJTMjDwMaJ8+sQaESIQEIHG0kTHGdHdbAiRaJCRzVcn7/9dz+nM6sP6OxTofgv38j88l0eHAGJiOJaAvk0jrF/I3AD7cfT42ewK+iimD04qBGIgOaJX7dwcx+D4wDSzgAoRBLaT/EpKATzGLV8HwdXzo4YexlcOJxMeX5+yY7H65daD11npv5zLGgmcGcnYg6D4g2r731ru3fhNQHYiS50TB7/N3j56DgGNbM6vQIZg4o4fH3nqkn/AS8Lm8tqzCEEVwTo+9I/2El4Bj+ZksQQBmlOSTOjwzTngNeK2fS1YgRIkU8D/9b+66rVsWYAgCzEChrD/xBkIySZRMXtUf+QaMgNGMNK/qo79gq8AwiUa60cv64A4cJRhGI+XBuj64hEcNhoeMkV7VnwrIDBHp+baA87a8IeAB+A376ErDYNZtVQAAAABJRU5ErkJggg==" ;
       r_foldin_gate : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAD1BMVEUAAAAAgADAYEAA//////8AF+P3AAACWElEQVR4XqWXYY6EMAiFO8YDDOkFGm9guEB/eP8z7ShEZvsITOPb+GOJLV8f2GUL806qcmnZtu3fI+ExupVbsmpY1yQ8RHXVi24VZiaVbqwUA4ibZj3OnzGa7xAC5PwWKf2UAfzkIQJoDd6wsPnmS/hy4NJiMb8QGxzEB1DQtoF1uImEBcA9dfMK0ZRoAGAFuFK3268TxGBccwUA0Kx8sgVs3CKAL9BFIvZIGACgOMOyL2tbDmCPLpQIHOU/QBGNr+pBJJIC+Huoo+6xjguge2bpMqB3e2AXgMR83K/1k6B3IE4L4QMAaPMd/QL4EPTeZ5bFAJNHaV00aRwCsPXAXDEVYKp1LvkAAjfTzgqQfDz5PcC7fw9svqMAMLMsANDbduYoCjBhnORorwHgqgHetiUoJvRA0Dp4TwPAfo8DLZovRggFALZggpFIAPDDH/YAIB8jEOCuATCno80qAMeSvIt+ugDzw916ERzr/CiJADvREpkvGDgOnPnXdAyCnRGABQAaJhyO1o+OzxOOQdjYPsBOi8+8+OYKgCh91yIIQKyiN7ycnWpVZW5hIQgAbDT9fbw1ByaGaRpUqFoXmPIBHwHyf4cccaHRAhMlLWUAYdtaalQ9AaoReHoH94AqcItCMZ8AxECAKu49oHL75UWpqgJURgRf38PRACBBSB2KDcBEmexzbYcCdPy8cmnaoiRoQo6xdiHoB6bOxQwAYELOoKJ5VQOwX1ITngsMLxCa8eDByQ1gwoKncJVBVGzrlIBFT9JjGgWoOUF90iLsi24AQriAf39sveX4Ayvj0Oi7foq3AAAAAElFTkSuQmCC" ;
       r_newbies_boonies : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAJFBMVEUAAACAAAAAgACAgADAwMCbdlOAQAA8PUGAgID/AAC4hgtgYGBPeAorAAAB0klEQVR4Xu3XwWrCQBAG4LnlHGh9gIW99CogeE5LzkvH2gdQKF4CxQ70bGhewVfw3l7yct1Rw7BxbbYsugX6K/G/5dMZlgjImbW9fCEieYKhqUPrAbBq+1nEAZqyHq4CmC1PEwWYF0UZWOHg6AMWUSOYb4qiaAbr5QCbglOHVAGs7OY5gCcPYO0A9PkBcMqQKoAWcQ/I89HyZbsNASh+KSUaGcA+zXAVwCoYAIsOoJXRaLS92KvuDYBTD1YBtAK4ebCA4hwAUAD89bXRiiOApgOU9VD1A0YMePTvIIMFoC0BjTIuYNPsCWWzqYfqrwHsFYDSShujDtEaZQSNjf2oB6t/BLwD914AcwXAP77Rxxmgjt8Bdwm993cBign8NlaCkYD93QXg20FYuwDkBThugNJxAGw7f57f4rMHUGVAJ4DuroZbHOAT3fQBkFV0AkAjNRaAPwIqIOoAbuIBFBDIaDzd7cYTCokAPgYrUQAAGDmeqrs0gOpAfGUAJQBAdiwWMLk+oBLf+3hKVwdA5nCuDWBcUgBQWgBUSQFy8iQCAJ88CQEgJ08SAMjJkwQAcvKkAAgqEQAoKeANKDGArgzAXmZczv0zvMAj2Z8FkCd4CcA/4BuyG4lus+QmYAAAAABJRU5ErkJggg==" ;
+      r_outer_tower : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAD1BMVEUAAAAAgACAgIBUcAP////5UZ6nAAABHUlEQVR4XuyT0Q2DQAxDc+kCYQOUFViA/acq6Y8viPZ0gaNCivmzFLD8DE1BMWv9lCmocADyuj+AL4Af3EBuIDeQG8gN5AZyA6Y/bUDIVPG8rQHBjUMAe9gGkNY5R/GubABv7UDQwCLqNbfqDiGAFwiA0/MI4LUDAOIABPCOAqDa0QjMENWZqA5g7oUIym8EYgHWtQogjf/oK4JlUwAB7xrQ0o/g9fn2AvUg4F0DWjoQvNspgxSAQRgIWv2I5AXC/v9vPW5wWQJCe2nnqIBDJjhAGnaWV04HMoF86YcHocGwqgSZOgGIETDwTUmQ6XHZ0I5aQNfD/UOzxbShzwXsehgBCX0uUHvEnmDy5ecEyNIEIO8JkM8J9BAGjvgFbjFW0kLcMS4yAAAAAElFTkSuQmCC" ;
       r_rocky_caves : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAElBMVEUAAACmyvCAQACAgID/AAD//wDMf+NVAAACeElEQVR4Xr2XUY7bMAxEB5gTeIH8L7oXGGTO0AOkWN//KgVcxARNSUSz7Q4Cf43JJ5qiItgG/Tdq3BpGw6FBJhyPfwrgkXCqAOR3gK8CYJW/EiBXTRTYLIwOCQB7PmFKgEytw00XisBSWRjbFkDWGTBSI/Ng8WFVFzZ2Fl8oEhru8AFaDAvqwpzU54fFAGgEOqW45D+e9FCYAhBhavNPe1wnwCTIs59RxRagl7AEiGYSqvxFgAhL5QVVBOL/AFwrOuUA+k9gpjn4QmdbjNUova0pAMsgAqJiDQGyxJgBpgX2FUjQGFi7AlSzeNYT7AGMABCLdXkmTLqK4UBBrQBi+DBeVZW4AEAAKB9X49BKMxmhrgSaeIUWIEemsWhWTrf2wJxidAAeABhV17wLK6L1YYNmAtAEALMKUOEzkGPaGEWlo/ZCAKBMQ99//JG1AIiQtAjbWgHQWcA1bkD7ftu2x3Z7C1v5SMq7G1wCzM/CQnk879tj3x+PN1vr7YrnrJIHAE2zWkD9P3o879tt3/ftrZ0XAC2mI6PObHR/Z0J8Ajz2z8/98evkSwDOBIrUHNCmqd8fWj4o7rd9/7nvRwWYjFbZ5LItpvE6zi8KcMMggLkC2ZXcZaqINeJ1RPaHJ2sPhMWDuAHgCuCLkT0BHbsgAyziPi0l2LXlLU8VADEHJgAuAIidN/CdqWmzuyDQMQk9nIQ5hOqFceSjBYsWvVKE/7A9BqCT5MQU9nonBQgEI18D4Gik9qIt+/RycU+2wArQjLVWOH7yGiCOkQkA/apEgQlgGUwIgDSIXhdgQJGgWYzeM8DX1l+v973eWQDo79QHeAGgvxfAB8BvzNXKwBcICd8AAAAASUVORK5CYII=" ;
       r_tool_stall : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAGFBMVEUAAACAAADAwMCAQADggECAgID/AAD//wA/25nTAAAArUlEQVR4XuzQwQkCQQxGYcEKrGGxgTyCBcx28JMKBqYBgW1fmasXRZ1c8ir4eCfgzHftbW/AGB0A3figXwDaM4JOF/LQcV8LmAc8NEYXktYD2Da7hgjckcgC+ASQATDweQCBcNYfAGMeyASQDfBAKANgWPKB1wpQgAIUoACXt/sToAAFeIw0BzBQH5DkAAMl6oOh5QCmke4AA6WR7gCmAXbAqAMMlEa6A5hGugMAAJk1y3RMVc4AAAAASUVORK5CYII=" ;
 
