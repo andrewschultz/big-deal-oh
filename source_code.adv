@@ -327,6 +327,7 @@ collections {
    tried_combo_bonus : list {
       items = [
          "false",
+         "false",
          "false"
       ]
    }
@@ -334,12 +335,14 @@ collections {
    situations_bonus : list {
       items = [
          "anywhere",
+         "{here_app_mall}",
          "{here_app_mall}"
       ]
    }
 
    got_first_bonus : list {
       items = [
+         "false",
          "false",
          "false"
       ]
@@ -348,12 +351,14 @@ collections {
    think_first_bonus : list {
       items = [
          "<DIG<#f80>>",
-         "<MAP<#f80>>"
+         "<MAP<#f80>>",
+         "<CLOCK<#f80>>"
       ]
    }
 
    got_second_bonus : list {
       items = [
+         "false",
          "false",
          "false"
       ]
@@ -362,7 +367,8 @@ collections {
    think_second_bonus : list {
       items = [
          "<BELOW<#f80>>",
-         "<ALL<#f80>>"
+         "<ALL<#f80>>",
+         "<JERK<#f80>>"
       ]
    }
 
@@ -437,7 +443,7 @@ booleans {
    # bonus point(s) (alphabetize)
    bonus_point_dig_below : boolean "false" scope="survivor" ;
    bonus_point_map_all : boolean "false" scope="survivor" ;
-   bonus_point_clock_jerk : boolean "false" ;
+   bonus_point_clock_jerk : boolean "false" scope="survivor" ;
 
    # think variables
    think_leery_owner : boolean "false" ;
