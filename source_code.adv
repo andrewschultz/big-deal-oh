@@ -535,6 +535,30 @@ locations {
          }
       }
    }
+   backin_cabin : location "{loc_backin_cabin}" header="{header_backin_cabin}" graphic="r_backin_cabin" {
+      on_command {
+         : match "pull file" {
+            : if (point_pull_file) {
+               : print "You already pulled the file and made the cabin neater to make a path through!" ;
+            }
+            : print "Now you know what you're looking for in the full pile, or you're pretty sure you do, you can at least sort out the junk. Then you find a file. It describes where the secret passages in the cabin are. It's not pretty, but you dump some of the piles into the secret pasasages, as there's enough space in them, and things look a little cleaner. Those passages lead north, south and east." ;
+            : set_true "point_pull_file" ;
+            : gosub "add_point" ;
+            : done ;
+         }
+         : if (!point_pull_file) {
+            : match "pull _;_ file" {
+               : set_integer var="tempint" "7" ;
+               : set_false "first_half" ;
+               : match "pull _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
+            }
+         }
+      }
+   }
    cache_shack : location "{loc_cache_shack}" header="{header_cache_shack}" graphic="r_cache_shack" {
       on_command {
          : if (!buns_taken) {
@@ -689,7 +713,44 @@ locations {
    }
    mooting_tombing : location "{loc_mooting_tombing}" header="{header_mooting_tombing}" graphic="r_0_blank" {
    }
+   newbies_boonies : location "{loc_newbies_boonies}" header="{header_newbies_boonies}" graphic="r_newbies_boonies" {
+      on_command {
+         : match "push best" {
+            : if (point_push_best) {
+               : print "You already pushed the bush pest away." ;
+            }
+            : set_true "point_push_best" ;
+            : print "It's an interesting little rassling match. Direct pushing doesn't work, but you have an idea. You move to your right, then as the bush comes to the right, you pull a Reggie White club move on it, pushing it the direction it was already going..." ;
+            : press_any_key ;
+            : update_graphic ;
+            : set_integer var="newbies_cutscene" value="1";
+            : print "It screams, then ..." ;
+            : press_any_key ;
+            : update_graphic ;
+            : print "Oh no! You're worried you did permanent damage to it. You walk over to make sure it's okay. It get up, sticks its tongue out, and runs away for easier people, or entities, to be a nuisance to." ;
+            : print "You can go all four directions now." ;
+            : set_integer var="newbies_cutscene" value="2";
+            : press_any_key ;
+            : update_graphic ;
+            : gosub "add_point" ;
+            : done ;
+         }
+         : if (!point_push_best) {
+            : match "push _;_ best" {
+               : set_integer var="tempint" "6" ;
+               : set_false "first_half" ;
+               : match "push _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
+            }
+         }
+      }
+   }
    oopster_stupor : location "{loc_oopster_stupor}" header="{header_oopster_stupor}" graphic="r_0_blank" {
+   }
+   outer_tower : location "{loc_outer_tower}" header="{header_outer_tower}" graphic="r_outer_tower" {
    }
    rocky_caves : location "{loc_rocky_caves}" header="{header_rocky_caves}" graphic="r_rocky_caves" {
       on_command {
@@ -837,67 +898,6 @@ locations {
             : set_true "tutorial_16_south_twice" ;
          }
       }
-   }
-   newbies_boonies : location "{loc_newbies_boonies}" header="{header_newbies_boonies}" graphic="r_newbies_boonies" {
-      on_command {
-         : match "push best" {
-            : if (point_push_best) {
-               : print "You already pushed the bush pest away." ;
-            }
-            : set_true "point_push_best" ;
-            : print "It's an interesting little rassling match. Direct pushing doesn't work, but you have an idea. You move to your right, then as the bush comes to the right, you pull a Reggie White club move on it, pushing it the direction it was already going..." ;
-            : press_any_key ;
-            : update_graphic ;
-            : set_integer var="newbies_cutscene" value="1";
-            : print "It screams, then ..." ;
-            : press_any_key ;
-            : update_graphic ;
-            : print "Oh no! You're worried you did permanent damage to it. You walk over to make sure it's okay. It get up, sticks its tongue out, and runs away for easier people, or entities, to be a nuisance to." ;
-            : print "You can go all four directions now." ;
-            : set_integer var="newbies_cutscene" value="2";
-            : press_any_key ;
-            : update_graphic ;
-            : gosub "add_point" ;
-            : done ;
-         }
-         : if (!point_push_best) {
-            : match "push _;_ best" {
-               : set_integer var="tempint" "6" ;
-               : set_false "first_half" ;
-               : match "push _" {
-                  : set_true "first_half" ;
-               }
-               : gosub "say_half" ;
-               : done ;
-            }
-         }
-      }
-   }
-   backin_cabin : location "{loc_backin_cabin}" header="{header_backin_cabin}" graphic="r_backin_cabin" {
-      on_command {
-         : match "pull file" {
-            : if (point_pull_file) {
-               : print "You already pulled the file and made the cabin neater to make a path through!" ;
-            }
-            : print "Now you know what you're looking for in the full pile, or you're pretty sure you do, you can at least sort out the junk. Then you find a file. It describes where the secret passages in the cabin are. It's not pretty, but you dump some of the piles into the secret pasasages, as there's enough space in them, and things look a little cleaner. Those passages lead north, south and east." ;
-            : set_true "point_pull_file" ;
-            : gosub "add_point" ;
-            : done ;
-         }
-         : if (!point_pull_file) {
-            : match "pull _;_ file" {
-               : set_integer var="tempint" "7" ;
-               : set_false "first_half" ;
-               : match "pull _" {
-                  : set_true "first_half" ;
-               }
-               : gosub "say_half" ;
-               : done ;
-            }
-         }
-      }
-   }
-   outer_tower : location "{loc_outer_tower}" header="{header_outer_tower}" graphic="r_outer_tower" {
    }
    yankin_canyon : location "{loc_yankin_canyon}" header="{header_yankin_canyon}" graphic="r_0_blank" {
    }
