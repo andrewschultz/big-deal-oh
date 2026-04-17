@@ -103,8 +103,8 @@ strings {
    loc_chattin_em_plain: string "You are in the Chattin 'Em Plain. The only exit is north." ;
    header_chattin_em_plain: string "<Chattin' 'Em Plain<#ff0>>" ;
 
-   loc_collation_location: string "You are in the collation location." ;
-   header_collation_location: string "<Collation Location<#ff0>>" ;
+   loc_collation_location: dynamic_string {( "You are in a collation location. The only exit is south. Dough groups sit here " + (point_grow_dupes ? "looking lonely" : "happy together") + "." )} ;
+   header_cl: string "<Collation Location<#ff0>>" ;
 
    loc_demo_meadow : string "Here in the Demo Meadow {meadow_status}.\n{meadow_passages}." ;
    meadow_status : dynamic_string {( point_rocky_caves ? "it's quiet again after you got rid of the cocky raves" : listen_demo_meadow ? "you hear some {puz_point_cocky_raves_l}" : "it feels relatively quiet, and yet, not as quiet and peaceful as it should be" )} ;
@@ -157,6 +157,7 @@ strings {
    puz_point_cocky_raves_l : dynamic_string {( opt_color_coding ? "<cocky raves<#f80>>" : "cocky raves" )} ;
    puz_point_eerie_loner : dynamic_string {( opt_color_coding ? "<eerie loner<#f80>>" : "eerie loner" )} ;
    puz_point_flaming_towers : dynamic_string {( opt_color_coding ? "<flaming towers<#f80>>" : "flaming towers" )} ;
+   puz_point_grow_dupes : dynamic_string {( opt_color_coding ? "<grow dupes<#f80>>" : "grow dupes" )} ;
    puz_point_pull_file : dynamic_string {( opt_color_coding ? "<full pile<#f80>>" : "pull file" )} ;
    puz_point_right_tools : dynamic_string {( opt_color_coding ? "<right tools<#f80>>" : "right tools" )} ;
    puz_point_real_stench : dynamic_string {( opt_color_coding ? "<real stench<#f80>>" : "real stench" )} ;
@@ -197,7 +198,7 @@ strings {
 
 integers {
    score : integer "0" ;
-   max_score : integer "8" ;
+   max_score : integer "10" ;
 
    bonus_score : integer "0" ;
    max_bonus_score : integer "3" ;
@@ -248,6 +249,7 @@ collections {
          "false",
          "false",
          "false",
+         "false",
          "false"
       ]
    }
@@ -262,11 +264,13 @@ collections {
          "{here_demo_meadow}"
          "{here_newbies_boonies}"
          "{here_backin_cabin}"
+         "{here_collation_location}"
       ]
    }
 
    got_first_core : list {
       items = [
+         "false",
          "false",
          "false",
          "false",
@@ -287,12 +291,14 @@ collections {
          "<TIGHT<#f80>>",
          "<TAMING<#f80>>",
          "<PUSH<#f80>>",
-         "<PULL<#f80>>"
+         "<PULL<#f80>>",
+         "<GROW<#f80>>"
       ]
    }
 
    got_second_core : list {
       items = [
+         "false",
          "false",
          "false",
          "false",
@@ -313,7 +319,8 @@ collections {
          "<RULES<#f80>>",
          "<FLOWERS<#f80>>",
          "<BEST<#f80>>",
-         "<FILE<#f80>>"
+         "<FILE<#f80>>",
+         "<DUPES<#f80>>"
       ]
    }
 
@@ -414,17 +421,18 @@ booleans {
    tutorial_17_leery_owner_2 : boolean "false" ;
    tutorial_done : boolean "false" ;
 
-   # game state (point scoring) (alphabetical)
+   # game state (point scoring) (alphabetical, with number in half-guess array)
    point_bake_tons : boolean "false" ;
    point_drop_chain : boolean "false" ;
-   point_leery_owner : boolean "false" ;
-   point_pull_file : boolean "false" ;
-   point_push_best : boolean "false" ;
-   point_rocky_caves : boolean "false" ;
-   point_steel_wrench : boolean "false" ;
-   point_taming_flowers : boolean "false" ;
-   point_tight_rules : boolean "false" ;
-   point_tool_stall : boolean "false" ;
+   point_grow_dupes : boolean "false" ;      # 8
+   point_leery_owner : boolean "false" ;     # 3
+   point_pull_file : boolean "false" ;       # 7
+   point_push_best : boolean "false" ;       # 6
+   point_rocky_caves : boolean "false" ;     # 0
+   point_steel_wrench : boolean "false";     # 1
+   point_taming_flowers : boolean "false" ;  # 5
+   point_tight_rules : boolean "false" ;     # 4
+   point_tool_stall : boolean "false" ;      # 2
 
    # bonus point(s) (alphabetize)
    bonus_point_dig_below : boolean "false" scope="survivor" ;
@@ -433,6 +441,7 @@ booleans {
 
    # think variables
    think_leery_owner : boolean "false" ;
+   think_grow_dupes  : boolean "false" ;
 
    # dynamic booleans for ease of coding
    known_leery_owner : dynamic_boolean {( think_leery_owner || point_leery_owner )} ;
@@ -579,7 +588,36 @@ locations {
    }
    chattin_em_plain : location "{loc_chattin_em_plain}" header="{header_chattin_em_plain}" graphic="r_chattin_em_plain" {
    }
-   collation_location : location "{loc_collation_location}" header="COLLATION LOCATION" graphic="r_0_blank" {
+   collation_location : location "{loc_collation_location}" header="{header_cl}" graphic="r_collation_location" {
+      on_command {
+         : match "grow dupes" {
+            : if (point_grow_dupes) {
+               : print "You've duplicated enough!" ;
+               : done ;
+            }
+            : if (!buns_taken) {
+               : print "That seems right, but you have no raw materials with which to help the dough groups regenerate!" ;
+               : set_true "think_grow_dupes" ;
+               : done ;
+            }
+            : print "The buns you took manage to crumble off just enough. The dough groups, renewed, grow and -- somehow, when you're not looking -- reproduce. They thank you, assuring you the buns will now have self-regenerative properties of their own." ;
+            : set_true "point_grow_dupes" ;
+            : gosub "add_point" ;
+            : update_graphic ;
+            : done ;
+         }
+         : if (!point_grow_dupes) {
+            : match "grow _;_ dupes" {
+               : set_integer var="tempint" "8" ;
+               : set_false "first_half" ;
+               : match "grow _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
+            }
+         }
+      }
    }
    demo_meadow : location "{loc_demo_meadow}" header="{header_demo_meadow}" graphic="r_demo_meadow" {
       on_command {
