@@ -88,19 +88,46 @@ strings {
 
    # room(s)
 
+   loc_ailer_lair: string "You are in the ailer lair." ;
+   header_ailer_lair: string "<Ailer Lair<#ff0>>" ;
+
    loc_app_mall : dynamic_string {( "Here in the mall they're offering apps--well, you ask the nice jock clerk at the front desk for a code or whatever. Apparently they need to make sure you're sane enough, or something." + (bonus_point_map_all ? "But you got the one you needed." : "Which one might be right for you?" ) + "\nA jock clerk mans the vending area.\nYou can go back north." + (!bonus_point_clock_jerk ? "\nAnd yet the atmosphere isn't quite right. You can probably leave " + (bonus_point_map_all ? "now" : "once") + " you've got what you want, but then there always seems to be more to tidy up." : "" ) )} ;
    header_app_mall : string "<App Mall<#ff0>>" ;
+
+   loc_backin_cabin   : dynamic_string {( "Here by the backin' cabin, " + (point_pull_file ? "the full pile has been cleaned significantly, and now you see passages in all four directions." : "you can only go back west for now. A full pile spills from the backin' cabin. Whoever put it there obviously was trying to help you, but they may have tried too hard." ) )} ;
+   header_backin_cabin : string "<Backin' Cabin<#ff0>>" ;
 
    loc_cache_shack : string "You are in a cache shack, filled with various random stuff that seems either useless or far too heavy to lift. You can go back east." ;
    header_cache_shack : string "<Cache Shack<#ff0>>" ;
 
+   loc_chattin_em_plain: string "You are in the Chattin 'Em Plain. The only exit is north." ;
+   header_chattin_em_plain: string "<Chattin' 'Em Plain<#ff0>>" ;
+
+   loc_collation_location: string "You are in the collation location." ;
+   header_collation_location: string "<Collation Location<#ff0>>" ;
+
    loc_demo_meadow : string "Here in the Demo Meadow {meadow_status}.\n{meadow_passages}." ;
    meadow_status : dynamic_string {( point_rocky_caves ? "it's quiet again after you got rid of the cocky raves" : listen_demo_meadow ? "you hear some {puz_point_cocky_raves_l}" : "it feels relatively quiet, and yet, not as quiet and peaceful as it should be" )} ;
-   meadow_passages: dynamic_string {( point_taming_flowers ? "You've found passages {dir_n}, {dir_e} and {dir_w} that lead away. You probably don't need to go back {dir_s} or in" : (!point_rocky_caves && !point_tool_stall) ? "You haven't found anywhere to go from here yet" : !point_rocky_caves ? "You can go {dir_s} to the tool stall" : !point_tool_stall ? "You can go {dir_d} to the rocky caves" : "You can go {dir_s} to the tool stall and {dir_d} to the rocky caves" )} ;
    header_demo_meadow : string "<Demo Meadow<#ff0>>" ;
+   meadow_passages: dynamic_string {( point_taming_flowers ? "You've found passages {dir_n}, {dir_e} and {dir_w} that lead away. You probably don't need to go back {dir_s} or in" : (!point_rocky_caves && !point_tool_stall) ? "You haven't found anywhere to go from here yet" : !point_rocky_caves ? "You can go {dir_s} to the tool stall" : !point_tool_stall ? "You can go {dir_d} to the rocky caves" : "You can go {dir_s} to the tool stall and {dir_d} to the rocky caves" )} ;
 
    loc_foldin_gate : string "You're at the foldin' gate. You can go back south. You can't go north and win the game yet." ;
    header_foldin_gate : string "<Foldin' Gate<#ff0>>" ;
+
+   loc_gnawing_awning: string "You are in the gnawing awning. Exits are north and east." ;
+   header_gnawing_awning: string "<Gnawing Awning<#ff0>>" ;
+
+   loc_jeerin_region: string "You are in the jeerin' region." ;
+   header_jeerin_region: string "<Jeerin' Region<#ff0>>" ;
+
+   loc_moldin_dolmen: string "You are in the moldin' dolmen." ;
+   header_moldin_dolmen: string "<Moldin' Dolmen<#ff0>>" ;
+
+   loc_newbies_boonies : dynamic_string {( "Here in the newbies' boonies you can " + (point_push_best ? "go in all four directions with the bush pest gone." : "only go back south for now. There's a {puz_point_bush_pest} dancing around that seems to pop up in the latest direction you're considering going. Well, except back east." ) )} ;
+   header_newbies_boonies : string "<Newbies' Boonies<#ff0>>" ;
+
+   loc_oopster_stupor : string "Oh no! There's a marred haze ahead! Your head very much is foggy and you're doing things that make you say oops." ;
+   header_oopster_stupor : string "<Oopster Stupor<#ff0>>" ;
 
    loc_outer_tower : string "Here at the outer tower, barbed wire stretches all around. It looks like you could maybe eventually unlock the tower to go north, though, since it has a keyhole in it. It looks like you'll want to, because the grass really IS greener on the other side! Or maybe you'll need to prep by going back south first." ;
    header_outer_tower : string "<Outer Tower<#ff0>>" ;
@@ -108,14 +135,20 @@ strings {
    loc_rocky_caves : dynamic_string {( (point_steel_wrench ? "The rocky caves are just caves now. You're used to the smell, but you have nothing more to do here." : smell_rocky_caves ? "The {puz_point_real_stench} is almost overpowering. Could any good possibly come from it?" : "It's damp and dark in here. Yet the dampness and darkness reveal little. Perhaps another sense...") + "\nThere's a sunshine-shun sign here, probably just to reiterate the caves are too dark to explore deeply." )} ;
    header_rocky_caves : string "<Rocky Caves<#ff0>>" ;
 
+   loc_streaky_cove: string "You are in the streaky cove." ;
+   header_streaky_cove: string "<Streaky Cove<#ff0>>" ;
+
+   loc_taller_altar: string "You are in the taller altar." ;
+   header_taller_altar: string "<Taller Altar<#ff0>>" ;
+
+   loc_tenser_center: string "You are in the tenser center." ;
+   header_tenser_center: string "<Tenser Center<#ff0>>" ;
+
    loc_tool_stall : dynamic_string {( "You're in a tool stall. The exit is back {dir_n}. Nearby you see " + (point_leery_owner ? "the owner, no longer leery" : "an {puz_point_eerie_loner}") + (point_tight_rules || !point_leery_owner ? "" : ". That sign indicates the {puz_point_right_tools} are available, but you haven't figured how to ask for them yet") + "." )} ;
    header_tool_stall : string "<Tool Stall<#ff0>>" ;
 
-   loc_newbies_boonies : dynamic_string {( "Here in the newbies' boonies you can " + (point_push_best ? "go in all four directions with the bush pest gone." : "only go back south for now. There's a {puz_point_bush_pest} dancing around that seems to pop up in the latest direction you're considering going. Well, except back east." ) )} ;
-   header_newbies_boonies : string "<Newbies' Boonies<#ff0>>" ;
-
-   loc_backin_cabin   : dynamic_string {( "Here by the backin' cabin, " + (point_pull_file ? "the full pile has been cleaned significantly, and now you see passages in all four directions." : "you can only go back west for now. A full pile spills from the backin' cabin. Whoever put it there obviously was trying to help you, but they may have tried too hard." ) )} ;
-   header_backin_cabin : string "<Backin' Cabin<#ff0>>" ;
+   loc_yankin_canyon: string "You are in the yankin' canyon." ;
+   header_yankin_canyon: string "<Yankin' Canyon<#ff0>>" ;
 
    # puzzle text (core) (alphabetize)
 
@@ -520,9 +553,9 @@ locations {
          }
       }
    }
-   collation_location : location "{loc_collation_location}" header="COLLATION LOCATION" graphic="r_0_blank" {
-   }
    chattin_em_plain : location "{loc_chattin_em_plain}" header="{header_chattin_em_plain}" graphic="r_chattin_em_plain" {
+   }
+   collation_location : location "{loc_collation_location}" header="COLLATION LOCATION" graphic="r_0_blank" {
    }
    demo_meadow : location "{loc_demo_meadow}" header="{header_demo_meadow}" graphic="r_demo_meadow" {
       on_command {
