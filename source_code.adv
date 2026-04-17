@@ -88,7 +88,7 @@ strings {
 
    # room(s)
 
-   loc_ailer_lair: string "You are in the ailer lair." ;
+   loc_ailer_lair: string "You are in the ailer lair. You can go north and west." ;
    header_ailer_lair: string "<Ailer Lair<#ff0>>" ;
 
    loc_app_mall : dynamic_string {( "Here in the mall they're offering apps--well, you ask the nice jock clerk at the front desk for a code or whatever. Apparently they need to make sure you're sane enough, or something." + (bonus_point_map_all ? "But you got the one you needed." : "Which one might be right for you?" ) + "\nA jock clerk mans the vending area.\nYou can go back north." + (!bonus_point_clock_jerk ? "\nAnd yet the atmosphere isn't quite right. You can probably leave " + (bonus_point_map_all ? "now" : "once") + " you've got what you want, but then there always seems to be more to tidy up." : "" ) )} ;
@@ -114,13 +114,13 @@ strings {
    loc_foldin_gate : string "You're at the foldin' gate. You can go back south. You can't go north and win the game yet." ;
    header_foldin_gate : string "<Foldin' Gate<#ff0>>" ;
 
-   loc_gnawing_awning: string "You are in the gnawing awning. Exits are north and east." ;
+   loc_gnawing_awning: string "A gnawing awning blocks passage every where except north and east. It has a gold side to it." ;
    header_gnawing_awning: string "<Gnawing Awning<#ff0>>" ;
 
-   loc_jeerin_region: string "You are in the jeerin' region." ;
+   loc_jeerin_region: string "You are in the jeerin' region. You can exit north or west." ;
    header_jeerin_region: string "<Jeerin' Region<#ff0>>" ;
 
-   loc_moldin_dolmen: string "You are in the moldin' dolmen." ;
+   loc_moldin_dolmen: string "You are by the moldin' dolmen. The only exit is south." ;
    header_moldin_dolmen: string "<Moldin' Dolmen<#ff0>>" ;
 
    loc_newbies_boonies : dynamic_string {( "Here in the newbies' boonies you can " + (point_push_best ? "go in all four directions with the bush pest gone." : "only go back south for now. There's a {puz_point_bush_pest} dancing around that seems to pop up in the latest direction you're considering going. Well, except back east." ) )} ;
@@ -135,19 +135,19 @@ strings {
    loc_rocky_caves : dynamic_string {( (point_steel_wrench ? "The rocky caves are just caves now. You're used to the smell, but you have nothing more to do here." : smell_rocky_caves ? "The {puz_point_real_stench} is almost overpowering. Could any good possibly come from it?" : "It's damp and dark in here. Yet the dampness and darkness reveal little. Perhaps another sense...") + "\nThere's a sunshine-shun sign here, probably just to reiterate the caves are too dark to explore deeply." )} ;
    header_rocky_caves : string "<Rocky Caves<#ff0>>" ;
 
-   loc_streaky_cove: string "You are in the streaky cove." ;
+   loc_streaky_cove: string "You are in the streaky cove. The only exit is north." ;
    header_streaky_cove: string "<Streaky Cove<#ff0>>" ;
 
-   loc_taller_altar: string "You are in the taller altar." ;
+   loc_taller_altar: string "You are in the taller altar. The only exit is south." ;
    header_taller_altar: string "<Taller Altar<#ff0>>" ;
 
-   loc_tenser_center: string "You are in the tenser center." ;
+   loc_tenser_center: string "You are in the tenser center. You can exit in all four directions, though you probably don't need to go back south." ;
    header_tenser_center: string "<Tenser Center<#ff0>>" ;
 
    loc_tool_stall : dynamic_string {( "You're in a tool stall. The exit is back {dir_n}. Nearby you see " + (point_leery_owner ? "the owner, no longer leery" : "an {puz_point_eerie_loner}") + (point_tight_rules || !point_leery_owner ? "" : ". That sign indicates the {puz_point_right_tools} are available, but you haven't figured how to ask for them yet") + "." )} ;
    header_tool_stall : string "<Tool Stall<#ff0>>" ;
 
-   loc_yankin_canyon: string "You are in the yankin' canyon." ;
+   loc_yankin_canyon: string "You are in the yankin' canyon. The only exit is back west." ;
    header_yankin_canyon: string "<Yankin' Canyon<#ff0>>" ;
 
    # puzzle text (core) (alphabetize)
@@ -1545,7 +1545,16 @@ on_command {
       : print "A low voice booms \"Vexing howls? Hexing?! VOWELS!\"";
       : done ;
    }
-
+   : if (is_carried "buns") {
+      : match "x buns" {
+         : print {( point_grow_dupes ? "Livelier and brighter than when you first got it." : "Flaky and dry. But weird, when something crumbles from it, it regenerates." )} ;
+         : done ;
+      }
+      : match "_ buns" {
+         : print "All you can do is examine the buns. Well, with the parser and with buns as a noun." ;
+         : done ;
+      }
+   }
    : gosub "check_diagnostics" ;
    : gosub "check_meta" ;
    : gosub "check_options" ;
