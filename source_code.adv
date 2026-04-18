@@ -164,6 +164,7 @@ strings {
    puz_point_real_stench : dynamic_string {( opt_color_coding ? "<real stench<#f80>>" : "real stench" )} ;
    puz_point_sinister_mouth : dynamic_string {( opt_color_coding ? "<sinister mouth<#f80>>" : "sinister mouth" )} ;
    puz_point_stool_tall : dynamic_string {( opt_color_coding ? "<stool (tall)<#f80>>" : "stool (tall)" )} ;
+   puz_point_warmed_fax : dynamic_string {( opt_color_coding ? "<warmed fax<#f80>>" : "warmed fax" )} ;
 
    # puzzle text (bonus) (alphabetize)
    puz_point_map_all : dynamic_string {( opt_color_coding && have_won ? "<app mall<#f80>>" : "app mall" )} ;
@@ -837,6 +838,30 @@ locations {
    jeerin_region : location "{loc_jeerin_region}" header="{header_jeerin_region}" graphic="r_0_blank" {
    }
    moldin_dolmen : location "{loc_moldin_dolmen}" header="{header_moldin_dolmen}" graphic="r_0_blank" {
+      on_command {
+         : match "formed wax" {
+            : if (point_formed_wax) {
+               : print "You got enough formed wax." ;
+               : done ;
+            }
+            : print "You grab a warmed fax as it comes out. Not sure what to do with it, or how to make formed wax, you crumple it in a ball and throw it at the dolmen. The dolmen throws a lump of formed wax back at you. It's not fully formed, but it's in a block that will fit nicely into your pocket while still being able to take impressions of whatever you need to make impressions of." ;
+            : pocket "wax" ;
+            : set_true "point_formed_wax" ;
+            : gosub "add_point" ;
+            : done ;
+         }
+         : if (!point_formed_wax) {
+            : match "formed _;_ wax" {
+               : set_integer var="tempint" "15" ;
+               : set_false "first_half" ;
+               : match "formed _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
+            }
+         }
+      }
    }
    newbies_boonies : location "{loc_newbies_boonies}" header="{header_newbies_boonies}" graphic="r_newbies_boonies" {
       on_command {
@@ -1119,6 +1144,7 @@ locations {
 objects {
    buns : object "the BUNS you managed/needed to TAKE" at="cache_shack" conspicuous="false" ;
    chain : object "the platinum chain that snapped onto you that you want to get rid of" ;
+   wax : object "the formed wax from the warmed fax" ;
 }
 
 connections {
