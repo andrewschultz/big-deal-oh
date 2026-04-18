@@ -141,7 +141,7 @@ strings {
    loc_taller_altar : string "You are in the taller altar. The only exit is south." ;
    header_taller_altar : string "<Taller Altar<#ff0>>" ;
 
-   loc_tenser_center : dynamic_string "You are in the tenser center. " + (point_minister_south ? "You can exit in all four directions with the sinister mouth gone, though you probably don't need to go back south." : "A sinister mouth blocks passage further! You can only go south right now." )} ;
+   loc_tenser_center : dynamic_string {( (point_minister_south ? "I guess this could be the intenser incenter if you want, now that you must be close to your goal, as long as if you don't mind thumbing your nose at a geometry textbook. You can exit in all four directions with the sinister mouth gone, though you probably don't need to go back south." : "You are in the tenser center. A sinister mouth blocks passage further! You can only go south right now." ) )} ;
    header_tenser_center : string "<Tenser Center<#ff0>>" ;
 
    loc_tool_stall : dynamic_string {( "You're in a tool stall. The exit is back {dir_n}. Nearby you see " + (point_leery_owner ? "the owner, no longer leery" : "an {puz_point_eerie_loner}") + (point_tight_rules || !point_leery_owner ? "" : ". That sign indicates the {puz_point_right_tools} are available, but you haven't figured how to ask for them yet") + "." + (point_tight_rules ? "\nThe owner also showed you a passage to the south." : "") )} ;
@@ -164,6 +164,8 @@ strings {
    puz_point_real_stench : dynamic_string {( opt_color_coding ? "<real stench<#f80>>" : "real stench" )} ;
    puz_point_sinister_mouth : dynamic_string {( opt_color_coding ? "<sinister mouth<#f80>>" : "sinister mouth" )} ;
    puz_point_stool_tall : dynamic_string {( opt_color_coding ? "<stool (tall)<#f80>>" : "stool (tall)" )} ;
+   puz_point_take_buns : dynamic_string {( opt_color_coding ? "<TAKE BUNS<#f80>>" : "TAKE BUNS" )} ;
+   puz_point_tree_cove : dynamic_string {( opt_color_coding ? "<tree cove<#f80>>" : "tree cove" )} ;
    puz_point_warmed_fax : dynamic_string {( opt_color_coding ? "<warmed fax<#f80>>" : "warmed fax" )} ;
 
    # puzzle text (bonus) (alphabetize)
@@ -690,6 +692,7 @@ locations {
             }
             : print "The buns you took manage to crumble off just enough. The dough groups, renewed, grow and -- somehow, when you're not looking -- reproduce. They thank you, assuring you the buns will now have self-regenerative properties of their own." ;
             : set_true "point_grow_dupes" ;
+            : set_false "think_grow_dupes" ;
             : gosub "add_point" ;
             : update_graphic ;
             : done ;
