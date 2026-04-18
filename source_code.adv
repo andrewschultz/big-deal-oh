@@ -135,7 +135,7 @@ strings {
    loc_rocky_caves : dynamic_string {( (point_steel_wrench ? "The rocky caves are just caves now. You're used to the smell, but you have nothing more to do here." : smell_rocky_caves ? "The {puz_point_real_stench} is almost overpowering. Could any good possibly come from it?" : "It's damp and dark in here. Yet the dampness and darkness reveal little. Perhaps another sense...") + "\nThere's a sunshine-shun sign here, probably just to reiterate the caves are too dark to explore deeply." )} ;
    header_rocky_caves : string "<Rocky Caves<#ff0>>" ;
 
-   loc_streaky_cove: string "You are in the streaky cove. The only exit is north." ;
+   loc_streaky_cove: dynamic_string {( "You are in a streaky cove. " + (point_key_trove ? "You discovered a key trove out back." : point_bake_tons ? "You discovered a tree cove once you blew up the stove." : point_creaky_stove ? "You discovered a creaky stove in the greyness of the right wall" : "The greyness of the right wall is a stark contrast to the colorful left side. What could be there?") + "\nThe only exit is north." )} ;
    header_streaky_cove: string "<Streaky Cove<#ff0>>" ;
 
    loc_taller_altar: string "You are in the taller altar. The only exit is south." ;
@@ -250,6 +250,14 @@ collections {
          "false",
          "false",
          "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
          "false"
       ]
    }
@@ -261,24 +269,18 @@ collections {
          "{here_demo_meadow}",
          "{here_tool_stall}",
          "{here_tool_stall}",
-         "{here_demo_meadow}"
-         "{here_newbies_boonies}"
-         "{here_backin_cabin}"
-         "{here_collation_location}"
-      ]
-   }
-
-   got_first_core : list {
-      items = [
-         "false",
-         "false",
-         "false",
-         "false",
-         "false",
-         "false",
-         "false",
-         "false",
-         "false"
+         "{here_demo_meadow}",
+         "{here_newbies_boonies}",
+         "{here_backin_cabin}",
+         "{here_collation_location}",
+         "{here_streaky_cove}",
+         "{here_streaky_cove}",
+         "{here_streaky_cove}",
+         "{here_chattin_em_plain}",
+         "{here_yankin_canyon}",
+         "{here_outer_tower}",
+         "{here_moldin_dolmen}",
+         "{here_tenser_center}"
       ]
    }
 
@@ -292,21 +294,15 @@ collections {
          "<TAMING<#f80>>",
          "<PUSH<#f80>>",
          "<PULL<#f80>>",
-         "<GROW<#f80>>"
-      ]
-   }
-
-   got_second_core : list {
-      items = [
-         "false",
-         "false",
-         "false",
-         "false",
-         "false",
-         "false",
-         "false",
-         "false",
-         "false"
+         "<GROW<#f80>>",
+         "<CREAKY<#f80>>",
+         "<BAKE<#f80>>",
+         "<KEY<#f80>>",
+         "<PLATINUM<#f80>>",
+         "<CHOP<#f80>>",
+         "<LODGING<#f80>>",
+         "<FORMED<#f80>>",
+         "<SINISTER<#f80>>"
       ]
    }
 
@@ -320,7 +316,59 @@ collections {
          "<FLOWERS<#f80>>",
          "<BEST<#f80>>",
          "<FILE<#f80>>",
-         "<DUPES<#f80>>"
+         "<DUPES<#f80>>",
+         "<STOVE<#f80>>",
+         "<TONS<#f80>>",
+         "<TROVE<#f80>>",
+         "<CHAIN<#f80>>",
+         "<DRAIN<#f80>>",
+         "<KEY<#f80>>",
+         "<WAX<#f80>>",
+         "<MOUTH<#f80>>"
+      ]
+   }
+
+   got_first_core : list {
+      items = [
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false"
+      ]
+   }
+
+   got_second_core : list {
+      items = [
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false"
       ]
    }
 
@@ -439,6 +487,7 @@ booleans {
    point_taming_flowers : boolean "false" ;  # 5
    point_tight_rules : boolean "false" ;     # 4
    point_tool_stall : boolean "false" ;      # 2
+   point_creaky_stove    : boolean "false" ; # 10
 
    # bonus point(s) (alphabetize)
    bonus_point_dig_below : boolean "false" scope="survivor" ;
@@ -855,6 +904,30 @@ locations {
       }
    }
    streaky_cove : location "{loc_streaky_cove}" header="{header_streaky_cove}" graphic="r_streaky_cove" {
+      on_command {
+         : match "creaky stove" {
+            : if (point_creaky_stove) {
+               : print {( point_bake_tons ? "The stove is blown to bits. You can't get it back." : "You already revealed the stove!" )} ;
+               : done ;
+            }
+            : print "Ah! That's what's along the unusually plain wall on the right-hand side. A creaky stove! You see an outline, and as you tap at the wall, it crumbles a bit. Yet that area still looks out of place." ;
+            : set_true "point_creaky_stove" ;
+            : gosub "add_point" ;
+            : update_graphic ;
+            : done ;
+         }
+         : if (!point_creaky_stove) {
+            : match "creaky _;_ stove" {
+               : set_integer var="tempint" "9" ;
+               : set_false "first_half" ;
+               : match "creaky _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
+            }
+         }
+      }
    }
    taller_altar : location "{loc_taller_altar}" header="{header_taller_altar}" graphic="r_0_blank" {
    }
