@@ -2083,6 +2083,17 @@ on_render {
          : overlay "s_newbies_boonies_bush_fall_2" x="112" y="19" ;
       }
    }
+   : if (is_at "streaky_cove") {
+      : if (point_bake_tons) {
+         : overlay "s_streaky_cove_tree_cove" x="160" y="0" ;
+         : if (point_key_trove) {
+            : overlay "s_streaky_cove_key_trove" x="160" y="0" ;
+         }
+      }
+      : else_if (point_creaky_stove) {
+         : overlay "s_streaky_cove_creaky_stove" x="190" y="0" ;
+      }
+   }
    : if (is_at "tool_stall") {
       : if (!point_leery_owner) {
          : overlay "s_tool_eerie_loner" x="20" y="6" ;
