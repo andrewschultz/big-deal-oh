@@ -155,6 +155,7 @@ strings {
    puz_point_bush_pest : dynamic_string {( opt_color_coding ? "<bush pest<#f80>>" : "bush pest" )} ;
    puz_point_cocky_raves : dynamic_string {( opt_color_coding ? "<Cocky raves<#f80>>" : "Cocky raves" )} ;
    puz_point_cocky_raves_l : dynamic_string {( opt_color_coding ? "<cocky raves<#f80>>" : "cocky raves" )} ;
+   puz_point_dodging_lock : dynamic_string {( opt_color_coding ? "<dodging lock<#f80>>" : "dodging lock" )} ;
    puz_point_eerie_loner : dynamic_string {( opt_color_coding ? "<eerie loner<#f80>>" : "eerie loner" )} ;
    puz_point_flaming_towers : dynamic_string {( opt_color_coding ? "<flaming towers<#f80>>" : "flaming towers" )} ;
    puz_point_grow_dupes : dynamic_string {( opt_color_coding ? "<grow dupes<#f80>>" : "grow dupes" )} ;
@@ -851,6 +852,29 @@ locations {
    oopster_stupor : location "{loc_oopster_stupor}" header="{header_oopster_stupor}" graphic="r_0_blank" {
    }
    outer_tower : location "{loc_outer_tower}" header="{header_outer_tower}" graphic="r_outer_tower" {
+      on_command {
+         : match "lodging doc;lodging dock" {
+            : if (point_lodging_doc) {
+               : print "You already made the lock stable." ;
+               : done ;
+            }
+            : print "You aren't sure if the lock responded to \"doc\" or \"dock.\" It does, however, stop. \"You can come in if you have the key, I guess,\" says a voice." ;
+            : set_true "point_lodging_doc" ;
+            : gosub "add_point" ;
+            : done ;
+         }
+         : if (!point_lodging_doc) {
+            : match "lodging _;_ doc;_ dock" {
+               : set_integer var="tempint" "14" ;
+               : set_false "first_half" ;
+               : match "lodging _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
+            }
+         }
+      }
    }
    rocky_caves : location "{loc_rocky_caves}" header="{header_rocky_caves}" graphic="r_rocky_caves" {
       on_command {
