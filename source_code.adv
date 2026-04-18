@@ -650,6 +650,30 @@ locations {
       }
    }
    chattin_em_plain : location "{loc_chattin_em_plain}" header="{header_chattin_em_plain}" graphic="r_chattin_em_plain" {
+      on_command {
+         : match "platinum chain" {
+            : if (point_platinum_chain) {
+               : print "You already attracted the platinum chain to yourself." ;
+               : done ;
+            }
+            : print "Well, you pushed your luck ... a platinum chain slithers from the ground onto your wrist. It feels heavy. You try to shake it off, but it stays. You grab it and throw it to the ground, but it leaps back up onto your wrist. You're obviously going to need help taking it off." ;
+            : set_true "point_platinum_chain" ;
+            : pocket "chain" ;
+            : gosub "add_point" ;
+            : done ;
+         }
+         : if (!point_platinum_chain) {
+            : match "platinum _;_ chain" {
+               : set_integer var="tempint" "12" ;
+               : set_false "first_half" ;
+               : match "platinum _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
+            }
+         }
+      }
    }
    collation_location : location "{loc_collation_location}" header="{header_cl}" graphic="r_collation_location" {
       on_command {
@@ -1094,6 +1118,7 @@ locations {
 # Defines things in the world (scenery cannot be carried)
 objects {
    buns : object "the BUNS you managed/needed to TAKE" at="cache_shack" conspicuous="false" ;
+   chain : object "the platinum chain that snapped onto you that you want to get rid of" ;
 }
 
 connections {
