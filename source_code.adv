@@ -1063,6 +1063,8 @@ connections {
 
 barriers {
 
+   #blockers will all be defined by map location (x,y) from bottom left. (6,4) is the upper right map edge.
+
    block_0_meadow_rockycaves : block {
       location = rocky_caves
       block_when_not = point_rocky_caves
@@ -1111,7 +1113,49 @@ barriers {
       message = You need to neutralize the flaming towers first.
    }
 
-###########################block_done
+   block_05_toolstall_app_mall : block {
+      location = app_mall
+      block_when_not = point_tight_rules
+      message = There is something there, but you'll need management's trust first.
+   }
+
+   block_11_chattin_em_plain : block {
+      location = chattin_em_plain
+      block_when_not = point_push_best
+      message = The bush pest slides over to block passage south.
+   }
+
+   block_02_cache_shack : block {
+      location = cache_shack
+      block_when_not = point_push_best
+      message = The bush pest slides over to block passage west.
+   }
+
+   block_13_moldin_dolmen : block {
+      location = moldin_dolmen
+      block_when_not = point_push_best
+      message = The bush pest slides over to block passage north.
+   }
+
+   block_31_streaky_cove : block {
+      location = streaky_cove
+      block_when_not = point_pull_file
+      message = Perhaps there is a passage south behind the backin' cabin. How to clear it out?
+   }
+
+   block_42_yankin_canyon : block {
+      location = yankin_canyon
+      block_when_not = point_pull_file
+      message = Perhaps there is a passage east behind the backin' cabin. How to clear it out?
+   }
+
+   block_33_collation_location : block {
+      location = collation_location
+      block_when_not = point_pull_file
+      message = Perhaps there is a passage north behind the backin' cabin. How to clear it out?
+   }
+
+   ###########################block_done
 
    block_done_meadow_rocky_caves : block {
       location = rocky_caves
