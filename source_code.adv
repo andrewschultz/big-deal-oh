@@ -929,6 +929,21 @@ locations {
                : done ;
             }
          }
+         : if (point_creaky_stove) {
+            : match "bake tons" {
+               : if (point_bake_tons) {
+                  : print "You already had enough baking for one adventure, even if the stove didn't get destroyed." ;
+                  : done ;
+               }
+               : print "The buns, charged with the dough groups' magic, fizzle as they heat up and explode! Fortunately, only the less picturesque part of the streaky cove blew up. Behind the streaky cove, you notice a different sort of cove: a {puz_point_tree_cove}!" ;
+               : set_true "point_bake_tons" ;
+               : set_false "think_bake_tons" ;
+               : gosub "add_point" ;
+               : update_graphic ;
+               : destroy "buns" ;
+               : done ;
+            }
+         }
       }
    }
    taller_altar : location "{loc_taller_altar}" header="{header_taller_altar}" graphic="r_0_blank" {
@@ -1685,6 +1700,21 @@ on_command {
       : match "_ buns" {
          : print "All you can do is examine the buns. Well, with the parser and with buns as a noun." ;
          : done ;
+      }
+      : if ((!point_creaky_stove || !is_at "streaky_cove")) {
+         : match "bake tons" {
+            : print "You have nothing to help you cook here." ;
+            : done ;
+         }
+         : match "bake _;_ tons" { # obscure bug here, 1/2 guess will be spoiled that stove is in cove if we BAKE TONS outside, whether or not stove is there ??
+            : set_integer var="tempint" "10" ;
+            : set_false "first_half" ;
+            : match "bake _" {
+               : set_true "first_half" ;
+            }
+            : gosub "say_half" ;
+            : done ;
+         }
       }
    }
    : gosub "check_diagnostics" ;
