@@ -629,7 +629,7 @@ locations {
             : match "take buns" {
                : print "Why, yes, it is that simple. You take the buns!" ;
                : set_true "buns_taken" ;
-			   : update_graphic ;
+               : update_graphic ;
                : pocket "buns" ;
                : done ;
             }
@@ -1022,7 +1022,7 @@ locations {
 
 # Defines things in the world (scenery cannot be carried)
 objects {
-    buns : object "the BUNS you managed/needed to TAKE" at="cache_shack" conspicuous="false" ;
+   buns : object "the BUNS you managed/needed to TAKE" at="cache_shack" conspicuous="false" ;
 }
 
 connections {
@@ -1199,8 +1199,8 @@ subroutines {
          : done ;
       }
       : cycle key = "one_right" predictable_order = "true" skip_interval = "0" max_loops = "1" {
-      : print "One of those words felt right, but the other didn't. You must be halfway there{for_bonus}.{already_got_check}" ;
-      : print "Again, you feel like you got halfway there{for_bonus}.{already_got_check}" ;
+         : print "One of those words felt right, but the other didn't. You must be halfway there{for_bonus}.{already_got_check}" ;
+         : print "Again, you feel like you got halfway there{for_bonus}.{already_got_check}" ;
          on_exhausted {
             : print "One word right, one word wrong{for_bonus}.{already_got_check}" ;
          }
@@ -1261,18 +1261,18 @@ subroutines {
          : if (!bonus_point_map_all) {
             : print "You haven't gained access to the internal game map command yet. It's not critical to win, though." ;
             : done ;
-           }
-           : set_true "drawing_map" ;
-           : clear_screen ;
-           : update_graphic "m_0_blank" ;
-           : press_any_key ;
-           : set_false "drawing_map" ;
-           : if (!map_note) {
-              : print "{note_once}there are no one-way paths. If you have activated the option to block completed rooms, they will be in <GREY<#888>>." ;
-              : set_true "map_note" ;
-           }
-           : update_graphic ;
-        : done ;
+         }
+         : set_true "drawing_map" ;
+         : clear_screen ;
+         : update_graphic "m_0_blank" ;
+         : press_any_key ;
+         : set_false "drawing_map" ;
+         : if (!map_note) {
+            : print "{one_time}there are no one-way paths. If you have activated the option to block completed rooms, they will be in <GREY<#888>>." ;
+            : set_true "map_note" ;
+         }
+         : update_graphic ;
+         : done ;
       }
 
       : match "score _" {
@@ -1292,12 +1292,12 @@ subroutines {
          : gosub "diagnostic_think_core_half" ;
          : gosub "diagnostic_think_bonus_half" ;
          : if (print_core_nag_after) {
-            : print "{note_once}You have figured each half of a point-scoring command, but you haven't typed them both together. That still might not work if you haven't prepared by solving other puzzles, but if that's the case, {vd_think} will remind you with context until it does." ;
+            : print "{one_time}You have figured each half of a point-scoring command, but you haven't typed them both together. That still might not work if you haven't prepared by solving other puzzles, but if that's the case, {vd_think} will remind you with context until it does." ;
             : set_true "solved_both_parts_core_nag" ;
             : set_false "print_core_nag_after" ;
          }
          : if (print_bonus_nag_after) {
-            : print "{note_once}You have figured each half of a bonus point scoring command, but you haven't typed them both together. {vd_think} will remind you of this try until it works, though game state changes may make, or have made, this undoable until you replay." ;
+            : print "{one_time}You have figured each half of a bonus point scoring command, but you haven't typed them both together. {vd_think} will remind you of this try until it works, though game state changes may make, or have made, this undoable until you replay." ;
             : set_true "solved_both_parts_bonus_nag" ;
             : set_false "print_bonus_nag_after" ;
          }
@@ -1475,13 +1475,13 @@ subroutines {
                   : print "{think_here_also} is a summary of correct bonus command half-guesses:" ;
                   : set_true "think_text_yet" ;
                   : set_true "think_bonus_yet" ;
-                  }
+               }
                : print {( (part_bonus_score != 2 ? (collection_get{ collection -> ("think_first_bonus") index -> (counter) }) : "{noguess}") + " " + (part_bonus_score >= 2 ? (collection_get{ collection -> ("think_second_bonus") index -> (counter) }) : "{noguess}") + " " + (collection_get{ collection -> ("situations_bonus") index -> (counter) }) )} ;
                : if (!solved_both_parts_bonus_nag && part_bonus_score == 3) {
                   : set_true "print_bonus_nag_after" ;
-                  }
                }
             }
+         }
          : increment "counter" ;
       }
       : set_false "in_bonus_half" ;
@@ -1950,19 +1950,19 @@ on_render {
    }
    : if (is_at "collation_location") {
       : if (!point_grow_dupes) {
-		: overlay "s_collation_location_sad" x="33" y="0" ;
-		: overlay "s_collation_location_sad" x="55" y="0" ;
-		: overlay "s_collation_location_sad" x="179" y="0" ;
-		: overlay "s_collation_location_sad" x="201" y="0" ;
+         : overlay "s_collation_location_sad" x="33" y="0" ;
+         : overlay "s_collation_location_sad" x="55" y="0" ;
+         : overlay "s_collation_location_sad" x="179" y="0" ;
+         : overlay "s_collation_location_sad" x="201" y="0" ;
       } : else {
-		: overlay "s_collation_location_happy" x="22" y="0" ;
-		: overlay "s_collation_location_happy" x="44" y="0" ;
-		: overlay "s_collation_location_happy" x="66" y="0" ;
-		: overlay "s_collation_location_happy" x="88" y="0" ;
-		: overlay "s_collation_location_happy" x="146" y="0" ;
-		: overlay "s_collation_location_happy" x="168" y="0" ;
-		: overlay "s_collation_location_happy" x="190" y="0" ;
-		: overlay "s_collation_location_happy" x="212" y="0" ;
+         : overlay "s_collation_location_happy" x="22" y="0" ;
+         : overlay "s_collation_location_happy" x="44" y="0" ;
+         : overlay "s_collation_location_happy" x="66" y="0" ;
+         : overlay "s_collation_location_happy" x="88" y="0" ;
+         : overlay "s_collation_location_happy" x="146" y="0" ;
+         : overlay "s_collation_location_happy" x="168" y="0" ;
+         : overlay "s_collation_location_happy" x="190" y="0" ;
+         : overlay "s_collation_location_happy" x="212" y="0" ;
       }
    }
    : if (is_at "demo_meadow" && !point_tool_stall) {
