@@ -497,6 +497,7 @@ booleans {
    # think variables
    think_leery_owner : boolean "false" ;
    think_grow_dupes  : boolean "false" ;
+   think_bake_tons   : boolean "false" ;
 
    # dynamic booleans for ease of coding
    known_leery_owner : dynamic_boolean {( think_leery_owner || point_leery_owner )} ;
@@ -505,7 +506,7 @@ booleans {
 
    # think-relevant booleans
    already_got_command : boolean "false" ;
-   think_any : dynamic_boolean {( think_leery_owner )} ;
+   think_any : dynamic_boolean {( think_leery_owner || think_grow_dupes || think_bake_tons )} ;
    first_half : boolean "false" ;
    half_bonus : boolean "false" ;
    bonus_obfuscated_note_yet : boolean "false" ;
@@ -1289,6 +1290,15 @@ subroutines {
             }
             : set_true "tutorial_5_think" ;
          }
+         : if (think_leery_owner) {
+            : print "You called for the {tht_leery_owner} in the tool stall but didn't have anything to trade." ;
+         }
+         : if (think_bake_tons) {
+            : print "You tried to {tht_bake_tons} {here_streaky_cove} but the buns weren't ready to grow yet.." ;
+         }
+         : if (think_grow_dupes) {
+            : print "You tried to grow dupes {here_collation_location} but didn't have any additional materials to help." ;
+         }
          : gosub "diagnostic_think_core_half" ;
          : gosub "diagnostic_think_bonus_half" ;
          : if (print_core_nag_after) {
@@ -1301,12 +1311,9 @@ subroutines {
             : set_true "solved_both_parts_bonus_nag" ;
             : set_false "print_bonus_nag_after" ;
          }
-         : if (!think_any) {
+         : if (!think_any && !think_core_yet && !think_bonus_yet) {
             : print "You haven't had any good ideas you weren't able to execute yet." ;
             : done ;
-         }
-         : if (think_leery_owner) {
-            : print "You called for the {tht_leery_owner} in the tool stall but didn't have anything to trade." ;
          }
       }
    }
