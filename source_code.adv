@@ -120,8 +120,8 @@ strings {
    loc_jeerin_region: string "You are in the jeerin' region. You can exit north or west." ;
    header_jeerin_region: string "<Jeerin' Region<#ff0>>" ;
 
-   loc_moldin_dolmen: string "You are by the moldin' dolmen. The only exit is south." ;
-   header_moldin_dolmen: string "<Moldin' Dolmen<#ff0>>" ;
+   loc_moldin_dolmen : string "You are by the moldin' dolmen. The only exit is south." ;
+   header_moldin_dolmen : string "<Moldin' Dolmen<#ff0>>" ;
 
    loc_newbies_boonies : dynamic_string {( "Here in the newbies' boonies you can " + (point_push_best ? "go in all four directions with the bush pest gone." : "only go back south for now. There's a {puz_point_bush_pest} dancing around that seems to pop up in the latest direction you're considering going. Well, except back east." ) )} ;
    header_newbies_boonies : string "<Newbies' Boonies<#ff0>>" ;
@@ -804,7 +804,7 @@ locations {
    }
    jeerin_region : location "{loc_jeerin_region}" header="{header_jeerin_region}" graphic="r_0_blank" {
    }
-   mooting_tombing : location "{loc_mooting_tombing}" header="{header_mooting_tombing}" graphic="r_0_blank" {
+   moldin_dolmen : location "{loc_moldin_dolmen}" header="{header_moldin_dolmen}" graphic="r_0_blank" {
    }
    newbies_boonies : location "{loc_newbies_boonies}" header="{header_newbies_boonies}" graphic="r_newbies_boonies" {
       on_command {
@@ -1041,7 +1041,7 @@ connections {
       backin_cabin, south, streaky_cove
 
       newbies_boonies, west, cache_shack
-      newbies_boonies, north, mooting_tombing
+      newbies_boonies, north, moldin_dolmen
       newbies_boonies, south, chattin_em_plain
 
       outer_tower, north, tenser_center
@@ -1413,9 +1413,9 @@ subroutines {
                : print {( (part_core_score != 2 ? (collection_get{ collection -> ("think_first_core") index -> (counter) }) : "{noguess_c_1}") + " " + (part_core_score >= 2 ? (collection_get{ collection -> ("think_second_core") index -> (counter) }) : "{noguess}") + " " + (collection_get{ collection -> ("situations_core") index -> (counter) }) )} ;
                : if (!solved_both_parts_core_nag && part_core_score == 3) {
                   : set_true "print_core_nag_after" ;
-                  }
                }
             }
+         }
          : increment "counter" ;
       }
    }
@@ -1839,9 +1839,9 @@ on_render {
          : overlay "m_0_visited" x="121" y="85" ;
          : overlay "m_backin_cabin" x="121" y="85" ;
       }
-      : if (has_visited("mooting_tombing")) {
+      : if (has_visited("moldin_dolmen")) {
          : overlay "m_0_visited" x="41" y="64" ;
-         : overlay "m_mooting_tombing" x="41" y="64" ;
+         : overlay "m_moldin_dolmen" x="41" y="64" ;
       }
       : if (has_visited("collation_location")) {
          : overlay "m_0_visited" x="121" y="64" ;
@@ -1975,7 +1975,7 @@ assets {
       m_foldin_gate : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADRJREFUCFtjYAABtpfTHRhYVoY6MLCtDGUAsYDE26kMUJBeBiRaVYDEdjUgMRXESlWDyAEAgFUKPG/wiHMAAAAASUVORK5CYII=" ;
       m_gnawing_awning : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAAEBJREFUCB1jZAACRuN4ybeMThkM3xijEj4wMXrFL4xiNCpf6McIlmVZzryJkWsBwzVGvjkMbIxcHhHPQMQ2sCwA78IOrvRx8n8AAAAASUVORK5CYII=" ;
       m_jeerin_region : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADhJREFUCB1jYAABxtzpDgyMnqFAIncqkOsZysDAnAskwIAtLe4BA6tH0AIGtmwgweoJItLiFoAlAVTkC4F+l+W6AAAAAElFTkSuQmCC" ;
-      m_mooting_tombing : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAAD5JREFUCFtjYAACRpFbf9cyie2J52AC8niYfjAw/GBicGH4wgCWtY40P8t0Xew+SFaBh4Xhx4NfTIwMChBZANiuDpnGAeoYAAAAAElFTkSuQmCC" ;
+      m_moldin_dolmen : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAAD5JREFUCFtjYAACRpFbf9cyie2J52AC8niYfjAw/GBicGH4wgCWtY40P8t0Xew+SFaBh4Xhx4NfTIwMChBZANiuDpnGAeoYAAAAAElFTkSuQmCC" ;
       m_newbies_boonies : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADtJREFUCFtjYAAB2VWnMxhEtVZ5MIiuOp3AICqySoFBdAqQBQY8714nMHCtWuXAwLNqNZilABQDskAAABduEQTCzslxAAAAAElFTkSuQmCC" ;
       m_oopster_stupor : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAAD9JREFUCB1jYAAB2bu7NzCIhgppMIjGTgayAiZpMMhenLwCLMnA9urdAQYWr1ULGNi8Xh1gYPLqArL8+haAZQEhBBEv5KFSdwAAAABJRU5ErkJggg==" ;
       m_outer_tower : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADJJREFUCB1jYAABxqu3gUTIpAYgMRvGujOrASzJwLxrLVBCa6UDkACxND2BLEtfB7AsAMpWDTed+6xtAAAAAElFTkSuQmCC" ;
