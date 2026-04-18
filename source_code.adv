@@ -1211,58 +1211,16 @@ barriers {
 
    #blockers will all be defined by map location (x,y) from bottom left. (6,4) is the upper right map edge.
 
-   block_0_meadow_rockycaves : block {
+   block_10_rockycaves : block {
       location = rocky_caves
       block_when_not = point_rocky_caves
-      message = Maybe something's that way, but you need to look for something concrete.
+      message = Maybe something's below, but you need to look for something concrete.
    }
 
-   block_0_meadow_toolstall : block {
-      location = tool_stall
-      block_when_not = point_tool_stall
-      message = Maybe something's that way, but you need to look for something concrete.
-   }
-
-   block_0_meadow_newbies_boonies : block {
-      location = newbies_boonies
-      block_when_not = point_tight_rules
-      message = Maybe something's that way, but you need to look for something concrete.
-   }
-
-   block_0_meadow_backin_cabin : block {
-      location = backin_cabin
-      block_when_not = point_tight_rules
-      message = Maybe something's that way, but you need to look for something concrete.
-   }
-
-   block_0_meadow_outer_tower : block {
-      location = outer_tower
-      block_when_not = point_tight_rules
-      message = Maybe something's that way, but you need to look for something concrete.
-   }
-
-   block_1_meadow_newbies_boonies : block {
-      location = newbies_boonies
-      block_when_not = point_taming_flowers
-      message = You need to neutralize the flaming towers first.
-   }
-
-   block_1_meadow_backin_cabin : block {
-      location = backin_cabin
-      block_when_not = point_taming_flowers
-      message = You need to neutralize the flaming towers first.
-   }
-
-   block_1_meadow_outer_tower : block {
-      location = outer_tower
-      block_when_not = point_taming_flowers
-      message = You need to neutralize the flaming towers first.
-   }
-
-   block_05_toolstall_app_mall : block {
+   block_20_app_mall : block {
       location = app_mall
       block_when_not = point_tight_rules
-      message = There is something there, but you'll need management's trust first.
+      message = There is something south, but you'll need management's trust first.
    }
 
    block_11_chattin_em_plain : block {
@@ -1271,16 +1229,10 @@ barriers {
       message = The bush pest slides over to block passage south.
    }
 
-   block_02_cache_shack : block {
-      location = cache_shack
-      block_when_not = point_push_best
-      message = The bush pest slides over to block passage west.
-   }
-
-   block_13_moldin_dolmen : block {
-      location = moldin_dolmen
-      block_when_not = point_push_best
-      message = The bush pest slides over to block passage north.
+   block_21_meadow_toolstall : block {
+      location = tool_stall
+      block_when_not = point_tool_stall
+      message = Maybe something's south, but you need to look for something concrete.
    }
 
    block_31_streaky_cove : block {
@@ -1289,16 +1241,90 @@ barriers {
       message = Perhaps there is a passage south behind the backin' cabin. How to clear it out?
    }
 
+   block_02_cache_shack : block {
+      location = cache_shack
+      block_when_not = point_push_best
+      message = The bush pest slides over to block passage west.
+   }
+
+   block_12_0_newbies_boonies : block {
+      location = newbies_boonies
+      block_when_not = point_tight_rules
+      message = Maybe something's west, but you need to look for something concrete.
+   }
+
+   block_12_newbies_boonies : block {
+      location = newbies_boonies
+      block_when_not = point_taming_flowers
+      message = You need to neutralize the flaming towers first.
+   }
+
+   # no block_22 since that's the demo meadow where we start
+
+   block_32_0_backin_cabin : block {
+      location = backin_cabin
+      block_when_not = point_tight_rules
+      message = Maybe something's east, but you need to look for something concrete.
+   }
+
+   block_32_backin_cabin : block {
+      location = backin_cabin
+      block_when_not = point_taming_flowers
+      message = You need to neutralize the flaming towers first.
+   }
+
    block_42_yankin_canyon : block {
       location = yankin_canyon
       block_when_not = point_pull_file
       message = Perhaps there is a passage east behind the backin' cabin. How to clear it out?
    }
 
+   block_13_moldin_dolmen : block {
+      location = moldin_dolmen
+      block_when_not = point_push_best
+      message = The bush pest slides over to block passage north.
+   }
+
+   block_23_0_outer_tower : block {
+      location = outer_tower
+      block_when_not = point_tight_rules
+      message = Maybe something's north, but you need to look for something concrete.
+   }
+
+   block_23_outer_tower : block {
+      location = outer_tower
+      block_when_not = point_taming_flowers
+      message = You need to neutralize the flaming towers first.
+   }
+
    block_33_collation_location : block {
       location = collation_location
       block_when_not = point_pull_file
       message = Perhaps there is a passage north behind the backin' cabin. How to clear it out?
+   }
+
+   block_14_ailer_lair : block {
+      location = ailer_lair
+      block_when_not = point_minister_south
+      message = The sinister mouth blocks your passage west.
+   }
+
+   block_24_tenser_center : block {
+      location = tenser_center
+      block_when_not = key_used
+      message = You haven't unlocked the tower yet.
+   }
+
+   block_34_jeerin_region : block {
+      location = jeerin_region
+      block_when_not = point_minister_south
+      message = The sinister mouth blocks your passage east.
+   }
+
+   block_25_oopster_stupor : block {
+      location = oopster_stupor
+      block_when_not = point_minister_south
+      message = The sinister mouth blocks your passage north.
    }
 
    ###########################block_done
