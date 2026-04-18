@@ -1008,7 +1008,7 @@ locations {
                : done ;
             }
          }
-         : if (point_creaky_stove) {
+         : if (point_creaky_stove && is_carried "buns") {
             : match "bake tons" {
                : if (point_bake_tons) {
                   : print "You already had enough baking for one adventure, even if the stove didn't get destroyed." ;
@@ -1021,6 +1021,27 @@ locations {
                : update_graphic ;
                : destroy "buns" ;
                : done ;
+            }
+            : match "key trove" {
+               : if (point_key_trove) {
+                  : print "You already found the key trove. You just need to figure what to do with it." ;
+                  : done ;
+               }
+               : print "There are a lot of trees, but you eventually uncover a key trove." ;
+               : set_true "point_key_trove" ;
+               : gosub "add_point" ;
+               : done ;
+            }
+            : if (!point_key_trove) {
+               : match "key _;_ trove" {
+                  : set_integer var="tempint" "11" ;
+                  : set_false "first_half" ;
+                  : match "key _" {
+                     : set_true "first_half" ;
+                  }
+                  : gosub "say_half" ;
+                  : done ;
+               }
             }
          }
       }
