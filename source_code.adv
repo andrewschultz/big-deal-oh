@@ -141,7 +141,7 @@ strings {
    loc_taller_altar : string "You are in the taller altar. The only exit is south." ;
    header_taller_altar : string "<Taller Altar<#ff0>>" ;
 
-   loc_tenser_center : string "You are in the tenser center. You can exit in all four directions, though you probably don't need to go back south." ;
+   loc_tenser_center : dynamic_string "You are in the tenser center. " + (point_minister_south ? "You can exit in all four directions with the sinister mouth gone, though you probably don't need to go back south." : "A sinister mouth blocks passage further! You can only go south right now." )} ;
    header_tenser_center : string "<Tenser Center<#ff0>>" ;
 
    loc_tool_stall : dynamic_string {( "You're in a tool stall. The exit is back {dir_n}. Nearby you see " + (point_leery_owner ? "the owner, no longer leery" : "an {puz_point_eerie_loner}") + (point_tight_rules || !point_leery_owner ? "" : ". That sign indicates the {puz_point_right_tools} are available, but you haven't figured how to ask for them yet") + "." + (point_tight_rules ? "\nThe owner also showed you a passage to the south." : "") )} ;
@@ -161,6 +161,7 @@ strings {
    puz_point_pull_file : dynamic_string {( opt_color_coding ? "<full pile<#f80>>" : "pull file" )} ;
    puz_point_right_tools : dynamic_string {( opt_color_coding ? "<right tools<#f80>>" : "right tools" )} ;
    puz_point_real_stench : dynamic_string {( opt_color_coding ? "<real stench<#f80>>" : "real stench" )} ;
+   puz_point_sinister_mouth : dynamic_string {( opt_color_coding ? "<sinister mouth<#f80>>" : "sinister mouth" )} ;
    puz_point_stool_tall : dynamic_string {( opt_color_coding ? "<stool (tall)<#f80>>" : "stool (tall)" )} ;
 
    # puzzle text (bonus) (alphabetize)
@@ -198,7 +199,7 @@ strings {
 
 integers {
    score : integer "0" ;
-   max_score : integer "10" ;
+   max_score : integer "17" ;
 
    bonus_score : integer "0" ;
    max_bonus_score : integer "3" ;
@@ -476,18 +477,23 @@ booleans {
    tutorial_done : boolean "false" ;
 
    # game state (point scoring) (alphabetical, with number in half-guess array)
-   point_bake_tons : boolean "false" ;
-   point_drop_chain : boolean "false" ;
-   point_grow_dupes : boolean "false" ;      # 8
-   point_leery_owner : boolean "false" ;     # 3
-   point_pull_file : boolean "false" ;       # 7
-   point_push_best : boolean "false" ;       # 6
-   point_rocky_caves : boolean "false" ;     # 0
-   point_steel_wrench : boolean "false";     # 1
-   point_taming_flowers : boolean "false" ;  # 5
-   point_tight_rules : boolean "false" ;     # 4
-   point_tool_stall : boolean "false" ;      # 2
+   point_bake_tons       : boolean "false" ; # 9
+   point_chop_drain      : boolean "false" ; # 13
    point_creaky_stove    : boolean "false" ; # 10
+   point_formed_wax      : boolean "false" ; # 15
+   point_grow_dupes      : boolean "false" ; # 8
+   point_key_trove       : boolean "false" ; # 11
+   point_leery_owner     : boolean "false" ; # 3
+   point_lodging_doc     : boolean "false" ; # 14
+   point_platinum_chain  : boolean "false" ; # 12
+   point_pull_file       : boolean "false" ; # 7
+   point_push_best       : boolean "false" ; # 6
+   point_rocky_caves     : boolean "false" ; # 0
+   point_minister_south  : boolean "false" ; # 16
+   point_steel_wrench    : boolean "false" ; # 1
+   point_taming_flowers  : boolean "false" ; # 5
+   point_tight_rules     : boolean "false" ; # 4
+   point_tool_stall      : boolean "false" ; # 2
 
    # bonus point(s) (alphabetize)
    bonus_point_dig_below : boolean "false" scope="survivor" ;
@@ -949,6 +955,29 @@ locations {
    taller_altar : location "{loc_taller_altar}" header="{header_taller_altar}" graphic="r_0_blank" {
    }
    tenser_center : location "{loc_tenser_center}" header="{header_tenser_center}" graphic="r_0_blank" {
+      on_command {
+         : match "minister south" {
+            : if (point_minister_south) {
+               : print "Already done!" ;
+               : done ;
+            }
+            : print "Narrative text." ;
+            : set_true "point_minister_south" ;
+            : gosub "add_point" ;
+            : done ;
+         }
+         : if (!point_minister_south) {
+            : match "minister _;_ south" {
+               : set_integer var="tempint" "16" ;
+               : set_false "first_half" ;
+               : match "minister _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
+            }
+         }
+      }
    }
    tool_stall : location "{loc_tool_stall}" header="{header_tool_stall}" graphic="r_tool_stall" {
       on_command {
