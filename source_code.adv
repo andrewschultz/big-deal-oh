@@ -873,6 +873,7 @@ locations {
             } : else {
                : print "Still that real stench." ;
             }
+            : done ;
          }
          : if (smell_rocky_caves) {
             : if (!point_steel_wrench) {
@@ -1768,7 +1769,7 @@ on_command {
    # the 4 below here are point scoring events that need general rejects
 
    : match "drop _" {
-      : set_boolean var="already_flag" {( point_drop_chain )} ;
+      : set_boolean var="already_flag" {( point_chop_drain )} ;
       : print "{standard_puzzle_check}" ;
    }
 
