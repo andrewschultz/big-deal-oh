@@ -88,23 +88,23 @@ strings {
 
    # room(s)
 
-   loc_ailer_lair: string "You are in the ailer lair. You can go north and west." ;
-   header_ailer_lair: string "<Ailer Lair<#ff0>>" ;
+   loc_ailer_lair : string "You are in the ailer lair. You can go north and west." ;
+   header_ailer_lair : string "<Ailer Lair<#ff0>>" ;
 
-   loc_app_mall : dynamic_string {( "Here in the mall they're offering apps--well, you ask the nice jock clerk at the front desk for a code or whatever. Apparently they need to make sure you're sane enough, or something." + (bonus_point_map_all ? "But you got the one you needed." : "Which one might be right for you?" ) + "\nA jock clerk mans the vending area.\nYou can go back north." + (!bonus_point_clock_jerk ? "\nAnd yet the atmosphere isn't quite right. You can probably leave " + (bonus_point_map_all ? "now" : "once") + " you've got what you want, but then there always seems to be more to tidy up." : "" ) )} ;
+   loc_app_mall : dynamic_string {( "Here in the mall they're offering apps--well, you ask the nice jock clerk at the front desk for a code or whatever. Apparently they need to make sure you're sane enough, or something. " + (bonus_point_map_all ? "But you got the one you needed." : "Which app might be right for you?" ) + "\nA jock clerk mans the vending area.\nYou can go back north." + (!bonus_point_clock_jerk ? "\nAnd yet the atmosphere isn't quite right. You can probably leave " + (bonus_point_map_all ? "now" : "once") + " you've got what you want, but then there always seems to be more to tidy up." : "" ) )} ;
    header_app_mall : string "<App Mall<#ff0>>" ;
 
-   loc_backin_cabin   : dynamic_string {( "Here by the backin' cabin, " + (point_pull_file ? "the full pile has been cleaned significantly, and now you see passages in all four directions." : "you can only go back west for now. A full pile spills from the backin' cabin. Whoever put it there obviously was trying to help you, but they may have tried too hard." ) )} ;
+   loc_backin_cabin : dynamic_string {( "Here by the backin' cabin, " + (point_pull_file ? "the full pile has been cleaned significantly, and now you see passages in all four directions." : "you can only go back west for now. A full pile spills from the backin' cabin. Whoever put it there obviously was trying to help you, but they may have tried too hard." ) )} ;
    header_backin_cabin : string "<Backin' Cabin<#ff0>>" ;
 
    loc_cache_shack : string "You are in a cache shack, filled with various random stuff that seems either useless or far too heavy to lift. You can go back east." ;
    header_cache_shack : string "<Cache Shack<#ff0>>" ;
 
-   loc_chattin_em_plain: string "You are in the Chattin 'Em Plain. The only exit is north." ;
-   header_chattin_em_plain: string "<Chattin' 'Em Plain<#ff0>>" ;
+   loc_chattin_em_plain : string "You are in the Chattin 'Em Plain. The only exit is north." ;
+   header_chattin_em_plain : string "<Chattin' 'Em Plain<#ff0>>" ;
 
-   loc_collation_location: dynamic_string {( "You are in a collation location. The only exit is south. Dough groups sit here " + (point_grow_dupes ? "looking lonely" : "happy together") + "." )} ;
-   header_cl: string "<Collation Location<#ff0>>" ;
+   loc_collation_location : dynamic_string {( "You are in a collation location. The only exit is south. Dough groups sit here " + (point_grow_dupes ? "looking lonely" : "happy together") + "." )} ;
+   header_cl : string "<Collation Location<#ff0>>" ;
 
    loc_demo_meadow : string "Here in the Demo Meadow {meadow_status}.\n{meadow_passages}." ;
    meadow_status : dynamic_string {( point_rocky_caves ? "it's quiet again after you got rid of the cocky raves" : listen_demo_meadow ? "you hear some {puz_point_cocky_raves_l}" : "it feels relatively quiet, and yet, not as quiet and peaceful as it should be" )} ;
@@ -114,11 +114,11 @@ strings {
    loc_foldin_gate : string "You're at the foldin' gate. You can go back south. You can't go north and win the game yet." ;
    header_foldin_gate : string "<Foldin' Gate<#ff0>>" ;
 
-   loc_gnawing_awning: string "A gnawing awning blocks passage every where except north and east. It has a gold side to it." ;
-   header_gnawing_awning: string "<Gnawing Awning<#ff0>>" ;
+   loc_gnawing_awning : string "A gnawing awning blocks passage every where except north and east. It has a gold side to it." ;
+   header_gnawing_awning : string "<Gnawing Awning<#ff0>>" ;
 
-   loc_jeerin_region: string "You are in the jeerin' region. You can exit north or west." ;
-   header_jeerin_region: string "<Jeerin' Region<#ff0>>" ;
+   loc_jeerin_region : string "You are in the jeerin' region. You can exit north or west." ;
+   header_jeerin_region : string "<Jeerin' Region<#ff0>>" ;
 
    loc_moldin_dolmen : string "You are by the moldin' dolmen. The only exit is south." ;
    header_moldin_dolmen : string "<Moldin' Dolmen<#ff0>>" ;
@@ -138,17 +138,17 @@ strings {
    loc_streaky_cove: dynamic_string {( "You are in a streaky cove. " + (point_key_trove ? "You discovered a key trove out back." : point_bake_tons ? "You discovered a tree cove once you blew up the stove." : point_creaky_stove ? "You discovered a creaky stove in the greyness of the right wall" : "The greyness of the right wall is a stark contrast to the colorful left side. What could be there?") + "\nThe only exit is north." )} ;
    header_streaky_cove: string "<Streaky Cove<#ff0>>" ;
 
-   loc_taller_altar: string "You are in the taller altar. The only exit is south." ;
-   header_taller_altar: string "<Taller Altar<#ff0>>" ;
+   loc_taller_altar : string "You are in the taller altar. The only exit is south." ;
+   header_taller_altar : string "<Taller Altar<#ff0>>" ;
 
-   loc_tenser_center: string "You are in the tenser center. You can exit in all four directions, though you probably don't need to go back south." ;
-   header_tenser_center: string "<Tenser Center<#ff0>>" ;
+   loc_tenser_center : string "You are in the tenser center. You can exit in all four directions, though you probably don't need to go back south." ;
+   header_tenser_center : string "<Tenser Center<#ff0>>" ;
 
-   loc_tool_stall : dynamic_string {( "You're in a tool stall. The exit is back {dir_n}. Nearby you see " + (point_leery_owner ? "the owner, no longer leery" : "an {puz_point_eerie_loner}") + (point_tight_rules || !point_leery_owner ? "" : ". That sign indicates the {puz_point_right_tools} are available, but you haven't figured how to ask for them yet") + "." )} ;
+   loc_tool_stall : dynamic_string {( "You're in a tool stall. The exit is back {dir_n}. Nearby you see " + (point_leery_owner ? "the owner, no longer leery" : "an {puz_point_eerie_loner}") + (point_tight_rules || !point_leery_owner ? "" : ". That sign indicates the {puz_point_right_tools} are available, but you haven't figured how to ask for them yet") + "." + (point_tight_rules ? "\nThe owner also showed you a passage to the south." : "") )} ;
    header_tool_stall : string "<Tool Stall<#ff0>>" ;
 
-   loc_yankin_canyon: string "You are in the yankin' canyon. The only exit is back west." ;
-   header_yankin_canyon: string "<Yankin' Canyon<#ff0>>" ;
+   loc_yankin_canyon : string "You are in the yankin' canyon. The only exit is back west." ;
+   header_yankin_canyon : string "<Yankin' Canyon<#ff0>>" ;
 
    # puzzle text (core) (alphabetize)
 
@@ -957,7 +957,8 @@ locations {
                : collection_modify { collection = "tried_combo_core" index -> (4) content -> ("true") } ;
                : print "You say you're willing to use the tools properly and take the time to be taught. The leery owner is pleased with this, or at least less displeased than you expected." ;
                : print "But it takes a while. Once you're done, the eerie loner pops back in to complain about how terrible things are outside." ;
-               : print "\"Boy,\" says the owner. \"Usually the loner just generally grouses quietly. But if they actually spoke up, things must be bad. Better go check.\"" ;
+               : print "\"Boy,\" says the owner. \"Usually the loner just generally grouses quietly. But if they actually spoke up, things must be bad. Better go check." ;
+               : print "Or, if you want, I can show you a path back somewhere that may ... help you a bit. Or not. Off to the south, now.\"" ;
                : set_true "point_tight_rules" ;
                : gosub "add_point" ;
                : done ;
