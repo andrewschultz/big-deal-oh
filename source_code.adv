@@ -1005,7 +1005,31 @@ locations {
          }
       }
    }
+   gnawing_awning : location "{loc_gnawing_awning}" header="{header_gnawing_awning}" graphic="r_0_blank" { # ?? describe with 1 or 2 or 3 white sides
+      on_command {
+         : match "sail tide" {
+            : if (point_sail_tide) {
+               : print "You already made a sail tide from the tail side!" ;
+               : done ;
+            }
+            : print "The tail side creaks and somehow sets off a Rube Goldberg-esque sequence of events that results in a waterway opening and the tide rising. You see a boat sail south out of view and then hear yelling to the south." ;
+            : set_true "point_sail_tide" ;
+            : gosub "add_point" ;
+            : done ;
+         }
+         : if (!point_sail_tide) {
+            : match "sail _;_ tide" {
+               : set_integer var="tempint" "21" ;
+               : set_false "first_half" ;
+               : match "sail _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
+            }
+         }
    gnawing_awning : location "{loc_gnawing_awning}" header="{header_gnawing_awning}" graphic="r_0_blank" {
+      }
    }
    jeerin_region : location "{loc_jeerin_region}" header="{header_jeerin_region}" graphic="r_0_blank" {
    }
