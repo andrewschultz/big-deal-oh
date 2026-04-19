@@ -65,3 +65,201 @@ This takes a while, so ...
 The scenery changed significantly! Flaming towers!
 
 > TAMING FLOWERS (1)
+
+You're now officially in the middlegame. The map has opened up so you can go north, west or east. But the outer tower has no game material beyond it yet.
+
+> W
+
+A bush pest!
+
+> PUSH BEST (1)
+
+> W
+
+> TAKE BUNS
+
+Sorry, no point for that one!
+
+> E
+
+> N
+
+The warmed fax that keeps being spit out and vaporized ...
+
+> FORMED WAX (1)
+
+> S
+
+> S
+
+Chattin' 'Em Plain.
+
+> PLATINUM CHAIN (1)
+
+> N
+
+> E
+
+> N
+
+> X KEYHOLE
+
+A dodging lock!
+
+> LODGING DOC (1)
+
+> S
+
+> E
+
+> N
+
+Dough groups.
+
+> GROW DUPES (1)
+
+> S
+
+> S
+
+A streaky cove!
+
+> CREAKY STOVE (1)
+
+A tree cove!
+
+> KEY TROVE (1)
+
+Unfortunately I need to put the code for getting the key into a function so you have to X TROVE even though logically you might see the keys in the trove now because you know what you want.
+
+> X TROVE
+
+> N
+
+> E
+
+> CHOP DRAIN (1)
+
+> W
+
+> W
+
+> W
+
+> N
+
+The dolmen takes the rusty key, wax and strong metal and makes a strong key.
+
+You will be allowed forward now in the tower.
+
+> S
+
+> E
+
+> N
+
+Yay, you can go north!
+
+> N
+
+> MINISTER SOUTH (1)
+
+You're now officially in the endgame. You actually have a bit more freedom of movement -- there are two pairs of rooms that are linked, but you don't need a puzzle to get past them! They're the only two such adjacent pairs in the game. Still, there's stuff to do.
+
+> E
+
+> N
+
+Many pounds are here.
+
+> PENNY MOUNDS (1)
+
+The movement you think you see, well, these people will appear later.
+
+> S
+
+> W
+
+> W
+
+> N
+
+There are three sides here.
+
+The gold side.
+
+> SOLD GUIDE (1)
+
+If you didn't have the pennies, you couldn't have anything sold.
+
+Brick side.
+
+> SICK BRIDE (1)
+
+Tail side.
+
+> SAIL TIDE (1)
+
+> S
+
+Nest boats float around. The ailers are waiting to reward you.
+
+> BEST NOTES (1)
+
+These will help you elsewhere. There's more to do here later, but it's a lot later. The sold guide also tells you about a TORCH. "Everyone knows you can find one in the..."
+
+...a porch? But then the other word would have to start with T. What location starts with T?
+
+The tower.
+
+> E
+
+> S
+
+> X PORCH
+
+> POWER TORCH (1)
+
+> E
+
+The spittin' wrecks want something, but you can't provide it on your own. Thanks to the best notes, you can.
+
+> WRITTEN SPECS (1)
+
+> N
+
+The pool clan is here. They're actually pool players. They owe you a favor for finding their friend.
+
+> COOL PLAN (1)
+
+With the torch, plan and specs, you can go north through the hard maze.
+
+> S
+
+> W
+
+> N
+
+> N
+
+At the gate brook, you can't get the item you were expecting. You can go through the foldin' gate, but ...
+
+> S
+
+> S
+
+> W
+
+Kelp, hard, has washed up here.
+
+> HELP CARD (1)
+
+A cold hard hold card!
+
+> E
+
+> N
+
+> N
+
+> GREAT BOOK (1)
