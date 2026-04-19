@@ -112,6 +112,10 @@ A dodging lock!
 
 > E
 
+A full pile!
+
+> PULL FILE (1)
+
 > N
 
 Dough groups.
@@ -125,6 +129,10 @@ Dough groups.
 A streaky cove!
 
 > CREAKY STOVE (1)
+
+What can we do with a stove?
+
+> BAKE TONS (1)
 
 A tree cove!
 
@@ -161,6 +169,8 @@ You will be allowed forward now in the tower.
 Yay, you can go north!
 
 > N
+
+Now we can go north, but I'm going to prep us to go north first.
 
 > MINISTER SOUTH (1)
 
@@ -220,6 +230,8 @@ The tower.
 
 > POWER TORCH (1)
 
+> N
+
 > E
 
 The spittin' wrecks want something, but you can't provide it on your own. Thanks to the best notes, you can.
@@ -232,13 +244,15 @@ The pool clan is here. They're actually pool players. They owe you a favor for f
 
 > COOL PLAN (1)
 
-With the torch, plan and specs, you can go north through the hard maze.
+With the torch, plan and specs, you can go north through the hard maze. What hard maze?
 
 > S
 
 > W
 
 > N
+
+> HARD MAZE (1)
 
 > N
 

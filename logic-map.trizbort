@@ -167,7 +167,7 @@
 			<dock index="0" id="70" port="e" />
 			<dock index="1" id="68" port="w" />
 		</line>
-		<room id="73" name="Help Card" subtitle="26" x="-416" y="128" w="96" h="64" region="Points" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
+		<room id="73" name="(Reach gate)" subtitle="" x="-416" y="128" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
 		<line id="75" name="" description="" flow="oneWay">
 			<dock index="0" id="62" port="se" />
 			<dock index="1" id="73" port="nw" />
@@ -190,12 +190,17 @@
 			<dock index="1" id="73" port="s" />
 		</line>
 		<line id="20" name="" description="" flow="oneWay">
-			<dock index="0" id="73" port="ne" />
-			<dock index="1" id="60" port="sw" />
+			<dock index="0" id="40" port="e" />
+			<dock index="1" id="60" port="w" />
 		</line>
 		<line id="22" name="" description="" flow="oneWay">
 			<dock index="0" id="64" port="e" />
 			<dock index="1" id="80" port="w" />
+		</line>
+		<room id="40" name="Help Card" subtitle="26" x="-416" y="0" w="96" h="64" region="Points" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
+		<line id="51" name="" description="">
+			<dock index="0" id="73" port="n" />
+			<dock index="1" id="40" port="s" />
 		</line>
 	</map>
 	<settings>
