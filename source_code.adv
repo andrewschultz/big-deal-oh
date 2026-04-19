@@ -147,7 +147,7 @@ strings {
    loc_tool_stall : dynamic_string {( "You're in a tool stall. The exit is back {dir_n}. Nearby you see " + (point_leery_owner ? "the owner, no longer leery" : "an {puz_point_eerie_loner}") + (point_tight_rules || !point_leery_owner ? "" : ". That sign indicates the {puz_point_right_tools} are available, but you haven't figured how to ask for them yet") + "." + (point_tight_rules ? "\nThe owner also showed you a passage to the south." : "") )} ;
    header_tool_stall : string "<Tool Stall<#ff0>>" ;
 
-   loc_yankin_canyon : string "You are in the yankin' canyon. The only exit is back west." ;
+   loc_yankin_canyon : string "Here in the yankin' canyon, there's a hole which occasionally, well, yanks debris into it. As it does so, there are small whirring and slicing noises. The only exit is back west." ;
    header_yankin_canyon : string "<Yankin' Canyon<#ff0>>" ;
 
    # puzzle text (core) (alphabetize)
@@ -505,9 +505,10 @@ booleans {
    bonus_point_clock_jerk : boolean "false" scope="survivor" ;
 
    # think variables
-   think_leery_owner : boolean "false" ;
-   think_grow_dupes  : boolean "false" ;
    think_bake_tons   : boolean "false" ;
+   think_chop_drain  : boolean "false" ;
+   think_grow_dupes  : boolean "false" ;
+   think_leery_owner : boolean "false" ;
 
    # dynamic booleans for ease of coding
    known_leery_owner : dynamic_boolean {( think_leery_owner || point_leery_owner )} ;
@@ -516,7 +517,7 @@ booleans {
 
    # think-relevant booleans
    already_got_command : boolean "false" ;
-   think_any : dynamic_boolean {( think_leery_owner || think_grow_dupes || think_bake_tons )} ;
+   think_any : dynamic_boolean {( think_leery_owner || think_grow_dupes || think_bake_tons || think_chop_drain )} ;
    first_half : boolean "false" ;
    half_bonus : boolean "false" ;
    bonus_obfuscated_note_yet : boolean "false" ;
@@ -1168,6 +1169,7 @@ locations {
 objects {
    buns : object "the BUNS you managed/needed to TAKE" at="cache_shack" conspicuous="false" ;
    chain : object "the platinum chain that snapped onto you that you want to get rid of" ;
+   slab : object "the slender fab fender slab that was inside the platinum chain" conspicuous="false" ;
    wax : object "the formed wax from the warmed fax" ;
 }
 
@@ -1466,6 +1468,9 @@ subroutines {
          }
          : if (think_bake_tons) {
             : print "You tried to {tht_bake_tons} {here_streaky_cove} but the buns weren't ready to grow yet.." ;
+         }
+         : if (think_bake_tons) {
+            : print "You tried to put the chain into a chop drain when one wasn't nearby." ;
          }
          : if (think_grow_dupes) {
             : print "You tried to grow dupes {here_collation_location} but didn't have any additional materials to help." ;
@@ -1845,6 +1850,37 @@ on_command {
    : match "xyzzy _" {
       : print "A low voice booms \"Vexing howls? Hexing?! VOWELS!\"";
       : done ;
+   }
+   : if (is_carried "chain") {
+      : match "chop drain" {
+         : if (point_chop_drain) {
+            : print "The chain should be off-stage. You shouldn't have it again." ;
+            : done ;
+         }
+         : if (!is_at("yankin_canyon")) {
+            : print "That would destroy the chain, but you see nothing that resembles, or could hold, a chop drain." ;
+            : set_true "think_chop_drain" ;
+            : done ;
+         }
+         : print "You take a guess that the hole here is a CHOP DRAIN. You fling the platinum chain towards it. Or try to. You struggle to pull it off, then suddenly it flies into the hole. A high-pitched noise ... and then, out pops, back, a small slab of metal. It feels like it could ward off evil. A slender fab fender-slab, if you will." ;
+         : pocket "slab" ;
+         : destroy "chain" ;
+         : set_true "point_chop_drain" ;
+         : set_false "think_chop_drain" ;
+         : gosub "add_point" ;
+         : done ;
+      }
+      : if (!point_chop_drain) {
+         : match "chop _;_ drain" { # again a bug might tell us where to drop the chain even if we haven't found it ??
+            : set_integer var="tempint" "13" ;
+            : set_false "first_half" ;
+            : match "chop _" {
+               : set_true "first_half" ;
+            }
+            : gosub "say_half" ;
+            : done ;
+         }
+      }
    }
    : if (is_carried "buns") {
       : match "x buns" {
