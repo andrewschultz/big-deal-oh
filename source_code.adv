@@ -1053,6 +1053,22 @@ locations {
                : done ;
             }
          }
+         : if (point_key_trove) {
+            : match "_ trove" {
+               : if (!point_lodging_doc) {
+                  : print {( "So many keys with so many labels. " + (has_visited "outer_tower" ? "You wouldn't know which would fit the outer tower!" : "You haven't found anything that needs unlocking yet, so you won't waste time searching." ) )};
+               } : else_if (!key_found) {
+                  : print "You remember the phrase from the dodging lock. YONDER, FUTZ FONDER, YUTZ. It takes a while, but the keys are sorted more or less alphabetically, so that saves time. The key you pick is rusty. It will fall apart if you try to open the lock." ;
+                  : set_true "key_found" ;
+                  : pocket "trove_key" ;
+               } : else_if (key_duplicated) {
+                  : print {( "You have no need to search for another key, now you " + (key_used ? "used it" : "have a stronger replacement") + "." )} ;
+               } : else {
+                  : print "You search for another key, perhaps a stronger one, but nothing turns up. You'll have to make one." ;
+               }
+               : done ;
+            }
+         }
          : if (point_creaky_stove && is_carried "buns") {
             : match "bake tons" {
                : if (point_bake_tons) {
