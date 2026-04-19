@@ -627,6 +627,51 @@ vocabulary {
 
 locations {
    ailer_lair : location "{loc_ailer_lair}" header="{header_ailer_lair}" graphic="r_0_blank" {
+      on_command {
+         : if (has_visited "foldin_gate") {
+            : match "help card" {
+               : if (point_help_card) {
+                  : print "You already found the help card!" ;
+                  : done ;
+               }
+               : print "The kelp is tough to pick through, which is discouraging, but then you remember if it's tough to pick through, it can catch a lot of stuff. And you find a help card! Actually, it's more a cold hard hold card, like for a library or something." ;
+               : set_true "point_help_card" ;
+               : pocket "hold_card" ;
+               : gosub "add_point" ;
+               : done ;
+            }
+         }
+         : if (!point_help_card) {
+            : match "help _;_ card" {
+               : set_integer var="tempint" "26" ;
+               : set_false "first_half" ;
+               : match "help _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
+            }
+         }
+         : if (point_sail_tide && !point_best_notes) {
+            : match "best notes" {
+               : print "Yes! That is what you need. The ailers are happy with this and leave you with the notes. They go off to complain elsewhere, abnout more first-worldly problems." ;
+               : set_true "point_best_notes" ;
+               : gosub "add_point" ;
+               : done ;
+            }
+         }
+         : if (point_sail_tide && !point_best_notes) {
+            : match "best _;_ notes" {
+               : set_integer var="tempint" "23" ;
+               : set_false "first_half" ;
+               : match "best _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
+            }
+         }
+      }
    }
    app_mall : location "{loc_app_mall}" header="{header_app_mall}" graphic="r_0_blank" {
       on_command {
