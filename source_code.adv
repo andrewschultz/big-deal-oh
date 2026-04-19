@@ -120,7 +120,7 @@ strings {
    loc_jeerin_region : string "You are in the jeerin' region. You can exit north or west." ;
    header_jeerin_region : string "<Jeerin' Region<#ff0>>" ;
 
-   loc_moldin_dolmen : string "You are by the moldin' dolmen. The only exit is south." ;
+   loc_moldin_dolmen : dynamic_string {( "You are by a " + (key_duplicated ? "no longer " : "") + "glowing moldin' dolmen." + (point_formed_wax ? " A fax machine from behind a wall spits out a fax every few minutes. Weird to have it here! Perhaps you should inspect things." : "") + "\nThe only exit is south." )} ;
    header_moldin_dolmen : string "<Moldin' Dolmen<#ff0>>" ;
 
    loc_newbies_boonies : dynamic_string {( "Here in the newbies' boonies you can " + (point_push_best ? "go in all four directions with the bush pest gone." : "only go back south for now. There's a {puz_point_bush_pest} dancing around that seems to pop up in the latest direction you're considering going. Well, except back east." ) )} ;
@@ -459,6 +459,9 @@ booleans {
    placed_flaming_towers : boolean "false" ;
    buns_taken : boolean "false" ;
 
+   key_found : boolean "false" ;
+   key_duplicated : boolean "false" ;
+   key_used : boolean "false" ;
    # game state (tutorials)
    skip_tutorial_cue : boolean "false" ; # not a tutorial but skip every-turn note when it is implied
    tutorial_0_in_tutorial : boolean "false" ;
@@ -850,13 +853,18 @@ locations {
                : print "You got enough formed wax." ;
                : done ;
             }
-            : print "You grab a warmed fax as it comes out. Not sure what to do with it, or how to make formed wax, you crumple it in a ball and throw it at the dolmen. The dolmen throws a lump of formed wax back at you. It's not fully formed, but it's in a block that will fit nicely into your pocket while still being able to take impressions of whatever you need to make impressions of." ;
+            : print "You grab a warmed fax as it comes out. Not sure what to do with it, or how to make formed wax, you crumple it in a ball and throw it at the dolmen. The dolmen throws a lump of formed wax back at you. It's not fully formed, but it's in a block that will fit nicely into your pocket while still being able to take impressions of whatever you need to make impressions of.\nYou're so busy fumbling in your pocket you don't notice the fax machine has slowed down and eventually stopped." ;
             : pocket "wax" ;
+            : gosub "dolmen_key_form" ;
             : set_true "point_formed_wax" ;
             : gosub "add_point" ;
             : done ;
          }
          : if (!point_formed_wax) {
+            : match "_ fax;_ machine" {
+               : print "When you walk over by the machine, it spits out a fax every couple minutes. Each fax is warmed but quickly cools off and disintegrates. What on earth could you do with a warmed fax?" ;
+               : done ;
+            }
             : match "formed _;_ wax" {
                : set_integer var="tempint" "15" ;
                : set_false "first_half" ;
@@ -867,6 +875,9 @@ locations {
                : done ;
             }
          }
+      }
+      on_describe {
+         : gosub "dolmen_key_form" ;
       }
    }
    newbies_boonies : location "{loc_newbies_boonies}" header="{header_newbies_boonies}" graphic="r_newbies_boonies" {
@@ -952,6 +963,11 @@ locations {
                : done ;
             }
          }
+      }
+      on_describe {
+          : if (key_duplicated && !key_used) {
+             : print "?? The reconstructed key works! You can go north now." ;
+          }
       }
    }
    rocky_caves : location "{loc_rocky_caves}" header="{header_rocky_caves}" graphic="r_rocky_caves" {
@@ -1195,6 +1211,8 @@ objects {
    buns : object "the BUNS you managed/needed to TAKE" at="cache_shack" conspicuous="false" ;
    chain : object "the platinum chain that snapped onto you that you want to get rid of" ;
    slab : object "the slender fab fender slab that was inside the platinum chain" conspicuous="false" ;
+   seek_key : object "the reconstructed key from the dolmen" ;
+   trove_key : object "a flimsy key from the trove" ;
    wax : object "the formed wax from the warmed fax" ;
 }
 
@@ -1649,6 +1667,15 @@ subroutines {
       : gosub "option_err_stub" ;
    }
 
+   #########################################room specific
+
+   dolmen_key_form: subroutine {
+      : if (point_formed_wax && key_found && point_chop_drain && !key_duplicated) {
+         : print "Now you have the old key, some stronger metal, and wax to make impressions, you could almost make a key. The moldin' dolmen might be able to help. You offer the three items to it ... and out comes a shiny new key! A key so \"Seek, oh!\"" ;
+         : destroy "trove_key" ;
+         : pocket "seek_key" ;
+      }
+   }
    #########################################hint and tutorial
 
    diagnostic_think_core_half : subroutine {
