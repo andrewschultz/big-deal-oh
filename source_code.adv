@@ -1203,6 +1203,16 @@ locations {
       }
    }
    yankin_canyon : location "{loc_yankin_canyon}" header="{header_yankin_canyon}" graphic="r_0_blank" {
+      on_command {
+         : match "listen _" {
+            : print {( point_chop_drain ? "No whirring now." : "There's a whirring from the hole." )} ;
+            : done ;
+         }
+         : match "_ hole" {
+            : print {( point_chop_drain ? "Now you know the hole can shred metal, you don't want to mess with it." : "You watch the hole a bit. Leaves and tumbleweeds and such get torn apart as they are sucked in." )} ;
+            : done ;
+         }
+      }
    }
 }
 
