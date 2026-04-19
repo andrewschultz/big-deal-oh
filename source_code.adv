@@ -204,10 +204,10 @@ strings {
 
 integers {
    score : integer "0" ;
-   max_score : integer "18" ;
+   max_score : integer "28" ;
 
-   bonus_score : integer "0" ;
-   max_bonus_score : integer "3" ;
+   bonus_score : integer "0" scope="survivor" ;
+   max_bonus_score : integer "4" ;
 
    # hinting. Magic numbers are 1 = do later, 0 = done, -1 = nothing to do
    # note items are listed in backwards order of how we do things
@@ -286,7 +286,18 @@ collections {
          "{here_yankin_canyon}",
          "{here_outer_tower}",
          "{here_moldin_dolmen}",
-         "{here_tenser_center}"
+         "{here_tenser_center}",
+         "{here_oopster_stupor}",
+         "{here_taller_altar}",
+         "{here_gnawing_awning}",
+         "{here_gnawing_awning}",
+         "{here_gnawing_awning}",
+         "{here_outer_tower}",
+         "{here_ailer_lair}",
+         "{here_jeerin_region}",
+         "{here_taller_altar}",
+         "{here_ailer_lair}",
+         "{here_foldin_gate}",
       ]
    }
 
@@ -308,7 +319,18 @@ collections {
          "<CHOP<#f80>>",
          "<LODGING<#f80>>",
          "<FORMED<#f80>>",
-         "<SINISTER<#f80>>"
+         "<SINISTER<#f80>>",
+         "<HARD<#f80>>",
+         "<PENNY<#f80>>",
+         "<SAIL<#f80>>",
+         "<SICK<#f80>>",
+         "<SOLD<#f80>>",
+         "<POWER<#f80>>",
+         "<BEST<#f80>>",
+         "<WRITTEN<#f80>>",
+         "<COOL<#f80>>",
+         "<HELP<#f80>>",
+         "<GREAT<#f80>>"
       ]
    }
 
@@ -330,12 +352,34 @@ collections {
          "<DRAIN<#f80>>",
          "<KEY<#f80>>",
          "<WAX<#f80>>",
-         "<MOUTH<#f80>>"
+         "<MOUTH<#f80>>",
+         "<MAZE<#f80>>",
+         "<MOUNDS<#f80>>",
+         "<TIDE<#f80>>",
+         "<BRIDE<#f80>>",
+         "<GUIDE<#f80>>",
+         "<TORCH<#f80>>",
+         "<NOTES<#f80>>",
+         "<SPECS<#f80>>",
+         "<PLAN<#f80>>",
+         "<CARD<#f80>>",
+         "<BOOK<#f80>>"
       ]
    }
 
    got_first_core : list {
       items = [
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
          "false",
          "false",
          "false",
@@ -374,12 +418,24 @@ collections {
          "false",
          "false",
          "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
          "false"
       ]
    }
 
    tried_combo_bonus : list {
       items = [
+         "false",
          "false",
          "false",
          "false"
@@ -390,12 +446,14 @@ collections {
       items = [
          "anywhere",
          "{here_app_mall}",
-         "{here_app_mall}"
+         "{here_app_mall}",
+         "{here_foldin_gate}"
       ]
    }
 
    got_first_bonus : list {
       items = [
+         "false",
          "false",
          "false",
          "false"
@@ -406,12 +464,14 @@ collections {
       items = [
          "<DIG<#f80>>",
          "<MAP<#f80>>",
-         "<CLOCK<#f80>>"
+         "<CLOCK<#f80>>",
+         "<GOLDEN<#f80>>"
       ]
    }
 
    got_second_bonus : list {
       items = [
+         "false",
          "false",
          "false",
          "false"
@@ -422,7 +482,8 @@ collections {
       items = [
          "<BELOW<#f80>>",
          "<ALL<#f80>>",
-         "<JERK<#f80>>"
+         "<JERK<#f80>>",
+         "<FATE<#f80>>"
       ]
    }
 
