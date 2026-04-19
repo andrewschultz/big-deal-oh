@@ -94,7 +94,7 @@ strings {
    loc_app_mall : dynamic_string {( "Here in the mall they're offering apps--well, you ask the nice jock clerk at the front desk for a code or whatever. Apparently they need to make sure you're sane enough, or something. " + (bonus_point_map_all ? "But you got the one you needed." : "Which app might be right for you?" ) + "\nA jock clerk mans the vending area.\nYou can go back north." + (!bonus_point_clock_jerk ? "\nAnd yet the atmosphere isn't quite right. You can probably leave " + (bonus_point_map_all ? "now" : "once") + " you've got what you want, but then there always seems to be more to tidy up." : "" ) )} ;
    header_app_mall : string "<App Mall<#ff0>>" ;
 
-   loc_backin_cabin : dynamic_string {( "Here by the backin' cabin, " + (point_pull_file ? "the full pile has been cleaned significantly, and now you see passages in all four directions." : "you can only go back west for now. A full pile spills from the backin' cabin. Whoever put it there obviously was trying to help you, but they may have tried too hard." ) )} ;
+   loc_backin_cabin : dynamic_string {( "Here by the backin' cabin, " + (point_pull_file ? "the pile has been cleaned significantly and is nowhere near as full, and now you see three passages through the cabin. You can go in all four directions." : "you can only go back west for now. A {puz_point_full_pile} spills from the backin' cabin. Whoever put it there obviously was trying to help you, but they may have tried too hard." ) )} ;
    header_backin_cabin : string "<Backin' Cabin<#ff0>>" ;
 
    loc_cache_shack : string "You are in a cache shack, filled with various random stuff that seems either useless or far too heavy to lift. You can go back east." ;
@@ -160,7 +160,7 @@ strings {
    puz_point_flaming_towers : dynamic_string {( opt_color_coding ? "<flaming towers<#f80>>" : "flaming towers" )} ;
    puz_point_grow_dupes : dynamic_string {( opt_color_coding ? "<grow dupes<#f80>>" : "grow dupes" )} ;
    puz_point_hard_maze : dynamic_string {( opt_color_coding ? "<hard maze<#f80>>" : "hard maze" )} ;
-   puz_point_pull_file : dynamic_string {( opt_color_coding ? "<full pile<#f80>>" : "pull file" )} ;
+   puz_point_full_pile : dynamic_string {( opt_color_coding ? "<full pile<#f80>>" : "pull file" )} ;
    puz_point_right_tools : dynamic_string {( opt_color_coding ? "<right tools<#f80>>" : "right tools" )} ;
    puz_point_real_stench : dynamic_string {( opt_color_coding ? "<real stench<#f80>>" : "real stench" )} ;
    puz_point_sinister_mouth : dynamic_string {( opt_color_coding ? "<sinister mouth<#f80>>" : "sinister mouth" )} ;
@@ -462,6 +462,7 @@ booleans {
    key_found : boolean "false" ;
    key_duplicated : boolean "false" ;
    key_used : boolean "false" ;
+
    # game state (tutorials)
    skip_tutorial_cue : boolean "false" ; # not a tutorial but skip every-turn note when it is implied
    tutorial_0_in_tutorial : boolean "false" ;
