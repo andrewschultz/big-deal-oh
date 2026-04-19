@@ -126,7 +126,7 @@ strings {
    loc_newbies_boonies : dynamic_string {( "Here in the newbies' boonies you can " + (point_push_best ? "go in all four directions with the bush pest gone." : "only go back south for now. There's a {puz_point_bush_pest} dancing around that seems to pop up in the latest direction you're considering going. Well, except back east." ) )} ;
    header_newbies_boonies : string "<Newbies' Boonies<#ff0>>" ;
 
-   loc_oopster_stupor : string "Oh no! There's a marred haze ahead! Your head very much is foggy and you're doing things that make you say oops." ;
+   loc_oopster_stupor : dynamic_string {( has_visited("foldin_gate") ? "The path north is clear now you passed and destroyed the hard maze. You can go south, too." : point_hard_maze ? "The hard maze is ahead to the north, and the tenser center is back to the south." : "Oh no! There's a marred haze ahead to the north! You haven't stepped in it, but its fogginess still affects you. Whether or not oopster is a word, you're very much in a stupor and doing minor things that make you say oops. Thankfully you're still aware of passage back south." )} ;
    header_oopster_stupor : string "<Oopster Stupor<#ff0>>" ;
 
    loc_outer_tower : string "Here at the outer tower, barbed wire stretches all around. It looks like you could maybe eventually unlock the tower to go north, though, since it has a keyhole in it. It looks like you'll want to, because the grass really IS greener on the other side! Or maybe you'll need to prep by going back south first." ;
@@ -159,6 +159,7 @@ strings {
    puz_point_eerie_loner : dynamic_string {( opt_color_coding ? "<eerie loner<#f80>>" : "eerie loner" )} ;
    puz_point_flaming_towers : dynamic_string {( opt_color_coding ? "<flaming towers<#f80>>" : "flaming towers" )} ;
    puz_point_grow_dupes : dynamic_string {( opt_color_coding ? "<grow dupes<#f80>>" : "grow dupes" )} ;
+   puz_point_hard_maze : dynamic_string {( opt_color_coding ? "<hard maze<#f80>>" : "hard maze" )} ;
    puz_point_pull_file : dynamic_string {( opt_color_coding ? "<full pile<#f80>>" : "pull file" )} ;
    puz_point_right_tools : dynamic_string {( opt_color_coding ? "<right tools<#f80>>" : "right tools" )} ;
    puz_point_real_stench : dynamic_string {( opt_color_coding ? "<real stench<#f80>>" : "real stench" )} ;
@@ -203,7 +204,7 @@ strings {
 
 integers {
    score : integer "0" ;
-   max_score : integer "17" ;
+   max_score : integer "18" ;
 
    bonus_score : integer "0" ;
    max_bonus_score : integer "3" ;
@@ -486,6 +487,7 @@ booleans {
    point_creaky_stove    : boolean "false" ; # 10
    point_formed_wax      : boolean "false" ; # 15
    point_grow_dupes      : boolean "false" ; # 8
+   point_hard_maze       : boolean "false" ; # 17
    point_key_trove       : boolean "false" ; # 11
    point_leery_owner     : boolean "false" ; # 3
    point_lodging_doc     : boolean "false" ; # 14
@@ -903,6 +905,29 @@ locations {
       }
    }
    oopster_stupor : location "{loc_oopster_stupor}" header="{header_oopster_stupor}" graphic="r_0_blank" {
+      on_command {
+         : match "hard maze" {
+            : if (point_hard_maze) {
+               : print "You already cleared the marred haze!" ;
+               : done ;
+            }
+            : print "The mists seem to re-form into ... something potentially worse! A hard maze! But at least you will be able to see your way through it. It seems pretty big, though, so you'll probably need some aid." ;
+            : set_true "point_hard_maze" ;
+            : gosub "add_point" ;
+            : done ;
+         }
+         : if (!point_hard_maze) {
+            : match "hard _;_ maze" {
+               : set_integer var="tempint" "17" ;
+               : set_false "first_half" ;
+               : match "hard _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
+            }
+         }
+      }
    }
    outer_tower : location "{loc_outer_tower}" header="{header_outer_tower}" graphic="r_outer_tower" {
       on_command {
