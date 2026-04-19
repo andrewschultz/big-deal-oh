@@ -948,6 +948,30 @@ locations {
       }
    }
    foldin_gate : location "{loc_foldin_gate}" header="{header_foldin_gate}" graphic="r_foldin_gate" {
+      on_command {
+         : match "great book" {
+            : if (!point_help_card) {
+               : print "You'd like that, but you realize you'd need a special card or something to check it out. You don't have one." ;
+               : done ;
+            }
+            : print "Narrative text." ;
+            : set_true "point_great_book" ;
+            : gosub "add_point" ;
+            : win_game ;
+            : done ;
+         }
+         : if (!point_great_book) {
+            : match "great _;_ book" {
+               : set_integer var="tempint" "27" ;
+               : set_false "first_half" ;
+               : match "great _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
+            }
+         }
+      }
    }
    gnawing_awning : location "{loc_gnawing_awning}" header="{header_gnawing_awning}" graphic="r_0_blank" {
    }
