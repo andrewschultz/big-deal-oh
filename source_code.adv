@@ -971,6 +971,38 @@ locations {
                : done ;
             }
          }
+         : match "n _" {
+            : if (!bonus_point_golden_fate) {
+               : print "You'll need to open the gate first. What could be behind it?" ;
+            } : else {
+               : cycle key = "thru_gate" predictable_order = "true" skip_interval = "0" max_loops = "1" {
+                  : print "The trowel jiggles and seems to pull you away." ;
+                  : print "You enter and achieve riches beyond your wildest dreams. But your life gets boring that way." ;
+               }
+            }
+			: done ;
+         }
+         : match "golden fate" {
+            : if (bonus_point_golden_fate) {
+               : print "You already opened the foldin' gate!" ;
+               : done ;
+            }
+            : print "The foldin' gate opens to reveal a golden fate behind it! What could be better than gold? Lots of it?" ;
+            : set_true "bonus_point_golden_fate" ;
+            : gosub "add_bonus" ;
+            : done ;
+         }
+         : if (!bonus_point_golden_fate) {
+            : match "golden _;_ fate" {
+               : set_integer var="tempint" "3" ;
+               : set_false "first_half" ;
+               : match "golden _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half_b" ;
+               : done ;
+            }
+         }
       }
    }
    gnawing_awning : location "{loc_gnawing_awning}" header="{header_gnawing_awning}" graphic="r_0_blank" {
