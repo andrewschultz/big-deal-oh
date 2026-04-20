@@ -771,7 +771,7 @@ locations {
       on_command {
          : if (!buns_taken) {
             : match "take buns" {
-               : print "Why, yes, it is that simple. You take the buns!" ;
+               : print "Why, yes, it is that simple. You take the buns! Perhaps finding what to do next with them, or the resources to help you, will be trickier." ;
                : set_true "buns_taken" ;
                : update_graphic ;
                : pocket "buns" ;
@@ -859,7 +859,7 @@ locations {
          }
          : if (!point_tool_stall) {
             : match "_ stool;_ tall" {
-               : print "You're not sure why you think of the {puz_point_stool_tall} that way instead of a tall stool. It's a bit weird, here. You can't exactly take it, and it doesn't lead anywhere, either. " ;
+               : print "You're not sure why you think of the {puz_point_stool_tall} that way instead of a tall stool. It's weird -- dealing with it directly doesn't seem like the way to go. Perhaps it's indicating something else." ;
                : done ;
             }
             : match "tool stall" {
@@ -1340,7 +1340,7 @@ locations {
                : if (!point_lodging_doc) {
                   : print {( "So many keys with so many labels. " + (has_visited "outer_tower" ? "You wouldn't know which would fit the outer tower!" : "You haven't found anything that needs unlocking yet, so you won't waste time searching." ) )};
                } : else_if (!key_found) {
-                  : print "You remember the phrase from the dodging lock. YONDER, FUTZ FONDER, YUTZ. It takes a while, but the keys are sorted more or less alphabetically, so that saves time. The key you pick is rusty. It will fall apart if you try to open the lock." ;
+                  : print "You remember the phrase from the dodging lock. YONDER, FUTZ FONDER, YUTZ. It takes a while to searc through the keys, but fortunately they're sorted more or less alphabetically, so that saves time. Unfortunately, the key you pick is rusty, and you can't find another. It will fall apart if you try to open the lock." ;
                   : set_true "key_found" ;
                   : pocket "trove_key" ;
                } : else_if (key_duplicated) {
@@ -1469,7 +1469,7 @@ locations {
                : set_true "tutorial_8_leery_owner_1" ;
                : done ;
             }
-            : print "The eerie loner grumbles. You show the steel wrench.\n\"All right, I'll get 'em.\" The loner leaves, their job done for the day. The leery owner comes out." ;
+            : print "The eerie loner grumbles. You show the steel wrench.\n\"All right, I'll get 'em.\" The loner leaves, their job done for the day. The leery owner comes out.\n\"Looking for the {puz_point_right_tools}, eh? Well, we don't just sell them to anyone who wants them. There are safety precautions and such.\" What could those precautions be?" ;
             : set_true "point_leery_owner" ;
             : set_false "think_leery_owner" ;
             : set_true "tutorial_17_leery_owner_2" ;
@@ -1507,7 +1507,7 @@ locations {
             : done ;
          }
          : match "_ hole" {
-            : print {( point_chop_drain ? "Now you know the hole can shred metal, you don't want to mess with it." : "You watch the hole a bit. Leaves and tumbleweeds and such get torn apart as they are sucked in." )} ;
+            : print {( point_chop_drain ? "Now you know the hole can shred metal, you REALLY don't want to mess with it." : "You watch the hole a bit. Leaves and tumbleweeds and such get torn apart as they are sucked in, with some finer particles being thrown back up after." )} ;
             : done ;
          }
       }
@@ -1828,7 +1828,7 @@ subroutines {
             : print "You called for the {tht_leery_owner} in the tool stall but didn't have anything to trade." ;
          }
          : if (think_bake_tons) {
-            : print "You tried to {tht_bake_tons} {here_streaky_cove} but the buns weren't ready to grow yet.." ;
+            : print "You tried to {tht_bake_tons} {here_streaky_cove} but the buns weren't ready to grow yet." ;
          }
          : if (think_bake_tons) {
             : print "You tried to put the chain into a chop drain when one wasn't nearby." ;
@@ -1919,7 +1919,6 @@ subroutines {
 
       : match "verbs _;verb _" {
          : print "{this_game} uses a reduced parser, though you need to guess certain commands to score points." ;
-         : print "Many commands are noun-based, so you don't have to guess the verb for relatively common actions, e.g. PUSH THING and USE THING are the same." ;
          : print "Many commands are noun-based, so you don't have to guess the verb for relatively common actions, e.g. PUSH THING and USE THING are the same." ;
          : print "You can use the basic directions {dir_n}, {dir_s}, {dir_e}, {dir_w}, {dir_u} and {dir_d}, abbreviated to a single letter e,g, <N<#f80>>/<S<#f80>>/<E<#f80>>/<W<#f80>>/<U<#f80>>/<D<#f80>>." ;
          : print "You will also want to use the senses, including {v_listen}, {v_smell} and {v_feel}." ;
@@ -2271,7 +2270,8 @@ on_command {
       }
       : if ((!point_creaky_stove || !is_at "streaky_cove")) {
          : match "bake tons" {
-            : print "You have nothing to help you cook here." ;
+            : print "Good idea, but you have nothing to help you cook here. You file the thought away for later." ;
+            : set_true "think_bake_tons" ;
             : done ;
          }
          : match "bake _;_ tons" { # obscure bug here, 1/2 guess will be spoiled that stove is in cove if we BAKE TONS outside, whether or not stove is there ??
@@ -2434,7 +2434,12 @@ on_tick {
       } : else_if (!tutorial_5_think) {
          : print "{note_cue_tutorial}Now you've taken inventory, you should type {vd_think} next to recap odd things you've seen." ;
       } : else_if (!tutorial_6_tool_stall) {
-         : print "{note_cue_tutorial}Now you've taken inventory, you should figure what to do with the {puz_point_stool_tall}." ;
+         : cycle key = "tutorial_6" predictable_order = "true" skip_interval = "0" max_loops = "1" {
+            : print "{note_cue_tutorial}Now you've taken inventory, you should figure what to do with the {puz_point_stool_tall}." ;
+            : print "{note_cue_tutorial}What to do with the stall is a lateral thinking puzzle, so use {vd_hint} if you want to skip past." ;
+            : print "{note_cue_tutorial}Things in your inventory should give you a clue, as should the starting location name." ;
+            : print "{note_cue_tutorial}The phrase you need is very similar to {puz_point_stool_tall}." ;
+         }
       } : else_if (!tutorial_7_south_first) {
          : print "{note_cue_tutorial}Now you've removed the stool, you should go {dir_s} to check what's there." ;
       } : else_if (!tutorial_8_leery_owner_1) {
