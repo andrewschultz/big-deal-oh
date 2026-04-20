@@ -548,28 +548,39 @@ booleans {
 
    # game state (point scoring) (alphabetical, with number in half-guess array)
    point_bake_tons       : boolean "false" ; # 9
+   point_best_notes      : boolean "false" ; # 23
    point_chop_drain      : boolean "false" ; # 13
+   point_cool_plan       : boolean "false" ; # 25
    point_creaky_stove    : boolean "false" ; # 10
    point_formed_wax      : boolean "false" ; # 15
+   point_great_book      : boolean "false" ; # 26
    point_grow_dupes      : boolean "false" ; # 8
    point_hard_maze       : boolean "false" ; # 17
+   point_help_card       : boolean "false" ; # 27
    point_key_trove       : boolean "false" ; # 11
    point_leery_owner     : boolean "false" ; # 3
    point_lodging_doc     : boolean "false" ; # 14
+   point_minister_south  : boolean "false" ; # 16
    point_platinum_chain  : boolean "false" ; # 12
    point_pull_file       : boolean "false" ; # 7
    point_push_best       : boolean "false" ; # 6
    point_rocky_caves     : boolean "false" ; # 0
-   point_minister_south  : boolean "false" ; # 16
+   point_penny_mounds    : boolean "false" ; # 18
+   point_power_torch     : boolean "false" ; # 22
+   point_sail_tide       : boolean "false" ; # 21
+   point_sick_bride      : boolean "false" ; # 20
+   point_sold_guide      : boolean "false" ; # 19
    point_steel_wrench    : boolean "false" ; # 1
    point_taming_flowers  : boolean "false" ; # 5
    point_tight_rules     : boolean "false" ; # 4
    point_tool_stall      : boolean "false" ; # 2
+   point_written_specs   : boolean "false" ; # 24
 
    # bonus point(s) (alphabetize)
-   bonus_point_dig_below : boolean "false" scope="survivor" ;
-   bonus_point_map_all : boolean "false" scope="survivor" ;
    bonus_point_clock_jerk : boolean "false" scope="survivor" ;
+   bonus_point_dig_below : boolean "false" scope="survivor" ;
+   bonus_point_golden_fate : boolean "false" scope="survivor" ;
+   bonus_point_map_all : boolean "false" scope="survivor" ;
 
    # think variables
    think_bake_tons   : boolean "false" ;
