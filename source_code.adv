@@ -88,7 +88,7 @@ strings {
 
    # room(s)
 
-   loc_ailer_lair : string "You are in the ailer lair. You can go north and west." ;
+   loc_ailer_lair : dynamic_string {( (point_best_notes ? "It's quiet here now." : point_sail_tide ? "Nest boats have arrived here. The babblers and blabbers look at you impatiently. They'd like to just give you a reward for rescuing them, but you've been taking a while." : "You are in the ailer lair. Babblers and blabbers sit here, one side kvetching about things that might go wrong, the other side kvetching about things they think went wrong but are actually okay. You see no way to mediate this civil war." ) + (has_visited "foldin_gate" ? " The changing tide has brought in some kelp, hard." : "") + "\nYou can go north and west." )} ;
    header_ailer_lair : string "<Ailer Lair<#ff0>>" ;
 
    loc_app_mall : dynamic_string {( "Here in the mall they're offering apps--well, you ask the nice jock clerk at the front desk for a code or whatever. Apparently they need to make sure you're sane enough, or something. " + (bonus_point_map_all ? "But you got the one you needed." : "Which app might be right for you?" ) + "\nA jock clerk mans the vending area.\nYou can go back north." + (!bonus_point_clock_jerk ? "\nAnd yet the atmosphere isn't quite right. You can probably leave " + (bonus_point_map_all ? "now" : "once") + " you've got what you want, but then there always seems to be more to tidy up." : "" ) )} ;
@@ -111,16 +111,16 @@ strings {
    header_demo_meadow : string "<Demo Meadow<#ff0>>" ;
    meadow_passages: dynamic_string {( point_taming_flowers ? "You've found passages {dir_n}, {dir_e} and {dir_w} that lead away. You probably don't need to go back {dir_s} or in" : (!point_rocky_caves && !point_tool_stall) ? "You haven't found anywhere to go from here yet" : !point_rocky_caves ? "You can go {dir_s} to the tool stall" : !point_tool_stall ? "You can go {dir_d} to the rocky caves" : "You can go {dir_s} to the tool stall and {dir_d} to the rocky caves" )} ;
 
-   loc_foldin_gate : string "You're at the foldin' gate. You can go back south. You can't go north and win the game yet." ;
+   loc_foldin_gate : dynamic_string {( "A big foldin' gate is to the north. It is " + (bonus_point_golden_fate ? "open, with goldness gleaming behind it" : "closed" ) + ". There's always passage south. Also, a gate brook runs by the gate." )} ;
    header_foldin_gate : string "<Foldin' Gate<#ff0>>" ;
 
-   loc_gnawing_awning : string "A gnawing awning blocks passage every where except north and east. It has a gold side to it." ;
+   loc_gnawing_awning : string "A gnawing awning blocks passage every way except back south. It has a gold side, a brick side, and a tail side." ;
    header_gnawing_awning : string "<Gnawing Awning<#ff0>>" ;
 
-   loc_jeerin_region : string "You are in the jeerin' region. You can exit north or west." ;
+   loc_jeerin_region : string "Here in the jeerin' region, {puz_point_spittin_wrecks} mock anything and everything. That you've avoided their mockery feels good until you wonder if they find you not even worth mocking. You can exit north or west." ;
    header_jeerin_region : string "<Jeerin' Region<#ff0>>" ;
 
-   loc_moldin_dolmen : dynamic_string {( "You are by a " + (key_duplicated ? "no longer " : "") + "glowing moldin' dolmen." + (point_formed_wax ? " A fax machine from behind a wall spits out a fax every few minutes. Weird to have it here! Perhaps you should inspect things." : "") + "\nThe only exit is south." )} ;
+   loc_moldin_dolmen : dynamic_string {( "You are by a " + (key_duplicated ? "no longer " : "") + "glowing moldin' dolmen." + (!point_formed_wax ? " A fax machine from behind a wall spits out a fax every few minutes. Weird to have it here! Perhaps you should inspect things." : "") + "\nThe only exit is south." )} ;
    header_moldin_dolmen : string "<Moldin' Dolmen<#ff0>>" ;
 
    loc_newbies_boonies : dynamic_string {( "Here in the newbies' boonies you can " + (point_push_best ? "go in all four directions with the bush pest gone." : "only go back south for now. There's a {puz_point_bush_pest} dancing around that seems to pop up in the latest direction you're considering going. Well, except back east." ) )} ;
@@ -138,7 +138,7 @@ strings {
    loc_streaky_cove: dynamic_string {( "You are in a streaky cove. " + (point_key_trove ? "You discovered a key trove out back." : point_bake_tons ? "You discovered a tree cove once you blew up the stove." : point_creaky_stove ? "You discovered a creaky stove in the greyness of the right wall" : "The greyness of the right wall is a stark contrast to the colorful left side. What could be there?") + "\nThe only exit is north." )} ;
    header_streaky_cove: string "<Streaky Cove<#ff0>>" ;
 
-   loc_taller_altar : string "You are in the taller altar. The only exit is south." ;
+   loc_taller_altar : dynamic_string {( "Here in the taller altar you see " + ( point_cool_plan ? "nothing much any more. You're probably done here" : !point_penny_mounds ? "many pounds, both in the animal cage and huge cartoon trap sense. Surely they can be repurposed" : "The bride's pool clan. They're waiting for you to ask for the right favor before you move on" ) + ".\nthe only exit is south." )} ;
    header_taller_altar : string "<Taller Altar<#ff0>>" ;
 
    loc_tenser_center : dynamic_string {( (point_minister_south ? "I guess this could be the intenser incenter if you want, now that you must be close to your goal, as long as if you don't mind thumbing your nose at a geometry textbook. You can exit in all four directions with the sinister mouth gone, though you probably don't need to go back south." : "You are in the tenser center. A sinister mouth blocks passage further! You can only go south right now." ) )} ;
@@ -153,19 +153,28 @@ strings {
    # puzzle text (core) (alphabetize)
 
    puz_point_bush_pest : dynamic_string {( opt_color_coding ? "<bush pest<#f80>>" : "bush pest" )} ;
+   puz_point_brick_side : dynamic_string {( opt_color_coding ? "<brick side<#f80>>" : "brick side" )} ;
    puz_point_cocky_raves : dynamic_string {( opt_color_coding ? "<Cocky raves<#f80>>" : "Cocky raves" )} ;
    puz_point_cocky_raves_l : dynamic_string {( opt_color_coding ? "<cocky raves<#f80>>" : "cocky raves" )} ;
    puz_point_dodging_lock : dynamic_string {( opt_color_coding ? "<dodging lock<#f80>>" : "dodging lock" )} ;
    puz_point_eerie_loner : dynamic_string {( opt_color_coding ? "<eerie loner<#f80>>" : "eerie loner" )} ;
    puz_point_flaming_towers : dynamic_string {( opt_color_coding ? "<flaming towers<#f80>>" : "flaming towers" )} ;
+   puz_point_full_pile : dynamic_string {( opt_color_coding ? "<full pile<#f80>>" : "pull file" )} ;
+   puz_point_gate_brook : dynamic_string {( opt_color_coding ? "<great book<#f80>>" : "gate brook" )} ;
+   puz_point_gold_side : dynamic_string {( opt_color_coding ? "<gold side<#f80>>" : "gold side" )} ;
    puz_point_grow_dupes : dynamic_string {( opt_color_coding ? "<grow dupes<#f80>>" : "grow dupes" )} ;
    puz_point_hard_maze : dynamic_string {( opt_color_coding ? "<hard maze<#f80>>" : "hard maze" )} ;
-   puz_point_full_pile : dynamic_string {( opt_color_coding ? "<full pile<#f80>>" : "pull file" )} ;
+   puz_point_kelp_hard : dynamic_string {( opt_color_coding ? "<kelp (hard)<#f80>>" : "kelp (hard)" )} ;
+   puz_point_many_pounds : dynamic_string {( opt_color_coding ? "<many pounds<#f80>>" : "many pounds" )} ;
+   puz_point_nest_boats : dynamic_string {( opt_color_coding ? "<nest boats<#f80>>" : "nest boats" )} ;
+   puz_point_pool_clan : dynamic_string {( opt_color_coding ? "<pool clan<#f80>>" : "pool clan" )} ;
    puz_point_right_tools : dynamic_string {( opt_color_coding ? "<right tools<#f80>>" : "right tools" )} ;
    puz_point_real_stench : dynamic_string {( opt_color_coding ? "<real stench<#f80>>" : "real stench" )} ;
    puz_point_sinister_mouth : dynamic_string {( opt_color_coding ? "<sinister mouth<#f80>>" : "sinister mouth" )} ;
    puz_point_stool_tall : dynamic_string {( opt_color_coding ? "<stool (tall)<#f80>>" : "stool (tall)" )} ;
+   puz_point_tail_side : dynamic_string {( opt_color_coding ? "<tail side<#f80>>" : "tail side" )} ;
    puz_point_take_buns : dynamic_string {( opt_color_coding ? "<TAKE BUNS<#f80>>" : "TAKE BUNS" )} ;
+   puz_point_tower_porch : dynamic_string {( opt_color_coding ? "<tower porch<#f80>>" : "tower porch" )} ;
    puz_point_tree_cove : dynamic_string {( opt_color_coding ? "<tree cove<#f80>>" : "tree cove" )} ;
    puz_point_warmed_fax : dynamic_string {( opt_color_coding ? "<warmed fax<#f80>>" : "warmed fax" )} ;
 
