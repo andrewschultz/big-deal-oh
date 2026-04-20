@@ -523,6 +523,7 @@ booleans {
    on_off_note : boolean "false" ;
    drawing_map : boolean "false" ;
    map_note : boolean "false" ;
+   widget_nudge : boolean "false" ;
 
    # game state (critical)
    listen_demo_meadow : boolean "false" ;
@@ -2493,6 +2494,10 @@ on_command {
             : print "Probably means nothing left to do here." ;
          } : else_if (tempint == 1) {
             : print "Maybe there's nothing constructive to do right now." ;
+         }
+         : if (!widget_nudge && tempint > 1) {
+            : print "Hmm. It's just a number. No detailed instructions. Maybe there's something simple you can immediately apply from it, no huge formulas." ;
+            : set_true "widget_nudge" ;
          }
          : done ;
       }
