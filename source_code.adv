@@ -1516,11 +1516,15 @@ locations {
 
 # Defines things in the world (scenery cannot be carried)
 objects {
+   best_notes : object "the best notes from the nest boats" ;
    buns : object "the BUNS you managed/needed to TAKE" at="cache_shack" conspicuous="false" ;
    chain : object "the platinum chain that snapped onto you that you want to get rid of" ;
+   hold_card : object "this entitles the bearer to have priority in checking out popular or useful literature." ;
    slab : object "the slender fab fender slab that was inside the platinum chain" conspicuous="false" ;
+   power_torch : object "the power torch you found on the tower porch. It has enough for one charge." ;
    seek_key : object "the reconstructed key from the dolmen" ;
-   trove_key : object "a flimsy key from the trove" ;
+   sold_guide : object "the sold guide you bought with the penny mounds" ;
+   trove_key : object "a rusty key (crusty! Eee!) from the trove" ;
    wax : object "the formed wax from the warmed fax" ;
 }
 
@@ -1545,12 +1549,12 @@ connections {
 
       outer_tower, north, tenser_center
 
-      tenser_center, east, taller_altar
-      tenser_center, west, gnawing_awning
+      tenser_center, east, jeerin_region
+      tenser_center, west, ailer_lair
       tenser_center, north, oopster_stupor
 
-      gnawing_awning, north, ailer_lair
-      taller_altar, north, jeerin_region
+      ailer_lair, north, gnawing_awning
+      jeerin_region, north, taller_altar
 
       oopster_stupor, north, foldin_gate
 
