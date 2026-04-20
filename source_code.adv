@@ -1239,15 +1239,55 @@ locations {
    }
    outer_tower : location "{loc_outer_tower}" header="{header_outer_tower}" graphic="r_outer_tower" {
       on_command {
-         : match "lodging doc;lodging dock" {
-            : if (point_lodging_doc) {
-               : print "You already made the lock stable." ;
+         : if (porch_in_tower) {
+            : match "power torch" {
+               : if (point_power_torch) {
+                  : print "You already found the torch!" ;
+                  : done ;
+               }
+               : collection_modify { collection = "tried_combo_core" index -> (22) content -> ("true") } ;
+               : print "You wonder briefly if you are looking for a really strong flashlight, but no. You discover a power torch. It seems to have one more burst left." ;
+               : set_true "point_power_torch" ;
+               : pocket "power_torch" ;
+               : gosub "add_point" ;
                : done ;
             }
-            : print "You aren't sure if the lock responded to \"doc\" or \"dock.\" It does, however, stop. \"You can come in if you have the key, I guess,\" says a voice." ;
-            : set_true "point_lodging_doc" ;
-            : gosub "add_point" ;
-            : done ;
+         }
+         : if (!ever_keyhole) {
+            : match "_ hole;_ keyhole" {
+               : print "When you look at the keyhole, it moves around a bit. A voice from inside booms \"Few can figure how to open the DODGING LOCK!\"" ;
+               : set_true "ever_keyhole" ;
+               : done ;
+            }
+         } : else_if (!key_used) {
+            : match "_ hole;_ keyhole;_ dodging;_ lock" {
+               : print {( point_lodging_doc ? "The lock is stable now." : "The lock is still dodging. In order to open it, you'll want to stop it moving around." )} ;
+               : done ;
+            }
+         }
+         : if (ever_keyhole) {
+            : if (!point_power_torch) {
+               : match "power _;_ torch" {
+                  : set_integer var="tempint" "22" ;
+                  : set_false "first_half" ;
+                  : match "power _" {
+                     : set_true "first_half" ;
+                  }
+                  : gosub "say_half" ;
+                  : done ;
+               }
+            }
+            : match "lodging doc;lodging dock" {
+               : if (point_lodging_doc) {
+                  : print "You already made the lock stable." ;
+                  : done ;
+               }
+               : collection_modify { collection = "tried_combo_core" index -> (14) content -> ("true") } ;
+               : print "You aren't sure if the lock responded to \"doc\" or \"dock.\" It does, however, stop. \"You can come in if you have the key, I guess,\" says a voice." ;
+               : set_true "point_lodging_doc" ;
+               : gosub "add_point" ;
+               : done ;
+            }
          }
          : if (!point_lodging_doc) {
             : match "lodging _;_ doc;_ dock" {
