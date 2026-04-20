@@ -654,6 +654,7 @@ locations {
                   : print "You already found the help card!" ;
                   : done ;
                }
+               : collection_modify { collection = "tried_combo_core" index -> (26) content -> ("true") } ;
                : print "The kelp is tough to pick through, which is discouraging, but then you remember if it's tough to pick through, it can catch a lot of stuff. And you find a help card! Actually, it's more a cold hard hold card, like for a library or something." ;
                : set_true "point_help_card" ;
                : pocket "hold_card" ;
@@ -674,6 +675,7 @@ locations {
          }
          : if (point_sail_tide && !point_best_notes) {
             : match "best notes" {
+               : collection_modify { collection = "tried_combo_core" index -> (23) content -> ("true") } ;
                : print "Yes! That is what you need. The ailers are happy with this and leave you with the notes. They go off to complain elsewhere, abnout more first-worldly problems." ;
                : set_true "point_best_notes" ;
                : gosub "add_point" ;
@@ -746,6 +748,7 @@ locations {
    backin_cabin : location "{loc_backin_cabin}" header="{header_backin_cabin}" graphic="r_backin_cabin" {
       on_command {
          : match "pull file" {
+            : collection_modify { collection = "tried_combo_core" index -> (7) content -> ("true") } ;
             : if (point_pull_file) {
                : print "You already pulled the file and made the cabin neater to make a path through!" ;
             }
@@ -792,6 +795,7 @@ locations {
                : print "You already attracted the platinum chain to yourself." ;
                : done ;
             }
+            : collection_modify { collection = "tried_combo_core" index -> (12) content -> ("true") } ;
             : print "Well, you pushed your luck ... a platinum chain slithers from the ground onto your wrist. It feels heavy. You try to shake it off, but it stays. You grab it and throw it to the ground, but it leaps back up onto your wrist. You're obviously going to need help taking it off." ;
             : set_true "point_platinum_chain" ;
             : pocket "chain" ;
@@ -818,6 +822,7 @@ locations {
                : print "You've duplicated enough!" ;
                : done ;
             }
+            : collection_modify { collection = "tried_combo_core" index -> (8) content -> ("true") } ;
             : if (!buns_taken) {
                : print "That seems right, but you have no raw materials with which to help the dough groups regenerate!" ;
                : set_true "think_grow_dupes" ;
@@ -972,6 +977,7 @@ locations {
    foldin_gate : location "{loc_foldin_gate}" header="{header_foldin_gate}" graphic="r_foldin_gate" {
       on_command {
          : match "great book" {
+            : collection_modify { collection = "tried_combo_core" index -> (27) content -> ("true") } ;
             : if (!point_help_card) {
                : print "You'd like that, but you realize you'd need a special card or something to check it out. You don't have one." ;
                : done ;
@@ -1034,6 +1040,7 @@ locations {
                : print "You already made a sail tide from the tail side!" ;
                : done ;
             }
+            : collection_modify { collection = "tried_combo_core" index -> (21) content -> ("true") } ;
             : print "The tail side creaks and somehow sets off a Rube Goldberg-esque sequence of events that results in a waterway opening and the tide rising. You see a boat sail south out of view and then hear yelling to the south." ;
             : set_true "point_sail_tide" ;
             : gosub "add_point" ;
@@ -1055,6 +1062,7 @@ locations {
                : print "You already discovered the sick bride. Why make her sicker?" ;
                : done ;
             }
+            : collection_modify { collection = "tried_combo_core" index -> (20) content -> ("true") } ;
             : print "You are sort of surprised, and not, to find a sick bride. She talks about why she can't go through with a wedding. What she found that she couldn't even have told her friends. They are probably looking for her. But it is embarrassing. You say you'll keep a look out." ;
             : set_true "point_sick_bride" ;
             : gosub "add_point" ;
@@ -1072,13 +1080,14 @@ locations {
             }
          }
          : match "sold guide" {
+            : if (point_sold_guide) {
+               : print "You already bought a guide. You don't need a duplicate." ;
+               : done ;
+            }
+            : collection_modify { collection = "tried_combo_core" index -> (19) content -> ("true") } ;
             : if (!point_penny_mounds) {
                : print "It could be sold, once you have a way to pay for it." ;
                : set_true "think_sold_guide" ;
-               : done ;
-            }
-            : if (point_sold_guide) {
-               : print "You already bought a guide. You don't need a duplicate." ;
                : done ;
             }
             : print "Hooray! Thanks to the penny mounds you found, you are able to purchase a sold guide. Reading it briefly, it notes you need a torch. Where to get one, it says, well, the perspicacious reader should be able to figure that out." ;
@@ -1108,6 +1117,7 @@ locations {
                : print "No, you have enough written specs. You wouldn't want the spittin' wrecks to have any excuse to mock you." ;
                : done ;
             }
+            : collection_modify { collection = "tried_combo_core" index -> (24) content -> ("true") } ;
             : if (!point_best_notes) {
                : print "The spittin' wrecks yell at you for not giving them guidelines to figure out such a thing. Sure, it can be done, but ..." ;
                : done ;
@@ -1132,20 +1142,21 @@ locations {
    }
    moldin_dolmen : location "{loc_moldin_dolmen}" header="{header_moldin_dolmen}" graphic="r_0_blank" {
       on_command {
+         : match "_ fax;_ machine" {
+            : print {( point_formed_wax ? "There's no trace of the fax machine, but it's not useful to you any more." : "When you walk over by the machine, it spits out a fax every couple minutes. Each fax is warmed but quickly cools off and disintegrates. What on earth could you do with a warmed fax?" )} ;
+            : done ;
+         }
          : match "formed wax" {
             : if (point_formed_wax) {
                : print "You got enough formed wax." ;
                : done ;
             }
+            : collection_modify { collection = "tried_combo_core" index -> (15) content -> ("true") } ;
             : print "You grab a warmed fax as it comes out. Not sure what to do with it, or how to make formed wax, you crumple it in a ball and throw it at the dolmen. The dolmen throws a lump of formed wax back at you. It's not fully formed, but it's in a block that will fit nicely into your pocket while still being able to take impressions of whatever you need to make impressions of.\nYou're so busy fumbling in your pocket you don't notice the fax machine has slowed down and eventually stopped." ;
             : pocket "wax" ;
             : gosub "dolmen_key_form" ;
             : set_true "point_formed_wax" ;
             : gosub "add_point" ;
-            : done ;
-         }
-         : match "_ fax;_ machine" {
-            : print {( point_formed_wax ? "There's no trace of the fax machine, but it's not useful to you any more." : "When you walk over by the machine, it spits out a fax every couple minutes. Each fax is warmed but quickly cools off and disintegrates. What on earth could you do with a warmed fax?" )} ;
             : done ;
          }
          : if (!point_formed_wax) {
@@ -1170,6 +1181,7 @@ locations {
             : if (point_push_best) {
                : print "You already pushed the bush pest away." ;
             }
+            : collection_modify { collection = "tried_combo_core" index -> (5) content -> ("true") } ;
             : set_true "point_push_best" ;
             : print "It's an interesting little rassling match. Direct pushing doesn't work, but you have an idea. You move to your right, then as the bush comes to the right, you pull a Reggie White club move on it, pushing it the direction it was already going..." ;
             : press_any_key ;
@@ -1206,6 +1218,7 @@ locations {
                : print "You already cleared the marred haze!" ;
                : done ;
             }
+            : collection_modify { collection = "tried_combo_core" index -> (17) content -> ("true") } ;
             : print "The mists seem to re-form into ... something potentially worse! A hard maze! But at least you will be able to see your way through it. It seems pretty big, though, so you'll probably need some aid." ;
             : set_true "point_hard_maze" ;
             : gosub "add_point" ;
@@ -1320,6 +1333,7 @@ locations {
                : print {( point_bake_tons ? "The stove is blown to bits. You can't get it back." : "You already revealed the stove!" )} ;
                : done ;
             }
+            : collection_modify { collection = "tried_combo_core" index -> (9) content -> ("true") } ;
             : print "Ah! That's what's along the unusually plain wall on the right-hand side. A creaky stove! You see an outline, and as you tap at the wall, it crumbles a bit. Yet that area still looks out of place." ;
             : set_true "point_creaky_stove" ;
             : gosub "add_point" ;
@@ -1359,6 +1373,7 @@ locations {
                   : print "You already had enough baking for one adventure, even if the stove didn't get destroyed." ;
                   : done ;
                }
+               : collection_modify { collection = "tried_combo_core" index -> (10) content -> ("true") } ;
                : print "The buns, charged with the dough groups' magic, fizzle as they heat up and explode! Fortunately, only the less picturesque part of the streaky cove blew up. Behind the streaky cove, you notice a different sort of cove: a {puz_point_tree_cove}!" ;
                : set_true "point_bake_tons" ;
                : set_false "think_bake_tons" ;
@@ -1372,6 +1387,7 @@ locations {
                   : print "You already found the key trove. You just need to figure what to do with it." ;
                   : done ;
                }
+               : collection_modify { collection = "tried_combo_core" index -> (11) content -> ("true") } ;
                : print "There are a lot of trees, but you eventually uncover a key trove." ;
                : set_true "point_key_trove" ;
                : gosub "add_point" ;
@@ -1400,6 +1416,7 @@ locations {
                : print "Already done!" ;
                : done ;
             }
+            : collection_modify { collection = "tried_combo_core" index -> (16) content -> ("true") } ;
             : print "Narrative text." ;
             : set_true "point_minister_south" ;
             : gosub "add_point" ;
@@ -2241,6 +2258,7 @@ on_command {
             : set_true "think_chop_drain" ;
             : done ;
          }
+         : collection_modify { collection = "tried_combo_core" index -> (13) content -> ("true") } ;
          : print "You take a guess that the hole here is a CHOP DRAIN. You fling the platinum chain towards it. Or try to. You struggle to pull it off, then suddenly it flies into the hole. A high-pitched noise ... and then, out pops, back, a small slab of metal. It feels like it could ward off evil. A slender fab fender-slab, if you will." ;
          : pocket "slab" ;
          : destroy "chain" ;
@@ -2272,6 +2290,7 @@ on_command {
       }
       : if ((!point_creaky_stove || !is_at "streaky_cove")) {
          : match "bake tons" {
+            : collection_modify { collection = "tried_combo_core" index -> (10) content -> ("true") } ;
             : print "Good idea, but you have nothing to help you cook here. You file the thought away for later." ;
             : set_true "think_bake_tons" ;
             : done ;
