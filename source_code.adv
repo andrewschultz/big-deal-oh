@@ -1816,6 +1816,12 @@ subroutines {
                : print "{vd_think} is part of the tutorial, but it will occur later on." ;
                : done ;
             }
+            : print "WHAT YOU KNOW SO FAR:" ;
+            : print "* you have a wild digit-dialed widget" ;
+            : print "* you started in the demo meadow" ;
+            : print "* you said Fie Moan My Phone, which seemed unnatural" ;
+            : print "* you were given the trudge-now'll-nudge trowel at the start" ;
+            : print "* you were told of the ancient Kind Gritty Grind City, where hard work and deep thought were rewarded" ;
             : set_true "tutorial_5_think" ;
          }
          : if (think_leery_owner) {
