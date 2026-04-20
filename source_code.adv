@@ -1451,6 +1451,28 @@ locations {
    }
    taller_altar : location "{loc_taller_altar}" header="{header_taller_altar}" graphic="r_0_blank" {
       on_command {
+         : match "cool plan" {
+            : if (point_cool_plan) {
+               : print "The pool clan is gone. You already got the cool plan." ;
+               : done ;
+            }
+            : collection_modify { collection = "tried_combo_core" index -> (25) content -> ("true") } ;
+            : print "They seem quite glad you managed to give your friend a tip how to flee and start a new life. They appreciate the instructions to visit her. In return they share a cool plan for making it easier to return once you've gone a ways north of the tenser center. Whew! You sort of feared what was out there." ;
+            : set_true "point_cool_plan" ;
+            : gosub "add_point" ;
+            : done ;
+         }
+         : if (!point_cool_plan) {
+            : match "cool _;_ plan" {
+               : set_integer var="tempint" "25" ;
+               : set_false "first_half" ;
+               : match "cool _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
+            }
+         }
          : match "penny mounds" {
             : if (point_penny_mounds) {
                : print "You already reduced the many pounds!" ;
