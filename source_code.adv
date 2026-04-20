@@ -2370,6 +2370,25 @@ on_command {
       : print "A low voice booms \"Vexing howls? Hexing?! VOWELS!\"";
       : done ;
    }
+   : if (point_sold_guide) {
+      : match "_ guide;_ sold" {
+         : print {( point_power_torch ? "The sold guide has instructions on how to use the power torch when you're ready, without excessive need for complicated parser commands." : "The sold guide reminds you that you need to find a torch, though it doesn't say where." )} ;
+         : done ;
+      }
+      : match "porch *;_ porch" {
+         : if (porch_in_tower) {
+            : print "You already found the porch. No need for further searches." ;
+            : done ;
+         }
+         : if (is_at "outer_tower") {
+            : print "You didn't look much at the tower as you went past, but with a bit of exploration you notice, yes, indeed, it does have a porch! What could be its use? What could it hold?" ;
+            : set_true "porch_in_tower" ;
+         } : else {
+            : print "No porch here. Maybe somewhere else." ;
+         }
+         : done ;
+   }
+}
    : if (is_carried "chain") {
       : match "chop drain" {
          : if (point_chop_drain) {
