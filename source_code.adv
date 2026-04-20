@@ -1516,7 +1516,7 @@ locations {
          }
       }
    }
-   tenser_center : location "{loc_tenser_center}" header="{header_tenser_center}" graphic="r_0_blank" {
+   tenser_center : location "{loc_tenser_center}" header="{header_tenser_center}" graphic="r_tenser_center" {
       on_command {
          : match "minister south" {
             : if (point_minister_south) {
@@ -2130,7 +2130,10 @@ subroutines {
       : if (point_formed_wax && key_found && point_chop_drain && !key_duplicated) {
          : print "Now you have the old key, some stronger metal, and wax to make impressions, you could almost make a key. The moldin' dolmen might be able to help. You offer the three items to it ... and out comes a shiny new key! A key so \"Seek, oh!\"" ;
          : destroy "trove_key" ;
+         : destroy "wax" ;
+         : destroy "slab" ;
          : pocket "seek_key" ;
+         : set_true "key_duplicated" ;
       }
    }
    #########################################hint and tutorial
