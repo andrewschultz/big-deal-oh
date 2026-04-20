@@ -1100,6 +1100,33 @@ locations {
       }
    }
    jeerin_region : location "{loc_jeerin_region}" header="{header_jeerin_region}" graphic="r_0_blank" {
+      on_command {
+         : match "written specs" {
+            : if (point_written_specs) {
+               : print "No, you have enough written specs. You wouldn't want the spittin' wrecks to have any excuse to mock you." ;
+               : done ;
+            }
+            : if (!point_best_notes) {
+               : print "The spittin' wrecks yell at you for not giving them guidelines to figure out such a thing. Sure, it can be done, but ..." ;
+               : done ;
+            }
+            : print "You give the spittin' wrecks the best notes. They nod. After a while, they hand back some written specs, which seem to detail a labyrinth. They note where the walls are thin and that you need to knock down a wall to get through. You wonder if they are pulling your leg, but you don't have much else to work with." ;
+            : set_true "point_written_specs" ;
+            : gosub "add_point" ;
+            : done ;
+         }
+         : if (!point_written_specs) {
+            : match "written _;_ specs" {
+               : set_integer var="tempint" "24" ;
+               : set_false "first_half" ;
+               : match "written _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
+            }
+         }
+      }
    }
    moldin_dolmen : location "{loc_moldin_dolmen}" header="{header_moldin_dolmen}" graphic="r_0_blank" {
       on_command {
