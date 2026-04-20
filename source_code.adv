@@ -1048,7 +1048,27 @@ locations {
                : done ;
             }
          }
-   gnawing_awning : location "{loc_gnawing_awning}" header="{header_gnawing_awning}" graphic="r_0_blank" {
+         : match "sick bride" {
+            : if (point_sick_bride) {
+               : print "You already discovered the sick bride. Why make her sicker?" ;
+               : done ;
+            }
+            : print "You are sort of surprised, and not, to find a sick bride. She talks about why she can't go through with a wedding. What she found that she couldn't even have told her friends. They are probably looking for her. But it is embarrassing. You say you'll keep a look out." ;
+            : set_true "point_sick_bride" ;
+            : gosub "add_point" ;
+            : done ;
+         }
+         : if (!point_sick_bride) {
+            : match "sick _;_ bride" {
+               : set_integer var="tempint" "20" ;
+               : set_false "first_half" ;
+               : match "sick _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
+            }
+         }
       }
    }
    jeerin_region : location "{loc_jeerin_region}" header="{header_jeerin_region}" graphic="r_0_blank" {
