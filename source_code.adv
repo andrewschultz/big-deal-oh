@@ -62,6 +62,7 @@ strings {
    v_smell : string "<SMELL<#0f0>>" ;
 
    # diagnostic verbs
+   vd_hint : string "<HINT<#f80>>" ;
    vd_i : string "<I<#f80>>" ;
    vd_inv : string "<INV<#f80>>" ;
    vd_i_long : string "<INVENTORY<#f80>>" ;
@@ -1063,7 +1064,7 @@ locations {
          }
          : match "sick bride" {
             : if (point_sick_bride) {
-               : print "You already discovered the sick bride. Why make her sicker?" ;
+               : print "You already discovered and helped the sick bride. She is busy making herself less sick, and as only a fleeting acquaintance you can't really help her any more." ;
                : done ;
             }
             : collection_modify { collection = "tried_combo_core" index -> (20) content -> ("true") } ;
@@ -1995,7 +1996,8 @@ subroutines {
    check_meta : subroutine {
       : match "about _" {
          : print "{this_game} was written for {l_talp_2026}, another annual edition of {l_talp}." ;
-         : print "It is in the spirit of {l_qt} and reuses a lot of the code. However, this year I'm trying to get in with the theme of Archaeology, even if my knowledge of that field is rudimentary." ;
+         : print "It is in the spirit of {l_qt} and reuses a lot of the code. However, this year I'm trying to get in at least somewhat with the theme of Archaeology, even if my knowledge of that field is rudimentary. Well, it does have a hidden city near the end." ;
+         : print "{this_game} needs only two-word commands to win." ;
          : set_true "tutorial_1_about" ;
          : done ;
       }
@@ -2005,8 +2007,8 @@ subroutines {
          : done ;
       }
 
-      : match "diag ;diags _;diagnostic _;diagnostics _" {
-         : print "{vd_hint} tries to give hints based on your location and current accomplishments." ;
+      : match "diag _;diags _;diagnostic _;diagnostics _" {
+         : print "{vd_hint} gives hints based on your location and current accomplishments." ;
          : print "{vd_i_three} takes inventory. In other words, you can see what you are carrying. While most clues in {this_game} should be in the room and description, the inventory and examining the items in it may provide additional clues." ;
          : print "{vd_score} is the most popular diagonsitic command. It tells you your core score, which you can also see in the upper right. It also tracks bonus points." ;
          : print "{vd_think} describes your partial successes and, before you get your first point, clues of odd things that may help you realize what you need to do to get that first point." ;
@@ -2047,7 +2049,7 @@ subroutines {
             : print {( "{optt_block}: blocks off places with nothing left to do. Currently it is set to " + (opt_block_done ? optt_block_on : optt_block_off) + "." )} ;
          }
          : if (!on_off_note) {
-            : print "{one_time}: {yn} toggles options. ON and OFF would be more logical, but Adventuron reserves ON for internal use. {this_game} also does not toggle an option if you type it alone." ;
+            : print "{one_time}: while ON and OFF would be more logical after an option, Adventuron reserves ON for internal use. Also, {this_game} does not toggle an option if you type it alone, so {yn} is needed." ;
             : set_true "on_off_note" ;
          }
          : set_true "option_asked_once" ;
@@ -2059,10 +2061,10 @@ subroutines {
          : print "Many commands are noun-based, so you don't have to guess the verb for relatively common actions, e.g. PUSH THING and USE THING are the same." ;
          : print "You can use the basic directions {dir_n}, {dir_s}, {dir_e}, {dir_w}, {dir_u} and {dir_d}, abbreviated to a single letter e,g, <N<#f80>>/<S<#f80>>/<E<#f80>>/<W<#f80>>/<U<#f80>>/<D<#f80>>." ;
          : print "You will also want to use the senses, including {v_listen}, {v_smell} and {v_feel}." ;
-         : print "You can <X<#f80>> something to examine it, though for most scenery in this game, you can use a noun, and any verb works." ;
-         : print "<L<#f80>> for look refreshes the screen." ;
-         : print "For the most part, <TAKE<#f80>> and <DROP<#f80>> aren't used, as the game automatically picks up what you need and destroys it when done. But they may be part of a puzzle." ; #?? establish whem
-         : print "Verbs outside of the game world are listed in {vm_meta}, {vm_diag}(NOSTIC), and {vm_options}. Intuitive abbreviations often work." ;
+         : print "You can <X<#f80>> something to <EXAMINE<#f80>> it. Sometimes this is necessary to uncover something else." ;
+         : print "<L<#f80>> (for look) refreshes the screen." ;
+         : print "For the most part, <TAKE<#f80>> and <DROP<#f80>> aren't used, as the game automatically picks up what you need and destroys it when done. But they may be part of a puzzle." ;
+         : print "Meta-verbs (actions or requests outside of the game world) are listed in {vm_meta}, {vm_diag}(NOSTIC), and {vm_options}. Intuitive abbreviations for these often work but aren't fully listed." ;
          : set_true "tutorial_2_verbs" ;
          : done ;
       }
