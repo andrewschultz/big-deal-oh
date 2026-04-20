@@ -528,10 +528,12 @@ booleans {
    smell_rocky_caves : boolean "false" ;
    placed_flaming_towers : boolean "false" ;
    buns_taken : boolean "false" ;
+   porch_in_tower : boolean "false" ;
 
    key_found : boolean "false" ;
    key_duplicated : boolean "false" ;
    key_used : boolean "false" ;
+   ever_keyhole : boolean "false" ;
 
    # game state (tutorials)
    skip_tutorial_cue : boolean "false" ; # not a tutorial but skip every-turn note when it is implied
@@ -596,6 +598,7 @@ booleans {
    think_chop_drain  : boolean "false" ;
    think_grow_dupes  : boolean "false" ;
    think_leery_owner : boolean "false" ;
+   think_sold_guide  : boolean "false" ;
 
    # dynamic booleans for ease of coding
    known_leery_owner : dynamic_boolean {( think_leery_owner || point_leery_owner )} ;
@@ -751,6 +754,7 @@ locations {
             : collection_modify { collection = "tried_combo_core" index -> (7) content -> ("true") } ;
             : if (point_pull_file) {
                : print "You already pulled the file and made the cabin neater to make a path through!" ;
+               : done ;
             }
             : print "Now you know what you're looking for in the full pile, or you're pretty sure you do, you can at least sort out the junk. Then you find a file. It describes where the secret passages in the cabin are. It's not pretty, but you dump some of the piles into the secret pasasages, as there's enough space in them, and things look a little cleaner. Those passages lead north, south and east." ;
             : set_true "point_pull_file" ;
@@ -1323,6 +1327,7 @@ locations {
       on_describe {
           : if (key_duplicated && !key_used) {
              : print "?? The reconstructed key works! You can go north now." ;
+             : set_true "key_used" ;
           }
       }
    }
