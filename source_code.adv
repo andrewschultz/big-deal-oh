@@ -915,6 +915,7 @@ locations {
                : collection_modify { collection = "tried_combo_core" index -> (0) content -> ("true") } ;
                : if (point_rocky_caves) {
                   : print "You already know where the rocky caves are." ;
+                  : done ;
                }
                : print "The cockiness seems to recede as you look around with a purpose. Then you find it. A passage {dir_d} to rocky caves!" ;
                : set_true "point_rocky_caves" ;
@@ -950,6 +951,7 @@ locations {
             } : else {
                : print "{puz_point_cocky_raves} continue to mock your inability to go anywhere interesting." ;
             }
+            : done ;
          }
       }
       on_describe {
@@ -1000,7 +1002,7 @@ locations {
                   : print "You enter and achieve riches beyond your wildest dreams. But your life gets boring that way." ;
                }
             }
-			: done ;
+            : done ;
          }
          : match "golden fate" {
             : if (bonus_point_golden_fate) {
@@ -1142,11 +1144,11 @@ locations {
             : gosub "add_point" ;
             : done ;
          }
+         : match "_ fax;_ machine" {
+            : print {( point_formed_wax ? "There's no trace of the fax machine, but it's not useful to you any more." : "When you walk over by the machine, it spits out a fax every couple minutes. Each fax is warmed but quickly cools off and disintegrates. What on earth could you do with a warmed fax?" )} ;
+            : done ;
+         }
          : if (!point_formed_wax) {
-            : match "_ fax;_ machine" {
-               : print "When you walk over by the machine, it spits out a fax every couple minutes. Each fax is warmed but quickly cools off and disintegrates. What on earth could you do with a warmed fax?" ;
-               : done ;
-            }
             : match "formed _;_ wax" {
                : set_integer var="tempint" "15" ;
                : set_false "first_half" ;
