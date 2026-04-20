@@ -1422,6 +1422,8 @@ locations {
                : destroy "buns" ;
                : done ;
             }
+         }
+         : if (point_bake_tons) {
             : match "key trove" {
                : if (point_key_trove) {
                   : print "You already found the key trove. You just need to figure what to do with it." ;
@@ -1433,16 +1435,16 @@ locations {
                : gosub "add_point" ;
                : done ;
             }
-            : if (!point_key_trove) {
-               : match "key _;_ trove" {
-                  : set_integer var="tempint" "11" ;
-                  : set_false "first_half" ;
-                  : match "key _" {
-                     : set_true "first_half" ;
-                  }
-                  : gosub "say_half" ;
-                  : done ;
+         }
+         : if (point_bake_tons && !point_key_trove) {
+            : match "key _;_ trove" {
+               : set_integer var="tempint" "11" ;
+               : set_false "first_half" ;
+               : match "key _" {
+                  : set_true "first_half" ;
                }
+               : gosub "say_half" ;
+               : done ;
             }
          }
       }
