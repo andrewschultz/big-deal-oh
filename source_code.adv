@@ -1868,6 +1868,14 @@ subroutines {
          : done ;
       }
 
+      : match "diag ;diags _;diagnostic _;diagnostics _" {
+         : print "{vd_hint} tries to give hints based on your location and current accomplishments." ;
+         : print "{vd_i_three} takes inventory. In other words, you can see what you are carrying. While most clues in {this_game} should be in the room and description, the inventory and examining the items in it may provide additional clues." ;
+         : print "{vd_score} is the most popular diagonsitic command. It tells you your core score, which you can also see in the upper right. It also tracks bonus points." ;
+         : print "{vd_think} describes your partial successes and, before you get your first point, clues of odd things that may help you realize what you need to do to get that first point." ;
+         : done ;
+      }
+
       : match "help _;hint _;hints _" {
          : gosub "hint_function" ;
          : done ;
