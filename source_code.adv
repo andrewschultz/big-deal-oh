@@ -1069,6 +1069,34 @@ locations {
                : done ;
             }
          }
+         : match "sold guide" {
+            : if (!point_penny_mounds) {
+               : print "It could be sold, once you have a way to pay for it." ;
+               : set_true "think_sold_guide" ;
+               : done ;
+            }
+            : if (point_sold_guide) {
+               : print "You already bought a guide. You don't need a duplicate." ;
+               : done ;
+            }
+            : print "Hooray! Thanks to the penny mounds you found, you are able to purchase a sold guide. Reading it briefly, it notes you need a torch. Where to get one, it says, well, the perspicacious reader should be able to figure that out." ;
+            : set_false "think_sold_guide" ;
+            : set_true "point_sold_guide" ;
+            : gosub "add_point" ;
+            : pocket "sold_guide" ;
+            : done ;
+         }
+         : if (!point_sold_guide) {
+            : match "sold _;_ guide" {
+               : set_integer var="tempint" "19" ;
+               : set_false "first_half" ;
+               : match "sold _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
+            }
+         }
       }
    }
    jeerin_region : location "{loc_jeerin_region}" header="{header_jeerin_region}" graphic="r_0_blank" {
