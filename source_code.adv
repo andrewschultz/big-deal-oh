@@ -1791,6 +1791,12 @@ barriers {
       message = The sinister mouth blocks your passage north.
    }
 
+   block_26_foldin_gate : block {
+      location = foldin_gate
+      block_when_not = point_hard_maze
+      message = The marred haze seems way too dangerous to fight through.
+   }
+
    ###########################block_done
 
    block_done_meadow_rocky_caves : block {
