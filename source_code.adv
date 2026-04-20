@@ -1450,6 +1450,30 @@ locations {
       }
    }
    taller_altar : location "{loc_taller_altar}" header="{header_taller_altar}" graphic="r_0_blank" {
+      on_command {
+         : match "penny mounds" {
+            : if (point_penny_mounds) {
+               : print "You already reduced the many pounds!" ;
+               : done ;
+            }
+            : collection_modify { collection = "tried_combo_core" index -> (18) content -> ("true") } ;
+            : print "A few of the pounds crumble away to something less dense. Something in small enough bits you can carry it. So you do. The rest ... well, they're still there, but you know you have no use for them." ;
+            : set_true "point_penny_mounds" ;
+            : gosub "add_point" ;
+            : done ;
+         }
+         : if (!point_penny_mounds) {
+            : match "penny _;_ mounds" {
+               : set_integer var="tempint" "18" ;
+               : set_false "first_half" ;
+               : match "penny _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
+            }
+         }
+      }
    }
    tenser_center : location "{loc_tenser_center}" header="{header_tenser_center}" graphic="r_0_blank" {
       on_command {
