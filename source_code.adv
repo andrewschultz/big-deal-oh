@@ -1213,6 +1213,25 @@ locations {
    }
    oopster_stupor : location "{loc_oopster_stupor}" header="{header_oopster_stupor}" graphic="r_0_blank" {
       on_command {
+         : if (point_hard_maze && !has_visited "foldin_gate") {
+            : match "n _" {
+               : if (!point_written_specs) {
+                  : print "Whoah! Walking into a hard maze like that without any sort of map is just too intimidating." ;
+                  : done ;
+               } : else_if (!point_power_torch) {
+                  : print "The written specs show there's no way to walk through. You'll need some sort of tool to bust down a wall." ;
+                  : done ;
+               } : else_if (!point_cool_plan) {
+                  : print "You think you could make it through, but ... what if you have to walk back through the maze? That'd be really exhausting. Your sense of efficiency (at least you call it that instead of laziness. Heck, I do) leaves you wanting an easy way back before you make a huge time and energy commitment." ;
+                  : done ;
+               } : else {
+                  : mask {
+                     : print "The written specs show the way through, minus where you need to burn through a wall with the torch. And the cool plan will help you get back. Armed with all this, you tackle the hard maze successfully. It takes a while. On the other side, you remember the cool plan and execute it. The maze tumbles down. Oh wow! It was even twistier than you thought. So that means if you have to go back, it'll take less time than you feared." ;
+                     : press_any_key ;
+                  }
+               }
+            }
+         }
          : match "hard maze" {
             : if (point_hard_maze) {
                : print "You already cleared the marred haze!" ;
