@@ -674,25 +674,25 @@ booleans {
    already_flag : boolean "true" ;
 
    # blocker variables
-   doneblock_10_rocky_caves : dynamic_boolean {( point_steel_wrench )} ;
-   doneblock_20_app_mall : dynamic_boolean {( point_leery_owner )} ;
-   doneblock_11_chattin_em_plain : dynamic_boolean {( point_platinum_chain )} ;
-   doneblock_21_tool_stall : dynamic_boolean {( point_tight_rules && is_at "demo_meadow" )} ;
-   doneblock_31_streaky_cove : dynamic_boolean {( key_found )} ;
-   doneblock_02_cache_shack : dynamic_boolean {( buns_taken )} ;
-   doneblock_12_newbies_boonies : dynamic_boolean {( is_at "demo_meadow" && doneblock_02_cache_shack && doneblock_11_chattin_em_plain && doneblock_13_moldin_dolmen )} ;
-   doneblock_22_demo_meadow : dynamic_boolean {( is_at "outer_tower" && key_duplicated )} ;
-   doneblock_32_backin_cabin : dynamic_boolean {( is_at "demo_meadow" && doneblock_42_yankin_canyon && point_grow_dupes && key_found )} ;
-   doneblock_42_yankin_canyon : dynamic_boolean {( point_chop_drain )} ;
-   doneblock_13_moldin_dolmen : dynamic_boolean {( key_duplicated )} ;
-   doneblock_23_outer_tower : dynamic_boolean {( is_at "tenser_center" && point_power_torch )} ;
-   doneblock_33_collation_location : dynamic_boolean {( point_grow_dupes )} ;
-   doneblock_14_ailer_lair : dynamic_boolean {( point_help_card && is_at "tenser_center" )} ;
-   doneblock_24_tenser_center : dynamic_boolean {( doneblock_14_ailer_lair && doneblock_34_jeerin_region && is_at "oopster_stupor" )} ;
-   doneblock_34_jeerin_region : dynamic_boolean {( is_at "tenser_center" && point_cool_plan )} ;
-   doneblock_15_gnawing_awning : dynamic_boolean {( point_sick_bride && point_sold_guide && point_sail_tide && is_at "ailer_lair"  )} ;
-   doneblock_25_oopster_stupor : dynamic_boolean {( is_at "foldin_gate" && point_help_card )} ;
-   doneblock_35_taller_altar : dynamic_boolean {( point_cool_plan && is_at "jeerin_region" )} ;
+   doneblock_10_rocky_caves : dynamic_boolean {( opt_block_done && point_steel_wrench )} ;
+   doneblock_20_app_mall : dynamic_boolean {( opt_block_done && point_leery_owner )} ;
+   doneblock_11_chattin_em_plain : dynamic_boolean {( opt_block_done && point_platinum_chain )} ;
+   doneblock_21_tool_stall : dynamic_boolean {( opt_block_done && point_tight_rules && is_at "demo_meadow" )} ;
+   doneblock_31_streaky_cove : dynamic_boolean {( opt_block_done && key_found )} ;
+   doneblock_02_cache_shack : dynamic_boolean {( opt_block_done && buns_taken )} ;
+   doneblock_12_newbies_boonies : dynamic_boolean {( opt_block_done && is_at "demo_meadow" && doneblock_02_cache_shack && doneblock_11_chattin_em_plain && doneblock_13_moldin_dolmen )} ;
+   doneblock_22_demo_meadow : dynamic_boolean {( opt_block_done && is_at "outer_tower" && key_duplicated )} ;
+   doneblock_32_backin_cabin : dynamic_boolean {( opt_block_done && is_at "demo_meadow" && doneblock_42_yankin_canyon && point_grow_dupes && key_found )} ;
+   doneblock_42_yankin_canyon : dynamic_boolean {( opt_block_done && point_chop_drain )} ;
+   doneblock_13_moldin_dolmen : dynamic_boolean {( opt_block_done && key_duplicated )} ;
+   doneblock_23_outer_tower : dynamic_boolean {( opt_block_done && is_at "tenser_center" && point_power_torch )} ;
+   doneblock_33_collation_location : dynamic_boolean {( opt_block_done && point_grow_dupes )} ;
+   doneblock_14_ailer_lair : dynamic_boolean {( opt_block_done && point_help_card && is_at "tenser_center" )} ;
+   doneblock_24_tenser_center : dynamic_boolean {( opt_block_done && doneblock_14_ailer_lair && doneblock_34_jeerin_region && is_at "oopster_stupor" )} ;
+   doneblock_34_jeerin_region : dynamic_boolean {( opt_block_done && is_at "tenser_center" && point_cool_plan )} ;
+   doneblock_15_gnawing_awning : dynamic_boolean {( opt_block_done && point_sick_bride && point_sold_guide && point_sail_tide && is_at "ailer_lair"  )} ;
+   doneblock_25_oopster_stupor : dynamic_boolean {( opt_block_done && is_at "foldin_gate" && point_help_card )} ;
+   doneblock_35_taller_altar : dynamic_boolean {( opt_block_done && point_cool_plan && is_at "jeerin_region" )} ;
 }
 
 vocabulary {
