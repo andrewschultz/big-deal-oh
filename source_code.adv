@@ -25,6 +25,7 @@ strings {
    l_talp_2026 : string "<TALP 2026<#0f0>>[https://itch.io/jam/talp2026]" ;
 
    l_tester_gg : string "<Gianluca Girelli<#0f0>>[https://g0blin.itch.io/]" ;
+
    # basics
    my_score : string "{score}/{max_score}" ;
    custom_unknown_verb_error : dynamic_string {( "Nothing special happens. You can use {vm_verbs} for a general overview of standard verbs." )} ;
@@ -2404,6 +2405,10 @@ on_describe {
 on_command {
    : match "xyzzy _" {
       : print "A low voice booms \"Vexing howls? Hexing?! VOWELS!\"";
+      : done ;
+   }
+   : match "sw _;se _;nw _;ne _" {
+      : print "{this_game} doesn't use diagonal directions." ;
       : done ;
    }
    : if (point_sold_guide) {
