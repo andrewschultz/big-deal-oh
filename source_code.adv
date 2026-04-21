@@ -674,6 +674,27 @@ booleans {
    # auxiliary variables
    opt_on_off : boolean "false" ;
    already_flag : boolean "true" ;
+
+   # blocker variables
+   doneblock_10_rocky_caves : dynamic_boolean {( point_steel_wrench )} ;
+   doneblock_20_app_mall : dynamic_boolean {( point_leery_owner )} ;
+   doneblock_11_chattin_em_plain : dynamic_boolean {( point_platinum_chain )} ;
+   doneblock_21_tool_stall : dynamic_boolean {( point_tight_rules && is_at "demo_meadow" )} ;
+   doneblock_31_streaky_cove : dynamic_boolean {( key_found )} ;
+   doneblock_02_cache_shack : dynamic_boolean {( buns_taken )} ;
+   doneblock_12_newbies_boonies : dynamic_boolean {( is_at "demo_meadow" && doneblock_02_cache_shack && doneblock_11_chattin_em_plain && doneblock_13_moldin_dolmen )} ;
+   doneblock_22_demo_meadow : dynamic_boolean {( is_at "outer_tower" && key_duplicated )} ;
+   doneblock_32_backin_cabin : dynamic_boolean {( is_at "demo_meadow" && doneblock_42_yankin_canyon && point_grow_dupes && key_found )} ;
+   doneblock_42_yankin_canyon : dynamic_boolean {( point_chop_drain )} ;
+   doneblock_13_moldin_dolmen : dynamic_boolean {( key_duplicated )} ;
+   doneblock_23_outer_tower : dynamic_boolean {( is_at "tenser_center" && point_power_torch )} ;
+   doneblock_33_collation_location : dynamic_boolean {( point_grow_dupes )} ;
+   doneblock_14_ailer_lair : dynamic_boolean {( point_help_card && is_at "tenser_center" )} ;
+   doneblock_24_tenser_center : dynamic_boolean {( doneblock_14_ailer_lair && doneblock_34_jeerin_region && is_at "oopster_stupor" )} ;
+   doneblock_34_jeerin_region : dynamic_boolean {( is_at "tenser_center" && point_cool_plan )} ;
+   doneblock_15_gnawing_awning : dynamic_boolean {( point_sick_bride && point_sold_guide && point_sail_tide && is_at "ailer_lair"  )} ;
+   doneblock_25_oopster_stupor : dynamic_boolean {( is_at "foldin_gate" && point_help_card )} ;
+   doneblock_35_taller_altar : dynamic_boolean {( point_cool_plan && is_at "jeerin_region" )} ;
 }
 
 vocabulary {
@@ -1732,7 +1753,8 @@ connections {
 
 barriers {
 
-   #blockers will all be defined by map location (x,y) from bottom left. (6,4) is the upper right map edge.
+   # blockers will all be defined by map location (x,y) from bottom left. (6,4) is the upper right map edge.
+   # first we define blocking progress
 
    block_10_rockycaves : block {
       location = rocky_caves
@@ -1856,12 +1878,120 @@ barriers {
       message = The marred haze seems way too dangerous to fight through.
    }
 
-   ###########################block_done
+   ###########################now we define block_done for the WALL feature
 
-   block_done_meadow_rocky_caves : block {
+   block_done_10_rocky_caves : block {
       location = rocky_caves
-      block_when = doneblock_rocky_caves
+      block_when = doneblock_10_rocky_caves
       message = You are done in the rocky caves.
+   }
+
+   block_done_20_app_mall : block {
+      location = app_mall
+      block_when = doneblock_20_app_mall
+      message = While the owner opened the passage south, it contains no game-critical points.
+   }
+
+   block_done_11_chattin_em_plain : block {
+      location = chattin_em_plain
+      block_when = doneblock_11_chattin_em_plain
+      message = You got the platinum chain to the south.
+   }
+
+   block_done_21_tool_stall : block {
+      location = tool_stall
+      block_when = doneblock_21_tool_stall
+      message = You got everything from the tool stall.
+   }
+
+   block_done_31_streaky_cove : block {
+      location = app_mall
+      block_when = doneblock_31_streaky_cove
+      message = You got the rusty key from the streaky cove.
+   }
+
+   block_done_02_cache_shack : block {
+      location = cache_shack
+      block_when = doneblock_02_cache_shack
+      message = You took the buns from the cache shack.
+   }
+
+   block_done_12_newbies_boonies : block {
+      location = newbies_boonies
+      block_when = doneblock_12_newbies_boonies
+      message = You've gotten everything you need west of the meadow.
+   }
+
+   block_done_22_demo_meadow : block {
+      location = demo_meadow
+      block_when = doneblock_22_demo_meadow
+      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+   }
+
+   block_done_32_backin_cabin : block {
+      location = backin_cabin
+      block_when = doneblock_32_backin_cabin
+      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+   }
+
+   block_done_42_yankin_canyon : block {
+      location = yankin_canyon
+      block_when = doneblock_42_yankin_canyon
+      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+   }
+
+   block_done_13_moldin_dolmen : block {
+      location = moldin_dolmen
+      block_when = doneblock_13_moldin_dolmen
+      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+   }
+
+   block_done_23_outer_tower : block {
+      location = outer_tower
+      block_when = doneblock_23_outer_tower
+      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+   }
+
+   block_done_33_collation_location : block {
+      location = collation_location
+      block_when = doneblock_33_collation_location
+      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+   }
+
+   block_done_14_ailer_lair : block {
+      location = ailer_lair
+      block_when = doneblock_14_ailer_lair
+      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+   }
+
+   block_done_24_tenser_center : block {
+      location = tenser_center
+      block_when = doneblock_24_tenser_center
+      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+   }
+
+   block_done_34_jeerin_region : block {
+      location = jeerin_region
+      block_when = doneblock_34_jeerin_region
+      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+   }
+
+   block_done_15_gnawing_awning : block {
+      location = gnawing_awning
+      block_when = doneblock_15_gnawing_awning
+      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+   }
+
+   block_done_25_oopster_stupor : block {
+      location = oopster_stupor
+      block_when = doneblock_25_oopster_stupor
+      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+   }
+
+   block_done_35_taller_altar : block {
+      location = taller_altar
+      block_when = doneblock_35_taller_altar
+      message = You got the key needed to pass the tower. You're done in the demo meadow area.
    }
 
 }
