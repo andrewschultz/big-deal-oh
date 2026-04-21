@@ -24,6 +24,7 @@ strings {
    l_talp : string "<TALP<#0f0>>[https://itch.io/jam/talp]" ;
    l_talp_2026 : string "<TALP 2026<#0f0>>[https://itch.io/jam/talp2026]" ;
 
+   l_tester_gg : string "<Gianluca Girelli<#0f0>>[https://g0blin.itch.io/]" ;
    # basics
    my_score : string "{score}/{max_score}" ;
    custom_unknown_verb_error : dynamic_string {( "Nothing special happens. You can use {vm_verbs} for a general overview of standard verbs." )} ;
@@ -2004,7 +2005,10 @@ subroutines {
       }
 
       : match "credits _;credit _;creds _;cred _" {
-         : print "Nothing yet. But obviously this will grow, and I need to fix this, and if you're testing now, you'll be in here!" ;
+         : print "Thanks to {l_tester_gg} for testing. He's the only person whose transcript(s) I've finished, but there will be at least two more. Maybe one of them is you!" ;
+         : print "GENERAL THANKS:" ;
+         : print "Chris Ainsley for Adventuron and administering TALP, Garry Francis for continuing to administer TALP, and all the TALP and Adventuron authors who came before me who set a high standard I've hopefully come close to." ;
+         : print "The Adventuron discord and Intfiction.org board, which overlap with the people listed above." ;
          : done ;
       }
 
