@@ -28,7 +28,38 @@ strings {
    # basics
    my_score : string "{score}/{max_score}" ;
    custom_unknown_verb_error : dynamic_string {( "Nothing special happens. You can use {vm_verbs} for a general overview of standard verbs." )} ;
-   exits_err : dynamic_string {( "Can't go that way." )} ;
+
+   only_up : string "You can only go back up" ;
+   only_west : string "You can only go back west" ;
+   only_east : string "You can only go back east" ;
+   only_north : string "You can only go back north" ;
+   only_south : string "You can only go back south" ;
+   only_north_south : string "You can go north and south, but there are no more secret passages to open" ;
+   only_four : string "You can only go the four basic directions here." ;
+   exits_err : dynamic_string {(
+      is_at "demo_meadow" ? "{this_game} uses the four basic directions, along with up and down." :
+      is_at "rocky_caves" ? "{only_up}." :
+      is_at "tool_stall" ? ( point_tight_rules ? "{only_north_south}." : "You can only go north here, for now" ) :
+      is_at "app_mall" ? "{only_north}." :
+      is_at "chattin_em_plain" ? "{only_north}." :
+      is_at "streaky_cove" ? "{only_north}." :
+      is_at "cache_shack" ? "{only_north}." :
+      is_at "newbies_boonies" ? ( point_push_best ? "{only_four}" : "{only_east} for now." ) :
+      is_at "backin_cabin" ? "{only_four}." :
+      is_at "yankin_canyon" ? "{only_north}." :
+      is_at "moldin_dolmen" ? "{only_south}." :
+      is_at "outer_tower" ? ( key_used ? "{only_north_south}" : "{only_south}, at least until you find a way through the tower." ) :
+      is_at "collation_location" ? "{only_south}." :
+      is_at "ailer_lair" ? "You can only go north or back east." :
+      is_at "tenser_center" ? "{only_south}." :
+      is_at "jeerin_region" ? "You can only go north or back west." :
+      is_at "gnawing_awning" ? "{only_south}." :
+      is_at "oopster_stupor" ? ( point_marred_haze ? "{only_north_south}." : "{only_south}." ) :
+      is_at "taller_altar" ? "{only_south}." :
+      is_at "foldin_gate" ? ( bonus_point_golden_fate ? "{only_north_south}." : "{only_south}." )
+   )}
+
+)} ;
 
    # parser stuff
    nospecial_custom : string "You see no specific item like that--time limits mean I couldn't implement noncritical things. To examine a room, <LOOK<#0f0>>. Note that the parser may not recognize adjectives as synonyms, so using a noun works best." ;
