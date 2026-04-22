@@ -610,6 +610,7 @@ booleans {
    drawing_map : boolean "false" ;
    map_note : boolean "false" ;
    widget_nudge : boolean "false" ;
+   hints_clarified_yet : boolean "false" ;
 
    # game state (critical)
    listen_demo_meadow : boolean "false" ;
@@ -2426,13 +2427,16 @@ subroutines {
          : print "Before I give hints, I'd like you to try {xme}, a standard action to start text adventures. It will give a clue." ;
          : done ;
       }
-      : if (score < 5) {
+      : if (score > 5) {
          : if (widget_num == -1) {
             : print "There is nothing to do here." ;
             : done ;
          } : else_if (widget_num == 1) {
             : print "There will be something to do later." ;
-            : print "{one_time}while {vd_hint} won't tell you where to go in this case, there should always be another room with hints where you can work at things and check back later." ;
+            : if (!hints_clarified_yet) {
+               : print "{one_time}while {vd_hint} won't tell you where to go in this case, there should always be another room with hints where you can work at things and check back later." ;
+               : set_true "hints_clarified_yet" ;
+            }
             : done ;
          } : else_if (widget_num == 0) {
             : print "You are done here." ;
