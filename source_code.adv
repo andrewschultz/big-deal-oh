@@ -252,7 +252,9 @@ integers {
 
    # hinting. Magic numbers are 1 = do later, 0 = done, -1 = nothing to do
    # note items are listed in backwards order of how we do things
-   widget_num : dynamic_integer {( is_at "rocky_caves" ? widget_10_rocky_caves :
+   widget_num : dynamic_integer {( has_visited "tenser_center" ? widget_num_north : widget_num_south )} ;
+
+   widget_num_south : dynamic_integer {( is_at "rocky_caves" ? widget_10_rocky_caves :
    is_at "tool_stall" ? widget_21_tool_stall :
    is_at "demo_meadow" ? widget_22_demo_meadow :
    is_at "chattin_em_plain" ? widget_11_chattin_em_plain :
@@ -267,14 +269,17 @@ integers {
    is_at "outer_tower" ? widget_23_outer_tower :
    is_at "collation_location" ? widget_33_collation_location :
    is_at "ailer_lair" ? widget_14_ailer_lair :
+   -1 )} ;
+
+   widget_num_north : dynamic_integer {( is_at "outer_tower" ? widget_23_outer_tower :
    is_at "tenser_center" ? widget_24_tenser_center :
    is_at "jeerin_region" ? widget_34_jeerin_region :
    is_at "gnawing_awning" ? widget_15_gnawing_awning :
    is_at "oopster_stupor" ? widget_25_oopster_stupor :
    is_at "taller_altar" ? widget_35_taller_altar :
    is_at "foldin_gate" ? widget_26_foldin_gate :
-   -1
-   )} ;
+   -1 )} ;
+
    widget_10_rocky_caves : dynamic_integer {( point_steel_wrench ? 0 : smell_rocky_caves ? 56 : 1 )} ;
    widget_20_app_mall : dynamic_integer {( 0 )} ;
    widget_11_chattin_em_plain : dynamic_integer {( point_platinum_chain ? 0 : 85 )} ;
