@@ -2410,15 +2410,44 @@ subroutines {
          : print "Before I give hints, I'd like you to try {xme}, a standard action to start text adventures. It will give a clue." ;
          : done ;
       }
-      : if (is_at "demo_meadow") {
+      if (score < 5) {
+         : if (widget_num == -1) {
+            : print "There is nothing to do here." ;
+            : done ;
+         } : else_if (widget_num == 1) {
+            : print "There will be something to do later." ;
+            : done ;
+         } : else_if (widget_num == 0) {
+            : print "You are done here." ;
+            : done ;
+         }
+      }
+      : if (is_at "ailer_lair") {
+         : if (!point_best_notes) {
+            : cycle key = "hint_23_best_notes" predictable_order = "true" skip_interval = "0" {
+               : print "The nest boats are what you need to look at." ;
+               : print "The babblers and blabbers want to give you a gift before you leave. One that isn't lame. Maybe there's something on the nest boats." ;
+               : print "<BEST NOTES<#f0f>>." ;
+            }
+            : done ;
+         }
+         : if (has_visited foldin_gate && !point_help_card) {
+            : cycle key = "hint_27_help_card" predictable_order = "true" skip_interval = "0" {
+               : print "The kelp (hard) has just gotten washed up." ;
+               : print "It may get stuff lost in it." ;
+               : print "A <HELP CARD<#f0f>>." ;
+            }
+            : done ;
+         }
+      } : else_if (is_at "demo_meadow") {
          : if (!point_tool_stall) {
-            : cycle key = "hint_tool_stall" predictable_order = "true" skip_interval = "0" {
+            : cycle key = "hint_02_tool_stall" predictable_order = "true" skip_interval = "0" {
                : print "The {puz_point_tool_stall} is out of place in a meadow and oddly worded for a reason." ;
                : print "You may notice something about some location names and expressions." ;
                : print "Demo meadow. Fie Moan My Phone, if you examined yourself. The item is a {i_widget}." ;
                : print "Spoonerisms are the mechanic." ;
                : print "Flip the sounds at the start of the words to get a..." ;
-               : print "TOOL STALL." ;
+               : print "<TOOL STALL<#f0f>>." ;
             }
             : done ;
          }
@@ -2427,10 +2456,18 @@ subroutines {
             : done ;
          }
          : if (!point_rocky_caves) {
-            : cycle key = "hint_rocky_caves" predictable_order = "true" skip_interval = "0" {
+            : cycle key = "hint_00_rocky_caves" predictable_order = "true" skip_interval = "0" {
                : print "The {puz_point_cocky_raves} sure find it funny you can't find a way out." ;
                : print "But of course the {puz_point_cocky_raves} are hiding something you may be able to figure out." ;
-               : print "COCKY RAVES are nearby." ;
+               : print "You will hear <COCKY RAVES<#f0f>> are nearby." ;
+            }
+            : done ;
+         }
+         : if (placed_flaming_towers && !point_taming_flowers) {
+            : cycle key = "hint_05_taming_flowers" predictable_order = "true" skip_interval = "0" {
+               : print "The flaming towers are certainly a menace?" ;
+               : print "How could you find something nicer that makes them less of a menace?" ;
+               : print "Find some <TAMING FLOWERS<#f0f>>." ;
             }
             : done ;
          }
@@ -2440,7 +2477,7 @@ subroutines {
             : done ;
          }
          : if (!point_leery_owner) {
-            : cycle key = "hint_leery_owner" predictable_order = "true" skip_interval = "0" {
+            : cycle key = "hint_03_leery_owner" predictable_order = "true" skip_interval = "0" {
                : print "The {puz_point_eerie_loner} isn't the person you need to speak to, but they can summon the person who is." ;
                : print "The {puz_point_eerie_loner} isn't big on positivity, either." ;
                : print "Who is the manager? Something that rhymes with loner, someone in charge." ;
@@ -2452,7 +2489,7 @@ subroutines {
             : done ;
          }
          : if (!point_tight_rules) {
-            : cycle key = "hint_tight_rules" predictable_order = "true" skip_interval = "0" {
+            : cycle key = "hint_04_tight_rules" predictable_order = "true" skip_interval = "0" {
                : print "The {puz_point_eerie_loner} isn't the person you need to speak to, but they can summon the person who is." ;
                : print "The {puz_point_eerie_loner} isn't big on positivity, either." ;
                : print "Who is the manager? Something that rhymes with loner, someone in charge." ;
@@ -2472,9 +2509,9 @@ subroutines {
             }
          }
          : if (!point_steel_wrench) {
-            : cycle key = "hint_steel_wrench" predictable_order = "true" skip_interval = "0" {
+            : cycle key = "hint_01_steel_wrench" predictable_order = "true" skip_interval = "0" {
                : print "That real stench may prevent less hardy adventurers from finding something, but maybe if you looked for something specific, you'd find it." ;
-               : print {( point_tool_stall ? "The tool stall you unveiled needs an item." : "The stool (tall) back in the meadow leads somewhere that could give you a clue." )} ;
+               : print {( point_tool_stall ? "The tool stall you unveiled needs an item." : "The {puz_point_stool_tall} back in the meadow leads somewhere that could give you a clue." )} ;
                : done ;
             }
          }
