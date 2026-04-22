@@ -2421,12 +2421,13 @@ subroutines {
          : print "Before I give hints, I'd like you to try {xme}, a standard action to start text adventures. It will give a clue." ;
          : done ;
       }
-      if (score < 5) {
+      : if (score < 5) {
          : if (widget_num == -1) {
             : print "There is nothing to do here." ;
             : done ;
          } : else_if (widget_num == 1) {
             : print "There will be something to do later." ;
+            : print "{one_time}while {vd_hint} won't tell you where to go in this case, there should always be another room with hints where you can work at things and check back later." ;
             : done ;
          } : else_if (widget_num == 0) {
             : print "You are done here." ;
@@ -2442,11 +2443,43 @@ subroutines {
             }
             : done ;
          }
-         : if (has_visited foldin_gate && !point_help_card) {
-            : cycle key = "hint_27_help_card" predictable_order = "true" skip_interval = "0" {
+         : if (has_visited "foldin_gate" && !point_help_card) {
+            : cycle key = "hint_26_help_card" predictable_order = "true" skip_interval = "0" {
                : print "The kelp (hard) has just gotten washed up." ;
                : print "It may get stuff lost in it." ;
                : print "A <HELP CARD<#f0f>>." ;
+            }
+            : done ;
+         }
+      } : else_if (is_at "backin_cabin") {
+         : if (!point_pull_file) {
+            : cycle key = "hint_07_pull_file" predictable_order = "true" skip_interval = "0" {
+               : print "The full pile is in your way. It has something you might want, but what?" ;
+               : print "You can reduce the clutter a bit. It helps to focus on something you need." ;
+               : print "You could <PULL FILE<#f0f>>." ;
+            }
+            : done ;
+         }
+      } : else_if (is_at "cache_shack") {
+         : if (!buns_taken) {
+            : print "You just need to <TAKE BUNS<#f0f>> here." ;
+            : done ;
+         }
+      } : else_if (is_at "chattin_em_plain") {
+         : if (!point_platinum_chain) {
+            : cycle key = "hint_12_platinum_chain" predictable_order = "true" skip_interval = "0" {
+               : print "Half the chatter says there's an item you don't want to pick up, and half says you do." ;
+               : print "But what could the item be?" ;
+               : print "It is a <PLATINUM CHAIN<#f0f>>." ;
+            }
+            : done ;
+         }
+      } : else_if (is_at "collation_location") {
+         : if (!point_grow_dupes) {
+            : cycle key = "hint_08_grow_dupes" predictable_order = "true" skip_interval = "0" {
+               : print "Now you have the buns, you have material that can help the dough groups repopulate." ;
+               : print "In the collation location, you make copies of things." ;
+               : print "You can <GROW DUPES<#f0f>>." ;
             }
             : done ;
          }
@@ -2482,6 +2515,137 @@ subroutines {
             }
             : done ;
          }
+      } : else_if (is_at "foldin_gate") {
+         : if (!point_great_book) {
+            : cycle key = "hint_27_great_book" predictable_order = "true" skip_interval = "0" {
+               : print "The gate brook holds wisdom and secrets and all that sort of thing." ;
+               : print "You have an item that can help you reserve such a book." ;
+               : print "The cold hard hold card." ;
+               : print "You need to ask for the <GREAT BOOK<#f0f>>." ;
+            }
+            : done ;
+         }
+      } : else_if (is_at "gnawing_awning") {
+         : if (!point_sail_tide) {
+            : cycle key = "hint_19_sail_tide" predictable_order = "true" skip_interval = "0" {
+               : print "The tail side is helping adjust wind patterns, or something." ;
+               : print "What can it help, to make things more comfortable for people to pass by?" ;
+               : print "You need to start the <SAIL TIDE<#f0f>>." ;
+            }
+            : done ;
+         } : else_if (!point_sold_guide) {
+            : cycle key = "hint_20_sold_guide" predictable_order = "true" skip_interval = "0" {
+               : print "The gold side hides something valuable." ;
+               : print "Something you should have the money to pay for." ;
+               : print "You need claim a <SOLD GUIDE<#f0f>>. You'll buy it automatically." ;
+            }
+            : done ;
+         } : else_if (!point_sick_bride) {
+            : cycle key = "hint_21_sick_bride" predictable_order = "true" skip_interval = "0" {
+               : print "Something or someone is bricked up behind the brick side." ;
+               : print "Who would want to run?" ;
+               : print "You will find a <SICK BRIDE<#f0f>>." ;
+            }
+            : done ;
+         }
+      } : else_if (is_at "jeerin_region") {
+         : if (!point_written_specs) {
+            : cycle key = "hint_19_written_specs" predictable_order = "true" skip_interval = "0" {
+               : print "The best notes help here." ;
+               : print "The spittin' wrecks know a lot, but giving general ordinary help is beneath them." ;
+               : print "Ask for <WRITTEN SPECS<#f0f>>. You'll use the best notes automatically." ;
+            }
+            : done ;
+         }
+      } : else_if (is_at "moldin_dolmen") {
+         : if (!point_formed_wax) {
+            : cycle key = "hint_15_formed_wax" predictable_order = "true" skip_interval = "0" {
+               : print "You keep seeing a warmed fax appear from the wall, then vanish." ;
+               : print "Maybe you could catch one and change it into something else quickly." ;
+               : print "You need to grab or create some <FORMED WAX<#f0f>>." ;
+            }
+            : done ;
+         }
+      } : else_if (is_at "newbies_boonies") {
+         : if (!point_push_best) {
+            : cycle key = "hint_06_newbies_boonies" predictable_order = "true" skip_interval = "0" {
+               : print "The bush pest wants a fight, but it's surprisingly good at getting in your way." ;
+               : print "What sort of move could you pull on it to get by?" ;
+               : print "You could <PUSH BEST<#f0f>>." ;
+            }
+            : done ;
+         }
+      } : else_if (is_at "outer_tower") {
+         : if (!point_lodging_doc) {
+            : cycle key = "hint_14_lodging_dock" predictable_order = "true" skip_interval = "0" {
+               : print "If you've examined the keyhole, you may notice it's not any old lock." ;
+               : print "It's a DODGING LOCK." ;
+               : print "Thus, you need to request a <LODGING DOCK<#f0f>> or say <LODGING DOC<#f0f>>. It works either way." ;
+            }
+            : done ;
+         } : else_if (!point_power_torch) {
+            : cycle key = "hint_22_power_torch" predictable_order = "true" skip_interval = "0" {
+               : print "Hmm, you've found where the porch is. What does that make it?" ;
+               : print "A tower porch." ;
+               : print "You need to look for a <POWER TORCH<#f0f>>." ;
+            }
+            : done ;
+         }
+      } : else_if (is_at "rocky_caves") {
+         : if (!smell_rocky_caves) {
+            : cycle key = "hint_rocky_caves_smell" predictable_order = "true" skip_interval = "0" {
+               : print "Time to use a different sense. It's damp and dark here. You can't really see and don't want to taste, but what other sense can you use?" ;
+               : print "You can SMELL." ;
+               : done ;
+            }
+         }
+         : if (!point_steel_wrench) {
+            : cycle key = "hint_01_steel_wrench" predictable_order = "true" skip_interval = "0" {
+               : print "That real stench may prevent less hardy adventurers from finding something, but maybe if you looked for something specific, you'd find it." ;
+               : print {( point_tool_stall ? "The tool stall you unveiled needs an item." : "The {puz_point_stool_tall} back in the meadow leads somewhere that could give you a clue." )} ;
+               : done ;
+            }
+         }
+      } : else_if (is_at "streaky_cove") {
+         : if (!point_creaky_stove) {
+            : cycle key = "hint_09_creaky_stove" predictable_order = "true" skip_interval = "0" {
+               : print "The streaky cove's right side is a plain grey, almost too grey." ;
+               : print "Something useful is hidden in the grey. A helpful appliance." ;
+               : print "It is a <CREAKY STOVE<#f0f>>." ;
+            }
+            : done ;
+         } : else_if (!point_bake_tons) {
+            : cycle key = "hint_10_bake_tons" predictable_order = "true" skip_interval = "0" {
+               : print "So you have a stove. Do you have anything you could cook or heat up?" ;
+               : print "The buns. If you take inventory, you notice something." ;
+               : print "You had to TAKE BUNS." ;
+               : print "You thus need to <BAKE TONS<#f0f>>." ;
+            }
+            : done ;
+         } : else_if (!point_key_trove) {
+            : cycle key = "hint_11_key_trove" predictable_order = "true" skip_interval = "0" {
+               : print "Something is hidden behind the tree cove." ;
+               : print "Perhaps something of value." ;
+               : print "There is a <KEY TROVE<#f0f>>." ;
+            }
+            : done ;
+         }
+      } : else_if (is_at "taller_altar") {
+         : if (!point_penny_mounds) {
+            : cycle key = "hint_18_penny_mounds" predictable_order = "true" skip_interval = "0" {
+               : print "Many pounds are around the taller altar." ;
+               : print "Neither seem terribly spiritual." ;
+               : print "What you get isn't terribly spiritual, but it is enough for what you need." ;
+               : print "<PENNY MOUNDS<#f0f>>." ;
+            }
+         } : else_if (!point_cool_plan) {
+            : cycle key = "hint_25_cool_plan" predictable_order = "true" skip_interval = "0" {
+               : print "The pool clan has something to offer you." ;
+               : print "Nothing concrete, just some help." ;
+               : print "They could construct a <COOL PLAN<#f0f>>." ;
+            }
+            : done ;
+         }
       } : else_if (is_at "tool_stall") {
          : if (!point_steel_wrench) {
             : print "You need to do something elsewhere first to make progress here." ;
@@ -2511,23 +2675,19 @@ subroutines {
             }
             : done ;
          }
-      } : else_if (is_at "rocky_caves") {
-         : if (!smell_rocky_caves) {
-            : cycle key = "hint_rocky_caves_smell" predictable_order = "true" skip_interval = "0" {
-               : print "Time to use a different sense. It's damp and dark here. You can't really see and don't want to taste, but what other sense can you use?" ;
-               : print "You can SMELL." ;
-               : done ;
+      } : else_if (is_at "yankin_canyon") {
+         : if (!point_chop_drain) {
+            : cycle key = "hint_13_chop_drain" predictable_order = "true" skip_interval = "0" {
+               : print "This is a tricky one, meant to identify what is yankin' things down." ;
+               : print "Look in your inventory. There's something cursed, something you want to get rid of." ;
+               : print "Have you tried to <DROP<#f0f>> it?" ;
+               : print "It doesn't work. You need the right thing to destroy it, or its essence." ;
+               : print "You need to call the <CHOP DRAIN<#f0f>>." ;
             }
-         }
-         : if (!point_steel_wrench) {
-            : cycle key = "hint_01_steel_wrench" predictable_order = "true" skip_interval = "0" {
-               : print "That real stench may prevent less hardy adventurers from finding something, but maybe if you looked for something specific, you'd find it." ;
-               : print {( point_tool_stall ? "The tool stall you unveiled needs an item." : "The {puz_point_stool_tall} back in the meadow leads somewhere that could give you a clue." )} ;
-               : done ;
-            }
+            : done ;
          }
       }
-      : print "I can't point to anything here and now.";
+      : print "This is a catchall \"I can't do anything right now\" statement. It shouldn't pop up, but if it does, it probably means I missed a case where you can do something here, but you'll have to do other things first. Sorry about this, and please let me know where and how it happened if you can, so I can fix it!";
       : done ;
    }
 
@@ -2564,7 +2724,6 @@ subroutines {
       : press_any_key ;
       : clear_screen ;
    }
-
 }
 
 themes {
