@@ -2448,10 +2448,6 @@ subroutines {
    #########################################hint and widget and tutorial
 
    hint_function : subroutine {
-      : if (!hinted_yet) {
-         : print "{one_time}{this_game} makes a reasonable guess of the next puzzle you can solve in the current room. If nothing turns up, you may wish to go elsewhere." ;
-         : set_true "hinted_yet" ;
-      }
       : set_true "skip_tutorial_cue" ;
       : if (tutorial_0_in_tutorial && !tutorial_5_think) {
          : print "There are several things you can do here. Get to step 4 of the tutorial, then ask for hints again." ;
@@ -2461,6 +2457,10 @@ subroutines {
       : if (score == 0 && !xme_yet) {
          : print "Before I give hints, I'd like you to try {xme}, a standard action to start text adventures. It will give a clue." ;
          : done ;
+      }
+      : if (!hinted_yet) {
+         : print "{one_time}{this_game} makes a reasonable guess of the next puzzle you can solve in the current room. If nothing turns up, you may wish to go elsewhere." ;
+         : set_true "hinted_yet" ;
       }
       : gosub "awning_hint_check" ;
       : if (is_at "start_zone") {
