@@ -159,7 +159,7 @@ strings {
    header_newbies_boonies : string "<Newbies' Boonies<#ff0>>" ;
 
    loc_oopster_stupor : dynamic_string {( has_visited("foldin_gate") ? "The path north is clear now you passed and destroyed the hard maze. You can go south, too." : point_hard_maze ? "The hard maze is ahead to the north, and the tenser center is back to the south." : "Oh no! There's a {puz_point_marred_haze} ahead to the north! You haven't stepped in it, but its fogginess still affects you. Whether or not oopster is a word, you're very much in a stupor and doing minor things that make you say oops. Thankfully you're still aware of passage back south." )} ;
-   header_oopster_stupor : string "<Oopster Stupor<#ff0>>" ;
+   header_oopster_stupor : dynamic_string {( point_hard_maze ? "<Chirp Perch<#ff0>>" : "<Oopster Stupor<#ff0>>" )} ;
 
    loc_outer_tower : dynamic_string {( key_used ? ("The tower leads north/south now you've opened it." + (porch_in_tower && !point_power_torch ? " You also found a {puz_point_tower_porch}." : "" ) ) : "Here at the outer tower, barbed wire stretches all around. It looks like you could maybe eventually unlock the tower to go north, though, since it has a keyhole in it. It looks like you'll want to, because the grass really IS greener on the other side! Or maybe you'll need to prep by going back south first." )} ;
    header_outer_tower : string "<Outer Tower<#ff0>>" ;
@@ -294,7 +294,7 @@ integers {
    widget_20_app_mall : dynamic_integer {( 0 )} ;
    widget_11_chattin_em_plain : dynamic_integer {( point_platinum_chain ? 0 : 85 )} ;
    widget_21_tool_stall : dynamic_integer {( point_tight_rules ? 0 : point_leery_owner ? 55 : point_steel_wrench ? 55 : -55 )} ;
-   widget_31_streaky_cove : dynamic_integer {( point_key_trove ? 0 : point_bake_tons ? 45 : point_creaky_stove ? 65 : 0 )} ;
+   widget_31_streaky_cove : dynamic_integer {( point_key_trove ? -1 : point_bake_tons ? 45 : point_creaky_stove ? 0 : 65 )} ;
    widget_02_cache_shack : dynamic_integer {( 0 )} ;
    widget_12_newbies_boonies : dynamic_integer {( point_push_best ? 0 : 44 )} ;
    widget_22_demo_meadow : dynamic_integer {( point_taming_flowers ? 0 : placed_flaming_towers ? 67 : cocky_raves_present ? 55 : (!point_tool_stall) ? 45 : 1 )} ;
@@ -302,7 +302,7 @@ integers {
    widget_42_yankin_canyon : dynamic_integer {( point_chop_drain ? 0 : 45 )} ;
    widget_13_moldin_dolmen : dynamic_integer {( point_formed_wax ? 0 : 63 )} ;
    widget_23_outer_tower : dynamic_integer {( point_power_torch ? 0 : !point_lodging_doc ? 74 : point_sold_guide ? 55 : 1 )} ;
-   widget_33_collation_location : dynamic_integer {( point_grow_dupes ? 63 : -1 )} ;
+   widget_33_collation_location : dynamic_integer {( point_grow_dupes ? -1 : 45 )} ;
    widget_14_ailer_lair : dynamic_integer {( point_help_card ? 0 : has_visited "foldin_gate" ? 44 : point_best_notes ? 1 : point_sail_tide ? 45 : 1 )} ;
    widget_24_tenser_center : dynamic_integer {( point_minister_south ? 0 : 85 )} ;
    widget_34_jeerin_region : dynamic_integer {( point_written_specs ? 0 : point_best_notes ? 75 : -75 )} ;
@@ -2607,7 +2607,7 @@ subroutines {
             : cycle key = "hint_20_sold_guide" predictable_order = "true" skip_interval = "0" {
                : print "The {puz_point_gold_side} hides something valuable." ;
                : print "Something you should have the money to pay for." ;
-               : print "You need claim a <SOLD GUIDE<#f0f>>. You'll buy it automatically." ;
+               : print "You need to claim a <SOLD GUIDE<#f0f>>. You'll buy it automatically." ;
             }
             : done ;
          } : else_if (!point_sick_bride) {
@@ -2713,7 +2713,7 @@ subroutines {
       } : else_if (is_at "taller_altar") {
          : if (!point_penny_mounds) {
             : cycle key = "hint_18_penny_mounds" predictable_order = "true" skip_interval = "0" {
-               : print "There are {puz_points_many_pounds}, of two types, around the taller altar. Animal and big cartoon weights." ;
+               : print "There are {puz_point_many_pounds}, of two types, around the taller altar. Animal and big cartoon weights." ;
                : print "Neither seem terribly spiritual. They don't belong here. Perhaps they can be replaced?" ;
                : print "What you get isn't terribly spiritual, but it is less damaging to the soul or body, and it's enough for what you need." ;
                : print "<PENNY MOUNDS<#f0f>>." ;
