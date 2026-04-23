@@ -3023,7 +3023,7 @@ on_command {
       : print "{standard_puzzle_check}" ;
    }
 
-   : match "leery _;rocky _;steel _;taming _;tool _;tight _" { #obfuscation of non solutions, regular points
+   : match "bake _;best _;cool _;clock _;chop _;creaky _;formed _;golden _;great _;hard _;key _;leery _;lodging _;minister _;penny _;platinum _;power _;rocky _;sail _;sick _;sold _;steel _;taming _;tool _;tight _;written _" { #obfuscation of non solutions, regular points
       : print "{custom_unknown_verb_error}" ;
       : done ;
    }
