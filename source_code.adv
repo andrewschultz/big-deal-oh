@@ -2919,6 +2919,10 @@ on_command {
       : match "_ widget;_ digit;_ dialed;_ wild" {
          : set_integer var="tempint" {( widget_num )} ;
          : set_false "widget_blurry" ;
+         : if (point_penny_mounds && !point_sold_guide && awning_done < 2) {
+            : print {( "Weird! It's 44 plus a fraction. Like, " + (awning_done == 0 ? "two-thirds" : "one-half") + "." )} ;
+            : done ;
+         }
          : if (tempint == -1 ) {
             : print "Some weird random negative number. Nothing to do here, period." ;
             : done ;
