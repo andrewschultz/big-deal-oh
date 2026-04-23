@@ -2630,6 +2630,15 @@ subroutines {
             }
             : done ;
          }
+      } : else_if (is_at "oopster_stupor") {
+         : if (!point_hard_maze) {
+            : cycle key = "hint_17_hard_maze" predictable_order = "true" skip_interval = "0" {
+               : print "The {puz_point_marred_haze} blocks you. It can become something slightly more solveable." ;
+               : print "Not fun to solve, but solveable." ;
+               : print "You could discover a <HARD MAZE<#f0f>>." ;
+            }
+            : done ;
+         }
       } : else_if (is_at "outer_tower") {
          : if (!point_lodging_doc) {
             : cycle key = "hint_14_lodging_dock" predictable_order = "true" skip_interval = "0" {
@@ -2699,6 +2708,15 @@ subroutines {
                : print "The {puz_point_pool_clan} has something to offer you." ;
                : print "Nothing concrete, just some help." ;
                : print "They could construct a <COOL PLAN<#f0f>>." ;
+            }
+            : done ;
+         }
+      } : else_if (is_at "tenser_center") {
+         : if (!point_hard_maze) {
+            : cycle key = "hint_16_minister_south" predictable_order = "true" skip_interval = "0" {
+               : print "The {puz_point_sinister_mouth} may not be fully evil, but you may need something powerful to dispel it." ;
+               : print "Perhaps you can call on someone to come a certain direction." ;
+               : print "You could call out <MINISTER SOUTH<#f0f>>." ;
             }
             : done ;
          }
