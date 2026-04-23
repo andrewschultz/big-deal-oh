@@ -1553,7 +1553,7 @@ locations {
             }
          }
          : if (point_key_trove) {
-            : match "_ trove" {
+            : match "_ trove;_ keys" {
                : if (!point_lodging_doc) {
                   : print {( "So many keys with so many labels. " + (has_visited "outer_tower" ? "You wouldn't know which would fit the outer tower!" : "You haven't found anything that needs unlocking yet, so you won't waste time searching." ) )};
                } : else_if (!key_found) {
@@ -1787,7 +1787,7 @@ objects {
    best_notes : object "the best notes from the nest boats" ;
    buns : object "the BUNS you managed/needed to TAKE" at="cache_shack" conspicuous="false" ;
    chain : object "the platinum CHAIN that snapped onto you that you want to get rid of. Oh, what's the word?" ;
-   hold_card : object "this entitles the bearer to have priority in checking out popular or useful literature." ;
+   hold_card : object "the cold hard hold card from the hard kelp" ;
    slab : object "the slender fab fender slab that was inside the platinum chain" conspicuous="false" ;
    power_torch : object "the power torch you found on the tower porch. It has enough for one charge." ;
    seek_key : object "the reconstructed key from the dolmen" ;
@@ -2226,6 +2226,9 @@ subroutines {
          }
          : if (think_chop_drain) {
             : print "You tried to put the chain into a chop drain when one wasn't nearby." ;
+         }
+         : if (think_sold_guide) {
+            : print "You tried to buy a sold guide {here_gnawing_awning} but had no collateral." ;
          }
          : if (think_great_book) {
             : print "You tried to check out the {tht_great_book} without any ID or voucher {here_foldin_gate}." ;
@@ -2886,7 +2889,7 @@ subroutines {
             : set_true "smell_rocky_caves" ;
             : set_true "placed_flaming_towers" ;
             : goto "demo_meadow" ;
-            : set_integer var="score" "5" ;
+            : set_integer var="score" "6" ;
             : done ;
          }
          : match "testjump outer" {
@@ -2989,6 +2992,12 @@ on_command {
    : match "sw _;se _;nw _;ne _" {
       : print "{this_game} doesn't use diagonal directions." ;
       : done ;
+   }
+   : if (is_carried "hold_card") {
+      : match "_ card;_ cold;_ hard;_ hold" {
+         : print "*This entitles the bearer to have priority in checking out popular or useful literature*" ;
+         : done ;
+      }
    }
    : if (point_sold_guide) {
       : match "_ guide;_ sold" {
