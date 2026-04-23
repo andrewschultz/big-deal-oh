@@ -301,6 +301,9 @@ integers {
    widget_35_taller_altar : dynamic_integer {( point_cool_plan ? 0 : point_sick_bride ? 44 : point_penny_mounds ? 1 : 56 )} ;
    widget_26_foldin_gate : dynamic_integer {( point_help_card ? 54 : -54 )} ;
 
+   awning_done : dynamic_integer {( (point_sail_tide ? 1 : 0) + (point_sold_guide ? 1 : 0) + (point_sick_bride ? 1 : 0) )};
+   awning_doable : dynamic_integer {( (3 - awning_done) - (point_penny_mounds ? 1 : 0) )} ;
+
    #auxiliary
    tempint : integer "0" ;
    counter : integer "0" ;
@@ -610,6 +613,7 @@ booleans {
    drawing_map : boolean "false" ;
    map_note : boolean "false" ;
    widget_nudge : boolean "false" ;
+   hint_awning_note : boolean "false" ;
    hints_clarified_yet : boolean "false" ;
 
    # game state (critical)
@@ -708,6 +712,8 @@ booleans {
    print_core_nag_after : boolean "false" ;
    solved_both_parts_core_nag : boolean "false" ;
    solved_both_parts_bonus_nag : boolean "false" ;
+
+   ambiguous_awning_hints : dynamic_boolean {( is_at "gnawing_awning" && awning_doable > 1 && !hint_awning_note )} ;
 
    in_bonus_half : boolean "false" ;
    unneeded_half : dynamic_boolean {( tempint == 0 && !in_bonus_half )} ;
@@ -2364,6 +2370,15 @@ subroutines {
          : set_true "key_duplicated" ;
       }
    }
+
+   awning_hint_check : subroutine {
+      : if (ambiguous_awning_hints) {
+         : print "{one_time}there's more than one thing you can focus on here and now, so I've picked the puzzle(s) in arbitrary order." ;
+         : set_true "hint_awning_note" ;
+         : return ;
+      }
+   }
+
    #########################################hint and tutorial
 
    diagnostic_think_core_half : subroutine {
@@ -2427,6 +2442,7 @@ subroutines {
          : print "Before I give hints, I'd like you to try {xme}, a standard action to start text adventures. It will give a clue." ;
          : done ;
       }
+      : gosub "awning_hint_check" ;
       : if (score > 5) {
          : if (widget_num == -1) {
             : print "There is nothing to do here." ;
