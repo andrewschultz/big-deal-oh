@@ -49,7 +49,7 @@ strings {
       is_at "backin_cabin" ? "{only_four}." :
       is_at "yankin_canyon" ? "{only_north}." :
       is_at "moldin_dolmen" ? "{only_south}." :
-      is_at "outer_tower" ? ( key_used ? "{only_north_south}" : "{only_south}, at least until you find a way through the tower." ) :
+      is_at "outer_tower" ? ( key_used ? "{only_north_south}." : "{only_south}, at least until you find a way through the tower." ) :
       is_at "collation_location" ? "{only_south}." :
       is_at "ailer_lair" ? "You can only go north or back east." :
       is_at "tenser_center" ? "{only_south}." :
@@ -135,7 +135,7 @@ strings {
    loc_chattin_em_plain : string "You are in the {puz_point_chattin_em_plain}. The only exit is north." ;
    header_chattin_em_plain : string "<Chattin' 'Em Plain<#ff0>>" ;
 
-   loc_collation_location : dynamic_string {( "You are in a collation location. The only exit is south. {puz_point_dough_groups_l} sit here " + (point_grow_dupes ? "looking lonely" : "happy together") + "." )} ;
+   loc_collation_location : dynamic_string {( "You are in a collation location. The only exit is south. {puz_point_dough_groups_u} sit here " + (point_grow_dupes ? "looking lonely" : "happy together") + "." )} ;
    header_cl : string "<Collation Location<#ff0>>" ;
 
    loc_demo_meadow : string "Here in the Demo Meadow {meadow_status}.\n{meadow_passages}." ;
@@ -187,11 +187,12 @@ strings {
    puz_point_bush_pest        : dynamic_string {( opt_color_coding ? "<bush pest<#f80>>" : "bush pest" )} ;                 # 06
    puz_point_brick_side       : dynamic_string {( opt_color_coding ? "<brick side<#f80>>" : "brick side" )} ;               # 20
    puz_point_chattin_em_plain : dynamic_string {( opt_color_coding ? "<chattin 'em plain<#f80>>" : "chattin 'em plain" )} ; # 12
-   puz_point_cocky_raves      : dynamic_string {( opt_color_coding ? "<Cocky raves<#f80>>" : "Cocky raves" )} ;             # 00
+   puz_point_cocky_raves_u    : dynamic_string {( opt_color_coding ? "<Cocky raves<#f80>>" : "Cocky raves" )} ;             # 00
    puz_point_cocky_raves_l    : dynamic_string {( opt_color_coding ? "<cocky raves<#f80>>" : "cocky raves" )} ;             # 00
-   puz_point_dodging_lock     : dynamic_string {( opt_color_coding ? "<dodging lock<#f80>>" : "dodging lock" )} ;           # 14
-   puz_point_dough_groups     : dynamic_string {( opt_color_coding ? "<dough groups<#f80>>" : "dough groups" )} ;           # 08
-   puz_point_dough_groups_l   : dynamic_string {( opt_color_coding ? "<Dough groups<#f80>>" : "Dough groups" )} ;           # 08
+   puz_point_dodging_lock_l   : dynamic_string {( opt_color_coding ? "<dodging lock<#f80>>" : "dodging lock" )} ;           # 14
+   puz_point_dodging_lock_u   : dynamic_string {( opt_color_coding ? "<DODGING LOCK<#f80>>" : "DODGING LOCK" )} ;           # 14
+   puz_point_dough_groups_l   : dynamic_string {( opt_color_coding ? "<dough groups<#f80>>" : "dough groups" )} ;           # 08
+   puz_point_dough_groups_u   : dynamic_string {( opt_color_coding ? "<Dough groups<#f80>>" : "Dough groups" )} ;           # 08
    puz_point_drop_chain       : dynamic_string {( opt_color_coding ? "<drop chain<#f80>>" : "drop chain" )} ;               # 13
    puz_point_eerie_loner      : dynamic_string {( opt_color_coding ? "<eerie loner<#f80>>" : "eerie loner" )} ;             # 03
    puz_point_flaming_towers   : dynamic_string {( opt_color_coding ? "<flaming towers<#f80>>" : "flaming towers" )} ;       # 05
@@ -800,7 +801,7 @@ locations {
          : if (point_sail_tide && !point_best_notes) {
             : match "best notes" {
                : collection_modify { collection = "tried_combo_core" index -> (23) content -> ("true") } ;
-               : print "Yes! That is what you need. The ailers are happy with this and leave you with the notes. They go off to complain elsewhere, abnout more first-worldly problems." ;
+               : print "Yes! That is what you need. The ailers are happy with this and leave you with the notes. They go off to complain elsewhere, about more first-worldly problems." ;
                : set_true "point_best_notes" ;
                : gosub "add_point" ;
                : done ;
@@ -949,11 +950,11 @@ locations {
             }
             : collection_modify { collection = "tried_combo_core" index -> (8) content -> ("true") } ;
             : if (!buns_taken) {
-               : print "That seems right, but you have no raw materials with which to help the {puz_point_dough_groups} regenerate!" ;
+               : print "That seems right, but you have no raw materials with which to help the {puz_point_dough_groups_l} regenerate!" ;
                : set_true "think_grow_dupes" ;
                : done ;
             }
-            : print "The buns you took manage to crumble off just enough. The {puz_point_dough_groups}, renewed, grow and -- somehow, when you're not looking -- reproduce. They thank you, assuring you the buns will now have self-regenerative properties of their own." ;
+            : print "The buns you took manage to crumble off just enough. The {puz_point_dough_groups_l}, renewed, grow and -- somehow, when you're not looking -- reproduce. They thank you, assuring you the buns will now have self-regenerative properties of their own." ;
             : set_true "point_grow_dupes" ;
             : set_false "think_grow_dupes" ;
             : gosub "add_point" ;
@@ -1074,12 +1075,12 @@ locations {
                   : print "You'll want to do that later in the tutorial, but not yet." ;
                   : done ;
                }
-               : print {( "What's that? {puz_point_cocky_raves}! Saying you won't find any" + (point_tool_stall ? " other" : "" ) + " way out of the meadow." )} ;
+               : print {( "What's that? {puz_point_cocky_raves_u}! Saying you won't find any" + (point_tool_stall ? " other" : "" ) + " way out of the meadow." )} ;
                : set_true "listen_demo_meadow" ;
                : set_true "tutorial_10_listen" ;
                : update_graphic ;
             } : else {
-               : print "{puz_point_cocky_raves} continue to mock your inability to go anywhere interesting." ;
+               : print "{puz_point_cocky_raves_u} continue to mock your inability to go anywhere interesting." ;
             }
             : done ;
          }
@@ -1399,7 +1400,7 @@ locations {
          }
          : if (!ever_keyhole) {
             : match "_ hole;_ keyhole" {
-               : print "When you look at the keyhole, it moves around a bit. A voice from inside booms \"Few can figure how to open the {puz_point_dodging_lock_caps}!\"" ;
+               : print "When you look at the keyhole, it moves around a bit. A voice from inside booms \"Few can figure how to open the {puz_point_dodging_lock_u}!\"" ;
                : set_true "ever_keyhole" ;
                : done ;
             }
@@ -2531,8 +2532,8 @@ subroutines {
          }
          : if (!point_rocky_caves) {
             : cycle key = "hint_00_rocky_caves" predictable_order = "true" skip_interval = "0" {
-               : print "The {puz_point_cocky_raves} sure find it funny you can't find a way out." ;
-               : print "But of course the {puz_point_cocky_raves} are hiding something you may be able to figure out." ;
+               : print "The {puz_point_cocky_raves_l} sure find it funny you can't find a way out." ;
+               : print "But of course the {puz_point_cocky_raves_l} are hiding something you may be able to figure out." ;
                : print "You will hear <COCKY RAVES<#f0f>> are nearby." ;
             }
             : done ;
@@ -2609,7 +2610,7 @@ subroutines {
          : if (!point_lodging_doc) {
             : cycle key = "hint_14_lodging_dock" predictable_order = "true" skip_interval = "0" {
                : print "If you've examined the keyhole, you may notice it's not any old lock." ;
-               : print "It's a {puz_point_dodging_lock_caps}." ;
+               : print "It's a {puz_point_dodging_lock_caps_l}." ;
                : print "Thus, you need to request a <LODGING DOCK<#f0f>> or say <LODGING DOC<#f0f>>. It works either way." ;
             }
             : done ;
@@ -3064,7 +3065,7 @@ on_tick {
       } : else_if (!tutorial_10_listen) {
          : print "{note_cue_tutorial}Now you're back in the meadow, try LISTENing." ;
       } : else_if (!tutorial_11_rocky_caves) {
-         : print "{note_cue_tutorial}Now you've heard the {puz_point_cocky_raves}, you need to figure what they're cluing." ;
+         : print "{note_cue_tutorial}Now you've heard the {puz_point_cocky_raves_l}, you need to figure what they're cluing." ;
       } : else_if (!tutorial_12_southwest) {
          : print "{note_cue_tutorial}Now you've found the rocky caves, you should explore them to the southwest." ;
       } : else_if (!tutorial_13_smell) {
