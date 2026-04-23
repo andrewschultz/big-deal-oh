@@ -764,6 +764,10 @@ booleans {
    doneblock_15_gnawing_awning : dynamic_boolean {( opt_block_done && point_sick_bride && point_sold_guide && point_sail_tide && is_at "ailer_lair"  )} ;
    doneblock_25_oopster_stupor : dynamic_boolean {( opt_block_done && is_at "foldin_gate" && point_help_card )} ;
    doneblock_35_taller_altar : dynamic_boolean {( opt_block_done && point_cool_plan && is_at "jeerin_region" )} ;
+
+   # debug variables
+   track_digits : boolean "false" ;
+   track_hints : boolean "false" ;
 }
 
 vocabulary {
@@ -2832,6 +2836,88 @@ subroutines {
       : press_any_key ;
       : clear_screen ;
    }
+
+   teststubs : subroutine {
+      : match "hinttrack both" {
+         : set_true "track_digits" ;
+         : set_true "track_hints" ;
+         : done ;
+      }
+      : match "hinttrack digits" {
+         : set_true "track_digits" ;
+         : set_false "track_hints" ;
+         : done ;
+      }
+      : match "hinttrack hints" {
+         : set_false "track_digits" ;
+         : set_true "track_hints" ;
+         : done ;
+      }
+      : match "hinttrack neither" {
+         : set_false "track_digits" ;
+         : set_false "track_hints" ;
+         : done ;
+      }
+      : match "hinttrack _" {
+         : print "Must HINTTRACK digits, hints, neither, or both." ;
+         : done ;
+      }
+      : if (score == 0) {
+         : match "testjump flaming" {
+            : set_true "point_rocky_caves" ;
+            : set_true "point_steel_wrench" ;
+            : set_true "point_tool_stall" ;
+            : set_true "point_leery_owner" ;
+            : set_true "point_tight_rules" ;
+            : set_true "point_taming_flowers" ;
+
+            : set_true "listen_demo_meadow" ;
+            : set_true "smell_rocky_caves" ;
+            : set_true "placed_flaming_towers" ;
+            : goto "demo_meadow" ;
+            : set_integer var="score" "5" ;
+            : done ;
+         }
+         : match "testjump outer" {
+            : set_true "point_rocky_caves" ;
+            : set_true "point_steel_wrench" ;
+            : set_true "point_tool_stall" ;
+            : set_true "point_leery_owner" ;
+            : set_true "point_tight_rules" ;
+            : set_true "point_taming_flowers" ;
+
+            : set_true "point_push_best" ;
+            : set_true "point_pull_file" ;
+            : set_true "point_grow_dupes" ;
+            : set_true "point_bake_tons" ;
+            : set_true "point_creaky_stove" ;
+            : set_true "point_key_trove" ;
+            : set_true "point_platinum_chain" ;
+            : set_true "point_chop_drain" ;
+            : set_true "point_lodging_doc" ;
+            : set_true "point_formed_wax" ;
+
+            : set_true "listen_demo_meadow" ;
+            : set_true "smell_rocky_caves" ;
+            : set_true "placed_flaming_towers" ;
+
+            : set_true "buns_taken" ;
+            : set_true "porch_in_tower" ;
+            : set_true "key_found" ;
+            : set_true "key_duplicated" ;
+            : set_true "key_used" ;
+            : set_true "ever_keyhole" ;
+            : set_integer var="score" "15" ;
+
+            : goto "outer_tower" ;
+            : done ;
+         }
+      }
+      : match "testjump _" {
+         : print "Score must be 0 and you must TESTJUMP FLAMING or TESTJUMP OUTER." ;
+      }
+   }
+
 }
 
 themes {
@@ -3135,6 +3221,14 @@ on_tick {
          : print "Oh no! You should be done with the tutorial. That's a small bug I'd like to know about." ;
          : set_false "tutorial_0_in_tutorial" ;
       }
+   }
+
+   # debug stuff here
+   : if (track_digits) {
+      : gosub "widget_function" ;
+   }
+   : if (track_hints) {
+      : gosub "hint_function" ;
    }
 }
 
