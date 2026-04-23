@@ -2503,6 +2503,9 @@ subroutines {
             }
             : done ;
          }
+      } : else_if (is_at "app_mall") {
+         : print "Nothing critical is needed here, but there are two bonus points." ;
+         : done ;
       } : else_if (is_at "backin_cabin") {
          : if (!point_pull_file) {
             : cycle key = "hint_07_pull_file" predictable_order = "true" skip_interval = "0" {
@@ -2561,7 +2564,7 @@ subroutines {
          }
          : if (placed_flaming_towers && !point_taming_flowers) {
             : cycle key = "hint_05_taming_flowers" predictable_order = "true" skip_interval = "0" {
-               : print "The flaming towers are certainly a menace?" ;
+               : print "The flaming towers are certainly a menace." ;
                : print "How could you find something nicer that makes them less of a menace?" ;
                : print "Find some <TAMING FLOWERS<#f0f>>." ;
             }
@@ -2631,7 +2634,7 @@ subroutines {
          : if (!point_lodging_doc) {
             : cycle key = "hint_14_lodging_dock" predictable_order = "true" skip_interval = "0" {
                : print "If you've examined the keyhole, you may notice it's not any old lock." ;
-               : print "It's a {puz_point_dodging_lock_caps_l}." ;
+               : print "It's a {puz_point_dodging_lock_l}." ;
                : print "Thus, you need to request a <LODGING DOCK<#f0f>> or say <LODGING DOC<#f0f>>. It works either way." ;
             }
             : done ;
@@ -2648,16 +2651,16 @@ subroutines {
             : cycle key = "hint_rocky_caves_smell" predictable_order = "true" skip_interval = "0" {
                : print "Time to use a different sense. It's damp and dark here. You can't really see and don't want to taste, but what other sense can you use?" ;
                : print "You can SMELL." ;
-               : done ;
             }
+            : done ;
          }
          : if (!point_steel_wrench) {
             : cycle key = "hint_01_steel_wrench" predictable_order = "true" skip_interval = "0" {
                : print "That {puz_point_real_stench} may prevent less hardy adventurers from finding something, but maybe if you looked for something specific, you'd find it." ;
                : print {( point_tool_stall ? "The tool stall you unveiled needs an item." : "The {puz_point_stool_tall} back in the meadow leads somewhere that could give you a clue." )} ;
                : print "Hidden behind the {puz_point_real_stench} is a <STEEL WRENCH<#f0f>>." ;
-               : done ;
             }
+            : done ;
          }
       } : else_if (is_at "streaky_cove") {
          : if (!point_creaky_stove) {
