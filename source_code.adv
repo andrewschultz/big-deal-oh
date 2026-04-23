@@ -909,6 +909,10 @@ locations {
       on_command {
          : if (!buns_taken) {
             : match "take buns" {
+               : if (original "verb" == "get") {
+                  : print "You suddenly have this overwhelming fear of getting shot. Perhaps there's some other very similar way to acquire the buns." ;
+                  : done ;
+               }
                : print "Why, yes, it is that simple. You take the buns! Perhaps finding what to do next with them, or the resources to help you, will be trickier." ;
                : set_true "buns_taken" ;
                : update_graphic ;
