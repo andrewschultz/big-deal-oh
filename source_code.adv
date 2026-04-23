@@ -227,6 +227,7 @@ strings {
    #conditional location text (core) (alphabetize)
    here_backin_cabin : dynamic_string {( is_at "backin_cabin" ? "here" : "in the backin' cabin" )} ;
    here_demo_meadow : dynamic_string {( is_at "demo_meadow" ? "here" : "in the demo meadow" )} ;
+   here_foldin_gate : dynamic_string {( is_at "foldin_gate" ? "here" : "by the foldin' gate" )} ;
    here_newbies_boonies : dynamic_string {( is_at "backin_cabin" ? "here" : "in the newbies' boonies" )} ;
    here_rocky_caves : dynamic_string {( is_at "rocky_caves" ? "here" : "in the rocky caves" )} ;
    here_tool_stall : dynamic_string {( is_at "tool_stall" ? "here" : "in the tool stall" )} ;
@@ -698,6 +699,7 @@ booleans {
    # think variables
    think_bake_tons   : boolean "false" ;
    think_chop_drain  : boolean "false" ;
+   think_great_book  : boolean "false" ;
    think_grow_dupes  : boolean "false" ;
    think_leery_owner : boolean "false" ;
    think_sold_guide  : boolean "false" ;
@@ -709,7 +711,7 @@ booleans {
 
    # think-relevant booleans
    already_got_command : boolean "false" ;
-   think_any : dynamic_boolean {( think_leery_owner || think_grow_dupes || think_bake_tons || think_chop_drain )} ;
+   think_any : dynamic_boolean {( think_leery_owner || think_great_book || think_grow_dupes || think_bake_tons || think_chop_drain )} ;
    first_half : boolean "false" ;
    half_bonus : boolean "false" ;
    bonus_obfuscated_note_yet : boolean "false" ;
@@ -1113,9 +1115,11 @@ locations {
             : collection_modify { collection = "tried_combo_core" index -> (27) content -> ("true") } ;
             : if (!point_help_card) {
                : print "You'd like that, but you realize you'd need a special card or something to check it out. You don't have one." ;
+               : set_true "think_great_book" ;
                : done ;
             }
             : print "Narrative text." ;
+            : set_false "think_great_book" ;
             : set_true "point_great_book" ;
             : gosub "add_point" ;
             : win_game ;
@@ -2216,8 +2220,11 @@ subroutines {
          : if (think_bake_tons) {
             : print "You tried to {tht_bake_tons} {here_streaky_cove} but the buns weren't ready to grow yet." ;
          }
-         : if (think_bake_tons) {
+         : if (think_chop_drain) {
             : print "You tried to put the chain into a chop drain when one wasn't nearby." ;
+         }
+         : if (think_great_book) {
+            : print "You tried to check out the {tht_great_book} without any ID or voucher {here_foldin_gate}." ;
          }
          : if (think_grow_dupes) {
             : print "You tried to grow dupes {here_collation_location} but didn't have any additional materials to help." ;
