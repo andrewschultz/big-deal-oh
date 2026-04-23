@@ -2738,6 +2738,33 @@ subroutines {
          }
       }
       : print "This is a catchall \"I can't do anything right now\" statement. It shouldn't pop up, but if it does, it probably means I missed a case where you can do something here, but you'll have to do other things first. Sorry about this, and please let me know where and how it happened if you can, so I can fix it!";
+   widget_function : subroutine {
+      : set_integer var="tempint" {( widget_num )} ;
+      : set_false "widget_blurry" ;
+      : if (point_penny_mounds && !point_sold_guide && awning_done < 2) {
+         : print {( "Weird! It's 44 plus a fraction. Like, " + (awning_done == 0 ? "two-thirds" : "one-half") + "." )} ;
+         : done ;
+      }
+      : if (tempint == -1 ) {
+         : print "Some weird random negative number. Nothing to do here, period." ;
+         : done ;
+      }
+      : if (tempint < 0) {
+         : set_integer var="tempint" {( 0 - tempint )} ;
+         : set_true "widget_blurry" ;
+      }
+      : print "On the widget, you see the number {tempint}." ;
+      : if (widget_blurry) {
+         : print "The number seems a bit blurry." ;
+      } : else_if (tempint == 0) {
+         : print "Probably means nothing left to do here." ;
+      } : else_if (tempint == 1) {
+         : print "Maybe there's nothing constructive to do right now." ;
+      }
+      : if (!widget_nudge && tempint > 1) {
+         : print "Hmm. It's just a number. No detailed instructions. Maybe there's something simple you can immediately apply from it, no huge formulas." ;
+         : set_true "widget_nudge" ;
+      }
       : done ;
    }
 
@@ -2942,33 +2969,7 @@ on_command {
 
    : if (xme_yet) {
       : match "_ widget;_ digit;_ dialed;_ wild" {
-         : set_integer var="tempint" {( widget_num )} ;
-         : set_false "widget_blurry" ;
-         : if (point_penny_mounds && !point_sold_guide && awning_done < 2) {
-            : print {( "Weird! It's 44 plus a fraction. Like, " + (awning_done == 0 ? "two-thirds" : "one-half") + "." )} ;
-            : done ;
-         }
-         : if (tempint == -1 ) {
-            : print "Some weird random negative number. Nothing to do here, period." ;
-            : done ;
-         }
-         : if (tempint < 0) {
-            : set_integer var="tempint" {( 0 - tempint )} ;
-            : set_true "widget_blurry" ;
-         }
-         : print "On the widget, you see the number {tempint}." ;
-         : if (widget_blurry) {
-            : print "The number seems a bit blurry." ;
-         } : else_if (tempint == 0) {
-            : print "Probably means nothing left to do here." ;
-         } : else_if (tempint == 1) {
-            : print "Maybe there's nothing constructive to do right now." ;
-         }
-         : if (!widget_nudge && tempint > 1) {
-            : print "Hmm. It's just a number. No detailed instructions. Maybe there's something simple you can immediately apply from it, no huge formulas." ;
-            : set_true "widget_nudge" ;
-         }
-         : done ;
+         : gosub "widget_function" ;
       }
    }
 
