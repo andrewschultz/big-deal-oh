@@ -258,26 +258,29 @@ integers {
 
    # hinting. Magic numbers are 1 = do later, 0 = done, -1 = nothing to do
    # note items are listed in backwards order of how we do things
-   widget_num : dynamic_integer {( has_visited "tenser_center" ? widget_num_north : widget_num_south )} ;
+   # Adventuron didn't like too-complex dynamic_integers so I broke things up
 
-   widget_num_south : dynamic_integer {( is_at "rocky_caves" ? widget_10_rocky_caves :
+   widget_num : integer "0" ;
+
+   widget_num_start : dynamic_integer {( is_at "rocky_caves" ? widget_10_rocky_caves :
    is_at "tool_stall" ? widget_21_tool_stall :
    is_at "demo_meadow" ? widget_22_demo_meadow :
+   -1 )} ;
+
+   widget_num_middle : dynamic_integer {(
    is_at "chattin_em_plain" ? widget_11_chattin_em_plain :
-   is_at "tool_stall" ? widget_21_tool_stall :
    is_at "streaky_cove" ? widget_31_streaky_cove :
    is_at "cache_shack" ? widget_02_cache_shack :
    is_at "newbies_boonies" ? widget_12_newbies_boonies :
    is_at "demo_meadow" ? widget_22_demo_meadow :
+   is_at "moldin_dolmen" ? widget_13_moldin_dolmen :
+   is_at "collation_location" ? widget_33_collation_location :
    is_at "backin_cabin" ? widget_32_backin_cabin :
    is_at "yankin_canyon" ? widget_42_yankin_canyon :
-   is_at "moldin_dolmen" ? widget_13_moldin_dolmen :
-   is_at "outer_tower" ? widget_23_outer_tower :
-   is_at "collation_location" ? widget_33_collation_location :
-   is_at "ailer_lair" ? widget_14_ailer_lair :
    -1 )} ;
 
-   widget_num_north : dynamic_integer {( is_at "outer_tower" ? widget_23_outer_tower :
+   widget_num_end : dynamic_integer {( is_at "outer_tower" ? widget_23_outer_tower :
+   is_at "ailer_lair" ? widget_14_ailer_lair :
    is_at "tenser_center" ? widget_24_tenser_center :
    is_at "jeerin_region" ? widget_34_jeerin_region :
    is_at "gnawing_awning" ? widget_15_gnawing_awning :
@@ -298,7 +301,7 @@ integers {
    widget_42_yankin_canyon : dynamic_integer {( point_chop_drain ? 0 : 45 )} ;
    widget_13_moldin_dolmen : dynamic_integer {( point_formed_wax ? 0 : 63 )} ;
    widget_23_outer_tower : dynamic_integer {( point_power_torch ? 0 : !point_lodging_doc ? 74 : point_sold_guide ? 55 : 1 )} ;
-   widget_33_collation_location : dynamic_integer {( point_formed_wax ? 0 : 63 )} ;
+   widget_33_collation_location : dynamic_integer {( point_grow_dupes ? 63 : -1 )} ;
    widget_14_ailer_lair : dynamic_integer {( point_help_card ? 0 : has_visited "foldin_gate" ? 44 : point_best_notes ? 1 : point_sail_tide ? 45 : 1 )} ;
    widget_24_tenser_center : dynamic_integer {( point_minister_south ? 0 : 85 )} ;
    widget_34_jeerin_region : dynamic_integer {( point_written_specs ? 0 : point_best_notes ? 75 : -75 )} ;
@@ -1781,6 +1784,17 @@ objects {
    wax : object "the formed wax from the warmed fax" ;
 }
 
+zones {
+   start_zone : zone {
+      locations = [ rocky_caves, app_mall, tool_stall, demo_meadow ]
+   }
+   middle_zone : zone {
+      locations = [ chattin_em_plain, streaky_cove, cache_shack, newbies_boonies, backin_cabin, yankin_canyon, moldin_dolmen, collation_location ]
+   }
+   end_zone : zone {
+      locations = [ outer_tower, ailer_lair, tenser_center, jeerin_region, gnawing_awning, oopster_stupor, taller_altar, foldin_gate ]
+   }
+}
 connections {
 
    from, direction, to = [
@@ -2431,7 +2445,7 @@ subroutines {
       : set_false "in_bonus_half" ;
    }
 
-   #########################################hint and tutorial
+   #########################################hint and widget and tutorial
 
    hint_function : subroutine {
       : if (!hinted_yet) {
@@ -2449,6 +2463,13 @@ subroutines {
          : done ;
       }
       : gosub "awning_hint_check" ;
+      : if (is_at "start_zone") {
+         : set_integer var="widget_num" {( widget_num_start )} ;
+      } : else_if (is_at "middle_zone") {
+         : set_integer var="widget_num" {( widget_num_middle )} ;
+      } : else_if (is_at "end_zone") {
+         : set_integer var="widget_num" {( widget_num_end )} ;
+      }
       : if (score > 5) {
          : if (widget_num == -1) {
             : print "There is nothing to do here." ;
