@@ -2737,7 +2737,17 @@ subroutines {
             : done ;
          }
       }
-      : print "This is a catchall \"I can't do anything right now\" statement. It shouldn't pop up, but if it does, it probably means I missed a case where you can do something here, but you'll have to do other things first. Sorry about this, and please let me know where and how it happened if you can, so I can fix it!";
+      : cycle key="hint_catchall" predictable_order = "true" skip_interval = "0" max_loops = "1" {
+         : print "*** This is a catchall \"I can't do anything right now\" statement. It shouldn't pop up, but if it does, it probably means I missed a case where you can do something here, but you'll have to do other things first. Sorry about this, and please let me know where and how it happened if you can, so I can fix it!" ;
+         : print "Another catchall bug. I'll be shortening this announcement in the future so as not to distract you. Sorry about this!" ;
+
+         on_exhausted {
+            : print "*** Hint catchall re-notification." ;
+         }
+      }
+      : done ;
+   }
+
    widget_function : subroutine {
       : set_integer var="tempint" {( widget_num )} ;
       : set_false "widget_blurry" ;
