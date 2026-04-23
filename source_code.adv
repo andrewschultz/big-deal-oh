@@ -44,15 +44,15 @@ strings {
       is_at "app_mall" ? "{only_north}." :
       is_at "chattin_em_plain" ? "{only_north}." :
       is_at "streaky_cove" ? "{only_north}." :
-      is_at "cache_shack" ? "{only_north}." :
+      is_at "cache_shack" ? "{only_east}." :
       is_at "newbies_boonies" ? ( point_push_best ? "{only_four}" : "{only_east} for now." ) :
       is_at "backin_cabin" ? "{only_four}." :
-      is_at "yankin_canyon" ? "{only_north}." :
+      is_at "yankin_canyon" ? "{only_west}." :
       is_at "moldin_dolmen" ? "{only_south}." :
       is_at "outer_tower" ? ( key_used ? "{only_north_south}." : "{only_south}, at least until you find a way through the tower." ) :
       is_at "collation_location" ? "{only_south}." :
       is_at "ailer_lair" ? "You can only go north or back east." :
-      is_at "tenser_center" ? "{only_south}." :
+      is_at "tenser_center" ? ( point_minister_south ? "{only_four}" : "{only_south}." ) :
       is_at "jeerin_region" ? "You can only go north or back west." :
       is_at "gnawing_awning" ? "{only_south}." :
       is_at "oopster_stupor" ? ( point_hard_maze ? "{only_north_south}." : "{only_south}." ) :
@@ -135,7 +135,7 @@ strings {
    loc_chattin_em_plain : string "You are in the {puz_point_chattin_em_plain}. The only exit is north." ;
    header_chattin_em_plain : string "<Chattin' 'Em Plain<#ff0>>" ;
 
-   loc_collation_location : dynamic_string {( "You are in a collation location. The only exit is south. {puz_point_dough_groups_u} sit here " + (point_grow_dupes ? "looking lonely" : "happy together") + "." )} ;
+   loc_collation_location : dynamic_string {( "You are in a collation location. The only exit is south. {puz_point_dough_groups_u} sit here " + (!point_grow_dupes ? "looking lonely" : "happy together") + "." )} ;
    header_cl : string "<Collation Location<#ff0>>" ;
 
    loc_demo_meadow : string "Here in the Demo Meadow {meadow_status}.\n{meadow_passages}." ;
@@ -3153,7 +3153,7 @@ on_command {
       : done ;
    }
 
-   : match "clock _" { #obfuscation of non solutions, bonus points
+   : match "clock _;golden _" { #obfuscation of non solutions, bonus points
       : print "{custom_unknown_verb_error}" ;
       : done ;
    }
@@ -3181,7 +3181,7 @@ on_tick {
       : if (!tutorial_1_about) {
          : print "{note_cue_tutorial}First, you should type {vm_about} to see general information about {this_game}." ;
       } : else_if (!tutorial_2_verbs) {
-         : print "{note_cue_tutorial}Now you've typed {vm_about}, You should type {vm_verbs} next to see basic commands for {this_game}." ;
+         : print "{note_cue_tutorial}Now you've typed {vm_about}, you should type {vm_verbs} next to see basic commands for {this_game}." ;
       } : else_if (!tutorial_3_x_me) {
          : print "{note_cue_tutorial}Now you've seen basic info, you should examine yourself with {xme}." ;
       } : else_if (!tutorial_4_inventory) {
