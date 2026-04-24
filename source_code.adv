@@ -2445,13 +2445,18 @@ subroutines {
    #########################################room specific
 
    dolmen_key_form: subroutine {
-      : if (point_formed_wax && key_found && point_chop_drain && !key_duplicated) {
-         : print "Now you have the old key, some stronger metal, and wax to make impressions, you could almost make a key. The moldin' dolmen might be able to help. You offer the three items to it ... and out comes a shiny new key! A key so \"Seek, oh!\"" ;
+      : if (key_duplicated) {
+         : return ;
+      }
+      : if (point_formed_wax && key_found && point_chop_drain) {
+         : print "Now you have the old key, some stronger metal, and wax to make impressions, you could almost make a key. The moldin' dolmen might be able to help. You offer the three items to it ... and out comes a shiny new key! A key so \"Seek, oh!\"\nYou look around, half expecting to be awarded a point for this. An unseen voice behind the dolmen whispers that the key will unlock an area that will get you many more points, and gosh darn it, that's even better.\nYou whisper \"Um, con, come ON!\" Finding the key took several commands! But the voice has a point about, um, not getting a point." ;
          : destroy "trove_key" ;
          : destroy "wax" ;
          : destroy "slab" ;
          : pocket "seek_key" ;
          : set_true "key_duplicated" ;
+      } : else_if (key_found) {
+         : print {( "The rusty key seems to pull you towards the dolmen, but when you get too close, the dolmen pushes you away " + (point_chop_drain || point_formed_wax ? "slightly. You might need something else." : "pretty forcefully. You probably need more for it to help you.") )} ;
       }
    }
 
