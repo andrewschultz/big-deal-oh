@@ -2489,11 +2489,11 @@ subroutines {
       : if (tutorial_0_in_tutorial && !tutorial_5_think) {
          : print "There are several things you can do here. Get to step 4 of the tutorial, then ask for hints again." ;
          : set_true "hint_zero_warn" ;
-         : done ;
+         : return ;
       }
       : if (score == 0 && !xme_yet) {
          : print "Before I give hints, I'd like you to try {xme}, a standard action to start text adventures. It will give a clue." ;
-         : done ;
+         : return ;
       }
       : if (!hinted_yet) {
          : print "{one_time}{this_game} makes a reasonable guess of the next puzzle you can solve in the current room. If nothing turns up, you may wish to go elsewhere." ;
@@ -2510,17 +2510,17 @@ subroutines {
       : if (score > 5) {
          : if (widget_num == -1) {
             : print "There is nothing to do here." ;
-            : done ;
+            : return ;
          } : else_if (widget_num == 1) {
             : print "There will be something to do later." ;
             : if (!hints_clarified_yet) {
                : print "{one_time}while {vd_hint} won't tell you where to go in this case, there should always be another room with hints where you can work at things and check back later." ;
                : set_true "hints_clarified_yet" ;
             }
-            : done ;
+            : return ;
          } : else_if (widget_num == 0) {
             : print "You are done here." ;
-            : done ;
+            : return ;
          }
       }
       : if (is_at "ailer_lair") {
@@ -2530,7 +2530,7 @@ subroutines {
                : print "The babblers and blabbers want to give you a gift before you leave. One that isn't lame. Maybe there's something on the {puz_point_nest_boats}." ;
                : print "<BEST NOTES<#f0f>>." ;
             }
-            : done ;
+            : return ;
          }
          : if (has_visited "foldin_gate" && !point_help_card) {
             : cycle key = "hint_26_help_card" predictable_order = "true" skip_interval = "0" {
@@ -2538,11 +2538,11 @@ subroutines {
                : print "It may get stuff lost in it." ;
                : print "A <HELP CARD<#f0f>>." ;
             }
-            : done ;
+            : return ;
          }
       } : else_if (is_at "app_mall") {
          : print "Nothing critical is needed here, but there are two bonus points." ;
-         : done ;
+         : return ;
       } : else_if (is_at "backin_cabin") {
          : if (!point_pull_file) {
             : cycle key = "hint_07_pull_file" predictable_order = "true" skip_interval = "0" {
@@ -2550,12 +2550,12 @@ subroutines {
                : print "You can reduce the clutter a bit. It helps to focus on something you need." ;
                : print "You could <PULL FILE<#f0f>>." ;
             }
-            : done ;
+            : return ;
          }
       } : else_if (is_at "cache_shack") {
          : if (!buns_taken) {
             : print "You just need to <TAKE BUNS<#f0f>> here." ;
-            : done ;
+            : return ;
          }
       } : else_if (is_at "chattin_em_plain") {
          : if (!point_platinum_chain) {
@@ -2564,7 +2564,7 @@ subroutines {
                : print "But what could the item be?" ;
                : print "It is a <PLATINUM CHAIN<#f0f>>." ;
             }
-            : done ;
+            : return ;
          }
       } : else_if (is_at "collation_location") {
          : if (!point_grow_dupes) {
@@ -2573,7 +2573,7 @@ subroutines {
                : print "In the collation location, you make copies of things." ;
                : print "You can <GROW DUPES<#f0f>>." ;
             }
-            : done ;
+            : return ;
          }
       } : else_if (is_at "demo_meadow") {
          : if (!point_tool_stall) {
@@ -2585,11 +2585,11 @@ subroutines {
                : print "Flip the sounds at the start of the words to get a..." ;
                : print "<TOOL STALL<#f0f>>." ;
             }
-            : done ;
+            : return ;
          }
          : if (!listen_demo_meadow) {
             : print "{v_listen} for what to do next." ;
-            : done ;
+            : return ;
          }
          : if (!point_rocky_caves) {
             : cycle key = "hint_00_rocky_caves" predictable_order = "true" skip_interval = "0" {
@@ -2597,7 +2597,7 @@ subroutines {
                : print "But of course the {puz_point_cocky_raves_l} are hiding something you may be able to figure out." ;
                : print "You will hear <COCKY RAVES<#f0f>> are nearby." ;
             }
-            : done ;
+            : return ;
          }
          : if (placed_flaming_towers && !point_taming_flowers) {
             : cycle key = "hint_05_taming_flowers" predictable_order = "true" skip_interval = "0" {
@@ -2605,7 +2605,7 @@ subroutines {
                : print "How could you find something nicer that makes them less of a menace?" ;
                : print "Find some <TAMING FLOWERS<#f0f>>." ;
             }
-            : done ;
+            : return ;
          }
       } : else_if (is_at "foldin_gate") {
          : if (!point_great_book) {
@@ -2615,7 +2615,7 @@ subroutines {
                : print "The cold hard hold card." ;
                : print "You need to ask for the <GREAT BOOK<#f0f>>." ;
             }
-            : done ;
+            : return ;
          }
       } : else_if (is_at "gnawing_awning") {
          : if (!point_sail_tide) {
@@ -2624,21 +2624,21 @@ subroutines {
                : print "What can it help, to make things more comfortable for people to pass by?" ;
                : print "You need to start the <SAIL TIDE<#f0f>>." ;
             }
-            : done ;
+            : return ;
          } : else_if (!point_sold_guide) {
             : cycle key = "hint_20_sold_guide" predictable_order = "true" skip_interval = "0" {
                : print "The {puz_point_gold_side} hides something valuable." ;
                : print "Something you should have the money to pay for." ;
                : print "You need to claim a <SOLD GUIDE<#f0f>>. You'll buy it automatically." ;
             }
-            : done ;
+            : return ;
          } : else_if (!point_sick_bride) {
             : cycle key = "hint_21_sick_bride" predictable_order = "true" skip_interval = "0" {
                : print "Something or someone is bricked up behind the {puz_point_brick_side}." ;
                : print "Who would want to run?" ;
                : print "You will find a <SICK BRIDE<#f0f>>." ;
             }
-            : done ;
+            : return ;
          }
       } : else_if (is_at "jeerin_region") {
          : if (!point_written_specs) {
@@ -2647,7 +2647,7 @@ subroutines {
                : print "The {puz_point_spittin_wrecks} know a lot, but giving general ordinary help is beneath them." ;
                : print "Ask for <WRITTEN SPECS<#f0f>>. You'll use the best notes automatically." ;
             }
-            : done ;
+            : return ;
          }
       } : else_if (is_at "moldin_dolmen") {
          : if (!point_formed_wax) {
@@ -2656,7 +2656,7 @@ subroutines {
                : print "Maybe you could catch one and change it into something else quickly." ;
                : print "You need to grab or create some <FORMED WAX<#f0f>>." ;
             }
-            : done ;
+            : return ;
          }
       } : else_if (is_at "newbies_boonies") {
          : if (!point_push_best) {
@@ -2665,16 +2665,16 @@ subroutines {
                : print "What sort of move could you pull on it to get by?" ;
                : print "You could <PUSH BEST<#f0f>>." ;
             }
-            : done ;
+            : return ;
          }
       } : else_if (is_at "oopster_stupor") {
          : if (!point_hard_maze) {
             : cycle key = "hint_17_hard_maze" predictable_order = "true" skip_interval = "0" {
-               : print "The {puz_point_marred_haze} blocks you. It can become something slightly more solveable." ;
-               : print "Not fun to solve, but solveable." ;
+               : print "The {puz_point_marred_haze} blocks you. It can become something slightly more solvable." ;
+               : print "Not fun to solve, mind, but solvable." ;
                : print "You could discover a <HARD MAZE<#f0f>>." ;
             }
-            : done ;
+            : return ;
          }
       } : else_if (is_at "outer_tower") {
          : if (!point_lodging_doc) {
@@ -2683,14 +2683,14 @@ subroutines {
                : print "It's a {puz_point_dodging_lock_l}." ;
                : print "Thus, you need to request a <LODGING DOCK<#f0f>> or say <LODGING DOC<#f0f>>. It works either way." ;
             }
-            : done ;
+            : return ;
          } : else_if (!point_power_torch) {
             : cycle key = "hint_22_power_torch" predictable_order = "true" skip_interval = "0" {
                : print "Hmm, you've found where the porch is. What does that make it?" ;
                : print "A {puz_point_tower_porch}." ;
                : print "You need to look for a <POWER TORCH<#f0f>>." ;
             }
-            : done ;
+            : return ;
          }
       } : else_if (is_at "rocky_caves") {
          : if (!smell_rocky_caves) {
@@ -2698,7 +2698,7 @@ subroutines {
                : print "Time to use a different sense. It's damp and dark here. You can't really see and don't want to taste, but what other sense can you use?" ;
                : print "You can SMELL." ;
             }
-            : done ;
+            : return ;
          }
          : if (!point_steel_wrench) {
             : cycle key = "hint_01_steel_wrench" predictable_order = "true" skip_interval = "0" {
@@ -2706,7 +2706,7 @@ subroutines {
                : print {( point_tool_stall ? "The tool stall you unveiled needs an item." : "The {puz_point_stool_tall} back in the meadow leads somewhere that could give you a clue." )} ;
                : print "Hidden behind the {puz_point_real_stench} is a <STEEL WRENCH<#f0f>>." ;
             }
-            : done ;
+            : return ;
          }
       } : else_if (is_at "streaky_cove") {
          : if (!point_creaky_stove) {
@@ -2715,7 +2715,7 @@ subroutines {
                : print "Something useful is hidden in the grey. A helpful appliance." ;
                : print "It is a <CREAKY STOVE<#f0f>>." ;
             }
-            : done ;
+            : return ;
          } : else_if (!point_bake_tons) {
             : cycle key = "hint_10_bake_tons" predictable_order = "true" skip_interval = "0" {
                : print "So you have a stove. Do you have anything you could cook or heat up?" ;
@@ -2723,14 +2723,14 @@ subroutines {
                : print "You had to <TAKE BUNS<#f0f>>." ;
                : print "You thus need to <BAKE TONS<#f0f>>." ;
             }
-            : done ;
+            : return ;
          } : else_if (!point_key_trove) {
             : cycle key = "hint_11_key_trove" predictable_order = "true" skip_interval = "0" {
                : print "Something is hidden behind the {puz_point_tree_cove}." ;
                : print "Perhaps something of value." ;
                : print "There is a <KEY TROVE<#f0f>>." ;
             }
-            : done ;
+            : return ;
          }
       } : else_if (is_at "taller_altar") {
          : if (!point_penny_mounds) {
@@ -2746,7 +2746,7 @@ subroutines {
                : print "Nothing concrete, just some help." ;
                : print "They could construct a <COOL PLAN<#f0f>>." ;
             }
-            : done ;
+            : return ;
          }
       } : else_if (is_at "tenser_center") {
          : if (!point_hard_maze) {
@@ -2755,12 +2755,12 @@ subroutines {
                : print "Perhaps you can call on someone to come a certain direction." ;
                : print "You could call out <MINISTER SOUTH<#f0f>>." ;
             }
-            : done ;
+            : return ;
          }
       } : else_if (is_at "tool_stall") {
          : if (!point_steel_wrench) {
             : print "You need to do something elsewhere first to make progress here." ;
-            : done ;
+            : return ;
          }
          : if (!point_leery_owner) {
             : cycle key = "hint_03_leery_owner" predictable_order = "true" skip_interval = "0" {
@@ -2772,7 +2772,7 @@ subroutines {
                : print "LEERY, in other words." ;
                : print "Ask for the {tht_leery_owner}." ;
             }
-            : done ;
+            : return ;
          }
          : if (!point_tight_rules) {
             : cycle key = "hint_04_tight_rules" predictable_order = "true" skip_interval = "0" {
@@ -2781,7 +2781,7 @@ subroutines {
                : print "Pretty clear advice and guidance." ;
                : print "Ask for <TIGHT RULES<#f0f>>." ;
             }
-            : done ;
+            : return ;
          }
       } : else_if (is_at "yankin_canyon") {
          : if (!point_chop_drain) {
@@ -2792,7 +2792,7 @@ subroutines {
                : print "It doesn't work. You need the right thing to destroy it, or its essence." ;
                : print "You need to call the <CHOP DRAIN<#f0f>>." ;
             }
-            : done ;
+            : return ;
          }
       }
       : cycle key="hint_catchall" predictable_order = "true" skip_interval = "0" max_loops = "1" {
@@ -2803,7 +2803,7 @@ subroutines {
             : print "*** Hint catchall re-notification." ;
          }
       }
-      : done ;
+      : return ;
    }
 
    widget_function : subroutine {
@@ -2811,11 +2811,11 @@ subroutines {
       : set_false "widget_blurry" ;
       : if (point_penny_mounds && !point_sold_guide && awning_done < 2) {
          : print {( "Weird! It's 44 plus a fraction. Like, " + (awning_done == 0 ? "two-thirds" : "one-half") + "." )} ;
-         : done ;
+         : return ;
       }
       : if (tempint == -1 ) {
          : print "Some weird random negative number. Nothing to do here, period." ;
-         : done ;
+         : return ;
       }
       : if (tempint < 0) {
          : set_integer var="tempint" {( 0 - tempint )} ;
@@ -2830,10 +2830,10 @@ subroutines {
          : print "Maybe there's nothing constructive to do right now." ;
       }
       : if (!widget_nudge && tempint > 1) {
-         : print "Hmm. It's just a number. No detailed instructions. Maybe there's something simple you can immediately apply from it, no huge formulas." ;
+         : print "Hmm. Just a number, as you might expect from the description. No detailed instructions. Perhaps that's because it was meant to give simple information with no crazy formulas." ;
          : set_true "widget_nudge" ;
       }
-      : done ;
+      : return ;
    }
 
    tutorial_choice : subroutine {
