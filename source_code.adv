@@ -11,7 +11,7 @@ game_information {
    uuid                         = b3c1f8e2-5d4a-4f9b-8c3d-2a7e5f6a9b1c
    year_of_release              = 2026
    copyright_message            = Free to distribute, voluntary payments welcome
-   short_synopsis               = TALP 2026 entry
+   short_synopsis               = Wordplay game with tutorial written for TALP 2026
 }
 
 
@@ -26,6 +26,7 @@ strings {
    l_talp_2026 : string "<TALP 2026<#0f0>>[https://itch.io/jam/talp2026]" ;
 
    l_tester_gg : string "<Gianluca Girelli<#0f0>>[https://g0blin.itch.io/]" ;
+   l_tester_ag : string "<Allyson Gray<#0f0>>[https://zophobas-morio.itch.io/]" ;
 
    # basics
    my_score : string "{score}/{max_score}" ;
@@ -2305,7 +2306,7 @@ subroutines {
       }
 
       : match "credits _;credit _;creds _;cred _" {
-         : print "Thanks to {l_tester_gg} for testing. He's the only person whose transcript(s) I've finished, but there will be at least two more. Maybe one of them is you!" ;
+         : print "Thanks to {l_tester_gg} and {l_tester_ag} for testing." ;
          : print "GENERAL THANKS:" ;
          : print "Chris Ainsley for Adventuron and administering TALP, Garry Francis for continuing to administer TALP, and all the TALP and Adventuron authors who came before me who set a high standard I've hopefully come close to." ;
          : print "The Adventuron discord and Intfiction.org board, which overlap with the people listed above." ;
@@ -3555,18 +3556,18 @@ on_render {
          : overlay "s_streaky_cove_creaky_stove" x="190" y="0" ;
       }
    }
-   : if (is_at "tool_stall") {
-      : if (!point_leery_owner) {
-         : overlay "s_tool_eerie_loner" x="20" y="6" ;
-      } : else {
-         : overlay "s_tool_right_tools" x="210" y="0" ;
-      }
-   }
    : if (is_at "tenser_center") {
       : if (!point_minister_south) {
          : overlay "s_tenser_center_sinister_mouth" x="0" y="0" ;
       } : else {
          : overlay "s_tenser_center_u_r_here" x="170" y="0" ;
+      }
+   }
+   : if (is_at "tool_stall") {
+      : if (!point_leery_owner) {
+         : overlay "s_tool_eerie_loner" x="20" y="6" ;
+      } : else {
+         : overlay "s_tool_right_tools" x="210" y="0" ;
       }
    }
 }
