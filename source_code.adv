@@ -2413,12 +2413,12 @@ subroutines {
    options_colorhint : subroutine {
       : set_boolean var="opt_on_off" {( opt_color_coding )} ;
       : match "ch yes" {
-         : print "Now {cch} is activated." ;
+         : print "Now {optt_ch} is activated." ;
          : set_true "opt_color_coding" ;
          : done ;
       }
       : match "ch no" {
-         : print "Now {cch} is deactivated." ;
+         : print "Now {optt_ch} is deactivated." ;
          : set_false "opt_color_coding" ;
          : done ;
       }
@@ -2898,8 +2898,8 @@ subroutines {
          : return ;
       }
       : ask_bool {
-         question   = {this_game} also puts critical words in <PURPLE<#f0f>> to help you know what to work with. The option can be changed in-game with CH YES/NO (on/off are reserved by Adventuron.)
-         yes_answer = Yes, I'd like to use color-coded hinting.
+         question   = {this_game} also puts critical words in <PURPLE<#f0f>> to help you know what to work with. The option can be changed in-game with {optt_ch} (on/off are reserved by Adventuron.)
+         yes_answer = Yes, I'd like to use color-coded hinting. (<RECOMMENDED<#0f0>>)
          no_answer  = No, I'd prefer not to use color-coded hinting.
          var        = opt_color_coding
       }
