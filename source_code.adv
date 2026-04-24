@@ -842,6 +842,10 @@ locations {
             : gosub "add_bonus" ;
             : done ;
          }
+         : match "cock _" {
+            : print {( "There's no hidden poultry farm, if that's what you're wondering." + bonus_point_clock_jerk ? "" : " However, you could help the jock clerk, although it's optional." )} ;
+            : done ;
+         }
          : if (!bonus_point_map_all) {
             : match "map _;_ all" {
                : set_integer var="tempint" "1" ;
@@ -2279,7 +2283,7 @@ subroutines {
    check_meta : subroutine {
       : match "about _" {
          : print "{this_game} was written for {l_talp_2026}, another annual edition of {l_talp}." ;
-         : print "It is a wordplay game in the spirit of {l_qt}, my TALP 2025 entry, and it reuses a lot of the code. However, this year I'm trying to get in at least somewhat with the theme of archaeology, even if my knowledge of that field is rudimentary. Well, it does have a hidden city near the end, and you dig and explore." ;
+         : print "It is a wordplay game in the spirit of {l_qt}, my {l_talp_2025} entry, and it reuses a lot of the code. However, this year I'm trying to get in at least somewhat with the theme of archaeology, even if my knowledge of that field is rudimentary. Well, it does have a hidden city near the end, and you dig and explore." ;
          : print "{this_game} uses a stripped-down parser for standard commands, but it requires you to discover two-word commands to win." ;
          : if (score == 0) {
             : print "Figuring the mechanic isn't meant to be too tricky, but I don't want to spoil it unsolicited. {vm_think} and, more explicitly, {vm_hint} can clue you into what is going on." ;
