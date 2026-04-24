@@ -197,7 +197,7 @@ strings {
    puz_point_drop_chain       : dynamic_string {( opt_color_coding ? "<drop chain<#f80>>" : "drop chain" )} ;               # 13
    puz_point_eerie_loner      : dynamic_string {( opt_color_coding ? "<eerie loner<#f80>>" : "eerie loner" )} ;             # 03
    puz_point_flaming_towers   : dynamic_string {( opt_color_coding ? "<flaming towers<#f80>>" : "flaming towers" )} ;       # 05
-   puz_point_full_pile        : dynamic_string {( opt_color_coding ? "<full pile<#f80>>" : "pull file" )} ;                 # 07
+   puz_point_full_pile        : dynamic_string {( opt_color_coding ? "<full pile<#f80>>" : "full pile" )} ;                 # 07
    puz_point_gate_brook       : dynamic_string {( opt_color_coding ? "<gate brook<#f80>>" : "gate brook" )} ;               # 27
    puz_point_gold_side        : dynamic_string {( opt_color_coding ? "<gold side<#f80>>" : "gold side" )} ;                 # 21
    puz_point_kelp_hard        : dynamic_string {( opt_color_coding ? "<kelp (hard)<#f80>>" : "kelp (hard)" )} ;             # 26
@@ -892,7 +892,7 @@ locations {
                : print "You already pulled the file and made the cabin neater to make a path through!" ;
                : done ;
             }
-            : print "Now you know what you're looking for in the full pile, or you're pretty sure you do, you can at least sort out the junk. Then you find a file. It describes where the secret passages in the cabin are. It's not pretty, but you dump some of the piles into the secret pasasages, as there's enough space in them, and things look a little cleaner. Those passages lead north, south and east." ;
+            : print "Now you know what you're looking for in the full pile, or you're pretty sure you do, you can at least sort out the junk. Then you find a file. It describes where the secret passages in the cabin are. It's not pretty, but you dump some of the piles into the secret passages, as there's enough space in them, and things look a little cleaner. Those passages lead north, south and east." ;
             : set_true "point_pull_file" ;
             : gosub "add_point" ;
             : done ;
