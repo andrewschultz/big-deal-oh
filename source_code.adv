@@ -139,8 +139,9 @@ strings {
    loc_collation_location : dynamic_string {( "You are in a collation location. The only exit is south. {puz_point_dough_groups_u} sit here " + (!point_grow_dupes ? "looking lonely" : "happy together") + "." )} ;
    header_cl : string "<Collation Location<#ff0>>" ;
 
-   loc_demo_meadow : string "Here in the Demo Meadow {meadow_status}.\n{meadow_passages}." ;
-   meadow_status : dynamic_string {( point_rocky_caves ? "it's quiet again after you got rid of the cocky raves" : listen_demo_meadow ? "you hear some {puz_point_cocky_raves_l}" : "it feels relatively quiet, and yet, not as quiet and peaceful as it should be" )} ;
+   loc_demo_meadow : string "Here in the Demo Meadow {meadow_status}{meadow_stool}.\n{meadow_passages}." ;
+   meadow_status : dynamic_string {( point_taming_flowers ? "it's peaceful again with the flaming towers subdued" : placed_flaing_towers ? "the flaming towers have interrupted the tranquility" : point_tight_rules ? "you see what the eerie loner was worried about" : point_rocky_caves ? "it's quiet again after you got rid of the cocky raves" : listen_demo_meadow ? "you hear some {puz_point_cocky_raves_l}" : "it feels relatively quiet, and yet, not as quiet and peaceful as it should be" )} ;
+   meadow_stool : dynamic_string {( point_tool_stall ? "" : ". A {puz_point_stool_tall} sits inexplicably here" )} ;
    header_demo_meadow : string "<Demo Meadow<#ff0>>" ;
    meadow_passages: dynamic_string {( point_taming_flowers ? "You've found passages {dir_n}, {dir_e} and {dir_w} that lead away. You probably don't need to go back {dir_s} or in" : (!point_rocky_caves && !point_tool_stall) ? "You haven't found anywhere to go from here yet" : !point_rocky_caves ? "You can go {dir_s} to the tool stall" : !point_tool_stall ? "You can go {dir_d} to the rocky caves" : "You can go {dir_s} to the tool stall and {dir_d} to the rocky caves" )} ;
 
@@ -1121,8 +1122,8 @@ locations {
          : if (flaming_towers_present) {
             : print "Those flaming towers are still flaming, exposing passage {dir_n}, {dir_e} and {dir_w} but not letting you by." ;
          } : else_if (point_tight_rules && !placed_flaming_towers) {
+            : print {( (placed_flaming_towers ? "Flaming towers still block your way" : "Yeah, that was worth the eerie loner making a scene over. Flaming towers have now popped up") + " to the {dir_n}, {dir_e} and {dir_w}!" )} ;
             : set_true "placed_flaming_towers" ;
-            : print "It must have been a while since you went through the tight rules. Flaming towers have now popped up to the {dir_n}, {dir_e} and {dir_w}!" ;
             : update_graphic ;
          }
       }
@@ -1493,7 +1494,7 @@ locations {
          : match "_ sunshine;_ shun;_ sign;_ sun;_ shine" {
             : print "It's a drawing of a sun with a red X over it. It's just there for local flavor." ;
             : if (!sunshine_xed) {
-               : print "{one_time}when something is a spoonerism of itself, like the Demo Meadow, it's there for local flavor or humor. Authors try to balance having Extra Stuff to Look At with not distracting you too much, and I tried to establish this convention in {this_game}. I hope it works." ;
+               : print "{one_time}when a room or thing or person is a spoonerism of itself, like the Demo Meadow, it's there for local flavor or humor. Authors try to balance having Extra Stuff to Look At with not distracting you too much, and I tried to establish this convention in {this_game} I hope it works." ;
                : set_true "sunshine_xed" ;
             }
             : done ;
@@ -1576,7 +1577,7 @@ locations {
                : if (!point_lodging_doc) {
                   : print {( "So many keys with so many labels. " + (has_visited "outer_tower" ? "You wouldn't know which would fit the outer tower!" : "You haven't found anything that needs unlocking yet, so you won't waste time searching." ) )};
                } : else_if (!key_found) {
-                  : print "You remember the phrase from the dodging lock. YONDER, FUTZ FONDER, YUTZ. It takes a while to searc through the keys, but fortunately they're sorted more or less alphabetically, so that saves time. Unfortunately, the key you pick is rusty, and you can't find another. It will fall apart if you try to open the lock." ;
+                  : print "You remember the phrase from the dodging lock. YONDER, FUTZ FONDER, YUTZ. It takes a while to search through the keys, but fortunately they're sorted more or less alphabetically, so that saves time. Unfortunately, the key you pick is rusty, and you can't find another. It will fall apart if you try to open the lock." ;
                   : set_true "key_found" ;
                   : pocket "trove_key" ;
                } : else_if (key_duplicated) {
@@ -1736,10 +1737,12 @@ locations {
                   : done ;
                }
                : collection_modify { collection = "tried_combo_core" index -> (4) content -> ("true") } ;
-               : print "You say you're willing to use the tools properly and take the time to be taught. The leery owner is pleased with this, or at least less displeased than you expected." ;
-               : print "But it takes a while. Once you're done, the eerie loner pops back in to complain about how terrible things are outside." ;
+               : print "You say you're willing to use the tools, whatever they are, properly and take the time to be taught. The leery owner is pleased with this, or at least less displeased than you expected." ;
+               : print "They ask what you're looking for. You say you're not sure. You have one you're clueless about, the trowel ..." ;
+               : print "The leery owner whistles. \"I can't give any big guidelines, but I'll tell you what I know about artifacts like that." ;
+               : print "It takes a while. Once you're done, the eerie loner pops back in to complain about how terrible things are outside." ;
                : print "\"Boy,\" says the owner. \"Usually the loner just generally grouses quietly. But if they actually spoke up, things must be bad. Better go check." ;
-               : print "Or, if you want, I can show you a path back somewhere that may ... help you a bit. Or not. Off to the south, now.\"" ;
+               : print "Or, if you want first, I can show you a path back somewhere that may ... help you a bit. Or not. It's off to the south.\"" ;
                : set_true "point_tight_rules" ;
                : gosub "add_point" ;
                : destroy "wrench" ;
