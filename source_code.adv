@@ -232,12 +232,24 @@ strings {
    for_bonus : dynamic_string {( half_bonus ? " for a bonus point" : "" )} ;
 
    #conditional location text (core) (alphabetize)
+   here_ailer_lair : dynamic_string {( is_at "ailer_lair" ? "here" : "in the ailer lair" )} ;
    here_backin_cabin : dynamic_string {( is_at "backin_cabin" ? "here" : "in the backin' cabin" )} ;
+   here_chattin_em_plain : dynamic_string {( is_at "chattin_em_plain" ? "here" : "in the chattin' 'em plain" )} ;
+   here_collation_location : dynamic_string {( is_at "collation_location" ? "here" : "in the collation location" )} ;
    here_demo_meadow : dynamic_string {( is_at "demo_meadow" ? "here" : "in the demo meadow" )} ;
    here_foldin_gate : dynamic_string {( is_at "foldin_gate" ? "here" : "by the foldin' gate" )} ;
-   here_newbies_boonies : dynamic_string {( is_at "backin_cabin" ? "here" : "in the newbies' boonies" )} ;
+   here_gnawing_awning : dynamic_string {( is_at "gnawing_awning" ? "here" : "by the gnawing awning" )} ;
+   here_jeerin_region : dynamic_string {( is_at "jeerin_region" ? "here" : "in the jeerin' region" )} ;
+   here_moldin_dolmen : dynamic_string {( is_at "moldin_dolmen" ? "here" : "by the moldin' dolmen" )} ;
+   here_newbies_boonies : dynamic_string {( is_at "newbies_boonies" ? "here" : "in the newbies' boonies" )} ;
+   here_oopster_stupor : dynamic_string {( is_at "oopster_stupor" ? "here" : "in the oopster stupor" )} ;
+   here_outer_tower : dynamic_string {( is_at "outer_tower" ? "here" : "in the outer tower" )} ;
    here_rocky_caves : dynamic_string {( is_at "rocky_caves" ? "here" : "in the rocky caves" )} ;
+   here_taller_altar : dynamic_string {( is_at "taller_altar" ? "here" : "in the taller altar" )} ;
+   here_tenser_center : dynamic_string {( is_at "tenser_center" ? "here" : "in the tenser center" )} ;
    here_tool_stall : dynamic_string {( is_at "tool_stall" ? "here" : "in the tool stall" )} ;
+   here_streaky_cove : dynamic_string {( is_at "streaky_cove" ? "here" : "in the streaky cove" )} ;
+   here_yankin_canyon : dynamic_string {( is_at "yankin_canyon" ? "here" : "by the yankin' canyon" )} ;
 
    #conditional location text (bonus) (alphabetize)
    here_app_mall : dynamic_string {( is_at "app_mall" ? "here" : "in the app mall" )} ;
