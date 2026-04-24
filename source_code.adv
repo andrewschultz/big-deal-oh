@@ -657,7 +657,7 @@ booleans {
    tutorial_9_north : boolean "false" ;
    tutorial_10_listen : boolean "false" ;
    tutorial_11_rocky_caves : boolean "false" ;
-   tutorial_12_southwest : boolean "false" ;
+   tutorial_12_down : boolean "false" ;
    tutorial_13_smell : boolean "false" ;
    tutorial_14_steel_wrench : boolean "false" ;
    tutorial_15_northeast : boolean "false" ;
@@ -1548,7 +1548,7 @@ locations {
          }
       }
       on_describe {
-         : set_true "tutorial_12_southwest" ;
+         : set_true "tutorial_12_down" ;
       }
    }
    streaky_cove : location "{loc_streaky_cove}" header="{header_streaky_cove}" graphic="r_streaky_cove" {
@@ -2886,7 +2886,7 @@ subroutines {
       }
       : ask_bool {
          question   = {this_game} has a tutorial mode for the first few puzzles. If you wish to use it, you need to request it before the game starts. Would you like to use it?
-         yes_answer = Yes, I'd like to use the tutorial.
+         yes_answer = Yes, I'd like to use the tutorial. (<RECOMMENDED<#0f0>> during the competition)
          no_answer  = No, I'd rather skip the tutorial.
          var        = tutorial_0_in_tutorial
       }
@@ -3298,8 +3298,8 @@ on_tick {
          : print "{note_cue_tutorial}Now you're back in the meadow, try LISTENing." ;
       } : else_if (!tutorial_11_rocky_caves) {
          : print "{note_cue_tutorial}Now you've heard the {puz_point_cocky_raves_l}, you need to figure what they're cluing." ;
-      } : else_if (!tutorial_12_southwest) {
-         : print "{note_cue_tutorial}Now you've found the rocky caves, you should explore them to the southwest." ;
+      } : else_if (!tutorial_12_down) {
+         : print "{note_cue_tutorial}Now you've found the rocky caves, you should explore them below." ;
       } : else_if (!tutorial_13_smell) {
          : print "{note_cue_tutorial}You need to use one of your senses. There are five." ;
       } : else_if (!tutorial_14_steel_wrench) {

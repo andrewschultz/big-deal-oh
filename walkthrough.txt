@@ -2,23 +2,26 @@ Walkthrough for Big Deal, Oh! by Andrew Schultz
 
 You can probably guess one bonus point from the title.
 
-Use these if you are running tutorial mode.
+This walkthrough includes three moves which add extra moves to the tutorial. They are marked with a double cursor.
 
-> ABOUT
 
-> VERBS
+>> ABOUT
+
+>> VERBS
 
 > X ME
 
-Gives you a clue.
+This isn't technically a point-scoring move, and you can win without it, but it gives you a hint item.
+
+It gives you an additional clue beyond the item's name as well.
 
 "Fie, moan, my phone!"
 
 Weird. You never use language like that.
 
-> I
+>> I
 
-> THINK
+>> THINK
 
 This will give you clues what to do.
 
@@ -26,7 +29,11 @@ But how to make concrete progress? The stool, tall looks suspicious.
 
 > TOOL STALL (1)
 
-We can't do anything to the south yet. The tutorial has us go south, get the point, and go back north.
+We can't do anything to the south yet, but the tutorial has us go there.
+
+>> S
+>> LEERY OWNER
+>> N
 
 The tutorial then tells you to pay attention to the description. It suggests an action.
 
