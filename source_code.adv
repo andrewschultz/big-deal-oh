@@ -1686,6 +1686,18 @@ locations {
    }
    tool_stall : location "{loc_tool_stall}" header="{header_tool_stall}" graphic="r_tool_stall" {
       on_command {
+         : match "_ eerie;_ loner" {
+            : print {( point_leery_owner ? "You're glad the loner's gone. No need to deal with them any more." : "The eerie loner's I H8 PPL tshirt suggests you may want to just ask them to refer you to someone who is more willing, or less unwilling, to help you." )} ;
+            : done ;
+         }
+         : match "_ right;_ sign" {
+            : print {( point_tight_rules ? "You figured what the sign was really for." : "It's weird. The sign doesn't just feel like bragging. It feels like ... if you know what to ask for, you can get it. An off the menu item so to speak. But if you don't, you don't deserve it. Yet." ;
+            : done ;
+         }
+         : match "_ tools" {
+            : print "The tools to the left of the sign make a bewildering array. " + (point_tight_rules ? "Fortunately, the leery owner helped you realize you were already carrying the right tool." : "You are intimidated. You have no guidelines to use them, and some, such as the Ho-Slam-'Er-Slow Hammer, seem much more violent than you'd want to have to use. You have no clue which is most right, or least wrong, for you." )} ;
+            : done ;
+         }
          : match "n _" {
             : if (tutorial_0_in_tutorial) {
                : if (!think_leery_owner) {
