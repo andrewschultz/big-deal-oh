@@ -702,12 +702,13 @@ booleans {
    bonus_point_map_all : boolean "false" scope="survivor" ;
 
    # think variables
-   think_bake_tons   : boolean "false" ;
-   think_chop_drain  : boolean "false" ;
-   think_great_book  : boolean "false" ;
-   think_grow_dupes  : boolean "false" ;
-   think_leery_owner : boolean "false" ;
-   think_sold_guide  : boolean "false" ;
+   think_bake_tons     : boolean "false" ;
+   think_chop_drain    : boolean "false" ;
+   think_great_book    : boolean "false" ;
+   think_grow_dupes    : boolean "false" ;
+   think_leery_owner   : boolean "false" ;
+   think_sold_guide    : boolean "false" ;
+   think_written_specs : boolean "false" ;
 
    # dynamic booleans for ease of coding
    known_leery_owner : dynamic_boolean {( think_leery_owner || point_leery_owner )} ;
@@ -1277,9 +1278,11 @@ locations {
             : collection_modify { collection = "tried_combo_core" index -> (24) content -> ("true") } ;
             : if (!point_best_notes) {
                : print "The {puz_point_spittin_wrecks} almost look interested for a moment before yelling at you for not giving them guidelines to figure out such a thing. Sure, it can be done, but ..." ;
+               : set_true "think_written_specs" ;
                : done ;
             }
             : print "You give the spittin' wrecks the best notes. They nod. After a while, they hand back some written specs, which seem to detail a labyrinth. They note where the walls are thin and that you need to knock down a wall to get through. You wonder if they are pulling your leg, but you don't have much else to work with." ;
+            : set_false "think_written_specs" ;
             : set_true "point_written_specs" ;
             : gosub "add_point" ;
             : done ;
@@ -2267,6 +2270,9 @@ subroutines {
          }
          : if (think_sold_guide) {
             : print "You tried to buy a sold guide {here_gnawing_awning} but had no collateral." ;
+         }
+         : if (think_written_specs) {
+            : print "You tried to help prepare {tht_written_specs} without any documents that might help {here_jeerin_region}." ;
          }
          : if (think_great_book) {
             : print "You tried to check out the {tht_great_book} without any ID or voucher {here_foldin_gate}." ;
