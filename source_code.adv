@@ -22,6 +22,7 @@ strings {
    this_game : string "<Big Deal, Oh!<#f80>>" ;
    l_qt : string "<Quirky Test<#0f0>>[http://andrewschultz.itch.io/us-too]" ;
    l_talp : string "<TALP<#0f0>>[https://itch.io/jam/talp]" ;
+   l_talp_2025 : string "<TALP 2025<#0f0>>[https://itch.io/jam/talp2025]" ;
    l_talp_2026 : string "<TALP 2026<#0f0>>[https://itch.io/jam/talp2026]" ;
 
    l_tester_gg : string "<Gianluca Girelli<#0f0>>[https://g0blin.itch.io/]" ;
@@ -2278,8 +2279,11 @@ subroutines {
    check_meta : subroutine {
       : match "about _" {
          : print "{this_game} was written for {l_talp_2026}, another annual edition of {l_talp}." ;
-         : print "It is in the spirit of {l_qt} and reuses a lot of the code. However, this year I'm trying to get in at least somewhat with the theme of Archaeology, even if my knowledge of that field is rudimentary. Well, it does have a hidden city near the end." ;
-         : print "{this_game} needs only two-word commands to win." ;
+         : print "It is a wordplay game in the spirit of {l_qt}, my TALP 2025 entry, and it reuses a lot of the code. However, this year I'm trying to get in at least somewhat with the theme of archaeology, even if my knowledge of that field is rudimentary. Well, it does have a hidden city near the end, and you dig and explore." ;
+         : print "{this_game} uses a stripped-down parser for standard commands, but it requires you to discover two-word commands to win." ;
+         : if (score == 0) {
+            : print "Figuring the mechanic isn't meant to be too tricky, but I don't want to spoil it unsolicited. {vm_think} and, more explicitly, {vm_hint} can clue you into what is going on." ;
+         }
          : set_true "tutorial_1_about" ;
          : done ;
       }
@@ -2295,12 +2299,17 @@ subroutines {
       : match "diag _;diags _;diagnostic _;diagnostics _" {
          : print "{vd_hint} gives hints based on your location and current accomplishments." ;
          : print "{vd_i_three} takes inventory. In other words, you can see what you are carrying. While most clues in {this_game} should be in the room and description, the inventory and examining the items in it may provide additional clues." ;
-         : print "{vd_score} is the most popular diagonsitic command. It tells you your core score, which you can also see in the upper right. It also tracks bonus points." ;
+         : print "{vd_score} is the most popular diagnostic command. It tells you your core score, which you can also see in the upper right. It also tracks bonus points." ;
          : print "{vd_think} describes your partial successes and, before you get your first point, clues of odd things that may help you realize what you need to do to get that first point." ;
          : done ;
       }
 
-      : match "help _;hint _;hints _" {
+      : match "help _" {
+         : print {( "<HELP<#f80>> is a bit ambiguous. It's not clear how much help you may want. {vd_think} will track what you know, while {vd_hint} will help with an immediate specific puzzle, if one is available. " + (xme_yet ? "The widget will give a number if there's something to do in the area." : "{xme} will reveal an item on your person which will tell if you have anything left in the area.") )} ;
+         : done ;
+      }
+
+      : match "hint _;hints _" {
          : gosub "hint_function" ;
          : done ;
       }
@@ -2314,11 +2323,11 @@ subroutines {
          : print "{vm_about} gives general information." ;
          : print "{vm_credits} credits people and entities who helped make {this_game} or fix various flaws." ;
          : print "{vm_diag} lists diagnostic verbs." ;
-         : print "{vm_diag} lists version history and major changes that necessitated each version." ;
+         : print "{vm_history} lists version history and major changes that necessitated each version." ;
          : print "{vm_meta}, this command, lists meta-commands, or commands that list other commands." ;
          : print "{vm_options} lists options." ;
          : print "{vm_verbs} describes verbs the parser uses." ;
-         : print "Native commands unique to Adventuron include {vs_tss}, which start and stop a transcript, which help the programmer find bugs, technical or narrative. {vs_quit} and {vs_restart} are common across text adventure systems. SAVE and RESTORE work as well." ;
+         : print "Native commands unique to Adventuron include {vs_tss}, which start and stop a transcript, which help the programmer find bugs, technical or narrative. {vs_quit} and {vs_restart} are common across text adventure systems. <SAVE<#f80>> and <RESTORE<#f80>> work as well." ;
          : done ;
       }
 
@@ -2342,7 +2351,7 @@ subroutines {
       }
 
       : match "verbs _;verb _" {
-         : print "{this_game} uses a reduced parser, though you need to guess certain commands to score points." ;
+         : print "{this_game} uses a reduced parser, though all point-scoring commands require you to guess a phrase." ;
          : print "Many commands are noun-based, so you don't have to guess the verb for relatively common actions, e.g. PUSH THING and USE THING are the same." ;
          : print "You can use the basic directions {dir_n}, {dir_s}, {dir_e}, {dir_w}, {dir_u} and {dir_d}, abbreviated to a single letter e,g, <N<#f80>>/<S<#f80>>/<E<#f80>>/<W<#f80>>/<U<#f80>>/<D<#f80>>." ;
          : print "You will also want to use the senses, including {v_listen}, {v_smell} and {v_feel}." ;
