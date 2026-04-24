@@ -626,6 +626,7 @@ booleans {
    widget_nudge : boolean "false" ;
    hint_awning_note : boolean "false" ;
    hints_clarified_yet : boolean "false" ;
+   demo_or_meadow_tried : boolean "false" ;
    widget_noun_note : boolean "false" ;
 
    # game state (critical)
@@ -995,6 +996,13 @@ locations {
    }
    demo_meadow : location "{loc_demo_meadow}" header="{header_demo_meadow}" graphic="r_demo_meadow" {
       on_command {
+		 : if (!demo_or_meadow_tried) {
+			: match "_ demo;_ meadow" {
+               : print "{one_time}you don't have to do anything with the meadow itself. It's more what's in it. Titles like the demo meadow are a clue you don't have to do anything with that entity." ;
+               : set_true "demo_or_meadow_tried" ;
+               : done ;
+            }
+         }
          : match "s _" {
             : if (tutorial_0_in_tutorial && tutorial_9_north && !point_steel_wrench) {
                : print "You don't need to go back to the tool stall yet. You don't have what you need at the moment." ;
