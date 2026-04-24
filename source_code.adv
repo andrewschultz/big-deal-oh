@@ -2500,13 +2500,7 @@ subroutines {
          : set_true "hinted_yet" ;
       }
       : gosub "awning_hint_check" ;
-      : if (is_at "start_zone") {
-         : set_integer var="widget_num" {( widget_num_start )} ;
-      } : else_if (is_at "middle_zone") {
-         : set_integer var="widget_num" {( widget_num_middle )} ;
-      } : else_if (is_at "end_zone") {
-         : set_integer var="widget_num" {( widget_num_end )} ;
-      }
+      : gosub "widget_adjust" ;
       : if (score > 5) {
          : if (widget_num == -1) {
             : print "There is nothing to do here." ;
@@ -2806,7 +2800,19 @@ subroutines {
       : return ;
    }
 
+   # I hate having this function, but if I don't have it, the dynamic_integer makes Adventuron do bad things. I think it's Adventuron and not me.
+   widget_adjust : subroutine {
+      : if (is_at "start_zone") {
+         : set_integer var="widget_num" {( widget_num_start )} ;
+      } : else_if (is_at "middle_zone") {
+         : set_integer var="widget_num" {( widget_num_middle )} ;
+      } : else_if (is_at "end_zone") {
+         : set_integer var="widget_num" {( widget_num_end )} ;
+      }
+   }
+
    widget_function : subroutine {
+      : gosub "widget_adjust" ;
       : set_integer var="tempint" {( widget_num )} ;
       : set_false "widget_blurry" ;
       : if (point_penny_mounds && !point_sold_guide && awning_done < 2) {
