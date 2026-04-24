@@ -14,6 +14,10 @@ game_information {
    short_synopsis               = Wordplay game with tutorial written for TALP 2026
 }
 
+game_settings {
+   rewind_enabled = true
+   rollback_enabled = true
+}
 
 ## Defines locations in the world
 
@@ -3053,6 +3057,10 @@ on_describe {
 ## Test VERB NOUN that the player types and executes conditional actions
 
 on_command {
+   : match "undo _;rewind _" {
+      : print "You need to use ctrl-shift-left to undo a move. Ctrl-shift-right can redo it, if you change your mind." ;
+      : done ;
+   }
    : match "xyzzy _" {
       : print "A low voice booms \"Vexing howls? Hexing?! VOWELS!\"";
       : done ;
