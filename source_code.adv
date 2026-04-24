@@ -1811,6 +1811,7 @@ objects {
    seek_key : object "the reconstructed key from the dolmen" ;
    sold_guide : object "the sold guide you bought with the penny mounds" ;
    trove_key : object "a rusty key (crusty! Eee!) from the trove" ;
+   trowel : object "the trudge-now'll-nudge trowel you started with" ;
    wax : object "the formed wax from the warmed fax" ;
    wrench : object "the wrench from the rocky caves" message="It looks very sturdy. Not a cheap dollar store wrench." ;
 }
@@ -2991,15 +2992,20 @@ themes {
 ## Print the objective when the game starts
 
 on_startup {
-   : print "{this_game}: a {l_talp_2026} entry.";
+   : print "{this_game}: a {l_talp_2026} entry with a focus on wordplay.";
    : if (have_won) {
-      : print "Thanks for replaying, but this is a reminder to look at the other {l_talp_26} entries, too!" ;
+      : print "Thanks for replaying, but this is a reminder to look at the other {l_talp_26} entries, too! The only reason to replay is to figure out bonus points." ;
       : press_any_key ;
       : clear_screen ;
    } : else {
       : gosub "tutorial_choice" ;
       : gosub "colorclue_choice" ;
    }
+   : print "You have heard tell of the Kind Gritty Grind City. But you have no clue how to get there." ;
+   : print "One day, when you're at the hardware store buying insulation, you happen on a weird item called the trudge-now'll-nudge trowel. You feel compelled to buy it." ;
+   : print "It just sits there for a year. Then one day when you consider sending stuff to goodwill, you put it in your back. You take a bike to the flea market. But you never make it. Instead you wind up in a ..." ;
+   : pocket "trowel" ;
+   : press_any_key ;
 }
 
 ## Execute this every time a player moves or redescribes a location
