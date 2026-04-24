@@ -626,6 +626,7 @@ booleans {
    widget_nudge : boolean "false" ;
    hint_awning_note : boolean "false" ;
    hints_clarified_yet : boolean "false" ;
+   widget_noun_note : boolean "false" ;
 
    # game state (critical)
    listen_demo_meadow : boolean "false" ;
@@ -3151,6 +3152,11 @@ on_command {
    : if (xme_yet) {
       : match "_ widget;_ digit;_ dialed;_ wild" {
          : gosub "widget_function" ;
+         : if (widget_noun_note) {
+            : print "{one_time}All you can do is look at the widget, so every verb, silly or normal, does the same thing." ;
+            : set_true "widget_noun_note" ;
+         }
+         : done ;
       }
    }
 
