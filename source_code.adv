@@ -1486,7 +1486,7 @@ locations {
          }
          : match "smell _" {
             : if (point_steel_wrench) {
-               : print "No smell any more." ;
+               : print "You're kind of used to the smell. Whether it got a bit less once you found the wrench, or your mood improved so it didn't bug you, you don't know. But it's not worth reflecting too deeply on. There's probably not anything else in the stench." ;
             } : else_if (!smell_rocky_caves) {
                : print "You smell something. Something bad. A {puz_point_real_stench}." ;
                : set_true "smell_rocky_caves" ;
@@ -1498,6 +1498,10 @@ locations {
             : done ;
          }
          : if (smell_rocky_caves) {
+            : match "_ stench" {
+               : print {( point_steel_wrench ? "You don't want to deal with the stench. You got something from it. Probably best to just leave." : "There must be something worth fighting through the stench for. But what?" )} ;
+               : done ;
+            }
             : if (!point_steel_wrench) {
                : match "steel wrench" {
                   : if (point_steel_wrench) {
@@ -1509,6 +1513,7 @@ locations {
                   : set_true "point_steel_wrench" ;
                   : set_true "tutorial_14_steel_wrench" ;
                   : gosub "add_point" ;
+                  : pocket "wrench" ;
                   : done ;
                }
                : match "steel _;_ wrench" {
@@ -1723,6 +1728,7 @@ locations {
                : print "Or, if you want, I can show you a path back somewhere that may ... help you a bit. Or not. Off to the south, now.\"" ;
                : set_true "point_tight_rules" ;
                : gosub "add_point" ;
+               : destroy "wrench" ;
                : done ;
             }
             : if (!point_tight_rules) {
@@ -1806,6 +1812,7 @@ objects {
    sold_guide : object "the sold guide you bought with the penny mounds" ;
    trove_key : object "a rusty key (crusty! Eee!) from the trove" ;
    wax : object "the formed wax from the warmed fax" ;
+   wrench : object "the wrench from the rocky caves" message="It looks very sturdy. Not a cheap dollar store wrench." ;
 }
 
 zones {
