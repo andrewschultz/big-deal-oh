@@ -1049,6 +1049,12 @@ locations {
                : done ;
             }
          }
+         : if (point_tool_stall) {
+            : match "tool stall" {
+               : print "You already found a way {dir_s} to the tool stall. It will stay open." ;
+               : done ;
+            }
+         }
          : if (!point_tool_stall) {
             : match "_ stool;_ tall" {
                : print "You're not sure why you think of the {puz_point_stool_tall} that way instead of a tall stool. It's weird -- dealing with it directly doesn't seem like the way to go. Perhaps it's indicating something else." ;
@@ -1848,12 +1854,12 @@ locations {
             : set_false "think_leery_owner" ;
             : set_true "tutorial_17_leery_owner_2" ;
             : increment "tutorial_score" ;
-            : if (tutorial_0_in_tutorial) {
-               : print "Congratulations! You finished the tutorial." ;
-               : set_false "tutorial_0_in_tutorial" ;
-            }
             : update_graphic ;
             : gosub "add_point" ;
+            : if (tutorial_0_in_tutorial) {
+               : print "Congratulations! You finished the tutorial. You may also note that your score is now listed in the upper right. You're one-seventh of the way to the City. Best of luck!" ;
+               : set_false "tutorial_0_in_tutorial" ;
+            }
             : done ;
          }
          : if (!point_leery_owner) {
@@ -2891,7 +2897,7 @@ subroutines {
             : return ;
          }
       } : else_if (is_at "tool_stall") {
-         : if (!point_steel_wrench) {
+         : if (!point_steel_wrench && !tutorial_0_in_tutorial) {
             : print "You need to do something elsewhere first to make progress here." ;
             : return ;
          }
