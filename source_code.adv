@@ -1063,6 +1063,7 @@ locations {
                : print "The {puz_point_stool_tall} shakes and falls over and rolls around more than you thought possible. As it does, its legs point to a passage you haven't seen before, to the {dir_s}." ;
                : set_true "point_tool_stall" ;
                : set_true "tutorial_6_tool_stall" ;
+               : increment "tutorial_score" ;
                : gosub "add_point" ;
                : update_graphic ;
                : done ;
@@ -1114,6 +1115,7 @@ locations {
                : print "The cockiness seems to recede as you look around with a purpose. Then you find it. A passage {dir_d} to rocky caves!" ;
                : set_true "point_rocky_caves" ;
                : set_true "tutorial_11_rocky_caves" ;
+               : increment "tutorial_score" ;
                : gosub "add_point" ;
                : done ;
             }
@@ -1140,7 +1142,10 @@ locations {
                }
                : print {( "What's that? {puz_point_cocky_raves_u}! Saying you won't find any" + (point_tool_stall ? " other" : "" ) + " way out of the meadow." )} ;
                : set_true "listen_demo_meadow" ;
-               : set_true "tutorial_10_listen" ;
+               : if (!tutorial_10_listen) {
+                  : set_true "tutorial_10_listen" ;
+                  : increment "tutorial_score" ;
+               }
                : update_graphic ;
             } : else {
                : print "{puz_point_cocky_raves_u} continue to mock your inability to go anywhere interesting." ;
@@ -1556,6 +1561,7 @@ locations {
                : print "You smell something. Something bad. A {puz_point_real_stench}." ;
                : set_true "smell_rocky_caves" ;
                : set_true "tutorial_13_smell" ;
+               : increment "tutorial_score" ;
                : update_graphic ;
             } : else {
                : print "Still that {puz_point_real_stench}." ;
@@ -1577,6 +1583,7 @@ locations {
                   : print "The stench is more bearable now you know what you're looking for. But you've still had quite enough of it -- you had to go into its heart -- once you acquire said wrench." ;
                   : set_true "point_steel_wrench" ;
                   : set_true "tutorial_14_steel_wrench" ;
+                  : increment "tutorial_score" ;
                   : gosub "add_point" ;
                   : pocket "wrench" ;
                   : done ;
@@ -1593,8 +1600,11 @@ locations {
             }
          }
       }
-      on_describe {
-         : set_true "tutorial_12_down" ;
+      on_pre_describe {
+         : if (!tutorial_12_down) {
+            : set_true "tutorial_12_down" ;
+            : increment "tutorial_score" ;
+         }
       }
    }
    streaky_cove : location "{loc_streaky_cove}" header="{header_streaky_cove}" graphic="r_streaky_cove" {
@@ -1826,15 +1836,18 @@ locations {
                : print "The {puz_point_eerie_loner} grumbles \"Can't disturb the owner unless you have something for them.\"" ;
                : if (tutorial_0_in_tutorial && !tutorial_8_leery_owner_1) {
                   : print "{one_time}currently tutorial progress is listed in the upper right, but when you get the right command before you're ready, +1 or +2 will appear in the upper right after your score, to remind you you've gotten close somewhere. Also, {vm_think} will save such commands. You can try it now, but it's not critical for the tutorial." ;
+               : if (!tutorial_8_leery_owner_1) {
+                  : set_true "tutorial_8_leery_owner_1" ;
+                  : increment "tutorial_score" ;
                }
                : set_true "think_leery_owner" ;
-               : set_true "tutorial_8_leery_owner_1" ;
                : done ;
             }
             : print "The eerie loner grumbles. You show the steel wrench.\n\"All right, I'll get 'em.\" The loner leaves, their job done for the day. The leery owner comes out.\n\"Looking for the {puz_point_right_tools}, eh? Well, we don't just sell them to anyone who wants them. There are safety precautions and such.\" What could those precautions be?" ;
             : set_true "point_leery_owner" ;
             : set_false "think_leery_owner" ;
             : set_true "tutorial_17_leery_owner_2" ;
+            : increment "tutorial_score" ;
             : if (tutorial_0_in_tutorial) {
                : print "Congratulations! You finished the tutorial." ;
                : set_false "tutorial_0_in_tutorial" ;
@@ -1855,10 +1868,14 @@ locations {
             }
          }
       }
-      on_describe {
-         : set_true "tutorial_7_south_first" ;
-         : if (point_steel_wrench) {
+      on_pre_describe {
+         : if (!tutorial_7_south_first) {
+            : set_true "tutorial_7_south_first" ;
+            : increment "tutorial_score" ;
+         }
+         : if (point_steel_wrench && !tutorial_16_south_twice) {
             : set_true "tutorial_16_south_twice" ;
+            : increment "tutorial_score" ;
          }
       }
    }
@@ -2276,7 +2293,10 @@ subroutines {
             : done ;
          }
          : mask {
-            : set_true "tutorial_4_inventory" ;
+            : if (tutorial_3_x_me && !tutorial_4_inventory) {
+               : set_true "tutorial_4_inventory" ;
+               : increment "tutorial_score" ;
+            }
          }
          : if (carried() == 0) {
             : print "" ;
@@ -2304,23 +2324,32 @@ subroutines {
       : match "score _" {
          : print {( "You've currently scored {score} of {max_score} total core points." + (think_available ? "You have also figured {number_as_word} point-scoring command" + ( commands_figured > 1 ? "s" : "" ) + " before you had the necessary support. Type {vd_think} for details." : "" ) )};
          : print "You have scored {bonus_score} of {max_bonus_score} bonus points." ;
+         : if (tutorial_0_in_tutorial) {
+            : print "Also, you've gotten through {tutorial_score} of the {tutorial_score} tutorial steps." ;
+         }
          : gosub "note_score_upper_right" ;
       }
 
       : match "think _" {
-         : if (tutorial_0_in_tutorial)
-         {
-            : if (!tutorial_4_inventory) {
-               : print "{vd_think} is part of the tutorial, but it will occur later on." ;
-               : done ;
-            }
+         : if (tutorial_0_in_tutorial && !tutorial_4_inventory) {
+            : print "{vd_think} is part of the tutorial, but it will occur later on." ;
+            : done ;
+         }
+         : if (score == 0) {
             : print "WHAT YOU KNOW SO FAR:" ;
-            : print "* you have a wild digit-dialed widget" ;
-            : print "* you started in the demo meadow" ;
+            : print "* you started here in the Demo Meadow" ;
             : print "* you said Fie Moan My Phone, which seemed unnatural" ;
             : print "* you were given the trudge-now'll-nudge trowel at the start" ;
             : print "* you were told of the ancient Kind Gritty Grind City, where hard work and deep thought were rewarded" ;
-            : set_true "tutorial_5_think" ;
+            : if (xme_yet) {
+               : print "* you have a {i_widget}" ;
+            }
+            : print "Now, how do these clues add up to you getting your first point?" ;
+            : if (!tutorial_5_think) {
+               : increment "tutorial_score" ;
+               : set_true "tutorial_5_think" ;
+            }
+            : done ;
          }
          : if (commands_figured > 0) {
             : print {( "Here " + (commands_figured > 1 ? "are {number_as_word} things that seemed like they" : "is something that seemed like it") + " should work, but you didn't have the resources yet:" )} ;
@@ -2373,7 +2402,10 @@ subroutines {
          : if (score == 0) {
             : print "Figuring the mechanic isn't meant to be too tricky, but I don't want to spoil it unsolicited. {vm_think} and, more explicitly, {vm_hint} can clue you into what is going on." ;
          }
-         : set_true "tutorial_1_about" ;
+         : if (!tutorial_1_about) {
+            : increment "tutorial_score" ;
+            : set_true "tutorial_1_about" ;
+         }
          : done ;
       }
 
@@ -2448,7 +2480,10 @@ subroutines {
          : print "<L<#f80>> (for look) refreshes the screen." ;
          : print "For the most part, <TAKE<#f80>> and <DROP<#f80>> aren't used, as the game automatically picks up what you need and destroys it when done. But they may be part of a puzzle." ;
          : print "Meta-verbs (actions or requests outside of the game world) are listed in {vm_meta}, {vm_diag}(NOSTIC), and {vm_options}. Intuitive abbreviations for these often work but aren't fully listed." ;
-         : set_true "tutorial_2_verbs" ;
+         : if (tutorial_1_about && !tutorial_2_verbs) {
+            : increment "tutorial_score" ;
+            : set_true "tutorial_2_verbs" ;
+         }
          : done ;
       }
 
@@ -3278,7 +3313,11 @@ on_command {
       } : else {
          : print "You find nothing else on your person. You still can't locate your phone, but who knows, it may turn up some day. Perhaps when you least expect it." ;
       }
-      : set_true "tutorial_3_x_me" ;
+      : if (!tutorial_3_x_me && tutorial_2_verbs) {
+         : set_true "tutorial_3_x_me" ;
+         : increment "tutorial_score" ;
+         : print "{one_time}you often need to examine some objects to reveal traits to use those objects properly. Though often in {this_game} you don't even need to use<X<#f80>>. Any verb with the noun is sufficient." ;
+      }
       : set_true "xme_yet" ;
       : done ;
    }
@@ -3370,30 +3409,30 @@ on_tick {
       } : else_if (!tutorial_6_tool_stall) {
          : cycle key = "tutorial_6" predictable_order = "true" skip_interval = "0" max_loops = "1" {
             : print "{note_cue_tutorial}Now you've taken inventory, you should figure what to do with the {puz_point_stool_tall}." ;
-            : print "{note_cue_tutorial}What to do with the stall is a lateral thinking puzzle, so use {vd_hint} if you want to skip past." ;
+            : print "{note_cue_tutorial}What to do with the stall is a lateral thinking puzzle, so use {vd_hint} if you want to see the solution." ;
             : print "{note_cue_tutorial}Things in your inventory should give you a clue, as should the starting location name." ;
             : print "{note_cue_tutorial}The phrase you need is very similar to {puz_point_stool_tall}." ;
          }
       } : else_if (!tutorial_7_south_first) {
          : print "{note_cue_tutorial}Now you've removed the stool, you should go {dir_s} to check what's there." ;
       } : else_if (!tutorial_8_leery_owner_1) {
-         : print "{note_cue_tutorial}Now you've made it to the tool stall, you may want to ask the eerie loner for someone." ;
+         : print "{note_cue_tutorial}Now you've made it to the tool stall, you may want to ask the {puz_point_eerie_loner} for someone specific. But who(m)? Using {vd_hint} is perfectly valid here, especially for non-native English speakers." ;
       } : else_if (!tutorial_9_north) {
          : print "{note_cue_tutorial}Now you know what you need, you should go back {dir_n}." ;
       } : else_if (!tutorial_10_listen) {
-         : print "{note_cue_tutorial}Now you're back in the meadow, try LISTENing." ;
+         : print "{note_cue_tutorial}Text adventures often have you use your senses for clues. Now you're back in the meadow, {v_listen_hear}." ;
       } : else_if (!tutorial_11_rocky_caves) {
-         : print "{note_cue_tutorial}Now you've heard the {puz_point_cocky_raves_l}, you need to figure what they're cluing." ;
+         : print "{note_cue_tutorial}Now you've heard the {puz_point_cocky_raves_l}, you need to figure what they're cluing. You can use {vd_hint} if you want, but this is intended to be easier than the other puzzles." ;
       } : else_if (!tutorial_12_down) {
-         : print "{note_cue_tutorial}Now you've found the rocky caves, you should explore them below." ;
+         : print "{note_cue_tutorial}Now you've found the rocky caves, you should go {dir_d} to explore them." ;
       } : else_if (!tutorial_13_smell) {
          : print "{note_cue_tutorial}You need to use one of your senses. There are five." ;
       } : else_if (!tutorial_14_steel_wrench) {
-         : print "{note_cue_tutorial}You need to figure out what the real stench might be hiding." ;
+         : print "{note_cue_tutorial}You need to figure out what the {puz_point_real_stench} might be hiding." ;
       } : else_if (!tutorial_15_up) {
          : print "{note_cue_tutorial}You're done in the caves. Now you've got the steel wrench, you should retreat {dir_u}." ;
       } : else_if (!tutorial_16_south_twice) {
-         : print "{note_cue_tutorial}Now you've got the steel wrench, you should continue {dir_s}." ;
+         : print "{note_cue_tutorial}The steel wrench might be useful in the tool stall to the {dir_s}." ;
       } : else_if (!tutorial_17_leery_owner_2) {
          : print "{note_cue_tutorial}Now you have something appropriate for the tool stall, you should ask to summon the person in charge. If you forget who that is, {vd_think}." ;
       } : else {
