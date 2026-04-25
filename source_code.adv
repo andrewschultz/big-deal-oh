@@ -344,7 +344,7 @@ integers {
    part_core_score : dynamic_integer {( ((collection_get{ collection -> ("got_first_core") index -> ( counter ) } == "true") ? 1 : 0) + ((collection_get{ collection -> ("got_second_core") index -> ( counter ) } == "true") ? 2 : 0) )} ; # this is a really bad hack, but I couldn't find a concise way to code things. Maybe I could use a dynamic boolean.
    part_bonus_score : dynamic_integer {( ((collection_get{ collection -> ("got_first_bonus") index -> ( counter ) } == "true") ? 1 : 0) + ((collection_get{ collection -> ("got_second_bonus") index -> ( counter ) } == "true") ? 2 : 0) )} ; # this is a really bad hack, but I couldn't find a concise way to code things. Maybe I could use a dynamic boolean.
 
-   commands_figured : dynamic_integer {( (think_leery_owner ? 1 : 0) )} ;
+   commands_figured : dynamic_integer {( (think_bake_tons ? 1 : 0) + (think_chop_drain ? 1 : 0) + (think_great_book ? 1 : 0) + (think_grow_dupes ? 1 : 0) + (think_leery_owner ? 1 : 0) + (think_sold_guide ? 1 : 0) + (think_written_specs ? 1 : 0) )} ;
 
 }
 
@@ -726,6 +726,7 @@ booleans {
    think_leery_owner   : boolean "false" ;
    think_sold_guide    : boolean "false" ;
    think_written_specs : boolean "false" ;
+   think_available     : dynamic_boolean {( think_bake_tons || think_chop_drain || think_great_book || think_grow_dupes || think_leery_owner || think_sold_guide || think_written_specs )} ;
 
    # dynamic booleans for ease of coding
    known_leery_owner : dynamic_boolean {( think_leery_owner || point_leery_owner )} ;
@@ -2282,6 +2283,9 @@ subroutines {
             : print "* you were given the trudge-now'll-nudge trowel at the start" ;
             : print "* you were told of the ancient Kind Gritty Grind City, where hard work and deep thought were rewarded" ;
             : set_true "tutorial_5_think" ;
+         }
+         : if (commands_figured > 0) {
+            : print {( "Here " + (commands_figured > 1 ? "are {number_as_word} things that seemed like they" : "is something that seemed like it") + " should work, but you didn't have the resources yet:" )} ;
          }
          : if (think_leery_owner) {
             : print "You called for the {tht_leery_owner} in the tool stall but didn't have anything to trade." ;
