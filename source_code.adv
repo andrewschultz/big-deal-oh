@@ -952,6 +952,11 @@ locations {
                : pocket "buns" ;
                : done ;
             }
+            : match "_ buns" {
+               : print "You can't do much with the buns. At least not here. Maybe there's a simple command you could use to pick them up and carry them around to where you need to take them. One that's usually used a lot in text adventures." ;
+               : print "A brief inspection turns up that they look sort of raw." ;
+               : done ;
+            }
          }
       }
       on_describe {
@@ -1444,6 +1449,10 @@ locations {
    }
    outer_tower : location "{loc_outer_tower}" header="{header_outer_tower}" graphic="r_outer_tower" {
       on_command {
+         : match "_ tower" {
+            : print {( "You step back and appreciate what an impressive tower it is. " + (key_used ? "You have free passage through it now." : "Perhaps the keyhole provides a clue how to get through.") )}
+            : done ;
+         }
          : if (porch_in_tower) {
             : match "power torch" {
                : if (point_power_torch) {
@@ -1603,7 +1612,7 @@ locations {
             }
          }
          : if (point_key_trove) {
-            : match "_ trove;_ keys" {
+            : match "_ trove;_ keys;_ key" {
                : if (!point_lodging_doc) {
                   : print {( "So many keys with so many labels. " + (has_visited "outer_tower" ? "You wouldn't know which would fit the outer tower!" : "You haven't found anything that needs unlocking yet, so you won't waste time searching." ) )};
                } : else_if (!key_found) {
@@ -1613,8 +1622,14 @@ locations {
                } : else_if (key_duplicated) {
                   : print {( "You have no need to search for another key, now you " + (key_used ? "used it" : "have a stronger replacement") + "." )} ;
                } : else {
-                  : print "You search for another key, perhaps a stronger one, but nothing turns up. You'll have to make one." ;
+                  : print "You look at your flimsy key and search for another stronger one in the trove,but nothing turns up. Bummer. But you have the key's shape. Perhaps somewhere else you can make a sturdier key." ;
                }
+               : done ;
+            }
+         }
+         : if (point_creaky_stove && !point_bake_tons) {
+            : match "_ stove" {
+               : print "The stove has all sorts of settings to cook stuff. You've been around microwave ovens a lot, but you haven't totally lost touch with old-school cooking. You muse on what a stove could cook, and what sort of cooking you'd need to do." ;
                : done ;
             }
          }
@@ -3087,6 +3102,11 @@ on_command {
       : print "You need to use ctrl-shift-left to undo a move. Ctrl-shift-right can redo it, if you change your mind." ;
       : done ;
    }
+   : if (is_carried "wrench") {
+      : match "_ wrench" {
+         : print "You're not very handy with tools, so you may need help with how to use it and where. It looks really sturdy, though." ;
+      }
+   }
    : match "xyzzy _" {
       : print "A low voice booms \"Vexing howls? Hexing?! VOWELS!\"";
       : done ;
@@ -3098,6 +3118,12 @@ on_command {
    : if (is_carried "hold_card") {
       : match "_ card;_ cold;_ hard;_ hold" {
          : print "*This entitles the bearer to have priority in checking out popular or useful literature*" ;
+         : done ;
+      }
+   }
+   : if (is_carried "trove_key") {
+      : match "unlock _;open _" {
+         : print {( "You don't trust the rusty key to open or unlock anything." + (is_at "outer_tower" ? " But you wouldn't be surprised if a stronger copy opened the tower here." : "") )} ;
          : done ;
       }
    }
