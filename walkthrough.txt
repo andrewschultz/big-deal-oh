@@ -57,7 +57,7 @@ A real stench!
 
 > S
 
-The eerie loner doesn't want to have anything to do with you. Unless you have business here.
+The eerie loner doesn't want to have anything to do with you. Unless you have business here. You may've seen what's in the walkthrough already.
 
 > LEERY OWNER (1)
 
@@ -65,7 +65,7 @@ If you didn't have the wrench, the owner wouldn't want to see you. Now there are
 
 > TIGHT RULES (1)
 
-This takes a while, so ...
+This takes a while for the leery owner to explain things to you, so things will change when you go back north.
 
 > N
 
@@ -91,7 +91,9 @@ Sorry, no point for that one!
 
 > N
 
-The warmed fax that keeps being spit out and vaporized ...
+> X FAX
+
+The paper's coming from a fax machine. Each paper is a warmed fax. Or it is before it disappears.
 
 > FORMED WAX (1)
 

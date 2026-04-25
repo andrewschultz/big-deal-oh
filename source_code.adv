@@ -99,7 +99,7 @@ strings {
    v_smell : string "<SMELL<#0f0>>" ;
 
    # diagnostic verbs
-   vd_hint : string "<HINT<#f80>>" ;
+   vd_hint : string "<HINT<#f80>>/<HINTS<#f80>>" ;
    vd_i : string "<I<#f80>>" ;
    vd_inv : string "<INV<#f80>>" ;
    vd_i_long : string "<INVENTORY<#f80>>" ;
@@ -1030,8 +1030,8 @@ locations {
    }
    demo_meadow : location "{loc_demo_meadow}" header="{header_demo_meadow}" graphic="r_demo_meadow" {
       on_command {
-		 : if (!demo_or_meadow_tried) {
-			: match "_ demo;_ meadow" {
+         : if (!demo_or_meadow_tried) {
+            : match "_ demo;_ meadow" {
                : print "{one_time}you don't have to do anything with the meadow itself. It's more what's in it. Titles like the demo meadow are a clue you don't have to do anything with that entity." ;
                : set_true "demo_or_meadow_tried" ;
                : done ;
