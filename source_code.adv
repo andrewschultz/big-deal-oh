@@ -996,7 +996,7 @@ locations {
       on_command {
          : match "grow dupes" {
             : if (point_grow_dupes) {
-               : print "You've duplicated enough!" ;
+               : print "The dough groups are happy enough now! If you created too many, there'd be overpopulation." ;
                : done ;
             }
             : collection_modify { collection = "tried_combo_core" index -> (8) content -> ("true") } ;
@@ -1074,10 +1074,10 @@ locations {
                : done ;
             }
          }
-         : if (flaming_towers_present) {
+         : if (placed_flaming_towers) {
             : match "taming flowers" {
                : if (point_taming_flowers) {
-                  : print "You already picked some taming flowers!" ;
+                  : print "You already picked some taming flowers! You should probably let them grow back in case someone else needs them." ;
                   : done ;
                }
                : collection_modify { collection = "tried_combo_core" index -> (5) content -> ("true") } ;
@@ -1087,6 +1087,8 @@ locations {
                : update_graphic ;
                : done ;
             }
+         }
+         : if (flaming_towers_present) {
             : if (!point_taming_flowers) {
                : match "taming _;_ flowers" {
                   : set_integer var="tempint" "5" ;
@@ -1223,7 +1225,7 @@ locations {
       on_command {
          : match "sail tide" {
             : if (point_sail_tide) {
-               : print "You already made a sail tide from the tail side!" ;
+               : print "You already made a sail tide from the tail side! You don't want to mess with nature too much." ;
                : done ;
             }
             : collection_modify { collection = "tried_combo_core" index -> (21) content -> ("true") } ;
@@ -1371,6 +1373,7 @@ locations {
          : match "push best" {
             : if (point_push_best) {
                : print "You already pushed the bush pest away." ;
+               : done ;
             }
             : collection_modify { collection = "tried_combo_core" index -> (5) content -> ("true") } ;
             : set_true "point_push_best" ;
@@ -1517,7 +1520,8 @@ locations {
       }
       on_describe {
           : if (key_duplicated && !key_used) {
-             : print "?? The reconstructed key works! You can go north now." ;
+             : print "You hope the key works. It'd better. You'd hate to have to back and forth to the trove. All those trips, and no detour to bound rocks to find a round box." ;
+             : print "There's always that nervous moment. Then, CLICK!" ;
              : set_true "key_used" ;
           }
       }
@@ -1636,7 +1640,7 @@ locations {
          : if (point_creaky_stove && is_carried "buns") {
             : match "bake tons" {
                : if (point_bake_tons) {
-                  : print "You already had enough baking for one adventure, even if the stove didn't get destroyed." ;
+                  : print "Even if the stove weren't destroyed, you've had enough baking for one adventure, " ;
                   : done ;
                }
                : collection_modify { collection = "tried_combo_core" index -> (10) content -> ("true") } ;
@@ -1727,11 +1731,11 @@ locations {
       on_command {
          : match "minister south" {
             : if (point_minister_south) {
-               : print "Already done!" ;
+               : print "The sinister mouth will not return. No need to disturb the clergy." ;
                : done ;
             }
             : collection_modify { collection = "tried_combo_core" index -> (16) content -> ("true") } ;
-            : print "Narrative text." ;
+            : print "Well, you came from the south, and so maybe you can call some good guys south to help you. Some who know how to deal with evil monsters. You're in luck! A mistin'-er minister sprays the sinister mouth with Spring-'Way-Wing-Spray. You thank the minister profusely, but they say it's no big deal. The mouth wasn't evil, or at any rate very adept at evil. It just sort of hoped it was." ;
             : set_true "point_minister_south" ;
             : gosub "add_point" ;
             : done ;
@@ -1813,6 +1817,9 @@ locations {
             : collection_modify { collection = "tried_combo_core" index -> (3) content -> ("true") } ;
             : if (!point_steel_wrench) {
                : print "The {puz_point_eerie_loner} grumbles \"Can't disturb the owner unless you have something for them.\"" ;
+               : if (tutorial_0_in_tutorial && !tutorial_8_leery_owner_1) {
+                  : print "{one_time}currently tutorial progress is listed in the upper right, but when you get the right command before you're ready, +1 or +2 will appear in the upper right after your score, to remind you you've gotten close somewhere. Also, {vm_think} will save such commands. You can try it now, but it's not critical for the tutorial." ;
+               }
                : set_true "think_leery_owner" ;
                : set_true "tutorial_8_leery_owner_1" ;
                : done ;
@@ -1850,6 +1857,12 @@ locations {
    }
    yankin_canyon : location "{loc_yankin_canyon}" header="{header_yankin_canyon}" graphic="r_0_blank" {
       on_command {
+         : if (point_chop_drain) {
+            : match "chop drain" {
+               : print "You don't need to chop anything else up." ;
+               : done ;
+            }
+         }
          : match "listen _" {
             : print {( point_chop_drain ? "No whirring now." : "There's a whirring from the hole." )} ;
             : done ;
@@ -1875,7 +1888,8 @@ objects {
    trove_key : object "a rusty key (crusty! Eee!) from the trove" ;
    trowel : object "the trudge-now'll-nudge trowel you started with" ;
    wax : object "the formed wax from the warmed fax" ;
-   wrench : object "the wrench from the rocky caves" message="It looks very sturdy. Not a cheap dollar store wrench." ;
+   widget : object "the <wild digit-dialed widget<#c8c>> you found on your person" ;
+   wrench : object "the wrench from the rocky caves" ;
 }
 
 zones {
@@ -3180,11 +3194,11 @@ on_command {
    }
    : if (is_carried "buns") {
       : match "x buns" {
-         : print {( point_grow_dupes ? "Livelier and brighter than when you first got it." : "Flaky and dry. But weird, when something crumbles from it, it regenerates." )} ;
+         : print {( point_grow_dupes ? "Still very raw and doughy, but livelier and brighter than when you first got them." : "They're rather raw and doughy. When a small bit breaks off from it, it regenerates." )} ;
          : done ;
       }
       : match "_ buns" {
-         : print "All you can do is examine the buns. Well, with the parser and with buns as a noun." ;
+         : print "All you can do, now you decided to TAKE the buns, is examine them. Well, you'll be able to do something else with them, but indirectly, with another phrase." ;
          : done ;
       }
       : if ((!point_creaky_stove || !is_at "streaky_cove")) {
@@ -3273,6 +3287,11 @@ on_command {
    }
 
    # the 4 below here are point scoring events that need general rejects
+   : if (is_carried "chain") {
+      : match "drop chain" {
+         : print {( "You fling the chain on the ground, but it " + (is_at "yankin_canyon" ? "hurls you away from the hole and " : "") + "snakes back onto your wrist. You need stronger measures. Help from someone, or something, else." )} ;
+      }
+   }
 
    : match "drop _" {
       : set_boolean var="already_flag" {( point_chop_drain )} ;
