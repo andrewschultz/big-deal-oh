@@ -274,6 +274,9 @@ integers {
    score : integer "0" ;
    max_score : integer "28" ;
 
+   tutorial_score : integer "0" ;
+   max_tutorial_score : integer "17" ;
+
    bonus_score : integer "0" scope="survivor" ;
    max_bonus_score : integer "4" ;
 
@@ -678,7 +681,7 @@ booleans {
    tutorial_12_down : boolean "false" ;
    tutorial_13_smell : boolean "false" ;
    tutorial_14_steel_wrench : boolean "false" ;
-   tutorial_15_northeast : boolean "false" ;
+   tutorial_15_up : boolean "false" ;
    tutorial_16_south_twice : boolean "false" ;
    tutorial_17_leery_owner_2 : boolean "false" ;
    tutorial_done : boolean "false" ;
@@ -1146,17 +1149,21 @@ locations {
          }
       }
       on_describe {
-         : if (point_steel_wrench) {
-            : set_true "tutorial_15_northeast" ;
-         } : else_if (think_leery_owner) {
-            : set_true "tutorial_9_north" ;
-         }
          : if (flaming_towers_present) {
             : print "Those flaming towers are still flaming, exposing passage {dir_n}, {dir_e} and {dir_w} but not letting you by." ;
          } : else_if (point_tight_rules && !placed_flaming_towers) {
             : print {( (placed_flaming_towers ? "Flaming towers still block your way" : "Yeah, that was worth the eerie loner making a scene over. Flaming towers have now popped up") + " to the {dir_n}, {dir_e} and {dir_w}!" )} ;
             : set_true "placed_flaming_towers" ;
             : update_graphic ;
+         }
+      }
+      on_pre_describe {
+         : if (point_steel_wrench && !tutorial_15_up) {
+            : set_true "tutorial_15_up" ;
+            : increment "tutorial_score" ;
+         } : else_if (think_leery_owner && !tutorial_9_north) {
+            : set_true "tutorial_9_north" ;
+            : increment "tutorial_score" ;
          }
       }
    }
@@ -3383,8 +3390,8 @@ on_tick {
          : print "{note_cue_tutorial}You need to use one of your senses. There are five." ;
       } : else_if (!tutorial_14_steel_wrench) {
          : print "{note_cue_tutorial}You need to figure out what the real stench might be hiding." ;
-      } : else_if (!tutorial_15_northeast) {
-         : print "{note_cue_tutorial}Now you've got the steel wrench, you should retreat NORTHEAST." ;
+      } : else_if (!tutorial_15_up) {
+         : print "{note_cue_tutorial}You're done in the caves. Now you've got the steel wrench, you should retreat {dir_u}." ;
       } : else_if (!tutorial_16_south_twice) {
          : print "{note_cue_tutorial}Now you've got the steel wrench, you should continue {dir_s}." ;
       } : else_if (!tutorial_17_leery_owner_2) {
