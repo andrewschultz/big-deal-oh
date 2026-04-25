@@ -830,8 +830,12 @@ locations {
                : done ;
             }
          }
-         : if (point_sail_tide && !point_best_notes) {
+         : if (point_sail_tide) {
             : match "best notes" {
+               : if (point_best_notes) {
+                  : print {( "But the nest boats are gone. And the notes they gave " + (point_written_specs ? "were" : "are") + " already the best!" )} ;
+                  : done ;
+               }
                : collection_modify { collection = "tried_combo_core" index -> (23) content -> ("true") } ;
                : print "Yes! That is what you need. The ailers are happy with this and leave you with the notes. They go off to complain elsewhere, about more first-worldly problems." ;
                : set_true "point_best_notes" ;
