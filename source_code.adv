@@ -33,7 +33,7 @@ strings {
    l_tester_ag : string "<Allyson Gray<#0f0>>[https://zophobas-morio.itch.io/]" ;
 
    # basics
-   my_score : string "{score}/{max_score}" ;
+   my_score : dynamic_string {( tutorial_0_in_tutorial ? "Tutorial progress: {tutorial_score}/{max_tutorial_score}" : "{score}{plus_in_header}/{max_score}" )} ;
    custom_unknown_verb_error : dynamic_string {( "Nothing special happens. You can use {vm_verbs} for a general overview of standard verbs." )} ;
 
    only_up : string "You can only go back up" ;
@@ -259,6 +259,7 @@ strings {
    noguess_c_1 : dynamic_string {( unneeded_half ? "<(unneeded)<#888>>" : "<(unknown)<#888>>" )} ;
    think_here_also : dynamic_string {( think_text_yet ? "Also, here" : "Here" )} ;
    number_as_word : dynamic_string {( collection_get { collection -> ("num_to_word") index -> ( commands_figured ) } )} ;
+   plus_in_header : dynamic_string {( commands_figured > 0 ? "+{commands_figured}" : "" )} ;
 
    # item(s)
    i_widget : string "<wild digit-dialed widget<#c8c>>" ;
@@ -2265,7 +2266,8 @@ subroutines {
       }
 
       : match "score _" {
-         : print "You've currently scored {score} of {max_score} total core points. You have scored {bonus_score} of {max_bonus_score} bonus points." ;
+         : print {( "You've currently scored {score} of {max_score} total core points." + (think_available ? "You have also figured {number_as_word} point-scoring command" + ( commands_figured > 1 ? "s" : "" ) + " before you had the necessary support. Type {vd_think} for details." : "" ) )};
+         : print "You have scored {bonus_score} of {max_bonus_score} bonus points." ;
          : gosub "note_score_upper_right" ;
       }
 
