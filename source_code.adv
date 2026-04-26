@@ -3390,6 +3390,12 @@ on_tick {
       : set_true "showed_first_note" ;
       : done ;
    }
+   : match "use _" {
+      : cycle key = "use_notes" predictable_order = "true" skip_interval = "0" max_loops = "1" {
+         : print "While there's stuff you need to use, the USE verb isn't specific enough, at least for {this_game}. Some other parser games allow and encourage it for weird items, so the player doesn't have to fight the parser, but here, the right command is needed for an item's use. Also, if you're seeing this message, it should mean whatever you tried to use isn't critical, as this game's parser often focuses on nouns." ;
+         : print "You tried to {v_use} something that likely didn't need to be used, period." ;
+      }
+   }
    : match "i _" {
       : if (!tutorial_3_x_me && carried() == 0) {
          : print "You aren't holding anything, but you haven't really searched yourself with {xme}." ;
