@@ -104,6 +104,7 @@ strings {
    vd_inv : string "<INV<#f80>>" ;
    vd_i_long : string "<INVENTORY<#f80>>" ;
    vd_i_three : string "{vd_i}/{vd_inv}/{vd_i_long}" ;
+   vd_map : string "{vd_i}/{vd_inv}/{vd_i_long}" ;
    vd_score : string "<SCORE<#f80>>" ;
    vd_think : string "<THINK<#f80>>" ;
 
@@ -650,6 +651,7 @@ booleans {
    hints_clarified_yet : boolean "false" ;
    demo_or_meadow_tried : boolean "false" ;
    widget_noun_note : boolean "false" ;
+   map_first_warn : boolean "false" ;
 
    # game state (critical)
    listen_demo_meadow : boolean "false" ;
@@ -1843,6 +1845,7 @@ locations {
                : print "The {puz_point_eerie_loner} grumbles \"Can't disturb the owner unless you have something for them.\"" ;
                : if (tutorial_0_in_tutorial && !tutorial_8_leery_owner_1) {
                   : print "{one_time}currently tutorial progress is listed in the upper right, but when you get the right command before you're ready, +1 or +2 will appear in the upper right after your score, to remind you you've gotten close somewhere. Also, {vd_think} will save such commands. You can try it now, but it's not critical for the tutorial." ;
+               }
                : if (!tutorial_8_leery_owner_1) {
                   : set_true "tutorial_8_leery_owner_1" ;
                   : increment "tutorial_score" ;
@@ -2310,22 +2313,16 @@ subroutines {
          }
       }
 
+      : match "_ map" {
+         : if (!map_first_warn) {
+            : set_true "map_first_warn" ;
+            : print "{one_time}you can't do anything with the map other than look at it, so just {vd_map} is adequate." ;
+         }
+         : gosub "map_stub" ;
+      }
+
       : match "map _" {
-         : if (!bonus_point_map_all) {
-            : print "You haven't gained access to the internal game map command yet. It's not critical to win, though." ;
-            : done ;
-         }
-         : set_true "drawing_map" ;
-         : clear_screen ;
-         : update_graphic "m_0_blank" ;
-         : press_any_key ;
-         : set_false "drawing_map" ;
-         : if (!map_note) {
-            : print "{one_time}there are no one-way paths. If you have activated the option to block completed rooms, they will be in <GREY<#888>>." ;
-            : set_true "map_note" ;
-         }
-         : update_graphic ;
-         : done ;
+         : gosub "map_stub" ;
       }
 
       : match "score _" {
