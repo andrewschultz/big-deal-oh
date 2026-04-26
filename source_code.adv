@@ -177,10 +177,10 @@ strings {
    loc_streaky_cove: dynamic_string {( "You are in a {puz_point_streaky_cove}. " + (point_key_trove ? "You discovered a key trove out back." : point_bake_tons ? "You discovered a {puz_point_tree_cove} once you blew up the stove." : point_creaky_stove ? "You discovered a creaky stove in the greyness of the right wall." : "The greyness of the right wall is a stark contrast to the colorful left side. What could be there?") + "\nThe only exit is north." )} ;
    header_streaky_cove: string "<Streaky Cove<#ff0>>" ;
 
-   loc_taller_altar : dynamic_string {( "Here in the taller altar you see " + ( point_cool_plan ? "nothing much any more. You're probably done here" : !point_penny_mounds ? "{puz_point_many_pounds}, both in the animal cage and huge cartoon trap sense. Surely they can be repurposed" : "The bride's {puz_point_pool_clan}. They're waiting for you to ask for the right favor before you move on" ) + ".\nthe only exit is south." )} ;
+   loc_taller_altar : dynamic_string {( "Here in the taller altar you see " + ( point_cool_plan ? "nothing much any more. You're probably done here" : !point_penny_mounds ? "{puz_point_many_pounds}, both in the animal cage and huge cartoon trap sense. Surely they can be repurposed" : "The bride's {puz_point_pool_clan}. They're waiting for you to ask for the right favor before you move on" ) + ".\nThe only exit is south." )} ;
    header_taller_altar : string "<Taller Altar<#ff0>>" ;
 
-   loc_tenser_center : dynamic_string {( (point_minister_south ? "I guess this could be the intenser incenter if you want, now that you must be close to your goal, as long as if you don't mind thumbing your nose at a geometry textbook. You can exit in all four directions with the sinister mouth gone, though you probably don't need to go back south." : "You are in the tenser center. A {puz_point_sinister_mouth} blocks passage further! You can only go south right now." ) )} ;
+   loc_tenser_center : dynamic_string {( (point_minister_south ? "I guess this could be the intenser incenter if you want, now that you must be close to your goal, as long as you don't mind thumbing your nose at a geometry textbook. You can exit in all four directions with the sinister mouth gone, though you probably don't need to go back south." : "You are in the tenser center. A {puz_point_sinister_mouth} blocks passage further! You can only go south right now." ) )} ;
    header_tenser_center : string "<Tenser Center<#ff0>>" ;
 
    loc_tool_stall : dynamic_string {( "You're in a tool stall. The exit is back {dir_n}. Nearby you see " + (point_leery_owner ? "the owner, no longer leery" : "an {puz_point_eerie_loner}") + (point_tight_rules || !point_leery_owner ? "" : ". That sign indicates the {puz_point_right_tools} are available, but you haven't figured how to ask for them yet") + "." + (point_tight_rules ? "\nThe owner also showed you a passage to the south." : "") )} ;
@@ -1008,7 +1008,7 @@ locations {
                : set_true "think_grow_dupes" ;
                : done ;
             }
-            : print "The buns you took manage to crumble off just enough. The {puz_point_dough_groups_l}, renewed, grow and -- somehow, when you're not looking -- reproduce. They thank you, assuring you the buns will now have self-regenerative properties of their own." ;
+            : print "The buns you took manage to crumble off just enough. The {puz_point_dough_groups_l}, renewed, grow and -- somehow, when you're not looking -- reproduce. Mitosis! (Not meiosis, right?) They thank you and take a look at the buns. \"The regenerative properties are almost used up. But we can infuse them with one last boost, when you need them.\" You're not sure how, but given they seem happy with your acts, you trust them." ;
             : set_true "point_grow_dupes" ;
             : set_false "think_grow_dupes" ;
             : gosub "add_point" ;
@@ -1062,7 +1062,7 @@ locations {
             }
             : match "tool stall" {
                : if (tutorial_0_in_tutorial && !tutorial_5_think) {
-                  : print "That's how to score the first point, but we're in the tutorial right now, so there are other things to do." ;
+                  : print "That's how to score the first point, but we're in the tutorial right now, where we'll visit some help commands first." ;
                   : done ;
                }
                : collection_modify { collection = "tried_combo_core" index -> (2) content -> ("true") } ;
@@ -1656,7 +1656,8 @@ locations {
          }
          : if (point_creaky_stove && !point_bake_tons) {
             : match "_ stove" {
-               : print "The stove has all sorts of settings to cook stuff. You've been around microwave ovens a lot, but you haven't totally lost touch with old-school cooking. You muse on what a stove could cook, and what sort of cooking you'd need to do." ;
+               : print "The stove has all sorts of settings to cook stuff. You've been around microwave ovens a lot, but you haven't totally lost touch with old-school cooking. You muse on *what* a stove could cook, and what *sort* of cooking you'd need to do." ;
+               : print "The stove also looks, well, old. A stress-test might destroy it. Maybe there's something inside or under. This is a cove, after all." ;
                : done ;
             }
          }
@@ -1813,7 +1814,7 @@ locations {
                : print "They ask what you're looking for. You say you're not sure. You have one you're clueless about, the trowel ..." ;
                : print "The leery owner whistles. \"I can't give any big guidelines, but I'll tell you what I know about artifacts like that." ;
                : print "It takes a while. Once you're done, the eerie loner pops back in to complain about how terrible things are outside." ;
-               : print "\"Boy,\" says the owner. \"Usually the loner just generally grouses quietly. But if they actually spoke up, things must be bad. Better go check." ;
+               : print "\"Boy,\" says the owner. \"Usually the loner just grouses quietly about the state of the world these days. But if they actually spoke up, things must be bad. Better go check." ;
                : print "Or, if you want first, I can show you a path back somewhere that may ... help you a bit. Or not. It's off to the south.\"" ;
                : set_true "point_tight_rules" ;
                : gosub "add_point" ;
@@ -1841,7 +1842,7 @@ locations {
             : if (!point_steel_wrench) {
                : print "The {puz_point_eerie_loner} grumbles \"Can't disturb the owner unless you have something for them.\"" ;
                : if (tutorial_0_in_tutorial && !tutorial_8_leery_owner_1) {
-                  : print "{one_time}currently tutorial progress is listed in the upper right, but when you get the right command before you're ready, +1 or +2 will appear in the upper right after your score, to remind you you've gotten close somewhere. Also, {vm_think} will save such commands. You can try it now, but it's not critical for the tutorial." ;
+                  : print "{one_time}currently tutorial progress is listed in the upper right, but when you get the right command before you're ready, +1 or +2 will appear in the upper right after your score, to remind you you've gotten close somewhere. Also, {vd_think} will save such commands. You can try it now, but it's not critical for the tutorial." ;
                : if (!tutorial_8_leery_owner_1) {
                   : set_true "tutorial_8_leery_owner_1" ;
                   : increment "tutorial_score" ;
@@ -2276,7 +2277,7 @@ subroutines {
       : if (!have_won) {
          : print "{custom_unknown_verb_error}" ;
          : if (!bonus_obfuscated_note_yet) {
-            : print "{one_time}well, not exactly. You've discovered half of a bonus point. But the first time through, {qt} won't be hinting them, so as not to distract you from the main quest. If you continue after the win-and-restart, you'll get a nudge, since it's assumed you know the main way through." ;
+            : print "{one_time}well, not exactly. You've discovered half of the command for a bonus point. But the first time through, {qt} won't be hinting them, so as not to distract you from the main quest. If you continue after the win-and-restart, you'll get a nudge, since it's assumed you know the main way through." ;
             : set_true "bonus_obfuscated_note_yet" ;
          }
          : done ;
@@ -3183,6 +3184,7 @@ on_command {
          : done ;
       }
    }
+
    : if (is_carried "trove_key") {
       : match "unlock _;open _" {
          : print {( "You don't trust the rusty key to open or unlock anything." + (is_at "outer_tower" ? " But you wouldn't be surprised if a stronger copy opened the tower here." : "") )} ;
@@ -3206,8 +3208,9 @@ on_command {
             : print "No porch here. Maybe somewhere else." ;
          }
          : done ;
+      }
    }
-}
+
    : if (is_carried "chain") {
       : match "chop drain" {
          : if (point_chop_drain) {
@@ -3415,7 +3418,7 @@ on_tick {
       } : else_if (!tutorial_6_tool_stall) {
          : cycle key = "tutorial_6" predictable_order = "true" skip_interval = "0" max_loops = "1" {
             : print "{note_cue_tutorial}Now you've taken inventory, you should figure what to do with the {puz_point_stool_tall}." ;
-            : print "{note_cue_tutorial}What to do with the stall is a lateral thinking puzzle, so use {vd_hint} if you want to see the solution." ;
+            : print "{note_cue_tutorial}What to do with the stool is a lateral thinking puzzle, so use {vd_hint} if you want to see the solution." ;
             : print "{note_cue_tutorial}Things in your inventory should give you a clue, as should the starting location name." ;
             : print "{note_cue_tutorial}The phrase you need is very similar to {puz_point_stool_tall}." ;
          }
