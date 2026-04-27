@@ -31,6 +31,7 @@ strings {
 
    l_tester_gg : string "<Gianluca Girelli<#0f0>>[https://g0blin.itch.io/]" ;
    l_tester_ag : string "<Allyson Gray<#0f0>>[https://zophobas-morio.itch.io/]" ;
+   l_tester_wc : string "<Wade Clarke<#0f0>>[https://wade-clarke.itch.io/]" ;
 
    # basics
    my_score : dynamic_string {( tutorial_0_in_tutorial ? "Tutorial progress: {tutorial_score}/{max_tutorial_score}" : "{score}{plus_in_header}/{max_score}" )} ;
@@ -2411,6 +2412,7 @@ subroutines {
          }
          : if (think_leery_owner) {
             : print "You called for the {tht_leery_owner} in the tool stall but didn't have anything to trade." ;
+            : set_true "skip_tutorial_cue" ;
          }
          : if (think_bake_tons) {
             : print "You tried to {tht_bake_tons} {here_streaky_cove} but the buns weren't ready to grow yet." ;
@@ -2465,10 +2467,11 @@ subroutines {
       }
 
       : match "credits _;credit _;creds _;cred _" {
-         : print "Thanks to {l_tester_gg} and {l_tester_ag} for testing." ;
+         : print "All thanks are in alphabetical order." ;
+         : print "Thanks to {l_tester_wc}, {l_tester_gg}, and {l_tester_ag} for testing. Linking to their itch.io profiles is the very least I can do!" ;
          : print "GENERAL THANKS:" ;
          : print "Chris Ainsley for Adventuron and administering TALP, Garry Francis for continuing to administer TALP, and all the TALP and Adventuron authors who came before me who set a high standard I've hopefully come close to." ;
-         : print "The Adventuron discord and Intfiction.org board, which overlap with the people listed above." ;
+         : print "The Adventuron discord (specific technical questions) and Intfiction.org board (general support,) which overlap with the people listed above." ;
          : done ;
       }
 
