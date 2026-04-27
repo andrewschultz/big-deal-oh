@@ -2724,7 +2724,7 @@ subroutines {
             : return ;
          }
          : if (has_visited "foldin_gate" && !point_help_card) {
-            : cycle key = "hint_26_help_card" predictable_order = "true" skip_interval = "0" {
+            : cycle key = "hint_27_help_card" predictable_order = "true" skip_interval = "0" {
                : print "The {puz_point_kelp_hard} has just gotten washed up." ;
                : print "It may get stuff lost in it." ;
                : print "A <HELP CARD<#f0f>>." ;
@@ -2800,7 +2800,7 @@ subroutines {
          }
       } : else_if (is_at "foldin_gate") {
          : if (!point_great_book) {
-            : cycle key = "hint_27_great_book" predictable_order = "true" skip_interval = "0" {
+            : cycle key = "hint_28_great_book" predictable_order = "true" skip_interval = "0" {
                : print "The {puz_point_gate_brook} holds wisdom and secrets and all that sort of thing." ;
                : print "You have an item that can help you reserve such a book." ;
                : print "The cold hard hold card." ;
@@ -2833,7 +2833,7 @@ subroutines {
          }
       } : else_if (is_at "jeerin_region") {
          : if (!point_written_specs) {
-            : cycle key = "hint_19_written_specs" predictable_order = "true" skip_interval = "0" {
+            : cycle key = "hint_24_written_specs" predictable_order = "true" skip_interval = "0" {
                : print "The best notes help here." ;
                : print "The {puz_point_spittin_wrecks} know a lot, but giving general ordinary help is beneath them." ;
                : print "Ask for <WRITTEN SPECS<#f0f>>. You'll use the best notes automatically." ;
@@ -2899,6 +2899,14 @@ subroutines {
             }
             : return ;
          }
+      } : else_if (is_at "sappage_passage") {
+         : cycle key = "hint_26_fumbling_wrist" predictable_order = "true" skip_interval = "0" {
+            : print "The {puz_point_rumbling_fist} is a tough customer!" ;
+            : print "The {puz_point_rumbling_fist} seems quite stable and sturdy, but is it that way on its own? Or with something?" ;
+            : print "In any case, linking the {puz_point_rumbling_fist} to something less solid might mess it up." ;
+            : print "A <FUMBLING WRIST<#f0f>>." ;
+         }
+         : return ;
       } : else_if (is_at "streaky_cove") {
          : if (!point_creaky_stove) {
             : cycle key = "hint_09_creaky_stove" predictable_order = "true" skip_interval = "0" {
@@ -3845,6 +3853,7 @@ assets {
       r_oopster_stupor : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoAgMAAABslMwaAAAACVBMVEUAgAD//wAA//9A3hKlAAAAXklEQVR4XuzSMQqAUAyDYS8Zh7c7mAM5ZFewp1Sv4D8UwULXj4R2kuTU+3mAxRAY1Q1o9FdovgL/g41WOGmFgglsBOxzgoCsKQgczYBtBtz7eeAHrjEMFzAKRsEoAABmbhN3wIhrGAAAAABJRU5ErkJggg==" ;
       r_outer_tower : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAD1BMVEUAAAAAgACAgIBUcAP////5UZ6nAAABHUlEQVR4XuyT0Q2DQAxDc+kCYQOUFViA/acq6Y8viPZ0gaNCivmzFLD8DE1BMWv9lCmocADyuj+AL4Af3EBuIDeQG8gN5AZyA6Y/bUDIVPG8rQHBjUMAe9gGkNY5R/GubABv7UDQwCLqNbfqDiGAFwiA0/MI4LUDAOIABPCOAqDa0QjMENWZqA5g7oUIym8EYgHWtQogjf/oK4JlUwAB7xrQ0o/g9fn2AvUg4F0DWjoQvNspgxSAQRgIWv2I5AXC/v9vPW5wWQJCe2nnqIBDJjhAGnaWV04HMoF86YcHocGwqgSZOgGIETDwTUmQ6XHZ0I5aQNfD/UOzxbShzwXsehgBCX0uUHvEnmDy5ecEyNIEIO8JkM8J9BAGjvgFbjFW0kLcMS4yAAAAAElFTkSuQmCC" ;
       r_rocky_caves : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAElBMVEUAAACmyvCAQACAgID/AAD//wDMf+NVAAACeElEQVR4Xr2XUY7bMAxEB5gTeIH8L7oXGGTO0AOkWN//KgVcxARNSUSz7Q4Cf43JJ5qiItgG/Tdq3BpGw6FBJhyPfwrgkXCqAOR3gK8CYJW/EiBXTRTYLIwOCQB7PmFKgEytw00XisBSWRjbFkDWGTBSI/Ng8WFVFzZ2Fl8oEhru8AFaDAvqwpzU54fFAGgEOqW45D+e9FCYAhBhavNPe1wnwCTIs59RxRagl7AEiGYSqvxFgAhL5QVVBOL/AFwrOuUA+k9gpjn4QmdbjNUova0pAMsgAqJiDQGyxJgBpgX2FUjQGFi7AlSzeNYT7AGMABCLdXkmTLqK4UBBrQBi+DBeVZW4AEAAKB9X49BKMxmhrgSaeIUWIEemsWhWTrf2wJxidAAeABhV17wLK6L1YYNmAtAEALMKUOEzkGPaGEWlo/ZCAKBMQ99//JG1AIiQtAjbWgHQWcA1bkD7ftu2x3Z7C1v5SMq7G1wCzM/CQnk879tj3x+PN1vr7YrnrJIHAE2zWkD9P3o879tt3/ftrZ0XAC2mI6PObHR/Z0J8Ajz2z8/98evkSwDOBIrUHNCmqd8fWj4o7rd9/7nvRwWYjFbZ5LItpvE6zi8KcMMggLkC2ZXcZaqINeJ1RPaHJ2sPhMWDuAHgCuCLkT0BHbsgAyziPi0l2LXlLU8VADEHJgAuAIidN/CdqWmzuyDQMQk9nIQ5hOqFceSjBYsWvVKE/7A9BqCT5MQU9nonBQgEI18D4Gik9qIt+/RycU+2wArQjLVWOH7yGiCOkQkA/apEgQlgGUwIgDSIXhdgQJGgWYzeM8DX1l+v973eWQDo79QHeAGgvxfAB8BvzNXKwBcICd8AAAAASUVORK5CYII=" ;
+      r_sappage_passage : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAFVBMVEUAAADAwMCAQACAgID/AAAAAP/////6R1vLAAACdElEQVR4Xq3WQYrjMBAF0K+Y0drOCeJaaB3QFcIcYdbCNHX/I0xcSqDTperfbfLB2mThz1NKFqpLWsJM7meeqVqi1/gC1yXOfKDAXC3Re0AAPEFa3koAAuAJ0vJWAhAAT5Ai6mMEIACOIBQADhHAAxCCFAAA6QgBHAAjSBHAMQI4AJYUAOR2iAAO4FgAVcBzYU7fE4AD8BiAqhH4At8T4A0AMwDoPbCkQYGYAAwgcQAAO8BOYBkIxAQgADN+CGAxCKTfDAIIwDQRAuNvWbUZwb4kLxATgADU6Ur3P9vLbRe6gC8QE4AA1PDwxx7zN/0G9BX41VkAAlCnLhMX0B6T0D4FPjEBCEAlN4BngYYMaIMTOK/rsq4xAQhAncyGCgDWQd0UiMgi6xoSgADUyXB4gazteRqkzwCyyUVO611iTAACYAWufAvQ/4ZfBc7nrVxKEYgEBCAA1ZZEBWwGH/kMcC5S7pF7xgQgAL3AlRWwNFhedmARkVK2IpciQwIQgNrXxLZAA4H1VIrKtguUIQEIgAkYARVoyOqmQLRHtq2sIwIQABMwAl4gq7opOBV9ZMvr6CwAATCBeBCoQNZnNllkQAACYAJGQATGUzDvvfqziYwIQABMwAiiAsjhFFiBP/+yPWoFHAEIgAlYUvg5/pFAMwFPgAjAFYg/ijmegvl5TGrO7Tz6IoAA1IlemfGMn4JeoGkvMLwXgACYABuER6IpAKzB+GoEAmAClOA1y2gMoQbjCEAATCAgCCjSC4/qx+12+6vaHK8FBMAEYgKerLc92gE8AQiACcQEPOgCL5d1VmAKChwjwGM0AmEQABMgBCTIqkgR8X8d0HYfbildeAAAAABJRU5ErkJggg==" ;
       r_streaky_cove : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoAgMAAABslMwaAAAACVBMVEXAwMCAQAD//wDm4Lc6AAABv0lEQVR4XqXVMQocMRQD0FzyfbB7Bzz30RF+YHzKNFsFdjIk6vUqgX7Y1QDle358i2F+AeZboAKoeQPguvsdsF0NVNcNFeAC6xmwmwsoZtc5B0FF/g78DHVjKVwHzMCtaawH4ALYAKjmiuki2N+BaoAJgG1xdZ2jYH4HDkAKDNAWBpXCkK9AAJNAw2Sh0IVtfQVQwSKQgZsFYRfaeAIEIShFkQULovIM2FRY2ARlEANisp+AeayJjWZhGMRE0fQDcN2yBgYf5wMolBmVhyE1PoBVXB+gEIamfAca1gYVMcMwTDSj8jgkgbWgblrdDNuwLBbsd8DEVoNtGTYsWN+BCiQAU02WZZnQkAeARQJQKSzRhArqGdgEgF1oEa4A5REYKgCMiVQKAPMJyAcwz7mhqJQCwHgAxCC4qUZRhvEWWCZNBTMUA/s98DMWExwqYME855x4BnRbbKgcAkKdhpNHQGVZNEx1BDBvwNWeAZYKbJz80ed6BEbTNlio+8++up+AvYkGG1U3bACY5wHoSSrgBrOp5t29VyrlAhXgyjzeAhfhV2ACXLfXQBOVhg3AewBRNvhnYJv/B7TKfwHBvwG/ASExTpKkdFpMAAAAAElFTkSuQmCC" ;
       r_tenser_center : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoAQMAAAArNLbKAAAABlBMVEWDZTnAwMAggxMRAAAATUlEQVQ4y2NgQAHs/0HgAANOQFABP1hBAwUK5MEKGChQYA+S/0eJgnqQgj+UKAC78QcFChjBCj5QoIAZrOABaQr+EwCjCkaWgtHSAQwADBuDAyaxU7kAAAAASUVORK5CYII=" ;
       r_tool_stall : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAGFBMVEUAAACAAADAwMCAQADggECAgID/AAD//wA/25nTAAAArUlEQVR4XuzQwQkCQQxGYcEKrGGxgTyCBcx28JMKBqYBgW1fmasXRZ1c8ir4eCfgzHftbW/AGB0A3figXwDaM4JOF/LQcV8LmAc8NEYXktYD2Da7hgjckcgC+ASQATDweQCBcNYfAGMeyASQDfBAKANgWPKB1wpQgAIUoACXt/sToAAFeIw0BzBQH5DkAAMl6oOh5QCmke4AA6WR7gCmAXbAqAMMlEa6A5hGugMAAJk1y3RMVc4AAAAASUVORK5CYII=" ;
