@@ -178,6 +178,7 @@ strings {
 
    loc_sappage_passage : string "A {puz_point_rumbling_fist} has you pinned down. It's rumbling slowly towards you! You're so paralyzed with fear, you can't even focus on whether \"sappage\" is a real word or not, or whether it deserves to be. How to get out of this fix?" ;
    header_sappage_passage : string "<Sappage Passage<#ff0>>" ;
+
    loc_streaky_cove: dynamic_string {( "You are in a {puz_point_streaky_cove}. " + (point_key_trove ? "You discovered a key trove out back." : point_bake_tons ? "You discovered a {puz_point_tree_cove} once you blew up the stove." : point_creaky_stove ? "You discovered a creaky stove in the greyness of the right wall." : "The greyness of the right wall is a stark contrast to the colorful left side. What could be there?") + "\nThe only exit is north." )} ;
    header_streaky_cove: string "<Streaky Cove<#ff0>>" ;
 
@@ -2562,6 +2563,30 @@ subroutines {
       : match "wall eh" {
          : print {( "Blocking done areas is " + (opt_block_done ? "already" : "now" ) + " on." )} ;
          : set_true "opt_block_done" ;
+         : done ;
+      }
+   }
+
+   map_stub : subroutine {
+      : match "map _" {
+         : if (!bonus_point_map_all) {
+            : print "You haven't gained access to the internal game map command yet. It's not critical to win, though." ;
+            : done ;
+         }
+         : if (is_at "sappage_passage") {
+            : print "You're in the maze now, so you don't need a game map." ;
+            : done ;
+         }
+         : set_true "drawing_map" ;
+         : clear_screen ;
+         : update_graphic "m_0_blank" ;
+         : press_any_key ;
+         : set_false "drawing_map" ;
+         : if (!map_note) {
+            : print "{one_time}there are no one-way paths. If you have activated the option to block completed rooms, they will be in <GREY<#888>>." ;
+            : set_true "map_note" ;
+         }
+         : redescribe ;
          : done ;
       }
    }
