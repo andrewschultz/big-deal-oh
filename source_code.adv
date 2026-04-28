@@ -113,6 +113,7 @@ strings {
    vm_about : string "<ABOUT<#f80>>" ;
    vm_credits : string "<CREDITS<#f80>>" ;
    vm_diag : string "<DIAG<#f80>>" ;
+   vm_graphics : string "<GR<#f80>>" ;
    vm_history : string "<HISTORY<#f80>>" ;
    vm_meta : string "<META<#f80>>" ;
    vm_options : string "<OPTIONS<#f80>>" ;
@@ -665,6 +666,8 @@ booleans {
    demo_or_meadow_tried : boolean "false" ;
    widget_noun_note : boolean "false" ;
    map_first_warn : boolean "false" ;
+   graphics_unwon_warn : boolean "false" ;
+   graphics_note : boolean "false" scope="survivor" ;
 
    # game state (critical)
    listen_demo_meadow : boolean "false" ;
@@ -2503,6 +2506,9 @@ subroutines {
          : print "{vm_about} gives general information." ;
          : print "{vm_credits} credits people and entities who helped make {this_game} or fix various flaws." ;
          : print "{vm_diag} lists diagnostic verbs." ;
+         : if (have_won || graphics_unwon_warn) {
+            : print "{vm_gr} gives graphical notes for the current location." ;
+         }
          : print "{vm_history} lists version history and major changes that necessitated each version." ;
          : print "{vm_meta}, this command, lists meta-commands, or commands that list other commands." ;
          : print "{vm_options} lists options." ;
@@ -2564,6 +2570,54 @@ subroutines {
          : print {( "Blocking done areas is " + (opt_block_done ? "already" : "now" ) + " on." )} ;
          : set_true "opt_block_done" ;
          : done ;
+      }
+   }
+
+   graphic_stuff : subroutine {
+      : set_stat target="current_location" stat="stat_graphic_notes" value="1" ;
+      : if (current_location() == "ailer_lair") {
+            : print "My idea for the babblers and blabbers came from the Life of Brian, with the Judean People's Front and People's Front of Judea. Other than that, I realized it would get complicated once I had put three puzzles into it, while not putting any into the Jeerin' Region." ;
+      } : else_if (current_location() == "app_mall") {
+         : print "Since this is a very retro-friendly competition and the theme is archaeology, I thought I'd put in some artifacts I enjoyed. In this case, an Apple IIj, Commodore 512 (couldn't fit the number in,) and TRS999." ;
+      } : else_if (current_location() == "backin_cabin") {
+         : print "My minimal Google Image research to draw things in Adventuron can sometimes be quite fun. Here I looked at all sorts of log cabins, and I looked up different RGBs for different shades of brown. I've done cabins and hills before but never cabins in hills. I slowly but surely try new things in each Adventuron game." ;
+      } : else_if (current_location() == "cache_shack") {
+         : print "I originally intended this to be the shack you now see in the chattin 'em plain. I tried to simulate shelves but there was a worry they might give the optical illusion of bulging out instead of going away, which one tester pointed out. I can't say I have a full solution to that." ;
+      } : else_if (current_location() == "chattin_em_plain") {
+         : print "This was originally meant for the newbies' boonies, but for whatever reason, I was watching the introduction of the movie Hoosiers for one more idea to stuff in them. It reminded me of car trips from towns near West Lafayette, Indiana, where I was born. There were many details I wanted to put into them. But I didn't want to waste the original picture, so I put it here. The result is, this isn't as much of a flat plain as is perfectly optimal, but I hope it's more interesting." ;
+      } : else_if (current_location() == "collation_location") {
+         : print "The smiling and frowning gingerbreads weren't hard to do, and the way overlays work in Adventuron, you can just define it in several places. So this was fun. Though I did flip the smiling/frowning gingerbreads in my first build to testers. Oops." ;
+      } : else_if (current_location() == "demo_meadow") {
+         : print "Why yes I cut and pasted the butterflies and filled different colors in each of them and flipped some horizontally. I had to make sure they had space for both the stool and the towers. A lot of my Adventuron graphics are like that. I make heavy use of rotations and mirrorings. Often I need to use a hex editor to change the palette, as I just forget MSPaint has a palette editor! Maybe I could/should move up to GIMP for palette switches, but with MSPaint's sparer interface, I enjoy the lack of distractions. And, why yes, I do indeed use the Windows 95/XP MSPaint." ;
+      } : else_if (current_location() == "foldin_gate") {
+         : print "It was tough to make the gate folding! I figured out the final room early on, and I also wanted to make an angled brick wall, which wasn't bad with Python's PIL/pillow. I've used it before. But sometimes it doesn't work well with lower resolution images, and you have to blow it up before shrinking it." ;
+      } : else_if (current_location() == "gnawing_awning") {
+         : print "My first few drawings were of a hexagonal gazebo, which was cute, and I may use it later, but it didn't work logically." ;
+      } : else_if (current_location() == "jeerin_region") {
+         : print "I don't know if I've done an east/west to north/south path before. I've done crossroads. But I like the slightly different perspective here. The shirts were fun to make, too. I wanted to do something with several different shirts making a message, but I couldn't decide what. \"U R AN\" is left ambiguous on purpose, like someone who says \"You know what your problem is?\" and you don't want to hear it but you say \"What?\" and they try for ominous silence and eye-rolling. Also, the IQ we can't see is 170." ;
+      } : else_if (current_location() == "moldin_dolmen") {
+         : print "This was a bit of a struggle as dolmens generally have height. I wanted a ring of stones but that seemed to make the rest of the area bare. I also originally had the fax coming out from a wall, but when I moved to a wide-open space, I had to change that. The paper looks white but it's actually xf0f0f0 because I needed most of the overlay graphic to be white for transparency. Well, I could've changed the transparency color, but that'd be more difficult." ;
+      } : else_if (current_location() == "newbies_boonies") {
+         : print "The chattin 'em plain has this place's original graphic. I pulled three things from the movie Hoosiers: the stoplights on a wire, the grain silos, and the old-timey gas station. Of course there's bush, since there's a bush pest. I'm pleased with how this went. Cutting and pasting the silos over the road was one high point technically, and I enjoyed placing the stoplights just right once I had the shape." ;
+      } : else_if (current_location() == "oopster_stupor") {
+         : print "I actually just had a door with part of a maze planned here, but I'd wondered for a while, it's not a stupor with the haze gone. What could it be? So I got the idea for birds, which are tough at this low resolution, and I wanted a silly intimidating message. Brevity is necessary with this image size." ;
+      } : else_if (current_location() == "outer_tower") {
+         : print "I didn't have time to have the lock do a full dance, but I enjoyed making the tower locked then unlocked. I thought of the grass-is-greener joke mainly because I like to differentiate between sub-areas of an image, and shades of green are the easiest way to do it. Green and brown work too." ; 
+      } : else_if (current_location() == "rocky_caves") {
+         : print "The stink lines were fun to make, if trivial. It's not bad to make caves in MSPaint. You just draw a jagged line slightly above the bottom, then draw a few dark holes, then draw lines and cracks in the walls." ;
+      } : else_if (current_location() == "sappage_passage") {
+         : print "I fit this room in last-minute and wanted to give some sort of mazy perspective, so I wanted to go with diagonal corridors. I also transcribed the flying fist from a vector image of a fist. I made the thumb brown while placing it." ;
+      } : else_if (current_location() == "streaky_cove") {
+         : print "This was a lot of fun to make. The stove was a transparent graphic, copied from Google searches of old wood stoves. The tree with or without the keys " ;
+      } : else_if (current_location() == "taller_altar") {
+         : print "This was an interesting one. I wanted to do a small fake-out with the pool clan, as if your mind wandered to people wearing swimsuits, shame on you! This is a family game. The weight, of course, is from my days enjoying Road Runner cartoons. Though I did feel bad Wile E. Coyote never won once. He deserved it, for all his hard work." ;
+      } : else_if (current_location() == "tenser_center") {
+         : print "This is one of those liminal locations where I felt I didn't need too much, since it links through to others. I wanted a sign behind the sinister mouth." ;
+      } : else_if (current_location() == "tool_stall") {
+         : print "The tools were fun to draw. Near release I realized I'd never put the owner into the graphic. Then they were too big to fit behind the counter, so I slipped in the longer tools on the left. Which took a while, but it made the place more cheery. I'm also pleased with the brevity of the t-shirt messages. I hope I can find more for my next game." ;
+      } : else_if (current_location() == "yankin_canyon") {
+      } : else {
+         : print "I don't have any author narrative for this location, but I should." ;
       }
    }
 
@@ -3245,6 +3299,14 @@ on_describe {
 ## Test VERB NOUN that the player types and executes conditional actions
 
 on_command {
+   : match "gr _" {
+      : if (!have_won && !graphics_unwon_warn) {
+         : print "{one_time}author's notes on graphics may spoil some puzzles the first time through. If that's okay, or you've won in a previous session, type {vm_graphics} again." ;
+         : set_true "graphics_unwon_warn" ;
+         : done ;
+      }
+      : gosub "graphic_stuff" ;
+   }
    : match "undo _;rewind _" {
       : print "You need to use ctrl-shift-left to undo a move. Ctrl-shift-right can redo it, if you change your mind." ;
       : done ;
