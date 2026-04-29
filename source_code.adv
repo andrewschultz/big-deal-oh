@@ -159,7 +159,7 @@ strings {
    loc_gnawing_awning : string "A gnawing awning blocks passage every way except back south. It has a {puz_point_gold_side}, a {puz_point_brick_side}, and a {puz_point_tail_side}." ;
    header_gnawing_awning : string "<Gnawing Awning<#ff0>>" ;
 
-   loc_jeerin_region : string "Here in the jeerin' region, {puz_point_spittin_wrecks} mock anything and everything. That you've avoided their mockery feels good until you wonder if they find you not even worth mocking. You can exit north or west." ;
+   loc_jeerin_region : dynamic_string {( "Here in the jeerin' region, {puz_point_spittin_wrecks} find very clever ways to prove that everyone's beneath them. " + ( !point_written_specs ? "Yet they seem pretty smart. Perhaps they might help you" : "Maybe even you, but at least they helped you") + (!kelp_placed ? "" : point_help_card ? "The kelp (hard) still lies here, but you already found something from it." : "The kelp (hard) has washed in from sea. Perhaps it's gotten something tangled in it.") + " You can exit north or west." )} ;
    header_jeerin_region : string "<Jeerin' Region<#ff0>>" ;
 
    loc_moldin_dolmen : dynamic_string {( "You are by a " + (key_duplicated ? "no longer " : "") + "glowing moldin' dolmen." + (!point_formed_wax ? " A fax machine from--well, for all you know, a wormhole to a new dimension--spits out a fax every few minutes. Weird to have it here! Perhaps you should inspect things." : "") + "\nThe only exit is south." )} ;
@@ -676,6 +676,7 @@ booleans {
    buns_taken : boolean "false" ;
    fax_examined : boolean "false" ;
    porch_in_tower : boolean "false" ;
+   kelp_placed : boolean "false" ;
 
    key_found : boolean "false" ;
    key_duplicated : boolean "false" ;
@@ -1337,6 +1338,12 @@ locations {
    }
    jeerin_region : location "{loc_jeerin_region}" header="{header_jeerin_region}" graphic="r_jeerin_region" {
       on_command {
+         : if (kelp_placed) {
+            : match "_ hard;_ kelp" {
+               : print {( point_help_card ? "You pick through the kelp but find nothing else." : "There's a lot of kelp. It would help to know what to pick through." )} ;
+               : done ;
+            }
+         }
          : match "written specs" {
             : if (point_written_specs) {
                : print "No, you have enough written specs. Asking for more might make the spittin' wrecks beat you down for your greed." ;
@@ -1364,6 +1371,12 @@ locations {
                : gosub "say_half" ;
                : done ;
             }
+         }
+      }
+      on_describe {
+         : if (has_visited "foldin_gate" && !kelp_placed) {
+            : print "The destruction of the hard maze must have sent across some serious shockwaves. Some kelp (hard) has appeared along the sandy area." ;
+            : set_true "kelp_placed" ;
          }
       }
    }
@@ -3827,6 +3840,9 @@ on_render {
       : overlay "s_meadow_flaming_towers" x="82" y="0" ;
       : overlay "s_meadow_flaming_towers" x="164" y="0" ;
    }
+   : if (is_at "jeerin_region" && has_visited "foldin_gate") {
+      : overlay "s_jeerin_region_kelp" x="172" y="2" ;
+   }
    : if (is_at "moldin_dolmen") {
       : if (!point_formed_wax) {
          : overlay "s_moldin_dolmen_fax" x="73" y="3" ;
@@ -3958,6 +3974,7 @@ assets {
       s_cache_shack_buns : base64_png "iVBORw0KGgoAAAANSUhEUgAAABAAAAAHAQMAAAA77l8BAAAABlBMVEUAAAD//wCI23BQAAAAHUlEQVR4XmP4/59hVifDqtUMs1YyrFrLMGMlUAQAa48KUDmFK0AAAAAASUVORK5CYII=" ;
       s_collation_location_happy : base64_png "iVBORw0KGgoAAAANSUhEUgAAABUAAAAoBAMAAADj3azWAAAAD1BMVEX///8AAAAAAP8AgADdw6IvtXB4AAAAAXRSTlMAQObYZgAAAG1JREFUeF6d0NENgEAIA9D76AiO4AbnACR2/5mkwOHnRfmoL42J4NCAyiK57KQtnzzDGKDGMWjug3SkmVbOeRnK92QY+ZI6Wd8Nj9WbXCOjnKs1e8+9t3ftDZmfjNf9d/tqOR7/jDTTnd1YRlUP6CMy3buroIAAAAAASUVORK5CYII=" ;
       s_collation_location_sad : base64_png "iVBORw0KGgoAAAANSUhEUgAAABUAAAAoBAMAAADj3azWAAAAD1BMVEX///8AAAAAAP/dw6L/AACa4lhZAAAAAXRSTlMAQObYZgAAAG9JREFUeF6dz8EJAzEMRFHDlJAStgHB3w42/dcURkgIx6dE4PGTDxZaLuEsQhsg2hdXWbjavOB8X9xvov3wxPn/OXcIw2qKRFqAbBH2gs0+aRG73WLs1irre3fZ/GSNZ0vSkc7rPysNaSYpR0ZP/AADjSal28zewwAAAABJRU5ErkJggg==" ;
+      s_jeerin_region_kelp : base64_png "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUAgMAAADw5/WeAAAACVBMVEX///8AMAAAYAC6jXp8AAAAAXRSTlMAQObYZgAAAGxJREFUCB0FgKEOwyAQQF9wVz8/M7J+ECdQNSWUryBVS33JZpdcw/jKBeAFEy7BrUuCWeVyTLanmSolnZRdUyTkKywMtVHptp4ZHSEqVj7dmELUAzeaZSTETXnYdzOal3Dw9v5XufsmC7Snq3/BICOmky5aXAAAAABJRU5ErkJggg==" ;
       s_meadow_flaming_towers : base64_png "iVBORw0KGgoAAAANSUhEUgAAACQAAAAoBAMAAABk7EXQAAAAElBMVEX///8AAACAAADAwMDw8PD/gABU/IfLAAAAAXRSTlMAQObYZgAAARNJREFUeF5l0M1txEAIhmFy4B472gIGiQKiVLDSFsAivf23kmFY2/nBc7AfwSc8UqWC9EuIHG/agpwWGi2onHP0VNDERJ1UGhIvCqGmiYpQRVsjENCa2LafJ5i0j+06TojGbke52bO2OMgXjSLdzro9t21ScAy6GzZAkEnQNJ9Y8U2kT6e2580scayK96JqgxaGaNH6zBLPd6Hvb1p3DeF1EXtFj7nY0CXKDHPP8fXxOaQrSEujuk4SDKO74kU33DqLJb1/WpXHlWWUgrYhvVSSHIOyLwOeclJFG1nbN7HWtEygSWJ1eXoOfRH76nLMOcJyZbkZchRuXeOkmx+/fVHiOR6P+0X7FPtDZkX33+T/u+yibynQV4eqAf8hAAAAAElFTkSuQmCC" ;
       s_meadow_haha : base64_png "iVBORw0KGgoAAAANSUhEUgAAACIAAAAYAQMAAAClaL1KAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAAIJJREFUCB0FwLEKAWEAAOBPitRfMpoMXuA2gxcx3nQvYDHouge4LF7AI6h7AHdIFoNRKTeZLAaldCWYQfcFkxztT45pldP62TM4bE58q/pIci1LknfWZlmXYxaxOVEcmkzkdMlEIbljlTaZ3jp9lobFPGG4K2JGjwL92xbhBuEMHfgDhpcoRuzCRnsAAAAASUVORK5CYII=" ;
       s_meadow_stool : base64_png "iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAABKklEQVR4nO2YUQ7DIAiGcdm97M3Um8nJ2MNm05haQNbpmv6JL81g337AaR0Rwcx6jAbg9LQEp5RE9ocQXO93OE2Jm0Ax7gc0nmuAxYArXAtGqk+8FHL6HrxWievEvUOyl6spIhKtGCNpnvfG1Gv6HhQBqkoiUAjBSdvjGg6OlAmQK72mlC1d28FfiAX89gQXScv//w6O1vSAphM1AAAinnqpUQFuYXLOomOT9x5SSrQsSwceA1imrIB571egnLPKuW3sNie3S7AOnrHFALyBi7tHnxs6JJL+ZR1ERKrLY1Hdx5xEQ7LXgxawkkdSYhawJENEqkui3WK6fqD2PtFzr7Dk6hoS7QHCci6c/q/uBpToqF2mADyUdUI1qyfv9A7egFap3g+O0PQOvgCblwBNMoukoAAAAABJRU5ErkJggg==" ;
