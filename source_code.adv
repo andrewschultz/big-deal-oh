@@ -157,12 +157,12 @@ strings {
    header_foldin_gate : string "<Foldin' Gate<#ff0>>" ;
 
    loc_gnawing_awning : string "A gnawing awning blocks passage every way except back south. It has a {puz_point_gold_side}, a {puz_point_brick_side}, and a {puz_point_tail_side}.{awning_sides}" ;
-   awning_sides: dynamic_string {( puz_point_gold_side ? ("\nYou've currently found what to do with the gold side" + awning_gold_sub + ".") :
-      puz_point_brick_side ? ( "\nYou've currently found what to do with the brick side" + (puz_point_tail_side ? " and the tail side" : "") + ".") :
-	  puz_point_tail_side ? "You've currently found what to do with the tail side." : "You haven't unlocked any of the awning's mysteries yet."
+   awning_sides: dynamic_string {( point_sold_guide ? ("\nYou've currently found what to do with the gold side" + awning_gold_sub + ".") :
+      point_sick_bride ? ( "\nYou've currently found what to do with the brick side" + (point_sail_tide ? " and the tail side" : "") + ".") :
+	  point_sail_tide ? "\nYou've currently found what to do with the tail side." : "\nYou haven't uncovered any of the awning's mysteries yet."
    )} ;
-   awning_gold_sub : dynamic_string {( !puz_point_brick_side ? ( puz_point_tail_side ? " and the tail side" : "" ) :
-      ( puz_point_tail_side ? ", the brick side and the tail side" : " and the brick side" )
+   awning_gold_sub : dynamic_string {( !point_sick_bride ? ( point_sail_tide ? " and the tail side" : "" ) :
+      ( point_sail_tide ? ", the brick side and the tail side" : " and the brick side" )
    )} ;
    header_gnawing_awning : string "<Gnawing Awning<#ff0>>" ;
 
