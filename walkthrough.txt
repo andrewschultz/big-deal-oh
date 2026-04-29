@@ -265,21 +265,25 @@ With the torch, plan and specs, you can go north through the hard maze. What har
 
 > N
 
+Oh no! A rumbling fist!
+
+> FUMBLING WRIST (1)
+
 At the gate brook, you can't get the item you were expecting. You can go through the foldin' gate, but ...
 
 > S
 
 > S
 
-> W
+> E
 
-Kelp, hard, has washed up here.
+Kelp, hard, has washed up here. Ignore the spittin' wrecks! Get the help when you need it!
 
 > HELP CARD (1)
 
 A cold hard hold card!
 
-> E
+> W
 
 > N
 
