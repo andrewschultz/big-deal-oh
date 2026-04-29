@@ -129,7 +129,7 @@ strings {
 
    # room(s)
 
-   loc_ailer_lair : dynamic_string {( (point_best_notes ? "It's quiet here now." : point_sail_tide ? "Some {puz_point_nest_boats} have arrived here. The babblers and blabbers look at you impatiently. They'd like to just give you a reward for rescuing them, but you've been taking a while." : "You are in the ailer lair. Babblers and blabbers sit here, one side kvetching about things that might go wrong, the other side kvetching about things they think went wrong but are actually okay. You see no way to mediate this civil war." ) + (has_visited "foldin_gate" ? " The changing tide has brought in some {puz_point_kelp_hard}." : "") + "\nYou can go north and west." )} ;
+   loc_ailer_lair : dynamic_string {( (point_best_notes ? "It's quiet here now." : point_sail_tide ? "Some {puz_point_nest_boats} have arrived here. The babblers and blabbers look at you impatiently. They'd like to just give you a reward for rescuing them, they've changed their kvetching to how you've given them no clue what you like or need." : "You are in the ailer lair. Babblers and blabbers sit here, one side kvetching about things that might go wrong, the other side kvetching about things they think went wrong but are actually okay. You see no way to mediate this civil war on your own, but you also see no danger of being sucked into it." ) + (has_visited "foldin_gate" ? " The changing tide has brought in some {puz_point_kelp_hard}." : "") + "\nYou can go north and west." )} ;
    header_ailer_lair : string "<Ailer Lair<#ff0>>" ;
 
    loc_app_mall : dynamic_string {( "Here in the mall they're offering apps--well, you ask the nice jock clerk at the front desk for a code or whatever. Apparently they need to make sure you're sane enough, or something. " + (bonus_point_map_all ? "But you got the one you needed." : "Which app might be right for you?" ) + "\nA jock clerk mans the vending area.\nYou can go back north." + (!bonus_point_clock_jerk ? "\nAnd yet the atmosphere isn't quite right. You can probably leave " + (bonus_point_map_all ? "now" : "once") + " you've got what you want, but then there always seems to be more to tidy up." : "" ) )} ;
@@ -828,7 +828,7 @@ vocabulary {
 }
 
 locations {
-   ailer_lair : location "{loc_ailer_lair}" header="{header_ailer_lair}" graphic="r_0_blank" {
+   ailer_lair : location "{loc_ailer_lair}" header="{header_ailer_lair}" graphic="r_ailer_lair" {
       on_command {
          : if (has_visited "foldin_gate") {
             : match "help card" {
@@ -3829,6 +3829,21 @@ on_render {
          : overlay "s_collation_location_happy" x="212" y="0" ;
       }
    }
+   : if (is_at "ailer_lair") {
+      : if (point_sail_tide && !point_best_notes) {
+         : overlay "s_ailer_lair_boats" x="1" y="1" ;
+         : overlay "s_ailer_lair_boats" x="9" y="17" ;
+         : overlay "s_ailer_lair_boats" x="30" y="10" ;
+      }
+      : if (!point_best_notes) {
+         : overlay "s_ailer_lair_babbler" x="80" y="18" ;
+         : overlay "s_ailer_lair_babbler" x="100" y="18" ;
+         : overlay "s_ailer_lair_babbler" x="120" y="18" ;
+         : overlay "s_ailer_lair_babbler" x="140" y="18" ;
+         : overlay "s_ailer_lair_blabber" x="160" y="18" ;
+         : overlay "s_ailer_lair_blabber" x="180" y="18" ;
+         : overlay "s_ailer_lair_blabber" x="200" y="18" ;
+         : overlay "s_ailer_lair_blabber" x="220" y="18" ;
    : if (is_at "demo_meadow" && !point_tool_stall) {
       : overlay "s_meadow_stool" x="164" y="0" ;
    }
@@ -3951,6 +3966,7 @@ assets {
 
       # rooms
       r_0_blank : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAYAQMAAAAvTrFnAAAAA1BMVEX//wCKxvRFAAAAD0lEQVR4XmPAAKNgFIwCAAMYAAFrMpCEAAAAAElFTkSuQmCC" ;
+      r_ailer_lair : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAD1BMVEUAAACAAADLvZOAQAAA//9+7eRBAAABMUlEQVR4XsXU4YnDMAwFYIMnKJrgnAVCtIHQ/jMdOULby7MrS8Xo/Q7ok55J0UFaLz+PfyH+Pt8AiJMBvBQgPQDMzwRwMoCTAZQN4GQArQfoJwBxMiA06YwHIOMfEYXmgyAOYH/2C1AR4O+AQvOvOAAyAkC51S7gmQoAdweEy9V5QJkH6ADQK9eaHwNIF0Dd3ZYAtAswXzdmjwKkAyDzdWNKFKBiAPB124AKAFcJj+FtjQZiACyBhqvVSUABgOsE9moYmO4ByCdAMQDIrEdrGwCiJ9j9gAO2KOoUbG7AuxG2QID9Dp0/Ab4f4IwHoA1yE1Q+7rYrf43DAc4EAVjHfjbf5T23fUEPqBIAZgfYxwCHJPh0FqBtVbZJgLR1SQe0GYCmAyQboOkAyQaorATklvALPlCGc09Cf7oAAAAASUVORK5CYII=" ;
       r_app_mall : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAG1BMVEUAAAAAgIDAwMCAQADggECAgID/AAAAAP////8416ItAAACF0lEQVR4XsSTMU7EMBBFxxCtpkxuQMMJuECKnACJfivL5XZJOZX5x8YzhtUKLMUTadnn5nd5enZoqoTpjjAEYMjU4F8ECAY9TGCEER4okGNMjxRgFKRfgIzQXIcgBoSmfgEo0lxHDYSmfgFmKKG5jsEyeQSEjOY6BAHkEoipnLMuKHK7/Iz1DQSHQEZCFF3C9COwrgcFCAY5BXItwAw2gc+1KMiRAJxjRkwSnAWuAqgCG9ZNDgXIOSMCtCswkvFz37asAJEJ2E36A0AL5AQJuwWGRWFZt3IuuqpAWSoQkyyzWwDQz8cE7AvQt8Cm/BZYEWNZwS9Q6RKwBHQtQCJMwqKr/gWLOwEDOeUCIPsCoxUgbOVcbClyu5bgFyggdQnYK2Aho7k0gb9Av4AmmPH0rgyt5U0wMuikBc4ECfsCloDkVXlpLW+CEeBTyhFnAXoE6iuwBB9DY7kS0C5/BSzBLKQMreVJ8Py2R0OgJoAyNFch3FOgJiClvRwJvoqlmxOIYRiIwmbYAlRCmBYCPi+QTgTpv4RN9sc4AVnKEuMH6PwhpgBUZ82z2oBUt/ilWD9A3msBhJ/S+z58wJOhCmAjrC0ADoBp8cNVwJauFkB4BNz2gugIcQKku15Qz0BtgPAEQArEizPINgAFMH0BbIRCDRX4gLDKB/BPgL0B9AW4IxR2BfgjRFeAP0Lh4A+AHDpCITl0hBgMeAHzFLXkmD5PvQAAAABJRU5ErkJggg==" ;
       r_backin_cabin : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAFVBMVEUAAACAAAAAgACAQACAgID//wD///8a8Fr9AAAB6klEQVR4XrzSsQ3EIAwFUOuIGMQFNZIXoPAg6IrsP8Il5yQ/yIKCAne2YvL4gva5qmSlRVXLPl+zgCD/ygaIywFVAChEeTkgAECkReJiQKW7VIueiMWAIJL3WEWyGUTiUkCVB2AJHO1SQHCAYQRpDsBp/ALwBqzpH8RpBsDMgwCQABFtRSyCr1/CsIMi3Netpf4LAGBTNUA+d9yWDVMfRZ3/8VmDADxA4gHwgnvmhqkBcLvrLwNipXcZwBq+ygWAmT+dms+Sc3t0EFSTgHxwCtgD1QuAz3rup6/SAOz6V8OdNah83gTRC+/caIMDqBZpI2AE4AWYcroBv/bKIAVCGIaiGQdc6w1CgK4FjyK9QIG5/xGmMA71x2gchHYzbyP9oD6+IaInFodBmQBYBd9Av0y22LUQBBLs4soZCyib0K5AALMWwkC0uLqF51OByWwSQl0LWT2BIpyfpwK6giSGAYaBXnvLdHhm8kBxjRGSttSOYXsLzQ4TVCCasG+FDEk5gtkV4CJuPiiJJxBOBDpfQLpikMTAFZBjAb4yAyy/QU5LCK8/wc9lGvq8mjESuSOA+ALj0DcWyAaVBQgYswEhlRvIEEZ/geozMNaegQ1rAxjVFhgebQUytEDUYAZi6xmIS+NPEGNzgeWOwBtW622Kp1hJtQAAAABJRU5ErkJggg==" ;
       r_cache_shack : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAG1BMVEUAAACAAAAAgACAgIDAwMAwMDDg4OCkdEnStIzNzQqGAAABoElEQVR4XsWUMWoDMRREXfgCuzeIiu2DFtwKVuBtXfgCKdS7MFYrWNA/drCziRUmEX8niDwdQMP7w+xMQcfRm58IT97M75QBXjoSg5iBCNCx9LwAswMBDHUBRhmg4+lpAWYHAihqAYwyQPcXekIAdkC2k+V2Pp9PxvxfgHiFAFDBtgEyBAABjQNcIcAA/+sC3Agk5gwB4ADtDEiMWa6nioDWAXKMMZ+4BuIJKCTLpdrA1jsgElNVQOsdiJJTTUD7HZBvJwggoHmAKKn6f/sdKAIEPED7HShKOICAbQEWkYXZgUQKwBN4f6R3AAUQJ3BuLiQs6h0gBWAAv59FxK/MG3cglBjegLiVedsODCCAMOAfBvYfb1bvACkAS+jcvYRu5bhpBwIIIDuwQAdUOzCAALIDRQcX9Q7w/+MOwAVUO1D+zwew1rnJ2s8OTlbD4bEDARrABXj86lYmqyJKTgEE8AZG61cmq1VwAQG0AT89/x+tVkHC/3kDcAGFgoQH4DtQdFBLTIQA3gBySDUBfAesmgv8TwYYrR2/qjdaNa9wAD3vJ3YzGrixG2QAAAAASUVORK5CYII=" ;
@@ -3971,6 +3987,9 @@ assets {
       r_yankin_canyon : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoAgMAAABslMwaAAAACVBMVEUAAACAAADCsoA0s/AsAAAChUlEQVR4XpXTwW6jMBAGYAetpRWnPWTue6z8FA1SLpwMmnmfpBKXPgX0ZM1T7ngYZ2HbrOmoVE7s/2OMiaNcV/J00RHaZ6RxksFF//IYaNAp0MCFon1WwHm0eQM8IfR3lTTXLQgUDbA7QHQFiDwhGfBY5fvkCxDDEh+2AQQjewP6DXApbcSeb8Io2fDilbUFBVhWAMMGENSslpMDEA1d4NlS4m2ABAqMvAHAlMwyr7uUQYKSxQ3AkwL9BkAo/yJrziT2u8kCLAqEDJgf7wJ0AtPImjOJ9Sud9NZjBpICv124R6O7vNlWFcuZdN9O6lrfJfdTgROFZbDttwkohvkkiuVMEvi1TZ4wzHZM1z7RqwKA/Qo45wLfcmL2FNYc4Colim32Gk6ybAUWwAwgDWMGENbMKSfucQXYOV4B32XvddUQMjBdCQQY6DrOFwHQbpqd1LAFDeKbfm3tgACXdpKoAMJguhJF0Y/WyRMNAZAGAQAJE+RndBzITxkD5KzLCr0IcDhvh4IvlLt3QwaCl+sQ8L5eiSimDFydXALc9Y09XgmoE0Du7oBAgJkif6s8tQIgoSMFEnV1ILkm9691zxmyF4moT+d2f/Cugs3nsEgQCsC/uADmPAeCCj+4AIP+dpsy86FXpVLgG09E9iYSIVfegmBHWNa1PDMIMBhA4au7PHkHrBJtALTQrvfaiwFfAMWp7OYzMO6Bt/8BtwJMG6DfAZUnWmaXDRDqO0+fNpj+AnG7wsb1Q2H/APoqYJ3PO2B5AGEXbASo7eMjj1MBkL9bhoECsDvE+QjwbsBEqEC7aeztCDAbMK8A7g+5Us1WAgXGZ33Wa1Kgte7rQPjXnzNwfv6k6nWmP05UIp+zVJBKAAAAAElFTkSuQmCC" ;
 
       # scenery
+      s_ailer_lair_babbler : base64_png "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAWCAYAAAD0OH0aAAAApElEQVR4nL2SwQ7DIAxDk6p3/P9fab7AO6xBhaTrusMiISF4dhKIS7InsT2i/yLY1wN3n5qS5KUgQJKlQQinkla4OtvDpYKBNkTuLkmemgbaCezJxM0suQOthAHUz1rBUw9X0YCx71HFMUsiKZKSWVok9Ub1OUMvXm47sjhO6VcYwPg4j/G++ukwSoKIu1lKgrNwhUcPAazu1d1tSWtZv5f0bbwAYzaCvzMZTIUAAAAASUVORK5CYII=" ;
+      s_ailer_lair_blabber : base64_png "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAWCAYAAAD0OH0aAAAAnElEQVR4nL2SQQ7EIAwDnap3/P9Xpi9wT2EhDaqQqs3ReBIDMUnYqWPL/RfgzIKZTZeSZCUQRncvGwQ4RcrmSjuii7uDbCBbCcWkx6XdLwBYwgZAVRSydfincf2s2Rx1AkAjJ/EqJvZIkmBm5UaNIElIsu2fttjWcUqOFN2B9Ky2MJcTuvCySw+gx0vGqL4aufMIj2fThAr6JtJO3WTxZZN0PwPOAAAAAElFTkSuQmCC" ;
+      s_ailer_lair_boats : base64_png "iVBORw0KGgoAAAANSUhEUgAAABYAAAAWAgMAAAC52oSoAAAACVBMVEX///8AgADg4OCYIdj7AAAAAXRSTlMAQObYZgAAAEVJREFUeF5FzbENgEAMQ1ETiSY9O6BMwQgUsCO6KY/4F/ebV7iwulPuMwEJBcMEJBQME5BQMGA9LN7u1tFc2htp+3kkeZp2IBtfaqBV1wAAAABJRU5ErkJggg==" ;
       s_cache_shack_buns : base64_png "iVBORw0KGgoAAAANSUhEUgAAABAAAAAHAQMAAAA77l8BAAAABlBMVEUAAAD//wCI23BQAAAAHUlEQVR4XmP4/59hVifDqtUMs1YyrFrLMGMlUAQAa48KUDmFK0AAAAAASUVORK5CYII=" ;
       s_collation_location_happy : base64_png "iVBORw0KGgoAAAANSUhEUgAAABUAAAAoBAMAAADj3azWAAAAD1BMVEX///8AAAAAAP8AgADdw6IvtXB4AAAAAXRSTlMAQObYZgAAAG1JREFUeF6d0NENgEAIA9D76AiO4AbnACR2/5mkwOHnRfmoL42J4NCAyiK57KQtnzzDGKDGMWjug3SkmVbOeRnK92QY+ZI6Wd8Nj9WbXCOjnKs1e8+9t3ftDZmfjNf9d/tqOR7/jDTTnd1YRlUP6CMy3buroIAAAAAASUVORK5CYII=" ;
       s_collation_location_sad : base64_png "iVBORw0KGgoAAAANSUhEUgAAABUAAAAoBAMAAADj3azWAAAAD1BMVEX///8AAAAAAP/dw6L/AACa4lhZAAAAAXRSTlMAQObYZgAAAG9JREFUeF6dz8EJAzEMRFHDlJAStgHB3w42/dcURkgIx6dE4PGTDxZaLuEsQhsg2hdXWbjavOB8X9xvov3wxPn/OXcIw2qKRFqAbBH2gs0+aRG73WLs1irre3fZ/GSNZ0vSkc7rPysNaSYpR0ZP/AADjSal28zewwAAAABJRU5ErkJggg==" ;
