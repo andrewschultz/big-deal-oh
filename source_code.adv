@@ -1481,11 +1481,11 @@ locations {
                      : press_any_key ;
                   }
                }
+               : print "You walk into the maze. The written specs accurately show the passage. But then ... a noise. Horror of horrors, it's ..." ;
+               : press_any_key ;
+               : goto "sappage_passage" ;
+               : redescribe ;
             }
-            : print "You walk into the maze. The written specs accurately show the passage. But then ... a noise. Horror of horrors, it's ..." ;
-            : press_any_key ;
-            : goto "sappage_passage" ;
-            : redescribe ;
          }
          : match "hard maze" {
             : if (point_hard_maze) {
@@ -1675,7 +1675,7 @@ locations {
             : set_true "point_fumbling_wrist" ;
             : gosub "add_point" ;
             : goto "foldin_gate" ;
-			: redescribe ;
+            : redescribe ;
             : done ;
          }
          : if (!point_fumbling_wrist) {
@@ -1727,7 +1727,7 @@ locations {
                } : else_if (key_duplicated) {
                   : print {( "You have no need to search for another key, now you " + (key_used ? "used it" : "have a stronger replacement") + "." )} ;
                } : else {
-                  : print "You look at your flimsy key and search for another stronger one in the trove,but nothing turns up. Bummer. But you have the key's shape. Perhaps somewhere else you can make a sturdier key." ;
+                  : print "You look at your flimsy key and search for another stronger one in the trove, but nothing turns up. Bummer. But you have the key's shape. Perhaps somewhere else you can make a sturdier key." ;
                }
                : done ;
             }
@@ -1998,7 +1998,7 @@ objects {
    trove_key : object "a rusty key (crusty! Eee!) from the trove" ;
    trowel : object "the trudge-now'll-nudge trowel you started with" ;
    wax : object "the formed wax from the warmed fax" ;
-   widget : object "the <wild digit-dialed widget<#c8c>> you found on your person" ;
+   widget : object "the {i_widget} you found on your person" ;
    wrench : object "the wrench from the rocky caves" ;
 }
 
@@ -3319,6 +3319,12 @@ on_describe {
 ## Test VERB NOUN that the player types and executes conditional actions
 
 on_command {
+   : if (is_carried("trove_key")) {
+      : match "_ rusty" {
+         : print "It's not strong enough to open a lock without breaking off. You'll have to find a way to make a sturdier copy." ;
+         : done ;
+      }
+   }
    : match "gr _" {
       : if (!have_won && !graphics_unwon_warn) {
          : print "{one_time}author's notes on graphics may spoil some puzzles the first time through. If that's okay, or you've won in a previous session, type {vm_graphics} again." ;
@@ -3511,6 +3517,7 @@ on_command {
    : if (is_carried "chain") {
       : match "drop chain" {
          : print {( "You fling the chain on the ground, but it " + (is_at "yankin_canyon" ? "hurls you away from the hole and " : "") + "snakes back onto your wrist. You need stronger measures. Help from someone, or something, else." )} ;
+         : done ;
       }
    }
 
@@ -3534,7 +3541,9 @@ on_command {
       : print "{standard_puzzle_check}" ;
    }
 
-   : match "bake _;best _;cool _;clock _;chop _;creaky _;formed _;golden _;great _;hard _;key _;leery _;lodging _;minister _;penny _;platinum _;power _;rocky _;sail _;sick _;sold _;steel _;taming _;tool _;tight _;written _" { #obfuscation of non solutions, regular points
+   : gosub "teststubs" ;
+
+   : match "bake _;best _;cool _;clock _;chop _;creaky _;formed _;golden _;great _;hard _;key _;leery _;lodging _;minister _;penny _;platinum _;power _;rocky _;rumble _;rumbling _;sail _;sick _;sold _;steel _;taming _;tool _;tight _;written _" { #obfuscation of non solutions, regular points
       : print "{custom_unknown_verb_error}" ;
       : done ;
    }
@@ -3722,7 +3731,7 @@ on_render {
       }
       : if (has_visited("yankin_canyon")) {
          : overlay "m_0_visited" x="161" y="85" ;
-         : overlay "m_yankin_canyon" x="161" y="106" ;
+         : overlay "m_yankin_canyon" x="161" y="85" ;
       }
       : if (is_at "yankin_canyon") {
          : overlay "m_you_are_here" x="161" y="85" ;
@@ -3851,6 +3860,8 @@ on_render {
          : overlay "s_ailer_lair_blabber" x="180" y="18" ;
          : overlay "s_ailer_lair_blabber" x="200" y="18" ;
          : overlay "s_ailer_lair_blabber" x="220" y="18" ;
+      }
+   }
    : if (is_at "demo_meadow" && !point_tool_stall) {
       : overlay "s_meadow_stool" x="164" y="0" ;
    }
