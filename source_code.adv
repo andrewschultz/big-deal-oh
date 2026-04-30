@@ -292,7 +292,7 @@ integers {
    max_tutorial_score : integer "17" ;
 
    bonus_score : integer "0" scope="survivor" ;
-   max_bonus_score : integer "4" ;
+   max_bonus_score : integer "10" ;
 
    # hinting. Magic numbers are 1 = do later, 0 = done, -1 = nothing to do
    # note items are listed in backwards order of how we do things
@@ -592,6 +592,12 @@ collections {
          "false",
          "false",
          "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
          "false"
       ]
    }
@@ -599,14 +605,26 @@ collections {
    situations_bonus : list {
       items = [
          "anywhere",
+         "anywhere",
+         "{here_tool_stall}",
          "{here_app_mall}",
          "{here_app_mall}",
+         "{here_demo_meadow}",
+         "{here_chattin_em_plain}",
+         "{here_outer_tower}",
+         "{here_gnawing_awning}",
          "{here_foldin_gate}"
       ]
    }
 
    got_first_bonus : list {
       items = [
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
          "false",
          "false",
          "false",
@@ -617,14 +635,26 @@ collections {
    think_first_bonus : list {
       items = [
          "<DIG<#f80>>",
+         "<REAL<#f80>>",
+         "<REALLY<#f80>>",
          "<MAP<#f80>>",
          "<CLOCK<#f80>>",
+         "<MATING<#f80>>",
+         "<WEARY<#f80>>",
+         "<TOUTER<#f80>>",
+         "<WHITE<#f80>>",
          "<GOLDEN<#f80>>"
       ]
    }
 
    got_second_bonus : list {
       items = [
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
          "false",
          "false",
          "false",
@@ -635,14 +665,24 @@ collections {
    think_second_bonus : list {
       items = [
          "<BELOW<#f80>>",
+         "(none)",
+         "(none)",
          "<ALL<#f80>>",
          "<JERK<#f80>>",
+         "(none)",
+         "<BIZ<#f80>>",
+         "<HOUR<#f80>>",
+         "<SIDE<#f80>>",
          "<FATE<#f80>>"
       ]
    }
 
    bonus_status : list {
       items = [
+         0,
+         0,
+         0,
+         0,
          0,
          0,
          0,
@@ -690,6 +730,9 @@ booleans {
    key_duplicated : boolean "false" ;
    key_used : boolean "false" ;
    ever_keyhole : boolean "false" ;
+
+   # game state (bonus-related)
+   feel_yet : boolean "false" ;
 
    # game state (tutorials)
    skip_tutorial_cue : boolean "false" ; # not a tutorial but skip every-turn note when it is implied
@@ -749,6 +792,7 @@ booleans {
    bonus_point_dig_below : boolean "false" scope="survivor" ;
    bonus_point_golden_fate : boolean "false" scope="survivor" ;
    bonus_point_map_all : boolean "false" scope="survivor" ;
+   bonus_point_real_phase : boolean "false" scope="survivor" ;
    bonus_point_weary_biz : boolean "false" scope="survivor" ;
 
    # think variables
@@ -896,6 +940,7 @@ locations {
                : print "You already gained map-all capabilities!" ;
                : done ;
             }
+            : collection_modify { collection = "tried_combo_bonus" index -> (3) content -> ("true") } ;
             : print "The jock clerk nods. \"Yup, good, practical, simple. I think it'll serve you well. From now on, just say MAP whenever you want to map something.\"" ;
             : set_true "bonus_point_map_all" ;
             : gosub "add_bonus" ;
@@ -907,7 +952,7 @@ locations {
          }
          : if (!bonus_point_map_all) {
             : match "map _;_ all" {
-               : set_integer var="tempint" "1" ;
+               : set_integer var="tempint" "3" ;
                : set_false "first_half" ;
                : match "map _" {
                   : set_true "first_half" ;
@@ -921,6 +966,7 @@ locations {
                : print "You already alerted the clerk to the riff-raff. They will know what to do if said riff-raff return." ;
                : done ;
             }
+            : collection_modify { collection = "tried_combo_bonus" index -> (4) content -> ("true") } ;
             : print "You suggest a plan of action to the clerk, to get rid of the marginally audible kvetching. They wonder if it is too drastic. No, no, it is just right." ;
             : print "You locate the source of the kvetching about how apps sold here are too simplistic and dumb people shouldn't have luxuries that make their lives simple. The jock clerk looks determined before pulling out ..." ;
             : press_any_key ;
@@ -932,7 +978,7 @@ locations {
          }
          : if (!bonus_point_clock_jerk) {
             : match "clock _;_ jerk" {
-               : set_integer var="tempint" "2" ;
+               : set_integer var="tempint" "4" ;
                : set_false "first_half" ;
                : match "clock _" {
                   : set_true "first_half" ;
@@ -1026,6 +1072,7 @@ locations {
                : print "Don't rub it in." ;
                : done ;
             }
+            : collection_modify { collection = "tried_combo_bonus" index -> (6) content -> ("true") } ;
             : print "You listen to the beery whiz for a bit, almost convincing yourself they're not as interesting as they think they are. Then they look at you and ask what's the matter. Why hadn;t you offered any proper feedback? They are bringing all the energy to the conversation, here!\nYou have nothing to say. They go back to mumbling a bit softer, because you don't deserve to hear their wisdom. (Which is true. Just not in the way they think.)" ;
             : set_true "bonus_point_weary_biz" ;
             : gosub "add_bonus" ;
@@ -1033,7 +1080,7 @@ locations {
          }
          : if (!bonus_point_weary_biz) {
             : match "weary _;_ biz" {
-               : set_integer var="tempint" "4" ;
+               : set_integer var="tempint" "6" ;
                : set_false "first_half" ;
                : match "weary _" {
                   : set_true "first_half" ;
@@ -1270,6 +1317,7 @@ locations {
                : print "You already opened the foldin' gate!" ;
                : done ;
             }
+            : collection_modify { collection = "tried_combo_bonus" index -> (9) content -> ("true") } ;
             : print "The foldin' gate opens to reveal a golden fate behind it! What could be better than gold? Lots of it?" ;
             : set_true "bonus_point_golden_fate" ;
             : gosub "add_bonus" ;
@@ -1277,7 +1325,7 @@ locations {
          }
          : if (!bonus_point_golden_fate) {
             : match "golden _;_ fate" {
-               : set_integer var="tempint" "3" ;
+               : set_integer var="tempint" "9" ;
                : set_false "first_half" ;
                : match "golden _" {
                   : set_true "first_half" ;
