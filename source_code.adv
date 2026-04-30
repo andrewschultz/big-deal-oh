@@ -2677,6 +2677,41 @@ subroutines {
       }
    }
 
+   feel_real : subroutine {
+      : match "feel _" {
+         : print {( bonus_point_real_phase ? "You already dealt with your feelings." : feel_yet ? "You still feel those rays. Well, it could be a ray. Must be several ways to deal with them." : "Maybe it's just you, but you feel rays on your back. You're not sure what sort of rays, but you definitely feel rays." )} ;
+         : set_true "feel_yet" ;
+         : done ;
+      }
+      : if (!feel_yet) {
+         : return ;
+      }
+      : match "feel rays" {
+         : print {( bonus_point_real_phase ? "The rays still push you on, in their own way, whether or not they're imaginary." : "You still feel the rays on your back. What to think of them? Not that you have to. It might just be a pick me up." )} ;
+         : done ;
+      }
+      : match "real fey;real phase;real faze" {
+         : if (bonus_point_real_phase) {
+            : print "You already contemplated how things were or weren't getting real." ;
+            : done ;
+         }
+         : print "The rays you feel may or may not be imaginary. They may be fey, or a phase, or they may faze a bit. But the thing is -- that you even imagine feeling them is an excuse to get going so they don't zap ordrain you or whatever. Sometimes we have smart reasons to do silly things or do nothing, but here it may be a case of the reverse. Which is smart in its own way." ;
+         : set_true "bonus_point_real_phase" ;
+         : collection_modify { collection = "tried_combo_bonus" index -> (1) content -> ("true") } ;
+         : gosub "add_bonus" ;
+         : done ;
+      }
+      : match "real _;_ phase;_ fey;_ faze" {
+         : set_integer var="tempint" "1" ;
+         : set_false "first_half" ;
+         : match "real _" {
+            : set_true "first_half" ;
+         }
+         : gosub "say_half_b" ;
+         : done ;
+      }
+   }
+
    graphic_stuff : subroutine {
       : set_stat target="current_location" stat="stat_graphic_notes" value="1" ;
       : if (current_location() == "ailer_lair") {
