@@ -816,9 +816,9 @@ booleans {
    doneblock_13_moldin_dolmen : dynamic_boolean {( opt_block_done && key_duplicated )} ;
    doneblock_23_outer_tower : dynamic_boolean {( opt_block_done && is_at "tenser_center" && point_power_torch )} ;
    doneblock_33_collation_location : dynamic_boolean {( opt_block_done && point_grow_dupes )} ;
-   doneblock_14_ailer_lair : dynamic_boolean {( opt_block_done && point_help_card && is_at "tenser_center" )} ;
+   doneblock_14_ailer_lair : dynamic_boolean {( opt_block_done && point_best_notes && point_sold_guide && point_sick_bride && point_sail_tide && is_at "tenser_center" )} ;
    doneblock_24_tenser_center : dynamic_boolean {( opt_block_done && doneblock_14_ailer_lair && doneblock_34_jeerin_region && is_at "oopster_stupor" )} ;
-   doneblock_34_jeerin_region : dynamic_boolean {( opt_block_done && is_at "tenser_center" && point_cool_plan )} ;
+   doneblock_34_jeerin_region : dynamic_boolean {( opt_block_done && point_help_card && is_at "tenser_center" && point_cool_plan )} ;
    doneblock_15_gnawing_awning : dynamic_boolean {( opt_block_done && point_sick_bride && point_sold_guide && point_sail_tide && is_at "ailer_lair"  )} ;
    doneblock_25_oopster_stupor : dynamic_boolean {( opt_block_done && is_at "foldin_gate" && point_help_card )} ;
    doneblock_35_taller_altar : dynamic_boolean {( opt_block_done && point_cool_plan && is_at "jeerin_region" )} ;
@@ -3261,7 +3261,6 @@ subroutines {
             : set_true "placed_flaming_towers" ;
 
             : set_true "buns_taken" ;
-            : set_true "porch_in_tower" ;
             : set_true "key_found" ;
             : set_true "key_duplicated" ;
             : set_true "key_used" ;
