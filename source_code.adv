@@ -1359,6 +1359,29 @@ locations {
    }
    gnawing_awning : location "{loc_gnawing_awning}" header="{header_gnawing_awning}" graphic="r_gnawing_awning" {
       on_command {
+         : if (three_awning_sides_done) {
+            : match "white side" {
+               : if (bonus_point_white_side) {
+                  : print "Already done!" ;
+                  : done ;
+               }
+               : print "Site wide ... white side. Yes, there is another one around out back. It's not VERY exciting, but someone there warns you of a false city ahead. TMYK!" ;
+               : set_true "bonus_point_white_side" ;
+               : gosub "add_bonus" ;
+               : done ;
+            }
+            : if (!bonus_point_white_side) {
+               : match "white _;_ side" {
+                  : set_integer var="tempint" "8" ;
+                  : set_false "first_half" ;
+                  : match "white _" {
+                     : set_true "first_half" ;
+                  }
+                  : gosub "say_half_b" ;
+                  : done ;
+               }
+            }
+         }
          : match "sail tide" {
             : if (point_sail_tide) {
                : print "You already made a sail tide from the tail side! You don't want to mess with nature too much." ;
