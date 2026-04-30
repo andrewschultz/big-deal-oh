@@ -1297,6 +1297,14 @@ locations {
    }
    foldin_gate : location "{loc_foldin_gate}" header="{header_foldin_gate}" graphic="r_foldin_gate" {
       on_command {
+         : match "_ gate" {
+            : print {( bonus_point_golden_fate ? "It leads to a shining city. So shining, you wonder if it should be toned down." : "No obvious lock on the gate. Perhaps you need a magic word or something." )} ;
+            : done ;
+         }
+         : match "_ brook" {
+            : print {( think_great_book ? "You think of how to get a great book from the gate brook. Surely there must be a way." : "The brook puts you in the mood to think about the bigger things in life for a while. And the little things. And the middle things that link up said bigger and little things. It would feel like sacrilege to actually enter the brook, though. What secrets might it be waiting to reveal to you?" )} ;
+            : done ;
+         }
          : match "great book" {
             : collection_modify { collection = "tried_combo_core" index -> (28) content -> ("true") } ;
             : if (!point_help_card) {
