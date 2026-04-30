@@ -1867,6 +1867,11 @@ locations {
                : done ;
             }
          }
+         : if (point_bake_tons) {
+            : match "_ tree" {
+               : print {( point_key_trove ? "Trees are nice and all, and you have a whole tree cove in here! What secrets could it hide?" : "It's not the trees but the keys that are useful to you. I mean, trees are useful for the ecosystem in general, but yeah." )} ;
+            }
+         }
          : if (point_key_trove) {
             : match "_ trove;_ keys;_ key" {
                : if (!point_lodging_doc) {
@@ -2036,6 +2041,10 @@ locations {
                 : gosub "add_bonus" ;
                 : done ;
              }
+         }
+         : match "_ leery;_ owner" {
+            : print {( point_tight_rules ? "The owner seems more trusting of you now you showed you cared about rules." : "The owner doesn't seem to trust you yet. Perhaps you need to show you're willing to learn to use the right tools." )} ;
+            : done ;
          }
          : match "_ eerie;_ loner" {
             : print {( point_leery_owner ? "You're glad the loner's gone. No need to deal with them any more." : "The eerie loner's I H8 PPL tshirt suggests you may want to just ask them to refer you to someone who is more willing, or less unwilling, to help you." )} ;
