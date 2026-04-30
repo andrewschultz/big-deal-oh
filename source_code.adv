@@ -794,9 +794,6 @@ booleans {
    opt_score_notify : boolean "true" scope="survivor" ;
    can_reveal_block_opt : dynamic_boolean {( score > 0 || option_asked_once || have_won )} ;
 
-   # blocker dynamic booleans
-   doneblock_rocky_caves : dynamic_boolean {( point_steel_wrench && opt_block_done )} ;
-
    widget_blurry : boolean "false" ;
    show_overlay : boolean "true" ;
 
@@ -3869,6 +3866,23 @@ on_render {
       : done ;
    }
    #alphabetize main scenery
+   : if (is_at "ailer_lair") {
+      : if (point_sail_tide && !point_best_notes) {
+         : overlay "s_ailer_lair_boats" x="1" y="1" ;
+         : overlay "s_ailer_lair_boats" x="9" y="17" ;
+         : overlay "s_ailer_lair_boats" x="30" y="10" ;
+      }
+      : if (!point_best_notes) {
+         : overlay "s_ailer_lair_babbler" x="80" y="18" ;
+         : overlay "s_ailer_lair_babbler" x="100" y="18" ;
+         : overlay "s_ailer_lair_babbler" x="120" y="18" ;
+         : overlay "s_ailer_lair_babbler" x="140" y="18" ;
+         : overlay "s_ailer_lair_blabber" x="160" y="18" ;
+         : overlay "s_ailer_lair_blabber" x="180" y="18" ;
+         : overlay "s_ailer_lair_blabber" x="200" y="18" ;
+         : overlay "s_ailer_lair_blabber" x="220" y="18" ;
+      }
+   }
    : if (is_at "backin_cabin") {
       : if (point_pull_file) {
          : overlay "s_backin_cabin_file" x="111" y="24" ;
@@ -3901,23 +3915,6 @@ on_render {
          : overlay "s_collation_location_happy" x="168" y="0" ;
          : overlay "s_collation_location_happy" x="190" y="0" ;
          : overlay "s_collation_location_happy" x="212" y="0" ;
-      }
-   }
-   : if (is_at "ailer_lair") {
-      : if (point_sail_tide && !point_best_notes) {
-         : overlay "s_ailer_lair_boats" x="1" y="1" ;
-         : overlay "s_ailer_lair_boats" x="9" y="17" ;
-         : overlay "s_ailer_lair_boats" x="30" y="10" ;
-      }
-      : if (!point_best_notes) {
-         : overlay "s_ailer_lair_babbler" x="80" y="18" ;
-         : overlay "s_ailer_lair_babbler" x="100" y="18" ;
-         : overlay "s_ailer_lair_babbler" x="120" y="18" ;
-         : overlay "s_ailer_lair_babbler" x="140" y="18" ;
-         : overlay "s_ailer_lair_blabber" x="160" y="18" ;
-         : overlay "s_ailer_lair_blabber" x="180" y="18" ;
-         : overlay "s_ailer_lair_blabber" x="200" y="18" ;
-         : overlay "s_ailer_lair_blabber" x="220" y="18" ;
       }
    }
    : if (is_at "demo_meadow" && !point_tool_stall) {
