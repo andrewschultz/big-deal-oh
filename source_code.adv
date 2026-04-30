@@ -676,7 +676,7 @@ booleans {
    graphics_unwon_warn : boolean "false" ;
    graphics_note : boolean "false" scope="survivor" ;
 
-   # game state (critical)
+   # game state (critical or procedural e.g. changes in narrative visiting a place the first time)
    listen_demo_meadow : boolean "false" ;
    smell_rocky_caves : boolean "false" ;
    placed_flaming_towers : boolean "false" ;
@@ -684,6 +684,7 @@ booleans {
    fax_examined : boolean "false" ;
    porch_in_tower : boolean "false" ;
    kelp_placed : boolean "false" ;
+   center_sign_fell : boolean "false" ;
 
    key_found : boolean "false" ;
    key_duplicated : boolean "false" ;
@@ -1854,6 +1855,12 @@ locations {
                : gosub "say_half" ;
                : done ;
             }
+         }
+      }
+      on_describe {
+         : if (!center_sign_fell && has_visited "foldin_gate") {
+            : print "Oh, wow! That U R HERE sign fell over since last you passed by. Maybe the maze collapsing caused other changes worth checking out." ;
+            : set_true "center_sign_fell" ;
          }
       }
    }
@@ -3947,6 +3954,8 @@ on_render {
    : if (is_at "tenser_center") {
       : if (!point_minister_south) {
          : overlay "s_tenser_center_sinister_mouth" x="0" y="0" ;
+      } : else_if (has_visited "foldin_gate") {
+         : overlay "s_tenser_center_sign_fell" x="170" y="0" ;
       } : else {
          : overlay "s_tenser_center_u_r_here" x="170" y="0" ;
       }
@@ -4057,8 +4066,9 @@ assets {
       s_streaky_cove_tree_cove : base64_png "iVBORw0KGgoAAAANSUhEUgAAAGAAAAAoAgMAAAB8/ReqAAAADFBMVEWAAAAAQABAgEAA///nP2qnAAAAzklEQVR4Xp3PMQ6DMAyGUQs2lt6D+yDGHoUcJWPEKbhE7tHFWy3XEY3/pAOt6umTniwntLxHpdbCJQDqIC2sgPUTsudPcFdlz9yDeHIDG2DrQG08pQADkNlA6qNUkWyg9bYqUgpkALIA1xPaZDYQX2iSDdQXmpQCXBfazAYPulVAHldwAJB0BeSAfH6BETA67Ilo2M9BxhMIQD3MgNlhN5hOQKa/IDl44vgAGBwiABkMAvnrkXQFRPVbyGSRAMhoEQHIQHUmg+QZqYPgWeIF05Lz2PhP5/MAAAAASUVORK5CYII=" ;
       s_taller_altar_cage : base64_png "iVBORw0KGgoAAAANSUhEUgAAAB0AAAAdCAYAAABWk2cPAAABcUlEQVR4nM1Vba6EIAwczN4Lb0a9GZys79eYWqmg6yaviYGRj5YZaJOq4o5t23ZvQc9UdfoTEa216jdYRO45VFVwk6dYRDTN0PsGpaWUxL0+Mw7XdUXOOVlMq7VihAGgtbYHvowcMkIfQM450cEIAwAxAIT0vkVpa03prJSSQnpJhdWBfW4ywr0A2D855SLSEmnIwCJcaz0EYDU90PsGpdSUezEAUguYi2QpJRXs86Ts23GLvflLSLzQ4YjSaIMIXwWQROQVShkcsdXWz1kYRY9GYlJox60MfJecy370Tk+aWuNijlvsbURpV1Pv4CqAnsN/r+lecliGbEkiZnmy4z3s+7ac2faxph7/RFP737f2XbfWlAG01tTnceAlTW1hIObJ/CUDMKdppOGspv7bq0xEaW+sh3vVJMrJoaY2ywDHrOOxzc3MPJFD4IeaXs3/2Em+2vAUIzxDqbXDOyVdT9oRpSeno4c/kxhmHQIvazprfzeRIXADuKDBAAAAAElFTkSuQmCC" ;
       s_taller_altar_weight : base64_png "iVBORw0KGgoAAAANSUhEUgAAABUAAAAeCAYAAADD0FVVAAAAw0lEQVR4nNWTUQ7EIAhEcS8mNzPeDE/mftFQAoqt3U3np2mKzxmgqfcOM9Vaj6JSSprVf6JAhskLLkMlMOIyDGV3EZcAAOmJng6hrTX3Y87ZhYfir8qFsktEBOs5SvFbp5YQEYhoL5SIjvjL0FG/InXmSkWhAPZqufFlTEQcvk+hnkvdTx6YVR8elJ78klNP0ulsrU5QHUX3kWHapT53mv7K1LXkFvz/N12G3omuz78s/t3oLOa8LP5uJSLa0k+pR5x+AYsYesEvbcfqAAAAAElFTkSuQmCC" ;
+      s_tenser_center_sign_fell : base64_png "iVBORw0KGgoAAAANSUhEUgAAABIAAAARAgMAAACtNBRqAAAACVBMVEX///8AAAD//wBT7WDCAAAAAXRSTlMAQObYZgAAADpJREFUCFtjYGANDQ1gYGBbtWoCkAzNApHLIOxUELlqGYKdBpQNDUNRCSYjl4JVrgSLZ8JUQs0EmQ8APPQauypF4lMAAAAASUVORK5CYII=" ;
       s_tenser_center_sinister_mouth : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoAgMAAABslMwaAAAACVBMVEX///8AAAAAgABF0jEWAAAAAXRSTlMAQObYZgAAAXpJREFUeF7llTFuwzAMRQVPhY7RqdB9pMFHyCk0Ft2zEwEMyP+UhUsEHwQZOcnavxmkn/glikr/SwDGFLCAKQXdBgtU4gAuhyIkxxGKSTHBBcbjArYGChLWdm2QcwDXWuABmAH2WldQvUSA7gGM10MGckBVF1YWAP7iV5NrflepyegUqlWjaRdxHj6/M5dhCaAnK0ACgBNU1WvFSB+3RGWJAHXlDrjqLGDpBFipgQDdF3MSPW/1FTVIMtsgLwIqJJmD+MId0Gh7JmAxgAwFsHVOAdmOEwWYlp8BmuvmP4DekuUJQnOtVHbtD443YG6hBwDAXM6NAHqaAbQAzjFMmtrdx7zXZqlc8+I3trmJkLHCAtL9NKPJskKiZ+HHQtU2wWARlxhQejBkdDoza1NAD2aaFPcg7UcBYtfBARjR05YIoAnbcvmmNgg1yuF7ZTJEzaKfAmjMAtTtSKFKYEzsd1e3EgMQUT0gFTyIPgGQ96IEjPcB50W6Njjf51/oe0meo9rfKQAAAABJRU5ErkJggg==" ;
-      s_tenser_center_u_r_here : base64_png "iVBORw0KGgoAAAANSUhEUgAAABEAAAASAgMAAADAl93HAAAACVBMVEX///8AAAD//wBT7WDCAAAAAXRSTlMAQObYZgAAADlJREFUCFtjCAUCB4asVatWAcmZ00Dk1JkgchWITEudOQ1Ipk2b5cCQCmXPnAUTh+iCmMDAAMJ4SQDUOBy9Nqs5CAAAAABJRU5ErkJggg==" ;
+      s_tenser_center_u_r_here : base64_png "iVBORw0KGgoAAAANSUhEUgAAABEAAAASAgMAAADAl93HAAAACVBMVEX///8AAAD//wBT7WDCAAAAAXRSTlMAQObYZgAAADlJREFUCFtjCAUCB4asVatWAcm0lVFAMmwliA0WSUudNg1Ips2c5cCQisROS505DaYGYgIDAwjjJQGf/xws7CZp0gAAAABJRU5ErkJggg==" ;
       s_tool_eerie_loner : base64_png "iVBORw0KGgoAAAANSUhEUgAAABoAAAAiBAMAAACzTdQ9AAAAElBMVEUAgAAAAAAAAP+AAAD/AAD///85z4jPAAAAAXRSTlMAQObYZgAAAK9JREFUeF5lztENwyAMRVGsLsCLxACJ1P9WqBvgAZB4+69SOwRIVYuPnFxHIZyTc36FMY8f5Q9Zl0g+41CqxiXeBbKVKSG1GtaqpRVH+mswAQPaWitXRXK1/qkkaivWzpjYG1L1VOEqERZRIfSJYtGOFC2qMbgQRFVd4udqdf6dyjKU6DOVbd5AF45z9nhK7An2akQXtr1LfDe6OjdbngpA16obpsJ2IC7Z6k3id/kCA6EsRFjZ3X0AAAAASUVORK5CYII=" ;
       s_tool_right_tools : base64_png "iVBORw0KGgoAAAANSUhEUgAAABYAAAAPAgMAAACdA9f7AAAACVBMVEUAgAAAAAD////Q5koIAAAASUlEQVR4XmMIBYEAhqxVQDCBIWFRU0fDBIYkJa2ORSCeQsMiEE+jA0w1ASm4So0VixZMYMhYpKTUBaEWQagVQGrFigVNcJUQGwCWcSoxP9pxtwAAAABJRU5ErkJggg==" ;
       s_tool_stall_leery_owner : base64_png "iVBORw0KGgoAAAANSUhEUgAAABUAAAAWBAMAAADdrcoLAAAAFVBMVEX///8AAACAgECAgID4+Pj/AAD/AP+ds1uSAAAAAXRSTlMAQObYZgAAAH5JREFUeF41zOENwyAMhFGiLoCrUwfIBJWYgOToAFW9QZT9R+iZxN+vB9gU1VRRwVma3Ns7+BB1SIPY2zQYyUoGWdNML8Pdu5AP9fYCWkl3yxEDSav3RGRh46zXuP6cImgyeYyxreyX3b+4jPAK2eThfELL6Dj421Zj+DX/kf+LUCJuVOTfLwAAAABJRU5ErkJggg==" ;
