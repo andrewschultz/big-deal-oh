@@ -788,12 +788,16 @@ booleans {
    point_written_specs   : boolean "false" ; # 24
 
    # bonus point(s) (alphabetize)
-   bonus_point_clock_jerk : boolean "false" scope="survivor" ;
-   bonus_point_dig_below : boolean "false" scope="survivor" ;
-   bonus_point_golden_fate : boolean "false" scope="survivor" ;
-   bonus_point_map_all : boolean "false" scope="survivor" ;
-   bonus_point_real_phase : boolean "false" scope="survivor" ;
-   bonus_point_weary_biz : boolean "false" scope="survivor" ;
+   bonus_point_clock_jerk  : boolean "false" scope="survivor" ; # 04
+   bonus_point_dig_below   : boolean "false" scope="survivor" ; # 00
+   bonus_point_golden_fate : boolean "false" scope="survivor" ; # 09
+   bonus_point_map_all     : boolean "false" scope="survivor" ; # 03
+   bonus_point_mating      : boolean "false" scope="survivor" ; # 05
+   bonus_point_real_phase  : boolean "false" scope="survivor" ; # 01
+   bonus_point_really      : boolean "false" scope="survivor" ; # 02
+   bonus_point_touter_hour : boolean "false" scope="survivor" ; # 07
+   bonus_point_white_side  : boolean "false" scope="survivor" ; # 08
+   bonus_point_weary_biz   : boolean "false" scope="survivor" ; # 06
 
    # think variables
    think_bake_tons     : boolean "false" ;
