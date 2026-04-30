@@ -1637,6 +1637,28 @@ locations {
    }
    outer_tower : location "{loc_outer_tower}" header="{header_outer_tower}" graphic="r_outer_tower" {
       on_command {
+         : match "touter hour" {
+            : if (bonus_point_touter_hour) {
+               : print "You wouldn't want to tire out anyone around. Or yourself. Or me. You're doing well enough. You'll continue to do well. I believe in you! (And the hints I've provided, if you need them.)" ;
+               : done ;
+            }
+            : collection_modify { collection = "tried_combo_bonus" index -> (7) content -> ("true") } ;
+            : print "You take some time to feel great and let the world know! This objectively does nothing for your situation, but hey, if you don't believe in yourself, who will? You get tired before an hour of this, but that's not the worst thing, because you realize you didn't need a whole hour of self-encouragement to get going." ;
+            : set_true "bonus_point_touter_hour" ;
+            : gosub "add_bonus" ;
+            : done ;
+         }
+         : if (!bonus_point_touter_hour) {
+            : match "touter _;_ hour" {
+               : set_integer var="tempint" "7" ;
+               : set_false "first_half" ;
+               : match "touter _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half_b" ;
+               : done ;
+            }
+         }
          : match "_ tower" {
             : print {( "You step back and appreciate what an impressive tower it is. " + (key_used ? "You have free passage through it now." : "Perhaps the keyhole provides a clue how to get through.") )}
             : done ;
