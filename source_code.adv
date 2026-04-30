@@ -1130,6 +1130,23 @@ locations {
    }
    demo_meadow : location "{loc_demo_meadow}" header="{header_demo_meadow}" graphic="r_demo_meadow" {
       on_command {
+         : if (point_taming_flowers) {
+             : match "mating *;* mating" {
+                : print "Only MATING is needed for the bonus point." ;
+                : done ;
+             }
+             : match "mating -" {
+                : if (bonus_point_mating) {
+                   : print "The experiments in genetics will have to wait." ;
+                   : done ;
+                }
+                : collection_modify { collection = "tried_combo_bonus" index -> (5) content -> ("true") } ;
+                : set_true "bonus_point_mating" ;
+                : print "Wow! Those flowers sure are useful. You think of all they could hybridize with. You think back to your college genetics courses, of Mendeleev's teachings and dominant and recessive genes. You remember enough to know that some neat things could be created, but you don't remember the technical details or any ethical issues. Still, it's a thought." ;
+                : gosub "add_bonus" ;
+                : done ;
+             }
+         }
          : if (!demo_or_meadow_tried) {
             : match "_ demo;_ meadow" {
                : print "{one_time}you don't have to do anything with the meadow itself. It's more what's in it. Titles like the demo meadow are a clue you don't have to do anything with that entity." ;
