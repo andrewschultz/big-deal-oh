@@ -869,6 +869,7 @@ locations {
                   : done ;
                }
                : collection_modify { collection = "tried_combo_core" index -> (23) content -> ("true") } ;
+               : pocket "best_notes" ;
                : print "Yes! That is what you need. The ailers are happy with this and leave you with the notes. They go off to complain elsewhere, about more first-worldly problems." ;
                : set_true "point_best_notes" ;
                : gosub "add_point" ;
@@ -1362,7 +1363,8 @@ locations {
                : set_true "think_written_specs" ;
                : done ;
             }
-            : print "You give the spittin' wrecks the best notes. They nod. After a while, they hand back some written specs, which seem to detail a labyrinth. They note where the walls are thin and that you need to knock down a wall to get through. You wonder if they are pulling your leg, but you don't have much else to work with." ;
+            : print "You give the spittin' wrecks the best notes. They nod. After a while, they hand back some written specs, which seem to detail a labyrinth. They note where the walls are thin and that you need to knock down a wall to get through. You wonder if they are pulling your leg, but you don't have much else to work with. They ask if they can keep the notes. They tell you it would be selfish to keep them, which suits you fine for clearing up inventory space, then they find you a bit of a sucker for handing the notes over so quickly." ;
+            : destroy "best_notes" ;
             : set_false "think_written_specs" ;
             : set_true "point_written_specs" ;
             : gosub "add_point" ;
@@ -3319,6 +3321,12 @@ on_describe {
 ## Test VERB NOUN that the player types and executes conditional actions
 
 on_command {
+   : if (is_carried("best_notes")) {
+      : match "_ best;_ notes" {
+         : print "You understand them in a general sense, but the important details are well beyond you. You could use some help, here." ;
+         : done ;
+      }
+   }
    : if (is_carried("trove_key")) {
       : match "_ rusty" {
          : print "It's not strong enough to open a lock without breaking off. You'll have to find a way to make a sturdier copy." ;
