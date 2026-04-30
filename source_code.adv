@@ -1823,6 +1823,7 @@ locations {
             : set_true "point_fumbling_wrist" ;
             : gosub "add_point" ;
             : goto "foldin_gate" ;
+            : destroy "cool_plan" ;
             : redescribe ;
             : done ;
          }
@@ -1944,6 +1945,7 @@ locations {
             : collection_modify { collection = "tried_combo_core" index -> (25) content -> ("true") } ;
             : print "They seem quite glad you managed to give your friend a tip how to flee and start a new life. They appreciate the instructions to visit her. In return they share a cool plan for making it easier to return once you've gone a ways north of the tenser center. Whew! You sort of feared what was out there." ;
             : set_true "point_cool_plan" ;
+            : pocket "cool_plan" ;
             : gosub "add_point" ;
             : done ;
          }
@@ -2165,6 +2167,7 @@ locations {
 objects {
    best_notes : object "the best notes from the nest boats" ;
    buns : object "the BUNS you managed/needed to TAKE" at="cache_shack" conspicuous="false" ;
+   cool_plan : object "the outlined cool plan from the pool clan" ;
    chain : object "the platinum CHAIN that snapped onto you that you want to get rid of. Oh, what's the word?" ;
    hold_card : object "the cold hard hold card from the hard kelp" ;
    slab : object "the slender fab fender slab that was inside the platinum chain" conspicuous="false" ;
@@ -3535,6 +3538,12 @@ on_describe {
 ## Test VERB NOUN that the player types and executes conditional actions
 
 on_command {
+   : if (is_carried("cool_plan")) {
+      : match "_ cool;_ plan" {
+         : print "It's pretty cool, all right. You have another overview of it. That'll help things go smoothly when the time comes." ;
+         : done ;
+      }
+   }
    : if (is_carried("best_notes")) {
       : match "_ best;_ notes" {
          : print "You understand them in a general sense, but the important details are well beyond you. You could use some help, here." ;
