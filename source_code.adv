@@ -883,31 +883,6 @@ vocabulary {
 locations {
    ailer_lair : location "{loc_ailer_lair}" header="{header_ailer_lair}" graphic="r_ailer_lair" {
       on_command {
-         : if (has_visited "foldin_gate") {
-            : match "help card" {
-               : if (point_help_card) {
-                  : print "You already found the help card!" ;
-                  : done ;
-               }
-               : collection_modify { collection = "tried_combo_core" index -> (27) content -> ("true") } ;
-               : print "The kelp is tough to pick through, which is discouraging, but then you remember if it's tough to pick through, it can catch a lot of stuff. And you find a help card! Actually, it's more a cold hard hold card, like for a library or something." ;
-               : set_true "point_help_card" ;
-               : pocket "hold_card" ;
-               : gosub "add_point" ;
-               : done ;
-            }
-         }
-         : if (!point_help_card) {
-            : match "help _;_ card" {
-               : set_integer var="tempint" "27" ;
-               : set_false "first_half" ;
-               : match "help _" {
-                  : set_true "first_half" ;
-               }
-               : gosub "say_half" ;
-               : done ;
-            }
-         }
          : if (point_sail_tide) {
             : match "best notes" {
                : if (point_best_notes) {
@@ -1468,6 +1443,31 @@ locations {
    }
    jeerin_region : location "{loc_jeerin_region}" header="{header_jeerin_region}" graphic="r_jeerin_region" {
       on_command {
+         : if (has_visited "foldin_gate") {
+            : match "help card" {
+               : if (point_help_card) {
+                  : print "You already found the help card!" ;
+                  : done ;
+               }
+               : collection_modify { collection = "tried_combo_core" index -> (27) content -> ("true") } ;
+               : print "The kelp is tough to pick through, which is discouraging, but then you remember if it's tough to pick through, it can catch a lot of stuff. And you find a help card! Actually, it's more a cold hard hold card, like for a library or something.\nThe spittin' wrecks mock you a bit for actually wanting or needing such a thing. You're not sure why you want it, either.\n\"You know, it'd be easier to cut through that kelp with a power torch or something.\" Rats! You offer them yours, if they need to do such a thing. They scoff again. But they take it. It's unclear if they're scoffing at how cheap it is or how easily you gave up something valuable for free. But you're glad not to have to lug it around." ;
+               : set_true "point_help_card" ;
+               : pocket "hold_card" ;
+               : gosub "add_point" ;
+               : done ;
+            }
+         }
+         : if (!point_help_card) {
+            : match "help _;_ card" {
+               : set_integer var="tempint" "27" ;
+               : set_false "first_half" ;
+               : match "help _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half" ;
+               : done ;
+            }
+         }
          : if (kelp_placed) {
             : match "_ hard;_ kelp" {
                : print {( point_help_card ? "You pick through the kelp but find nothing else." : "There's a lot of kelp. It would help to know what to pick through." )} ;
