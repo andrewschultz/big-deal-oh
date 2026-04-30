@@ -749,6 +749,7 @@ booleans {
    bonus_point_dig_below : boolean "false" scope="survivor" ;
    bonus_point_golden_fate : boolean "false" scope="survivor" ;
    bonus_point_map_all : boolean "false" scope="survivor" ;
+   bonus_point_weary_biz : boolean "false" scope="survivor" ;
 
    # think variables
    think_bake_tons     : boolean "false" ;
@@ -1020,6 +1021,27 @@ locations {
                   : set_true "first_half" ;
                }
                : gosub "say_half" ;
+               : done ;
+            }
+         }
+         : match "weary biz" {
+            : if (bonus_point_weary_biz) {
+               : print "Don't rub it in." ;
+               : done ;
+            }
+            : print "You listen to the beery whiz for a bit, almost convincing yourself they're not as interesting as they think they are. Then they look at you and ask what's the matter. Why hadn;t you offered any proper feedback? They are bringing all the energy to the conversation, here!\nYou have nothing to say. They go back to mumbling a bit softer, because you don't deserve to hear their wisdom. (Which is true. Just not in the way they think.)" ;
+            : set_true "bonus_point_weary_biz" ;
+            : gosub "add_bonus" ;
+            : done ;
+         }
+         : if (!bonus_point_weary_biz) {
+            : match "weary _;_ biz" {
+               : set_integer var="tempint" "4" ;
+               : set_false "first_half" ;
+               : match "weary _" {
+                  : set_true "first_half" ;
+               }
+               : gosub "say_half_b" ;
                : done ;
             }
          }
@@ -3857,6 +3879,13 @@ on_render {
    : if (is_at "cache_shack" && !buns_taken) {
       : overlay "s_cache_shack_buns" x="97" y="15" ;
    }
+   : if (is_at "chattin_em_plain") {
+      : if (bonus_point_weary_biz) {
+         : overlay "s_chattin_em_plain_beery_whiz_after" x="100" y="18" ;
+      } else {
+         : overlay "s_chattin_em_plain_beery_whiz_before" x="100" y="18" ;
+      }
+   }
    : if (is_at "collation_location") {
       : if (!point_grow_dupes) {
          : overlay "s_collation_location_sad" x="33" y="0" ;
@@ -4060,6 +4089,8 @@ assets {
       s_backin_cabin_file : base64_png "iVBORw0KGgoAAAANSUhEUgAAABIAAAAQCAYAAAAbBi9cAAAAWUlEQVR4nOXTQQqAMAxE0ZnSg/dqOdm4akTEUUwXgn9dXkpoKQkukgIASXTnmgNIatgxe/3qBk+BE/QWSKgKzNoKJKEV/QEaqC0931EFOUB3RYT9lB9edrUNvFMTc9nl1aQAAAAASUVORK5CYII=" ;
       s_backin_cabin_pile : base64_png "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAADFBMVEX///8AAACAAAD//wDLgN8KAAAAAXRSTlMAQObYZgAAACtJREFUCFtjCGAAglQQkQViZi0FEasCQMQEHMRSMGsymDgAIj6AiD8g4j8AERsZpPhuHiEAAAAASUVORK5CYII=" ;
       s_cache_shack_buns : base64_png "iVBORw0KGgoAAAANSUhEUgAAABAAAAAHAQMAAAA77l8BAAAABlBMVEUAAAD//wCI23BQAAAAHUlEQVR4XmP4/59hVifDqtUMs1YyrFrLMGMlUAQAa48KUDmFK0AAAAAASUVORK5CYII=" ;
+      s_chattin_em_plain_beery_whiz_after : base64_png "iVBORw0KGgoAAAANSUhEUgAAAB4AAAAWBAMAAAAlTTH8AAAAFVBMVEX/AP8AAAAAAP8AgAAA/wD/AAD///9tFLVFAAAAAXRSTlMAQObYZgAAAHdJREFUGNNljdEJgDAMRKMTWMR8S+0ConSAKm6g/6GY/UewVaiJ3t/LXe4Akmqb1EORc2F1QfAQZhu0L9k+eg8VcwNCiESgbBWozi/v+yELOmb5/+sHY5RtmI0IYN4jPS8akDJiCWAb4zKNirdImr1g9F7ln72bL54RIKBaXCqCAAAAAElFTkSuQmCC" ;
+      s_chattin_em_plain_beery_whiz_before : base64_png "iVBORw0KGgoAAAANSUhEUgAAAB4AAAAWBAMAAAAlTTH8AAAAG1BMVEX/AP8AAAAAAP8AgAAA/wCAgAD/AAD//wD///8SWAg9AAAAAXRSTlMAQObYZgAAAKBJREFUeF5NzDEKAkEMBdC/QvoNNlPKuhcQLaZeLSynWbzB4AU8QFiQObY/DjvMLxIePwSew8Sc0DLPy2NeOp+X27Q7pX9Pi5BCTzUiifWLYyhlZPURDncIZm5WWJPXfiAriTDSOdOD7f7m/O6MkLOhuf7vDVU0KwYtRUdotWkoDFd1aXGDrTm41A3V47bdrxcla+jnZkDv2DnEyPvO7Tl+AkszzRrTTacAAAAASUVORK5CYII=" ;
       s_collation_location_happy : base64_png "iVBORw0KGgoAAAANSUhEUgAAABUAAAAoBAMAAADj3azWAAAAD1BMVEX///8AAAAAAP8AgADdw6IvtXB4AAAAAXRSTlMAQObYZgAAAG1JREFUeF6d0NENgEAIA9D76AiO4AbnACR2/5mkwOHnRfmoL42J4NCAyiK57KQtnzzDGKDGMWjug3SkmVbOeRnK92QY+ZI6Wd8Nj9WbXCOjnKs1e8+9t3ftDZmfjNf9d/tqOR7/jDTTnd1YRlUP6CMy3buroIAAAAAASUVORK5CYII=" ;
       s_collation_location_sad : base64_png "iVBORw0KGgoAAAANSUhEUgAAABUAAAAoBAMAAADj3azWAAAAD1BMVEX///8AAAAAAP/dw6L/AACa4lhZAAAAAXRSTlMAQObYZgAAAG9JREFUeF6dz8EJAzEMRFHDlJAStgHB3w42/dcURkgIx6dE4PGTDxZaLuEsQhsg2hdXWbjavOB8X9xvov3wxPn/OXcIw2qKRFqAbBH2gs0+aRG73WLs1irre3fZ/GSNZ0vSkc7rPysNaSYpR0ZP/AADjSal28zewwAAAABJRU5ErkJggg==" ;
       s_jeerin_region_kelp : base64_png "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUAgMAAADw5/WeAAAACVBMVEX///8AMAAAYAC6jXp8AAAAAXRSTlMAQObYZgAAAGxJREFUCB0FgKEOwyAQQF9wVz8/M7J+ECdQNSWUryBVS33JZpdcw/jKBeAFEy7BrUuCWeVyTLanmSolnZRdUyTkKywMtVHptp4ZHSEqVj7dmELUAzeaZSTETXnYdzOal3Dw9v5XufsmC7Snq3/BICOmky5aXAAAAABJRU5ErkJggg==" ;
