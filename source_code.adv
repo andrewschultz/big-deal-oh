@@ -157,13 +157,11 @@ strings {
    header_foldin_gate : string "<Foldin' Gate<#ff0>>" ;
 
    loc_gnawing_awning : string "A gnawing awning blocks passage every way except back south. It has a {puz_point_gold_side}, a {puz_point_brick_side}, and a {puz_point_tail_side}.{awning_sides}" ;
-   awning_sides: dynamic_string {( point_sold_guide ? ("\nYou've currently found what to do with the gold side" + awning_gold_sub + ".") :
+   awning_sides: dynamic_string {( three_awning_sides_done ? ( "\nYou've figured everything to do site-wide. " + (!bonus_point_white_side ? "Well, everything you need to do." : "Even finding the extra side!" )) : point_sold_guide ? ("\nYou've currently found what to do with the gold side" + awning_gold_sub + ".") :
       point_sick_bride ? ( "\nYou've currently found what to do with the brick side" + (point_sail_tide ? " and the tail side" : "") + ".") :
 	  point_sail_tide ? "\nYou've currently found what to do with the tail side." : "\nYou haven't uncovered any of the awning's mysteries yet."
    )} ;
-   awning_gold_sub : dynamic_string {( !point_sick_bride ? ( point_sail_tide ? " and the tail side" : "" ) :
-      ( point_sail_tide ? ", the brick side and the tail side" : " and the brick side" )
-   )} ;
+   awning_gold_sub : dynamic_string {( point_sick_bride ? " and the brick side" : point_sail_tide ? " and the tail side" : "" )} ;
    header_gnawing_awning : string "<Gnawing Awning<#ff0>>" ;
 
    loc_jeerin_region : dynamic_string {( "Here in the jeerin' region, {puz_point_spittin_wrecks} find very clever ways to prove that everyone's beneath them. " + ( !point_written_specs ? "Yet they seem pretty smart. Perhaps they might help you" : "Maybe even you, but at least they helped you.") + (!kelp_placed ? "" : point_help_card ? " The kelp (hard) still lies here, but you already found something from it." : " The kelp (hard) has washed in from sea. Perhaps it's gotten something tangled in it.") + " You can exit north or west." )} ;
@@ -1398,6 +1396,7 @@ locations {
             : collection_modify { collection = "tried_combo_core" index -> (21) content -> ("true") } ;
             : print "The tail side creaks and somehow sets off a Rube Goldberg-esque sequence of events that results in a waterway opening and the tide rising. You see a boat sail south out of view and then hear yelling to the south." ;
             : set_true "point_sail_tide" ;
+            : gosub "check_site_wide" ;
             : gosub "add_point" ;
             : done ;
          }
@@ -1420,6 +1419,7 @@ locations {
             : collection_modify { collection = "tried_combo_core" index -> (20) content -> ("true") } ;
             : print "You are sort of surprised, and not, to find a sick bride. She talks about why she can't go through with a wedding. What she found that she couldn't even have told her friends. They are probably looking for her. But it is embarrassing. You say you'll keep a look out." ;
             : set_true "point_sick_bride" ;
+            : gosub "check_site_wide" ;
             : gosub "add_point" ;
             : done ;
          }
@@ -1446,6 +1446,7 @@ locations {
                : done ;
             }
             : print "Hooray! Thanks to the penny mounds you found, you are able to purchase a sold guide. Reading it briefly, it notes you need a torch. Where to get one, it says, well, the perspicacious reader should be able to figure that out." ;
+            : gosub "check_site_wide" ;
             : set_false "think_sold_guide" ;
             : set_true "point_sold_guide" ;
             : gosub "add_point" ;
@@ -2726,6 +2727,12 @@ subroutines {
          : print {( "Blocking done areas is " + (opt_block_done ? "already" : "now" ) + " on." )} ;
          : set_true "opt_block_done" ;
          : done ;
+      }
+   }
+
+   check_site_wide : subroutine {
+      : if (three_awning_sides_done) {
+         : print "You take a brief time to reflect that you've done what you needed to, site-wide." ;
       }
    }
 
