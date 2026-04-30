@@ -350,8 +350,8 @@ integers {
    widget_na_sappage_passage : integer "85" ;
    widget_26_foldin_gate : dynamic_integer {( point_help_card ? 54 : -54 )} ;
 
-   awning_done : dynamic_integer {( (point_sail_tide ? 1 : 0) + (point_sold_guide ? 1 : 0) + (point_sick_bride ? 1 : 0) )};
-   awning_doable : dynamic_integer {( (3 - awning_done) - (point_penny_mounds ? 1 : 0) )} ;
+   awning_sides_done : dynamic_integer {( (point_sail_tide ? 1 : 0) + (point_sold_guide ? 1 : 0) + (point_sick_bride ? 1 : 0) )};
+   awning_doable : dynamic_integer {( (3 - awning_sides_done) - (point_penny_mounds ? 1 : 0) )} ;
 
    #auxiliary
    tempint : integer "0" ;
@@ -764,6 +764,7 @@ booleans {
    known_leery_owner : dynamic_boolean {( think_leery_owner || point_leery_owner )} ;
    cocky_raves_present : dynamic_boolean {( listen_demo_meadow && !point_rocky_caves )} ;
    flaming_towers_present : dynamic_boolean {( placed_flaming_towers && !point_taming_flowers )} ;
+   three_awning_sides_done : dynamic_boolean {( point_sold_guide && point_sick_bride && point_sail_tide )} ;
 
    # think-relevant booleans
    already_got_command : boolean "false" ;
@@ -816,10 +817,10 @@ booleans {
    doneblock_13_moldin_dolmen : dynamic_boolean {( opt_block_done && key_duplicated )} ;
    doneblock_23_outer_tower : dynamic_boolean {( opt_block_done && is_at "tenser_center" && point_power_torch )} ;
    doneblock_33_collation_location : dynamic_boolean {( opt_block_done && point_grow_dupes )} ;
-   doneblock_14_ailer_lair : dynamic_boolean {( opt_block_done && point_best_notes && point_sold_guide && point_sick_bride && point_sail_tide && is_at "tenser_center" )} ;
+   doneblock_14_ailer_lair : dynamic_boolean {( opt_block_done && point_best_notes && three_awning_sides_done && is_at "tenser_center" )} ;
    doneblock_24_tenser_center : dynamic_boolean {( opt_block_done && doneblock_14_ailer_lair && doneblock_34_jeerin_region && is_at "oopster_stupor" )} ;
    doneblock_34_jeerin_region : dynamic_boolean {( opt_block_done && point_help_card && is_at "tenser_center" && point_cool_plan )} ;
-   doneblock_15_gnawing_awning : dynamic_boolean {( opt_block_done && point_sick_bride && point_sold_guide && point_sail_tide && is_at "ailer_lair"  )} ;
+   doneblock_15_gnawing_awning : dynamic_boolean {( opt_block_done && three_awning_sides_done && is_at "ailer_lair"  )} ;
    doneblock_25_oopster_stupor : dynamic_boolean {( opt_block_done && is_at "foldin_gate" && point_help_card )} ;
    doneblock_35_taller_altar : dynamic_boolean {( opt_block_done && point_cool_plan && is_at "jeerin_region" )} ;
 
@@ -3135,8 +3136,8 @@ subroutines {
       : gosub "widget_adjust" ;
       : set_integer var="tempint" {( widget_num )} ;
       : set_false "widget_blurry" ;
-      : if (point_penny_mounds && !point_sold_guide && awning_done < 2) {
-         : print {( "Weird! It's 44 plus a fraction. Like, " + (awning_done == 0 ? "two-thirds" : "one-half") + "." )} ;
+      : if (point_penny_mounds && !point_sold_guide && awning_sides_done < 2) {
+         : print {( "Weird! It's 44 plus a fraction. Like, " + (awning_sides_done == 0 ? "two-thirds" : "one-half") + "." )} ;
          : return ;
       }
       : if (tempint == -1 ) {
