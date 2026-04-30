@@ -3658,6 +3658,8 @@ on_command {
       : done ;
    }
 
+   : gosub "feel_real" ;
+
    # the 4 below here are point scoring events that need general rejects
    : if (is_carried "chain") {
       : match "drop chain" {
@@ -4000,7 +4002,7 @@ on_render {
    : if (is_at "chattin_em_plain") {
       : if (bonus_point_weary_biz) {
          : overlay "s_chattin_em_plain_beery_whiz_after" x="100" y="18" ;
-      } else {
+      } : else {
          : overlay "s_chattin_em_plain_beery_whiz_before" x="100" y="18" ;
       }
    }
@@ -4067,7 +4069,7 @@ on_render {
       : if (!key_used) {
          : overlay "s_outer_tower_door" x="129" y="25" ;
       }
-      : if (!porch_in_tower) {
+      : if (porch_in_tower) {
          : overlay "s_outer_tower_porch" x="143" y="0" ;
       }
    }
