@@ -2419,67 +2419,67 @@ barriers {
    block_done_32_backin_cabin : block {
       location = backin_cabin
       block_when = doneblock_32_backin_cabin
-      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+      message = You got everything you needed beyond the cabin.
    }
 
    block_done_42_yankin_canyon : block {
       location = yankin_canyon
       block_when = doneblock_42_yankin_canyon
-      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+      message = You got the chop drain to repurpose the platinum chain. You're done in the canyon.
    }
 
    block_done_13_moldin_dolmen : block {
       location = moldin_dolmen
       block_when = doneblock_13_moldin_dolmen
-      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+      message = You got the dolmen to make a new key. You're done there.
    }
 
    block_done_23_outer_tower : block {
       location = outer_tower
       block_when = doneblock_23_outer_tower
-      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+      message = You don't need to go back to the tower again.
    }
 
    block_done_33_collation_location : block {
       location = collation_location
       block_when = doneblock_33_collation_location
-      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+      message = You've helped the dough groups enough.
    }
 
    block_done_14_ailer_lair : block {
       location = ailer_lair
       block_when = doneblock_14_ailer_lair
-      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+      message = You helped the babblers and blabbers and found everything in the awning.
    }
 
    block_done_24_tenser_center : block {
       location = tenser_center
       block_when = doneblock_24_tenser_center
-      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+      message = You have nowhere else to visit besides back north.
    }
 
    block_done_34_jeerin_region : block {
       location = jeerin_region
       block_when = doneblock_34_jeerin_region
-      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+      message = You got the cool plan and help card. That's all the aid you need.
    }
 
    block_done_15_gnawing_awning : block {
       location = gnawing_awning
       block_when = doneblock_15_gnawing_awning
-      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+      message = You found all you needed in the awning.
    }
 
    block_done_25_oopster_stupor : block {
       location = oopster_stupor
       block_when = doneblock_25_oopster_stupor
-      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+      message = Your destiny is back north. You have all you need.
    }
 
    block_done_35_taller_altar : block {
       location = taller_altar
       block_when = doneblock_35_taller_altar
-      message = You got the key needed to pass the tower. You're done in the demo meadow area.
+      message = The cool plan was all you needed from the taller altar.
    }
 
 }
