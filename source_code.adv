@@ -3527,58 +3527,79 @@ subroutines {
       }
       : if (score == 0) {
          : match "testjump flaming" {
-            : set_true "point_rocky_caves" ;
-            : set_true "point_steel_wrench" ;
-            : set_true "point_tool_stall" ;
-            : set_true "point_leery_owner" ;
-            : set_true "point_tight_rules" ;
-            : set_true "point_taming_flowers" ;
-
-            : set_true "listen_demo_meadow" ;
-            : set_true "smell_rocky_caves" ;
-            : set_true "placed_flaming_towers" ;
+            : gosub "test_part_1" ;
             : goto "demo_meadow" ;
             : set_integer var="score" "6" ;
+            : redescribe ;
             : done ;
          }
          : match "testjump outer" {
-            : set_true "point_rocky_caves" ;
-            : set_true "point_steel_wrench" ;
-            : set_true "point_tool_stall" ;
-            : set_true "point_leery_owner" ;
-            : set_true "point_tight_rules" ;
-            : set_true "point_taming_flowers" ;
-
-            : set_true "point_push_best" ;
-            : set_true "point_pull_file" ;
-            : set_true "point_grow_dupes" ;
-            : set_true "point_bake_tons" ;
-            : set_true "point_creaky_stove" ;
-            : set_true "point_key_trove" ;
-            : set_true "point_platinum_chain" ;
-            : set_true "point_chop_drain" ;
-            : set_true "point_lodging_doc" ;
-            : set_true "point_formed_wax" ;
-
-            : set_true "listen_demo_meadow" ;
-            : set_true "smell_rocky_caves" ;
-            : set_true "placed_flaming_towers" ;
-
-            : set_true "buns_taken" ;
-            : set_true "key_found" ;
-            : set_true "key_duplicated" ;
-            : set_true "key_used" ;
-            : set_true "ever_keyhole" ;
-            : set_integer var="score" "16" ;
-            : set_integer var="newbies_cutscene" "2" ;
-
+            : gosub "test_part_1" ;
+            : gosub "test_part_2" ;
             : goto "outer_tower" ;
+            : set_integer var="score" "16" ;
+            : redescribe ;
+            : done ;
+         }
+         : match "testjump perch" {
+            : gosub "test_part_1" ;
+            : gosub "test_part_2" ;
+            : gosub "test_part_3" ;
+            : goto "oopster_stupor" ;
+            : set_integer var="score" "26" ;
+            : redescribe ;
             : done ;
          }
       }
       : match "testjump _" {
-         : print "Score must be 0 and you must TESTJUMP FLAMING or TESTJUMP OUTER." ;
+         : print "Score must be 0 and you must TESTJUMP FLAMING or TESTJUMP OUTER or TESTJUMP PERCH." ;
       }
+   }
+
+   test_part_1 : subroutine {
+      : set_true "point_rocky_caves" ;
+      : set_true "point_steel_wrench" ;
+      : set_true "point_tool_stall" ;
+      : set_true "point_leery_owner" ;
+      : set_true "point_tight_rules" ;
+      : set_true "point_taming_flowers" ;
+      : set_true "listen_demo_meadow" ;
+      : set_true "smell_rocky_caves" ;
+      : set_true "placed_flaming_towers" ;
+   }
+
+   test_part_2 : subroutine {
+      : set_true "point_push_best" ;
+      : set_true "point_pull_file" ;
+      : set_true "point_grow_dupes" ;
+      : set_true "point_bake_tons" ;
+      : set_true "point_creaky_stove" ;
+      : set_true "point_key_trove" ;
+      : set_true "point_platinum_chain" ;
+      : set_true "point_chop_drain" ;
+      : set_true "point_lodging_doc" ;
+      : set_true "point_formed_wax" ;
+      : set_true "buns_taken" ;
+      : set_true "key_found" ;
+      : set_true "key_duplicated" ;
+      : set_true "key_used" ;
+      : set_true "ever_keyhole" ;
+      : set_integer var="newbies_cutscene" "2" ;
+
+   }
+
+   test_part_3 : subroutine {
+      : set_true "porch_in_tower" ;
+      : set_true "point_minister_south" ;
+      : set_true "point_hard_maze" ;
+      : set_true "point_penny_mounds" ;
+      : set_true "point_sold_guide" ;
+      : set_true "point_sick_bride" ;
+      : set_true "point_sail_tide" ;
+      : set_true "point_power_torch" ;
+      : set_true "point_best_notes" ;
+      : set_true "point_written_specs" ;
+      : set_true "point_cool_plan" ;
    }
 
 }
