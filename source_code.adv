@@ -286,6 +286,8 @@ strings {
 }
 
 integers {
+   invalid_number : integer "0" ;
+
    score : integer "0" ;
    max_score : integer "29" ;
 
@@ -367,6 +369,10 @@ integers {
 
    commands_figured : dynamic_integer {( (think_bake_tons ? 1 : 0) + (think_chop_drain ? 1 : 0) + (think_great_book ? 1 : 0) + (think_grow_dupes ? 1 : 0) + (think_leery_owner ? 1 : 0) + (think_sold_guide ? 1 : 0) + (think_written_specs ? 1 : 0) )} ;
 
+}
+
+stats {
+   stat_graphic_notes : stat ;
 }
 
 collections {
