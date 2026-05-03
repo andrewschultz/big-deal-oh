@@ -816,6 +816,7 @@ booleans {
    cocky_raves_present : dynamic_boolean {( listen_demo_meadow && !point_rocky_caves )} ;
    flaming_towers_present : dynamic_boolean {( placed_flaming_towers && !point_taming_flowers )} ;
    three_awning_sides_done : dynamic_boolean {( point_sold_guide && point_sick_bride && point_sail_tide )} ;
+   can_pass_maze : dynamic_boolean {( point_written_specs && point_power_torch && point_cool_plan )} ;
 
    # think-relevant booleans
    already_got_command : boolean "false" ;
@@ -1373,6 +1374,7 @@ locations {
                   : print "Already done!" ;
                   : done ;
                }
+               : collection_modify { collection = "tried_combo_bonus" index -> (8) content -> ("true") } ;
                : print "Site wide ... white side. Yes, there is another one around out back. It's not VERY exciting, but someone there warns you of a false city ahead. TMYK!" ;
                : set_true "bonus_point_white_side" ;
                : gosub "add_bonus" ;
@@ -3552,7 +3554,8 @@ subroutines {
             : set_true "key_duplicated" ;
             : set_true "key_used" ;
             : set_true "ever_keyhole" ;
-            : set_integer var="score" "15" ;
+            : set_integer var="score" "16" ;
+            : set_integer var="newbies_cutscene" "2" ;
 
             : goto "outer_tower" ;
             : done ;
@@ -3704,7 +3707,7 @@ on_command {
    : if (is_carried "chain") {
       : match "chop drain" {
          : if (point_chop_drain) {
-            : print "The chain should be off-stage. You shouldn't have it again." ;
+            : print "The chain should be off-stage. You shouldn't have it again." ; # ?? this code is inaccessible. Move things to the location when done?
             : done ;
          }
          : if (!is_at("yankin_canyon")) {
