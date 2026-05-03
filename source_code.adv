@@ -1323,6 +1323,10 @@ locations {
             : set_false "think_great_book" ;
             : set_true "point_great_book" ;
             : gosub "add_point" ;
+            : press_any_key ;
+            : if (!have_won) {
+               : print "Congratulations on finishing, and thanks for making it! While I encourage you to try the other TALP entries first if you haven't already, I'd like to note that you have unlocked graphics explanation mode if you wish to replay. Just type GR in any room.\nAnd if you wish to come back later, you don't have to win. You can type GR in any room, and you will get a warning first, because there are spoilers." ;
+            }
             : win_game ;
             : done ;
          }
@@ -2052,7 +2056,7 @@ locations {
                : done ;
             }
             : collection_modify { collection = "tried_combo_core" index -> (16) content -> ("true") } ;
-            : print "Well, you came from the south, and so maybe you can call some good guys south to help you. Some who know how to deal with evil monsters. You're in luck! A mistin'-er minister sprays the sinister mouth with Spring-'Way-Wing-Spray. Nothing happens. Oh no!\nBut then the minister begins a boring, boring sermon. The mouth seems agitated for a bit before running away.nYou thank the minister profusely, but they say it's no big deal. The mouth wasn't evil, or at any rate very adept at evil. It just sort of hoped it was." ;
+            : print "Well, you came from the south, and so maybe you can call some good guys south to help you. Some who know how to deal with evil monsters. You're in luck! A mistin'-er minister sprays the sinister mouth with Spring-'Way-Wing-Spray. Nothing happens. Oh no!\nBut then the minister begins a boring, boring sermon. The mouth seems agitated for a bit before running away.\nYou thank the minister profusely, but they say it's no big deal. The mouth wasn't evil, or at any rate very adept at evil. It just sort of hoped it was." ;
             : set_true "point_minister_south" ;
             : gosub "add_point" ;
             : done ;
