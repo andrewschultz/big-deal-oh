@@ -1489,16 +1489,16 @@ locations {
                : gosub "add_point" ;
                : done ;
             }
-         }
-         : if (!point_help_card) {
-            : match "help _;_ card" {
-               : set_integer var="tempint" "27" ;
-               : set_false "first_half" ;
-               : match "help _" {
-                  : set_true "first_half" ;
+            : if (!point_help_card) {
+               : match "help _;_ card" {
+                  : set_integer var="tempint" "27" ;
+                  : set_false "first_half" ;
+                  : match "help _" {
+                     : set_true "first_half" ;
+                  }
+                  : gosub "say_half" ;
+                  : done ;
                }
-               : gosub "say_half" ;
-               : done ;
             }
          }
          : match "_ spittin;_ wrecks" {
