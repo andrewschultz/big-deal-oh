@@ -3612,6 +3612,7 @@ themes {
       }
       theme_settings {
          parser_delay  = 0
+         layout = SB G D LOCK
       }
       colors {
          status_bar_pen   = 15
