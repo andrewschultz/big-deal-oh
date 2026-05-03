@@ -141,7 +141,7 @@ strings {
    loc_cache_shack : string "You are in a cache shack, filled with various random stuff that seems either useless or far too heavy to lift. You can go back east." ;
    header_cache_shack : string "<Cache Shack<#ff0>>" ;
 
-   loc_chattin_em_plain : string "You are in the {puz_point_chattin_em_plain}. The only exit is north." ;
+   loc_chattin_em_plain : string "You are in the {puz_point_chattin_em_plain}. The only escape from the chatter of a beery whiz nearby is north." ;
    header_chattin_em_plain : string "<Chattin' 'Em Plain<#ff0>>" ;
 
    loc_collation_location : dynamic_string {( "You are in a collation location. The only exit is south. {puz_point_dough_groups_u} sit here " + (!point_grow_dupes ? "looking lonely" : "happy together") + "." )} ;
@@ -164,7 +164,7 @@ strings {
    awning_gold_sub : dynamic_string {( point_sick_bride ? " and the brick side" : point_sail_tide ? " and the tail side" : "" )} ;
    header_gnawing_awning : string "<Gnawing Awning<#ff0>>" ;
 
-   loc_jeerin_region : dynamic_string {( "Here in the jeerin' region, {puz_point_spittin_wrecks} find very clever ways to prove that everyone's beneath them. " + ( !point_written_specs ? "Yet they seem pretty smart. Perhaps they might help you" : "Maybe even you, but at least they helped you.") + (!kelp_placed ? "" : point_help_card ? " The kelp (hard) still lies here, but you already found something from it." : " The kelp (hard) has washed in from sea. Perhaps it's gotten something tangled in it.") + " You can exit north or west." )} ;
+   loc_jeerin_region : dynamic_string {( "Here in the jeerin' region, {puz_point_spittin_wrecks} find very clever ways to prove that everyone's beneath them. " + ( !point_written_specs ? "Yet they seem pretty smart. Perhaps they might help you." : "Maybe even you, but at least they helped you.") + (!kelp_placed ? "" : point_help_card ? " The kelp (hard) still lies here, but you already found something from it." : " The kelp (hard) has washed in from sea. Perhaps it's gotten something tangled in it.") + " You can exit north or west." )} ;
    header_jeerin_region : string "<Jeerin' Region<#ff0>>" ;
 
    loc_moldin_dolmen : dynamic_string {( "You are by a " + (key_duplicated ? "no longer " : "") + "glowing moldin' dolmen." + (!point_formed_wax ? " A fax machine from--well, for all you know, a wormhole to a new dimension--spits out a fax every few minutes. Weird to have it here! Perhaps you should inspect things." : "") + "\nThe only exit is south." )} ;
@@ -188,10 +188,10 @@ strings {
    loc_streaky_cove: dynamic_string {( "You are in a {puz_point_streaky_cove}. " + (point_key_trove ? "You discovered a key trove out back." : point_bake_tons ? "You discovered a {puz_point_tree_cove} once you blew up the stove." : point_creaky_stove ? "You discovered a creaky stove in the greyness of the right wall." : "The greyness of the right wall is a stark contrast to the colorful left side. What could be there?") + "\nThe only exit is north." )} ;
    header_streaky_cove: string "<Streaky Cove<#ff0>>" ;
 
-   loc_taller_altar : dynamic_string {( "Here by the taller altar you see " + ( point_cool_plan ? "nothing much any more. You're probably done here." : !point_penny_mounds ? "{puz_point_many_pounds}, both in the animal cage sense, on the left, and huge cartoon trap sense, on the right. Surely they can be repurposed!" : "The bride's {puz_point_pool_clan}. They're waiting for you to ask for the right favor before you move on." ) + "\nThe only exit is south." )} ;
+   loc_taller_altar : dynamic_string {( "Here by the taller altar you see " + ( point_cool_plan ? "nothing much any more. You're probably done here." : !point_penny_mounds ? "{puz_point_many_pounds}, both in the animal cage sense, on the left, and huge cartoon trap sense, on the right. Surely they can be repurposed!" : point_sick_bride ? "the bride's {puz_point_pool_clan}. They're waiting for you to ask for the right favor before you move on." : "nothing much, but surely something will come up eventually?" ) + "\nThe only exit is south." )} ;
    header_taller_altar : string "<Taller Altar<#ff0>>" ;
 
-   loc_tenser_center : dynamic_string {( (point_minister_south ? "I guess this could be the intenser incenter if you want, now that you must be close to your goal, as long as you don't mind thumbing your nose at a geometry textbook. You can exit in all four directions with the sinister mouth gone, though you probably don't need to go back south." : "You are in the tenser center. A {puz_point_sinister_mouth} blocks passage further! You can only go south right now." ) )} ;
+   loc_tenser_center : dynamic_string {( (point_minister_south ? "I guess this could be the intenser incenter if you want, now that you must be close to your goal, as long as you don't mind thumbing your nose at a geometry textbook. You can exit in all four directions with the sinister mouth gone." : "You are in the tenser center. A {puz_point_sinister_mouth} blocks passage further! You can only go south right now." ) )} ;
    header_tenser_center : string "<Tenser Center<#ff0>>" ;
 
    loc_tool_stall : dynamic_string {( "You're in a tool stall. The exit is back {dir_n}. Nearby you see " + (point_leery_owner ? "the owner, no longer leery" : "an {puz_point_eerie_loner}") + (point_tight_rules || !point_leery_owner ? "" : ". That sign indicates the {puz_point_right_tools} are available, but you haven't figured how to ask for them yet") + "." + (point_tight_rules ? "\nThe owner also showed you a passage to the south." : "") )} ;
