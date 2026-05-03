@@ -2077,29 +2077,38 @@ locations {
    tool_stall : location "{loc_tool_stall}" header="{header_tool_stall}" graphic="r_tool_stall" {
       on_command {
          : if (point_leery_owner) {
-             : match "really *;* really" {
-                : print "Only REALLY is needed for the bonus point." ;
-                : done ;
-             }
-             : match "really -" {
-                : if (bonus_point_really) {
-                   : print "Your first conversation said all there was to say." ;
-                   : done ;
-                }
-                : collection_modify { collection = "tried_combo_bonus" index -> (2) content -> ("true") } ;
-                : set_true "bonus_point_really" ;
-                : print "\"Oh, man,\" you say. \"REALLY.\" You don't have anything in mind, but the leery owner agrees. \"REALLY.\"\nThere's a back and forth like this for a minute. You feel you understand the universe better, even though you have no better idea how to solve the tasks in front of you." ;
-                : gosub "add_bonus" ;
-                : done ;
-             }
+            : match "really *;* really" {
+               : print "Only REALLY is needed for the bonus point." ;
+               : done ;
+            }
+            : match "really -" {
+               : if (bonus_point_really) {
+                  : print "Your first conversation said all there was to say." ;
+                  : done ;
+               }
+               : collection_modify { collection = "tried_combo_bonus" index -> (2) content -> ("true") } ;
+               : set_true "bonus_point_really" ;
+               : print "\"Oh, man,\" you say. \"REALLY.\" You don't have anything in mind, but the leery owner agrees. \"REALLY.\"\nThere's a back and forth like this for a minute. You feel you understand the universe better, even though you have no better idea how to solve the tasks in front of you." ;
+               : gosub "add_bonus" ;
+               : done ;
+            }
+            : match "talk leery;talk owner" {
+               : print {( point_tight_rules ? "You ask the owner for clarifications for some of the rules. They oblige." : "The owner isn't into small talk. They want you to ask for the right thing. This doesn't contradict their t-shirt at all. Such talk helps protect them from legal liabilities." )} ;
+               : done ;
          }
-         : match "_ leery;_ owner" {
-            : print {( point_tight_rules ? "The owner seems more trusting of you now you showed you cared about rules." : "The owner doesn't seem to trust you yet. Perhaps you need to show you're willing to learn to use the right tools." )} ;
-            : done ;
-         }
-         : match "_ eerie;_ loner" {
-            : print {( point_leery_owner ? "You're glad the loner's gone. No need to deal with them any more." : "The eerie loner's I H8 PPL tshirt suggests you may want to just ask them to refer you to someone who is more willing, or less unwilling, to help you." )} ;
-            : done ;
+            : match "_ leery;_ owner" {
+               : print {( point_tight_rules ? "The owner seems more trusting of you now you showed you cared about rules." : "The owner doesn't seem to trust you yet. Perhaps you need to show you're willing to learn to use the right tools." )} ;
+               : done ;
+            }
+         } : else {
+            : match "talk eerie;talk loner" {
+               : print "They're not going to chat. Best ask about something, or ask for someone, specific." ;
+               : done ;
+            }
+            : match "_ eerie;_ loner" {
+               : print {( point_leery_owner ? "You're glad the loner's gone. No need to deal with them any more." : "The eerie loner's I H8 PPL tshirt suggests you may want to just ask them to refer you to someone who is more willing, or less unwilling, to help you." )} ;
+               : done ;
+            }
          }
          : match "_ right;_ sign" {
             : print {( point_tight_rules ? "You figured what the sign was really for." : "It's weird. The sign doesn't just feel like bragging. It feels like ... if you know what to ask for, you can get it. An off the menu item so to speak. But if you don't, you don't deserve it. Yet." )} ;
@@ -3627,6 +3636,10 @@ on_describe {
 ## Test VERB NOUN that the player types and executes conditional actions
 
 on_command {
+   : match "talk _" {
+      : print "You see nobody here like that. TALKing is not necessary to win {this_game}, though it may provide clues and give flavor." ;
+      : done ;
+   }
    : if (is_carried("cool_plan")) {
       : match "_ cool;_ plan" {
          : print "It's pretty cool, all right. You have another overview of it. That'll help things go smoothly when the time comes." ;
