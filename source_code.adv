@@ -1000,7 +1000,7 @@ locations {
                   : print "You suddenly have this overwhelming fear of getting shot. Perhaps there's some other very similar way to acquire the buns." ;
                   : done ;
                }
-               : print "Why, yes, it is that simple. You take the buns! Perhaps finding what to do next with them, or the resources to help you, will be trickier." ;
+               : print "Why, yes, it is that simple. You TAKE the buns! Perhaps finding what to do next with them, or the resources to help you, will be trickier." ;
                : set_true "buns_taken" ;
                : update_graphic ;
                : pocket "buns" ;
@@ -1015,7 +1015,7 @@ locations {
       }
       on_describe {
          : if (!buns_taken) {
-            : print "There are BUNS just sitting around. They're packaged up and all. Shouldn't be hard to get them." ;
+            : print "There are BUNS just sitting around. They're packaged up and all. Shouldn't be hard to get them. No, GET doesn't quite seem to be the right word." ;
          }
       }
    }
@@ -1028,6 +1028,7 @@ locations {
             }
             : collection_modify { collection = "tried_combo_core" index -> (12) content -> ("true") } ;
             : print "Well, you pushed your luck ... a platinum chain slithers from the ground onto your wrist. It feels heavy. You try to shake it off, but it stays. You grab it and throw it to the ground, but it leaps back up onto your wrist. You're obviously going to need help taking it off." ;
+            : print "\"I told you so,\" the beery whiz cries triumphantly. \"It'll be hard to find a place to let go of it. It's not as simple as DROPping it.\"" ;
             : set_true "point_platinum_chain" ;
             : pocket "chain" ;
             : gosub "add_point" ;
@@ -1285,7 +1286,9 @@ locations {
                : set_true "think_great_book" ;
                : done ;
             }
-            : print "Narrative text." ;
+            : print "With your hold card, you have some right to find the great book. You think. You hope. You look at the trowel. It is glowing brightly now. It seems to know where to dig. Next to the gate brook is a great book! Not a great thriller, but one explaining secrets of spirituality and wisdom, never to bue used for profit." ;
+            : print "You read it once. You read it twice. You learn the way to the Kind Gritty Grind City. It's not behind the foldin' gate. In there you learn many secrets-which-are-not-secrets. Or stuff it's sad that it's a secret. You meet people who have internalized the wisdom. And yet they seem more impressed by you than you are of them. To have to grind like that in your world, without people teaching what matters! And yet you still made it here!" ;
+            : print "You can't tell if you've been there years or hours, but you realize you have no more to learn, or at least no more to learn without life experience. You know what you must do. You hand over the trowel to whoever seems to be the leader. There are at least one hundred similar trowels behind them. You immediately feel less special, but you also feel optimistic there may be other people who've been here and will have the perspective you do, and you just haven't met them yet. But for now, back home." ;
             : set_false "think_great_book" ;
             : set_true "point_great_book" ;
             : gosub "add_point" ;
@@ -1670,7 +1673,7 @@ locations {
                   : done ;
                }
                : collection_modify { collection = "tried_combo_core" index -> (22) content -> ("true") } ;
-               : print "You wonder briefly if you are looking for a really strong flashlight, but no. You discover a power torch. It seems to have one more burst left." ;
+               : print "You wonder briefly if you are looking for a really strong flashlight, but no. You discover a power torch. It seems to have one more burst left. You check with the owner of the tower. No, they say, they can't use it." ;
                : set_true "point_power_torch" ;
                : pocket "power_torch" ;
                : gosub "add_point" ;
@@ -1999,7 +2002,7 @@ locations {
                : done ;
             }
             : collection_modify { collection = "tried_combo_core" index -> (16) content -> ("true") } ;
-            : print "Well, you came from the south, and so maybe you can call some good guys south to help you. Some who know how to deal with evil monsters. You're in luck! A mistin'-er minister sprays the sinister mouth with Spring-'Way-Wing-Spray. You thank the minister profusely, but they say it's no big deal. The mouth wasn't evil, or at any rate very adept at evil. It just sort of hoped it was." ;
+            : print "Well, you came from the south, and so maybe you can call some good guys south to help you. Some who know how to deal with evil monsters. You're in luck! A mistin'-er minister sprays the sinister mouth with Spring-'Way-Wing-Spray. Nothing happens. Oh no!\nBut then the minister begins a boring, boring sermon. The mouth seems agitated for a bit before running away.nYou thank the minister profusely, but they say it's no big deal. The mouth wasn't evil, or at any rate very adept at evil. It just sort of hoped it was." ;
             : set_true "point_minister_south" ;
             : gosub "add_point" ;
             : done ;
@@ -2610,6 +2613,7 @@ subroutines {
             : print "* you started here in the Demo Meadow" ;
             : print "* you said Fie Moan My Phone, which seemed unnatural" ;
             : print "* you were given the trudge-now'll-nudge trowel at the start" ;
+            : print "* you said Boo, Number! New Bummer! a lot around the trowel" ;
             : print "* you were told of the ancient Kind Gritty Grind City, where hard work and deep thought were rewarded" ;
             : if (xme_yet) {
                : print "* you have a {i_widget}" ;
@@ -3556,9 +3560,12 @@ on_startup {
       : gosub "tutorial_choice" ;
       : gosub "colorclue_choice" ;
    }
-   : print "You have heard tell of the Kind Gritty Grind City. But you have no clue how to get there." ;
-   : print "One day, when you're at the hardware store buying insulation, you happen on a weird item called the trudge-now'll-nudge trowel. You feel compelled to buy it." ;
-   : print "It just sits there for a year. Then one day when you consider sending stuff to goodwill, you put it in your back. You take a bike to the flea market. But you never make it. Instead you wind up in a ..." ;
+   : print "One day, when you're at the hardware store buying insulation, you happen on a weird item called the trudge-now'll-nudge trowel. You feel compelled to buy it. It's on sale. Sales are always good!" ;
+   : print "It just sits there for a year. Yet when you pass it, you find yourself muttering \"New bummer. Boo, number.\" What is up with that?" ;
+   : print "You always intend to give the trowel away, but you ave no clue who would want it. Every few months you look at it, and some writing clears up. Eventually you can read it: Please return this to Kind Gritty Grind City if found." ;
+   : print "You barely ever leave your neighborhood of Sleeping Heights. And yet you want to. It's low-crime, but boy oh boy, you find yourself muttering \"heaping slights\" to every small thing rude people do. It's high class rudeness, too, stuff you can't prove is rude. Every time you suffer such a slight, your trowel glows when you return home. You decide to take it back to the hardware store you bought it from." ;
+   : print "But the hardware store is closed. A vile tent stands where it was. It seems to flap its openings at you, and you are powerless to resist. Is this the end? You pull out the trowel ..." ;
+   : print "The tent screams and disintegrates. Beneath is a tile vent - obviously not completely tiled. But you are curious what is below. You walk a ways and come out above ground. You shut the vent and see no trace it was ever there..." ;
    : pocket "trowel" ;
    : press_any_key ;
 }
@@ -3717,7 +3724,7 @@ on_command {
          : done ;
       }
       : collection_modify { collection = "tried_combo_bonus" index -> (0) content -> ("true") } ;
-      : print "Narrative text." ;
+      : print "You pull out the trowel, but it resists you when it gets close to the ground. You aren't hurt or anything, just paralyzed for a bit. You feel there must be a time and place to dig, but you're not prepared yet." ;
       : set_true "bonus_point_dig_below" ;
       : gosub "add_bonus" ;
       : done ;
