@@ -239,7 +239,10 @@ strings {
    puz_point_map_all : dynamic_string {( opt_color_coding && have_won ? "<app mall<#f80>>" : "app mall" )} ;
 
    # think text
+   tht_bake_tons : string "<BAKE TONS<#f80>>" ;
+   tht_great_book : string "<GREAT BOOK<#f80>>" ;
    tht_leery_owner : string "<LEERY OWNER<#f80>>" ;
+   tht_written_specs : string "<WRITTEN SPECS<#f80>>" ;
    already_got_check : dynamic_string {( already_got_command ? " Though you already got the full command, which you can revisit with {vd_think}." : "" )} ;
    for_bonus : dynamic_string {( half_bonus ? " for a bonus point" : "" )} ;
 
@@ -713,6 +716,7 @@ booleans {
    map_first_warn : boolean "false" ;
    graphics_unwon_warn : boolean "false" ;
    graphics_note : boolean "false" scope="survivor" ;
+   whiz_said_wow : boolean "false" ;
 
    # game state (critical or procedural e.g. changes in narrative visiting a place the first time)
    listen_demo_meadow : boolean "false" ;
@@ -815,7 +819,7 @@ booleans {
 
    # think-relevant booleans
    already_got_command : boolean "false" ;
-   think_any : dynamic_boolean {( think_leery_owner || think_great_book || think_grow_dupes || think_bake_tons || think_chop_drain )} ;
+   think_any : dynamic_boolean {( think_bake_tons || think_chop_drain || think_great_book || think_grow_dupes || think_leery_owner || think_sold_guide || think_written_specs )} ;
    first_half : boolean "false" ;
    half_bonus : boolean "false" ;
    bonus_obfuscated_note_yet : boolean "false" ;
@@ -894,6 +898,12 @@ locations {
                : print "Yes! That is what you need. The ailers are happy with this and leave you with the notes. They go off to complain elsewhere, about more first-worldly problems." ;
                : set_true "point_best_notes" ;
                : gosub "add_point" ;
+               : done ;
+            }
+         }
+         : if (!point_best_notes) {
+            : match "_ babblers;_ blabbers" {
+               : print "The babblers and blabbers appear equally agitated and equally likely to agitate you with their complaints. The main ones seem to be that water transport is months late picking them up to go to somewhere nicer." ;
                : done ;
             }
          }
@@ -1045,6 +1055,10 @@ locations {
                : done ;
             }
          }
+         : match "listen _;_ whiz;_ wiz;_ beery" {
+            : print {( "The beery whiz continues to rattle on about how " + (point_chop_drain ? "lucky you are to get rid of the chain" : point_platinum_chain ? "that platinum chain is going to be soooo tough to get rid of." : "there's a cursed item here if you actually want to look for it. Apparently it can be uncursed." ) )} ;
+            : done ;
+         }
          : match "weary biz" {
             : if (bonus_point_weary_biz) {
                : print "Don't rub it in." ;
@@ -1066,6 +1080,12 @@ locations {
                : gosub "say_half_b" ;
                : done ;
             }
+         }
+      }
+      on_describe {
+         : if (point_chop_drain && !whiz_said_wow) {
+            : print "\"Still got that chain, eh? What? No? Oh man. Some people have all the luck.\" The beery whiz then gets back to general complaining." ;
+            : set_true "whiz_said_wow" ;
          }
       }
    }
@@ -1090,6 +1110,10 @@ locations {
             : done ;
          }
          : if (!point_grow_dupes) {
+            : match "talk dough;talk groups" {
+               : print {( "You talk to the dough groups for a bit.\n" + ( point_grow_dupes ? "They seem happy you've made this place less lonely." : "they seem lonely. You're nice enough company, but they need more." ) )} ;
+               : done ;
+            }
             : match "grow _;_ dupes" {
                : set_integer var="tempint" "8" ;
                : set_false "first_half" ;
@@ -1366,6 +1390,10 @@ locations {
                }
             }
          }
+         : match "_ brick;_ tail;_ gold;_ side" {
+            : print {( "The awning stretches three-quarters of the way around here. " + (three_awning_sides_done ? "But you've seen what it has to offer." : (point_sold_guide || point_sail_tide || point_sick_bride) ? "What else might it have to offer?" : "The awning might be hiding something." ) )} ;
+            : done ;
+         }
          : match "sail tide" {
             : if (point_sail_tide) {
                : print "You already made a sail tide from the tail side! You don't want to mess with nature too much." ;
@@ -1470,6 +1498,10 @@ locations {
                : gosub "say_half" ;
                : done ;
             }
+         }
+         : match "_ spittin;_ wrecks" {
+            : print "They seem like types you don't want to bother unless you know what you want, and once you do, it'd better involve them being able to show how much they know." ;
+            : done ;
          }
          : if (kelp_placed) {
             : match "_ hard;_ kelp" {
@@ -1577,6 +1609,10 @@ locations {
             : done ;
          }
          : if (!point_push_best) {
+            : match "_ bush;_ pest" {
+               : print "It seems only to want to stop you from where you want to go. It also seems not to understand language." ;
+               : done ;
+            }
             : match "push _;_ best" {
                : set_integer var="tempint" "6" ;
                : set_false "first_half" ;
@@ -1959,6 +1995,12 @@ locations {
             : gosub "add_point" ;
             : done ;
          }
+         : if (point_sick_bride) {
+            : match "_ pool;_ clan" {
+               : print "They don't seem up for small talk. They have somewhere to be. They must have something for you. But what?" ;
+               : done ;
+            }
+         }
          : if (!point_cool_plan) {
             : match "cool _;_ plan" {
                : set_integer var="tempint" "25" ;
@@ -2008,6 +2050,10 @@ locations {
             : done ;
          }
          : if (!point_minister_south) {
+            : match "_ sinister;_ mouth" {
+               : print "One look at the sinister mouth and you know negotiation isn't the way here. Since you don't have any real weapons on you, you probably need someone or something to help you." ;
+               : done ;
+            }
             : match "minister _;_ south" {
                : set_integer var="tempint" "16" ;
                : set_false "first_half" ;
