@@ -5,7 +5,7 @@ start_theme = my_theme
 
 game_information {
    game_name                    = Big Deal, Oh!
-   game_version                 = 1.0.0
+   game_version                 = 1.1.1
    game_shortname               = BDO
    written_by                   = Andrew Schultz
    uuid                         = b3c1f8e2-5d4a-4f9b-8c3d-2a7e5f6a9b1c
@@ -100,6 +100,7 @@ strings {
    v_smell : string "<SMELL<#0f0>>" ;
 
    # diagnostic verbs
+   vd_bonus : string "<BONUS<#f80>>" ;
    vd_hint : string "<HINT<#f80>>/<HINTS<#f80>>" ;
    vd_i : string "<I<#f80>>" ;
    vd_inv : string "<INV<#f80>>" ;
@@ -2566,7 +2567,7 @@ subroutines {
       : if (opt_score_notify) {
          : print "<You just found a bonus point!<#ff0>>" ;
          : if (bonus_score == 0) {
-            : print "{one_time}{this_game} contains several bonus points that are uncued on the first playthrough. {vd_sco} will let you know how many you've found, and {vd_bon} will list where you found them." ;
+            : print "{one_time}{this_game} contains several bonus points that are uncued on the first playthrough. {vd_score} will let you know how many you've found, and in a future release, {vd_bonus} will list where you found them. I was too disorganized before the initial release." ;
          }
       }
       : increment "bonus_score" ;
