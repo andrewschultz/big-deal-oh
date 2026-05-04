@@ -1136,6 +1136,15 @@ locations {
    }
    demo_meadow : location "{loc_demo_meadow}" header="{header_demo_meadow}" graphic="r_demo_meadow" {
       on_command {
+         : match "memo _" {
+            : if (score == 0) {
+               : print "Right idea, but the location riffs on itself well enough." ;
+            } : else_if (!bonus_point_touter_hour) {
+               : print "Right idea for a bonus point, but not here." ;
+            } : else {
+               : print "There's no memo, and you're doing well enough, you don't need one." ;
+            }
+         }
          : if (point_taming_flowers) {
              : match "mating *;* mating" {
                 : print "Only MATING is needed for the bonus point." ;
