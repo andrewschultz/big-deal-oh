@@ -189,7 +189,7 @@ strings {
    loc_streaky_cove: dynamic_string {( "You are in a {puz_point_streaky_cove}. " + (point_key_trove ? "You discovered a key trove out back." : point_bake_tons ? "You discovered a {puz_point_tree_cove} once you blew up the stove." : point_creaky_stove ? "You discovered a creaky stove in the greyness of the right wall." : "The greyness of the right wall is a stark contrast to the colorful left side. What could be there?") + "\nThe only exit is north." )} ;
    header_streaky_cove: string "<Streaky Cove<#ff0>>" ;
 
-   loc_taller_altar : dynamic_string {( "Here by the taller altar you see " + ( point_cool_plan ? "nothing much any more. You're probably done here." : !point_penny_mounds ? "{puz_point_many_pounds}, both in the animal cage sense, on the left, and huge cartoon trap sense, on the right. Surely they can be repurposed!" : point_sick_bride ? "the bride's {puz_point_pool_clan}. They're waiting for you to ask for the right favor before you move on." : "nothing much, but surely something will come up eventually?" ) + "\nThe only exit is south." )} ;
+   loc_taller_altar : dynamic_string {( "Here by the taller altar you see " + ( point_cool_plan ? "nothing much any more. You're probably done here." : !point_penny_mounds ? "{puz_point_many_pounds}, both in the animal cage sense, on the left, and huge cartoon trap sense, on the right. Surely they can be repurposed!" : pool_clan_intro ? "the bride's {puz_point_pool_clan}. They're waiting for you to ask for the right favor before you move on." : "nothing much, but surely something will come up eventually?" ) + "\nThe only exit is south." )} ;
    header_taller_altar : string "<Taller Altar<#ff0>>" ;
 
    loc_tenser_center : dynamic_string {( (point_minister_south ? "I guess this could be the intenser incenter if you want, now that you must be close to your goal, as long as you don't mind thumbing your nose at a geometry textbook. You can exit in all four directions with the sinister mouth gone." : "You are in the tenser center. A {puz_point_sinister_mouth} blocks passage further! You can only go south right now." ) )} ;
@@ -734,6 +734,7 @@ booleans {
    porch_in_tower : boolean "false" ;
    kelp_placed : boolean "false" ;
    center_sign_fell : boolean "false" ;
+   pool_clan_intro : boolean "false" ;
 
    key_found : boolean "false" ;
    key_duplicated : boolean "false" ;
@@ -2019,7 +2020,7 @@ locations {
          }
          : if (point_sick_bride) {
             : match "_ pool;_ clan" {
-               : print "They don't seem up for small talk. They have somewhere to be. They must have something for you. But what?" ;
+               : print "They don't seem up for small talk. They have serious construction work ahead. They must have something for you. But what?" ;
                : done ;
             }
          }
@@ -2040,8 +2041,12 @@ locations {
                : done ;
             }
             : collection_modify { collection = "tried_combo_core" index -> (18) content -> ("true") } ;
-            : print "A few of the pounds crumble away to something less dense. Something in small enough bits you can carry it. So you do. The rest ... well, they're still there, but you know you have no use for them." ;
+            : print "A few of the pounds crumble away to something less dense. Something in small enough bits you can carry it. So you do. The rest ... well, they're still there, but you know you have no use for them.\nThere are a lot of pennies in the mounds, though. Probably too many. you give a chunk to the altar, where you figure that minister you called earlier probably came from." ;
             : set_true "point_penny_mounds" ;
+            : if (point_sick_bride) {
+               : print "The pool clan the sick bride told you about comes into view, now things have cleared up a bit. They are discussing the next pool they would be installing in that city with more money than sense. Once you explain to them about the sick bride, they seem about ready to offer something." ;
+               : set_true "pool_clan_intro" ;
+            }
             : gosub "add_point" ;
             : done ;
          }
@@ -2055,6 +2060,13 @@ locations {
                : gosub "say_half" ;
                : done ;
             }
+         }
+      }
+      on_describe {
+         : if (point_sick_bride && point_penny_mounds && !pool_clan_intro) {
+            : print "Some people approach you. This must be the friends the sick bride told you about. They introduce themselves as the pool clan. They're between construction jobs right now, but they're willing to help you." ;
+            : set_true "pool_clan_intro" ;
+            : update_graphic ;
          }
       }
    }
@@ -4323,6 +4335,9 @@ on_render {
       }
    }
    : if (is_at "taller_altar") {
+      : if (pool_clan_intro && !point_cool_plan) {
+         : overlay "s_taller_altar_pool_clan" x="0" y="0" ;
+      }
       : if (!point_penny_mounds) {
          : overlay "s_taller_altar_weight" x="1" y="5" ;
          : overlay "s_taller_altar_weight" x="31" y="5" ;
@@ -4448,6 +4463,7 @@ assets {
       s_streaky_cove_key_trove : base64_png "iVBORw0KGgoAAAANSUhEUgAAAGAAAAAoAQMAAAA7XW16AAAABlBMVEX//////wB4fhrhAAAAAXRSTlMAQObYZgAAAGFJREFUKFNjYBgF5IMHyOx9DAx8cPYrBgZuqCyQ/YCBbwGEAxTfgNBjAZSxgXH0dzAwiMAkrNY3wFXpN1g1MLBDOVZzgATrByhP/AADA3sAlCPrANcCVw4GcOVgmQAGLAAA4csU2UOMHuQAAAAASUVORK5CYII=" ;
       s_streaky_cove_tree_cove : base64_png "iVBORw0KGgoAAAANSUhEUgAAAGAAAAAoAgMAAAB8/ReqAAAADFBMVEWAAAAAQABAgEAA///nP2qnAAAAzklEQVR4Xp3PMQ6DMAyGUQs2lt6D+yDGHoUcJWPEKbhE7tHFWy3XEY3/pAOt6umTniwntLxHpdbCJQDqIC2sgPUTsudPcFdlz9yDeHIDG2DrQG08pQADkNlA6qNUkWyg9bYqUgpkALIA1xPaZDYQX2iSDdQXmpQCXBfazAYPulVAHldwAJB0BeSAfH6BETA67Ilo2M9BxhMIQD3MgNlhN5hOQKa/IDl44vgAGBwiABkMAvnrkXQFRPVbyGSRAMhoEQHIQHUmg+QZqYPgWeIF05Lz2PhP5/MAAAAASUVORK5CYII=" ;
       s_taller_altar_cage : base64_png "iVBORw0KGgoAAAANSUhEUgAAAB0AAAAdCAYAAABWk2cPAAABcUlEQVR4nM1Vba6EIAwczN4Lb0a9GZys79eYWqmg6yaviYGRj5YZaJOq4o5t23ZvQc9UdfoTEa216jdYRO45VFVwk6dYRDTN0PsGpaWUxL0+Mw7XdUXOOVlMq7VihAGgtbYHvowcMkIfQM450cEIAwAxAIT0vkVpa03prJSSQnpJhdWBfW4ywr0A2D855SLSEmnIwCJcaz0EYDU90PsGpdSUezEAUguYi2QpJRXs86Ts23GLvflLSLzQ4YjSaIMIXwWQROQVShkcsdXWz1kYRY9GYlJox60MfJecy370Tk+aWuNijlvsbURpV1Pv4CqAnsN/r+lecliGbEkiZnmy4z3s+7ac2faxph7/RFP737f2XbfWlAG01tTnceAlTW1hIObJ/CUDMKdppOGspv7bq0xEaW+sh3vVJMrJoaY2ywDHrOOxzc3MPJFD4IeaXs3/2Em+2vAUIzxDqbXDOyVdT9oRpSeno4c/kxhmHQIvazprfzeRIXADuKDBAAAAAElFTkSuQmCC" ;
+      s_taller_altar_pool_clan : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoBAMAAADj1Dm6AAAAFVBMVEUA/wAAAAAAAP+AAAD/AAD//wD////w1c7OAAAAAXRSTlMAQObYZgAAATFJREFUeF7t0yFvxDAMBWBfuwu+kuIqYPikSocHouKSDCdb7/3/nzC3A74s0Vgc0ufwfLL1iHPmzNX7tgDv/ar311pagNoKrvlXhugB3PWW7dccMI46gEAXIP63AeZVBsSYAUL/cMssF9LeAIFfSC5ULaBhc/H2p/wGXzxh9/XAN1WMCWSQlx9PHhyAGKsCCHjnycrfWcs4hQ2QwSdPOLq3AB8CIAIPbS5Q3Vg7EX4B45gAjFyoNsCE0gaMXKg2gMJuWNySAuRCCgDCm8PmBJBcSAEg5d9zGYbkQtUBUv7SBqgqYBhuafkPwKQDkA1I+fUBXQIwJQCpAywT5EKNAEob4I9sVv5XQKcH4PK3BcgG+plfA8Bky76qme/8WgEk7QHSvfaA/EL6AP20B0j52+fMD913UzXM1rWNAAAAAElFTkSuQmCC" ;
       s_taller_altar_weight : base64_png "iVBORw0KGgoAAAANSUhEUgAAABUAAAAeCAYAAADD0FVVAAAAw0lEQVR4nNWTUQ7EIAhEcS8mNzPeDE/mftFQAoqt3U3np2mKzxmgqfcOM9Vaj6JSSprVf6JAhskLLkMlMOIyDGV3EZcAAOmJng6hrTX3Y87ZhYfir8qFsktEBOs5SvFbp5YQEYhoL5SIjvjL0FG/InXmSkWhAPZqufFlTEQcvk+hnkvdTx6YVR8elJ78klNP0ulsrU5QHUX3kWHapT53mv7K1LXkFvz/N12G3omuz78s/t3oLOa8LP5uJSLa0k+pR5x+AYsYesEvbcfqAAAAAElFTkSuQmCC" ;
       s_tenser_center_sign_fell : base64_png "iVBORw0KGgoAAAANSUhEUgAAABIAAAARAgMAAACtNBRqAAAACVBMVEX///8AAAD//wBT7WDCAAAAAXRSTlMAQObYZgAAADpJREFUCFtjYGANDQ1gYGBbtWoCkAzNApHLIOxUELlqGYKdBpQNDUNRCSYjl4JVrgSLZ8JUQs0EmQ8APPQauypF4lMAAAAASUVORK5CYII=" ;
       s_tenser_center_sinister_mouth : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAoAgMAAABslMwaAAAACVBMVEX///8AAAAAgABF0jEWAAAAAXRSTlMAQObYZgAAAXpJREFUeF7llTFuwzAMRQVPhY7RqdB9pMFHyCk0Ft2zEwEMyP+UhUsEHwQZOcnavxmkn/glikr/SwDGFLCAKQXdBgtU4gAuhyIkxxGKSTHBBcbjArYGChLWdm2QcwDXWuABmAH2WldQvUSA7gGM10MGckBVF1YWAP7iV5NrflepyegUqlWjaRdxHj6/M5dhCaAnK0ACgBNU1WvFSB+3RGWJAHXlDrjqLGDpBFipgQDdF3MSPW/1FTVIMtsgLwIqJJmD+MId0Gh7JmAxgAwFsHVOAdmOEwWYlp8BmuvmP4DekuUJQnOtVHbtD443YG6hBwDAXM6NAHqaAbQAzjFMmtrdx7zXZqlc8+I3trmJkLHCAtL9NKPJskKiZ+HHQtU2wWARlxhQejBkdDoza1NAD2aaFPcg7UcBYtfBARjR05YIoAnbcvmmNgg1yuF7ZTJEzaKfAmjMAtTtSKFKYEzsd1e3EgMQUT0gFTyIPgGQ96IEjPcB50W6Njjf51/oe0meo9rfKQAAAABJRU5ErkJggg==" ;
