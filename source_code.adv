@@ -1118,6 +1118,9 @@ locations {
             : update_graphic ;
             : done ;
          }
+         : match "_ dough;_ groups" {
+            : print {( point_grow_dupes ? "They actually look pretty sturdy, but they look a bit lonely." : "They look sturdy despite being duplicated. They didn't thin out or anything. They look happier too." )} ;
+         }
          : if (!point_grow_dupes) {
             : match "talk dough;talk groups" {
                : print {( "You talk to the dough groups for a bit.\n" + ( point_grow_dupes ? "They seem happy you've made this place less lonely." : "they seem lonely. You're nice enough company, but they need more." ) )} ;
@@ -3946,10 +3949,11 @@ on_command {
       : done ;
    }
 
-   : match "clock _;golden _" { #obfuscation of non solutions, bonus points
+   : match "clock _;golden _;mating _;real _;really _;touter _;white _;weary _" { #obfuscation of non solutions, bonus points
       : print "{custom_unknown_verb_error}" ;
       : done ;
    }
+
 
 }
 
