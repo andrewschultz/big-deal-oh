@@ -335,24 +335,24 @@ integers {
    -1 )} ;
 
    widget_10_rocky_caves : dynamic_integer {( point_steel_wrench ? 0 : smell_rocky_caves ? 56 : 1 )} ;
-   widget_20_app_mall : dynamic_integer {( 0 )} ;
+   widget_20_app_mall : dynamic_integer {( -1 )} ;
    widget_11_chattin_em_plain : dynamic_integer {( point_platinum_chain ? 0 : 85 )} ;
    widget_21_tool_stall : dynamic_integer {( point_tight_rules ? 0 : point_leery_owner ? 55 : point_steel_wrench ? 55 : -55 )} ;
-   widget_31_streaky_cove : dynamic_integer {( point_key_trove ? -1 : point_bake_tons ? 45 : point_creaky_stove ? 0 : 65 )} ;
+   widget_31_streaky_cove : dynamic_integer {( point_key_trove ? 0 : point_bake_tons ? 35 : point_creaky_stove ? 1 : 65 )} ;
    widget_02_cache_shack : dynamic_integer {( 0 )} ;
    widget_12_newbies_boonies : dynamic_integer {( point_push_best ? 0 : 44 )} ;
    widget_22_demo_meadow : dynamic_integer {( point_taming_flowers ? 0 : placed_flaming_towers ? 67 : cocky_raves_present ? 55 : (!point_tool_stall) ? 45 : 1 )} ;
    widget_32_backin_cabin : dynamic_integer {( point_pull_file ? 0 : 44 )} ;
-   widget_42_yankin_canyon : dynamic_integer {( point_chop_drain ? 0 : 45 )} ;
-   widget_13_moldin_dolmen : dynamic_integer {( point_formed_wax ? 0 : 63 )} ;
-   widget_23_outer_tower : dynamic_integer {( point_power_torch ? 0 : !point_lodging_doc ? 74 : point_sold_guide ? 55 : 1 )} ;
-   widget_33_collation_location : dynamic_integer {( point_grow_dupes ? -1 : 45 )} ;
-   widget_14_ailer_lair : dynamic_integer {( point_help_card ? 0 : has_visited "foldin_gate" ? 44 : point_best_notes ? 1 : point_sail_tide ? 45 : 1 )} ;
+   widget_42_yankin_canyon : dynamic_integer {( point_chop_drain ? 0 : point_platinum_chain ? 45 : 1 )} ;
+   widget_13_moldin_dolmen : dynamic_integer {( !fax_examined ? 1 : point_formed_wax ? 0 : 63 )} ;
+   widget_23_outer_tower : dynamic_integer {( point_power_torch ? 0 : !ever_keyhole ? 1 : !point_lodging_doc ? 74 : (point_sold_guide && porch_in_tower) ? 55 : 1 )} ;
+   widget_33_collation_location : dynamic_integer {( point_grow_dupes ? 0 : ( buns_taken ? 45 : -45) )} ;
+   widget_14_ailer_lair : dynamic_integer {( point_best_notes ? 0 : point_sail_tide ? 45 : 1 )} ;
    widget_24_tenser_center : dynamic_integer {( point_minister_south ? 0 : 85 )} ;
-   widget_34_jeerin_region : dynamic_integer {( point_written_specs ? 0 : point_best_notes ? 75 : -75 )} ;
-   widget_15_gnawing_awning : dynamic_integer {( point_sick_bride && point_sold_guide && point_sail_tide ? 0 : !point_sail_tide ? 45 : point_sick_bride || point_sold_guide ? 44 : 1 )} ;
+   widget_34_jeerin_region : dynamic_integer {( point_help_card ? 0 : has_visited "foldin_gate" ? 44 : point_written_specs ? 1 : point_best_notes ? 75 : -75 )} ;
+   widget_15_gnawing_awning : dynamic_integer {( point_sick_bride && point_sold_guide && point_sail_tide ? 0 : point_sail_tide ? (point_sick_bride && !point_penny_mounds ? -45 : 45) : 44 )} ;
    widget_25_oopster_stupor : dynamic_integer {( point_hard_maze ? 0 : 44 )} ;
-   widget_35_taller_altar : dynamic_integer {( point_cool_plan ? 0 : point_sick_bride ? 44 : point_penny_mounds ? 1 : 56 )} ;
+   widget_35_taller_altar : dynamic_integer {( point_cool_plan ? 0 : !point_penny_mounds ? 56 : point_sick_bride ? 44 : 1 )} ;
    widget_na_sappage_passage : integer "85" ;
    widget_26_foldin_gate : dynamic_integer {( point_help_card ? 54 : -54 )} ;
 
