@@ -3218,7 +3218,7 @@ subroutines {
          }
          : if (!point_rocky_caves) {
             : cycle key = "hint_00_rocky_caves" predictable_order = "true" skip_interval = "0" {
-               : print "The {puz_point_cocky_raves_l} sure find it funny you can't find a way out." ;
+               : print "The {puz_point_cocky_raves_l} sure find it funny you can't find anywhere new and cool to go." ;
                : print "But of course the {puz_point_cocky_raves_l} are hiding something you may be able to figure out." ;
                : print "You will hear <COCKY RAVES<#f0f>> are nearby." ;
             }
@@ -3277,7 +3277,7 @@ subroutines {
          : if (has_visited "foldin_gate" && !point_help_card) {
             : cycle key = "hint_27_help_card" predictable_order = "true" skip_interval = "0" {
                : print "The {puz_point_kelp_hard} has just gotten washed up." ;
-               : print "It may get stuff lost in it." ;
+               : print "The {puz_point_kelp_hard} may have gotten stuff lost in it." ;
                : print "A <HELP CARD<#f0f>>." ;
             }
             : return ;
@@ -3450,9 +3450,9 @@ subroutines {
          }
          : if (point_leery_owner && !point_tight_rules) {
             : cycle key = "hint_04_tight_rules" predictable_order = "true" skip_interval = "0" {
-               : print "The owner has the {puz_point_right_tools}, but they're not exactly stuff you can give away to anyone on the street." ;
-               : print "You need advice and guidance." ;
-               : print "Pretty clear advice and guidance." ;
+               : print "The owner has the {puz_point_right_tools}, but those tools aren't just for anyone. They're for people with the right know-how." ;
+               : print "You don't have that know-how yet for the {puz_point_right_tools}." ;
+               : print "Fortunately, the sign tells you what sort of guidance would help." ;
                : print "Ask for <TIGHT RULES<#f0f>>." ;
             }
             : return ;
