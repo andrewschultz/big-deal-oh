@@ -99,6 +99,8 @@ strings {
    v_listen_hear : string "<LISTEN<#0f0>> or <HEAR<#0f0>>" ;
    v_smell : string "<SMELL<#0f0>>" ;
 
+   v_use : string "<USE<#0f0>>" ;
+
    # diagnostic verbs
    vd_bonus : string "<BONUS<#f80>>" ;
    vd_hint : string "<HINT<#f80>>/<HINTS<#f80>>" ;
@@ -160,7 +162,7 @@ strings {
    loc_gnawing_awning : string "A gnawing awning blocks passage every way except back south. It has a {puz_point_gold_side}, a {puz_point_brick_side}, and a {puz_point_tail_side}.{awning_sides}" ;
    awning_sides: dynamic_string {( three_awning_sides_done ? ( "\nYou've figured everything to do site-wide. " + (!bonus_point_white_side ? "Well, everything you need to do." : "Even finding the extra side!" )) : point_sold_guide ? ("\nYou've currently found what to do with the gold side" + awning_gold_sub + ".") :
       point_sick_bride ? ( "\nYou've currently found what to do with the brick side" + (point_sail_tide ? " and the tail side" : "") + ".") :
-	  point_sail_tide ? "\nYou've currently found what to do with the tail side." : "\nYou haven't uncovered any of the awning's mysteries yet."
+      point_sail_tide ? "\nYou've currently found what to do with the tail side." : "\nYou haven't uncovered any of the awning's mysteries yet."
    )} ;
    awning_gold_sub : dynamic_string {( point_sick_bride ? " and the brick side" : point_sail_tide ? " and the tail side" : "" )} ;
    header_gnawing_awning : string "<Gnawing Awning<#ff0>>" ;
@@ -2641,7 +2643,7 @@ subroutines {
       : if (!have_won) {
          : print "{custom_unknown_verb_error}" ;
          : if (!bonus_obfuscated_note_yet) {
-            : print "{one_time}well, not exactly. You've discovered half of the command for a bonus point. But the first time through, {qt} won't be hinting them, so as not to distract you from the main quest. If you continue after the win-and-restart, you'll get a nudge, since it's assumed you know the main way through." ;
+            : print "{one_time}well, not exactly. You've discovered half of the command for a bonus point. But the first time through, {this_game} won't be hinting them, so as not to distract you from the main quest. If you continue after the win-and-restart, you'll get a nudge, since it's assumed you know the main way through." ;
             : set_true "bonus_obfuscated_note_yet" ;
          }
          : done ;
@@ -2767,7 +2769,7 @@ subroutines {
          : print "It is a wordplay game in the spirit of {l_qt}, my {l_talp_2025} entry, and it reuses a lot of the code. However, this year I'm trying to get in at least somewhat with the theme of archaeology, even if my knowledge of that field is rudimentary. Well, it does have a hidden city near the end, and you dig and explore." ;
          : print "{this_game} uses a stripped-down parser for standard commands, but it requires you to discover two-word commands to win." ;
          : if (score == 0) {
-            : print "Figuring the mechanic isn't meant to be too tricky, but I don't want to spoil it unsolicited. {vm_think} and, more explicitly, {vm_hint} can clue you into what is going on." ;
+            : print "Figuring the mechanic isn't meant to be too tricky, but I don't want to spoil it unsolicited. {vd_think} and, more explicitly, {vd_hint} can clue you into what is going on." ;
          }
          : if (!tutorial_1_about) {
             : increment "tutorial_score" ;
@@ -2813,7 +2815,7 @@ subroutines {
          : print "{vm_credits} credits people and entities who helped make {this_game} or fix various flaws." ;
          : print "{vm_diag} lists diagnostic verbs." ;
          : if (have_won || graphics_unwon_warn) {
-            : print "{vm_gr} gives graphical notes for the current location." ;
+            : print "{vm_graphics} gives graphical notes for the current location." ;
          }
          : print "{vm_history} lists version history and major changes that necessitated each version." ;
          : print "{vm_meta}, this command, lists meta-commands, or commands that list other commands." ;
@@ -2975,7 +2977,7 @@ subroutines {
             : done ;
          }
          : if (is_at "sappage_passage") {
-            : print "You're in the maze now, so you don't need a game map." ;
+            : print "You're in the maze now, so you don't need a game map. You need to deal with that fist!" ;
             : done ;
          }
          : set_true "drawing_map" ;
@@ -3668,7 +3670,7 @@ themes {
 on_startup {
    : print "{this_game}: a {l_talp_2026} entry with a focus on wordplay.";
    : if (have_won) {
-      : print "Thanks for replaying, but this is a reminder to look at the other {l_talp_26} entries, too! The only reason to replay is to figure out bonus points." ;
+      : print "Thanks for replaying, but this is a reminder to look at the other {l_talp_2026} entries, too! The only reason to replay is to figure out bonus points." ;
       : press_any_key ;
       : clear_screen ;
    } : else {
@@ -3965,7 +3967,7 @@ on_tick {
    }
    : match "use _" {
       : cycle key = "use_notes" predictable_order = "true" skip_interval = "0" max_loops = "1" {
-         : print "While there's stuff you need to use, the USE verb isn't specific enough, at least for {this_game}. Some other parser games allow and encourage it for weird items, so the player doesn't have to fight the parser, but here, the right command is needed for an item's use. Also, if you're seeing this message, it should mean whatever you tried to use isn't critical, as this game's parser often focuses on nouns." ;
+         : print "While there's stuff you need to use, the {v_use} verb isn't specific enough, at least for {this_game}. Some other parser games allow and encourage it for weird items, so the player doesn't have to fight the parser, but here, the right command is needed for an item's use. Also, if you're seeing this message, it should mean whatever you tried to use isn't critical, as this game's parser often focuses on nouns." ;
          : print "You tried to {v_use} something that likely didn't need to be used, period." ;
       }
    }
