@@ -244,7 +244,9 @@ strings {
 
    # think text
    tht_bake_tons : string "<BAKE TONS<#f80>>" ;
+   tht_chop_drain : string "<CHOP DRAIN<#f80>>" ;
    tht_great_book : string "<GREAT BOOK<#f80>>" ;
+   tht_grow_dupes : string "<GROW DUPES<#f80>>" ;
    tht_leery_owner : string "<LEERY OWNER<#f80>>" ;
    tht_written_specs : string "<WRITTEN SPECS<#f80>>" ;
    already_got_check : dynamic_string {( already_got_command ? " Though you already got the full command, which you can revisit with {vd_think}." : "" )} ;
@@ -2760,7 +2762,7 @@ subroutines {
             : print "You tried to {tht_bake_tons} {here_streaky_cove} but the buns weren't ready to grow yet." ;
          }
          : if (think_chop_drain) {
-            : print "You tried to put the chain into a chop drain when one wasn't nearby." ;
+            : print "You tried to put the chain into a {tht_chop_drain} when one wasn't nearby." ;
          }
          : if (think_sold_guide) {
             : print "You tried to buy a sold guide {here_gnawing_awning} but had no collateral." ;
@@ -2772,7 +2774,7 @@ subroutines {
             : print "You tried to check out the {tht_great_book} without any ID or voucher {here_foldin_gate}." ;
          }
          : if (think_grow_dupes) {
-            : print "You tried to grow dupes {here_collation_location} but didn't have any additional materials to help." ;
+            : print "You tried to {tht_grow_dupes} {here_collation_location} but didn't have any additional materials to help." ;
          }
          : gosub "diagnostic_think_core_half" ;
          : gosub "diagnostic_think_bonus_half" ;
