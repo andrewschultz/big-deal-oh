@@ -3108,7 +3108,7 @@ subroutines {
 
    awning_hint_check : subroutine {
       : if (ambiguous_awning_hints) {
-         : print "{one_time}there's more than one thing you can focus on here and now, so I've picked the puzzle(s) in arbitrary order." ;
+         : print "{one_time}there's more than one phrase and more than one number value, so I've picked the puzzle(s) in arbitrary order." ;
          : set_true "hint_awning_note" ;
          : return ;
       }
@@ -3174,7 +3174,7 @@ subroutines {
          : return ;
       }
       : if (!hinted_yet) {
-         : print "{one_time}{this_game} makes a reasonable guess of the next puzzle you can solve in the current room. If nothing turns up, you may wish to go elsewhere." ;
+         : print "{one_time}{this_game} makes a reasonable guess of the next puzzle you can solve in the current room." ;
          : set_true "hinted_yet" ;
       }
       : gosub "awning_hint_check" ;
