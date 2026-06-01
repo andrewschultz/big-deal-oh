@@ -372,6 +372,10 @@ integers {
    # silliness
    newbies_cutscene : integer "0" ;
 
+   # hint auxiliary
+
+   mall_bonus_found : dynamic_integer {( (bonus_point_map_all ? 1 : 0) + (bonus_point_clock_jerk ? 1 : 0) )} ;
+
    # for half THINK
    part_core_score : dynamic_integer {( ((collection_get{ collection -> ("got_first_core") index -> ( counter ) } == "true") ? 1 : 0) + ((collection_get{ collection -> ("got_second_core") index -> ( counter ) } == "true") ? 2 : 0) )} ; # this is a really bad hack, but I couldn't find a concise way to code things. Maybe I could use a dynamic boolean.
    part_bonus_score : dynamic_integer {( ((collection_get{ collection -> ("got_first_bonus") index -> ( counter ) } == "true") ? 1 : 0) + ((collection_get{ collection -> ("got_second_bonus") index -> ( counter ) } == "true") ? 2 : 0) )} ; # this is a really bad hack, but I couldn't find a concise way to code things. Maybe I could use a dynamic boolean.
@@ -3185,7 +3189,11 @@ subroutines {
             }
          }
       } : else_if (is_at "app_mall") {
-         : print "Nothing critical is needed here, but there are two bonus points." ;
+         : if (bonus_point_map_all && bonus_point_clock_jerk) {
+            : print "You got both bonus points, so you have nothing left to do here." ;
+         } : else {
+            : print {( "There's nothing critical to do here, but you can " + (( bonus_point_map_all || bonus_point_clock_jerk) ? "still get another bonus point." : "get two bonus points, which aren't covered by the hints." ) )} ;
+         }
          : return ;
       } : else_if (is_at "backin_cabin") {
          : if (!point_pull_file) {
