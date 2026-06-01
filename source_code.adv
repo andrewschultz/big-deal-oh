@@ -372,6 +372,8 @@ integers {
 
    commands_figured : dynamic_integer {( (think_bake_tons ? 1 : 0) + (think_chop_drain ? 1 : 0) + (think_great_book ? 1 : 0) + (think_grow_dupes ? 1 : 0) + (think_leery_owner ? 1 : 0) + (think_sold_guide ? 1 : 0) + (think_written_specs ? 1 : 0) )} ;
 
+   hard_maze_solve_progress : dynamic_integer {( (point_written_specs ? 1 : 0) + (point_power_torch ? 1 : 0) + (point_cool_plan ? 1 : 0) )} ;
+
 }
 
 stats {
@@ -3317,7 +3319,12 @@ subroutines {
             }
          }
          : if (!can_pass_maze) {
-            : print "You need three items and don't have them all yet. I should detail how many, but I got in a time crunch for release." ;
+            : print {( "You have currently found " + ( collection_get { collection -> ("num_to_word") index -> ( hard_maze_solve_progress ) } ) + " of three items needed to pass the hard maze to the north. They're all located in this endgame area." )} ;
+            : if (hard_maze_solve_progress == 1) {
+               : print {( "The item you have is the " + (point_written_specs ? "written specs" : point_power_torch ? "power torch" : "cool plan" ) + "." )} ; 
+            } : else_if (hard_maze_solve_progress == 2) {
+               : print {( "You still need to locate a " + (!point_written_specs ? "map for the maze" : !point_power_torch ? "tool to cut through a maze dead end" : "document that helps ensure you don't have to go back through the maze") + "." )} ;
+            }
             : return ;
          } : else_if (!has_visited "foldin_gate") {
             : print "You can just go north now. You have what you need." ;
