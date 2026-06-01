@@ -136,7 +136,7 @@ strings {
    loc_ailer_lair : dynamic_string {( (point_best_notes ? "It's quiet here now." : point_sail_tide ? "Some {puz_point_nest_boats} have arrived here. The babblers and blabbers look at you impatiently. They'd like to just give you a reward for rescuing them, they've changed their kvetching to how you've given them no clue what you like or need." : "You are in the ailer lair. Babblers and blabbers sit here, one side kvetching about things that might go wrong, the other side kvetching about things they think went wrong but are actually okay. You see no way to mediate this civil war on your own, but you also see no danger of being sucked into it." ) + "\nYou can go north and west." )} ;
    header_ailer_lair : string "<Ailer Lair<#ff0>>" ;
 
-   loc_app_mall : dynamic_string {( "Here in the mall they're offering apps--well, you ask the nice jock clerk at the front desk for a code or whatever. Apparently they need to make sure you're sane enough, or something. " + (bonus_point_map_all ? "But you got the one you needed." : "Which app might be right for you?" ) + "\nA jock clerk mans the vending area.\nYou can go back north." + (!bonus_point_clock_jerk ? "\nAnd yet the atmosphere isn't quite right. You can probably leave " + (bonus_point_map_all ? "now" : "once") + " you've got what you want, but then there always seems to be more to tidy up." : "" ) )} ;
+   loc_app_mall : dynamic_string {( ( bonus_point_map_all ? "You've got the map-all app." : "Here in the mall they're offering apps. Which app might be right for you?" ) + "\nA jock clerk mans the vending area, looking " + (!bonus_point_clock_jerk ? "around as if something is the matter" : "more relaxed now the jerk has been clocked" ) + ".\nYou can only go back north. There's no extra secret passage." )} ;
    header_app_mall : string "<App Mall<#ff0>>" ;
 
    loc_backin_cabin : dynamic_string {( "Here by the backin' cabin, " + (point_pull_file ? "the pile has been cleaned significantly and is nowhere near as full, and now you see three passages through the cabin. You can go in all four directions." : "you can only go back west for now. A {puz_point_full_pile} spills from the backin' cabin. Whoever put it there obviously was trying to help you, but they may have tried too hard." ) )} ;
@@ -3744,6 +3744,17 @@ on_describe {
 ## Test VERB NOUN that the player types and executes conditional actions
 
 on_command {
+   : if (is_carried("wax")) {
+      : match "_ formed;_ wax" {
+         : print "You poke at the formed wax for a bit. It could be formed into a more useful shape. And then, as wax imprints often do, help something else form." ;
+         : done ;
+      }
+   }
+   : match "_ trowel" {
+      : print "Though it's more readable than when you first got it, it's awfully dingy. Why, you could call it a grim trowel." ;
+      : print "Soon, you hope, you will return it to the {kggc}." ;
+      : done ;
+   }
    : match "talk _" {
       : print "You see nobody here like that. TALKing is not necessary to win {this_game}, though it may provide clues and give flavor." ;
       : done ;
@@ -3761,7 +3772,7 @@ on_command {
       }
    }
    : if (is_carried("trove_key")) {
-      : match "_ rusty" {
+      : match "_ rusty;_ key" {
          : print "It's not strong enough to open a lock without breaking off. You'll have to find a way to make a sturdier copy." ;
          : done ;
       }
