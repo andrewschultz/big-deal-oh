@@ -1,0 +1,9 @@
+--HINT code fixed (placing RETURN; outside Cycle loop on multiple occasions)
+  --many non-special command cases added to HINT code, ran through with HINTTRACK
+  --Center location had wrong hint condition
+--widget text fixed to be more clear
+--some unified HINT/WIDGET values misfired & I fixed them (e.g. 45 for the tail side was wrong)
+--CLERK implemented in app mall so 2nd bonus point there less obscure
+--THINK now clarified with 0 points, also 2 commands you got were not ORANGE TEXT CAPS
+--wax/trowel implemented, "rusty" and "key" both see key now
+--passage was not in zone and did not have "can't go that way" message
