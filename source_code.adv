@@ -3489,17 +3489,17 @@ subroutines {
          }
       }
       : if (widget_num == -1) {
-         : print "There is nothing to do here." ;
+         : print "There is no special command to guess here." ;
          : return ;
       } : else_if (widget_num == 1) {
-         : print "There will be something to do later." ;
+         : print "There will be a special command to guess later." ;
          : if (!hints_clarified_yet) {
             : print "{one_time}while {vd_hint} won't tell you where to go in this case, there should always be another room with hints where you can work at things and check back later." ;
             : set_true "hints_clarified_yet" ;
          }
          : return ;
       } : else_if (widget_num == 0) {
-         : print "You are done here." ;
+         : print "You are done guessing special commands here." ;
          : return ;
       }
       : cycle key="hint_catchall" predictable_order = "true" skip_interval = "0" max_loops = "1" {
@@ -3524,26 +3524,29 @@ subroutines {
       : gosub "widget_adjust" ;
       : set_integer var="tempint" {( widget_num )} ;
       : set_false "widget_blurry" ;
-      : if (point_penny_mounds && !point_sold_guide && awning_sides_done < 2) {
-         : print {( "Weird! It's 44 plus a fraction. Like, " + (awning_sides_done == 0 ? "two-thirds" : "one-half") + "." )} ;
-         : return ;
+      : if (is_at "gnawing_awning") {
+         : if (point_penny_mounds && !point_sold_guide && awning_sides_done < 2) {
+            : print {( "Weird! It's 44 plus a fraction. Like, " + (awning_sides_done == 0 ? "two-thirds" : "one-half") + "." )} ;
+            : return ;
+         }
       }
       : if (tempint == -1 ) {
-         : print "Some weird random negative number. Nothing to do here, period." ;
+         : print "Some weird random negative number. No critical phrase to think up here." ;
          : return ;
       }
       : if (tempint < 0) {
          : set_integer var="tempint" {( 0 - tempint )} ;
          : set_true "widget_blurry" ;
       }
-      : print "On the widget, you see the number {tempint}." ;
-      : if (widget_blurry) {
-         : print "The number seems a bit blurry." ;
-      } : else_if (tempint == 0) {
-         : print "Probably means nothing left to do here." ;
-      } : else_if (tempint == 1) {
-         : print "Maybe there's nothing constructive to do right now." ;
+      : if (tempint == 0) {
+         : print "The widget is completely dark. You suspect that means there's no clever phrase you need to think up here." ;
+         : return ;
       }
+      : if (tempint == 1) {
+         : print "The widget scrolls through some weird random irrational numbers for a bit, then shuts down. Perhaps there will be a phrase or concept to figure later." ;
+         : return ;
+      }
+      : print {( "On the widget, you see the number <" + tempint + "<#f80>>" + (widget_blurry ? ", but it seems a bit blurry." : "." ) )} ;
       : if (!widget_nudge && tempint > 1) {
          : print "Hmm. Just a number, as you might expect from the description. No detailed instructions. Perhaps that's because it was meant to give simple information with no crazy formulas." ;
          : set_true "widget_nudge" ;
