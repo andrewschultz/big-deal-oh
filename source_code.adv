@@ -285,6 +285,9 @@ strings {
    # item(s)
    i_widget : string "<wild digit-dialed widget<#c8c>>" ;
 
+   # concept(s)
+   kggc : string "<Kind Gritty Grind City<#888>>" ;
+
    # auxiliary variable(s)
    tempopt : string "" ;
    txt_on_off : dynamic_string {( opt_on_off ? "<ON<#f0f>>" : "<OFF<#f0f>>" )} ;
@@ -2735,16 +2738,24 @@ subroutines {
             : done ;
          }
          : if (score == 0) {
+            : if (have_won) {
+               : print "<***FOR POSTERITY ONLY, SINCE YOU ALREADY WON***<#888>>" ;
+            }
             : print "WHAT YOU KNOW SO FAR:" ;
-            : print "* you started here in the Demo Meadow" ;
-            : print "* you said Fie Moan My Phone, which seemed unnatural" ;
-            : print "* you were given the trudge-now'll-nudge trowel at the start" ;
-            : print "* you said Boo, Number! New Bummer! a lot around the trowel" ;
-            : print "* you were told of the ancient Kind Gritty Grind City, where hard work and deep thought were rewarded" ;
+            : print "* you started here in the <Demo Meadow<#888>>" ;
+            : print "* you said <Fie Moan My Phone<#888>>, which seemed unnatural" ;
+            : print "* recently you've been heaping slights a lot in Sleeping Heights" ;
+            : print "* you were given the <trudge-now'll-nudge trowel<#888>> at the start" ;
+            : print "* you said <Boo, Number! New Bummer!<#888>> a lot around the trowel" ;
+            : print "* you were told of the ancient {kggc}, where hard work and deep thought were rewarded" ;
             : if (xme_yet) {
                : print "* you have a {i_widget}" ;
             }
-            : print "Now, how do these clues add up to you getting your first point?" ;
+            : if (bonus_score == 0) {
+               : print "Now, how do these clues add up to you getting your first point?" ;
+            } : else {
+               : print "You've even got a bonus point! But how do these clues add up to you getting your first core point and opening up a new passage?" ;
+            }
             : if (!tutorial_5_think) {
                : increment "tutorial_score" ;
                : set_true "tutorial_5_think" ;
