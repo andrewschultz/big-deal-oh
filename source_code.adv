@@ -1053,7 +1053,7 @@ locations {
          : if (!buns_taken) {
             : match "take buns" {
                : if (original "verb" == "get") {
-                  : print "You suddenly have this overwhelming fear of getting shot. Perhaps there's some other very similar way to acquire the buns." ;
+                  : print "You suddenly have this overwhelming fear of getting shot, with people gambling on where. Perhaps there's some other very similar way to acquire the buns." ;
                   : done ;
                }
                : print "Why, yes, it is that simple. You TAKE the buns! Perhaps finding what to do next with them, or the resources to help you, will be trickier." ;
@@ -2216,10 +2216,10 @@ locations {
                : collection_modify { collection = "tried_combo_core" index -> (4) content -> ("true") } ;
                : print "You say you're willing to use the tools, whatever they are, properly and take the time to be taught. The leery owner is pleased with this, or at least less displeased than you expected." ;
                : print "They ask what you're looking for. You say you're not sure. You have one you're clueless about, the trowel ..." ;
-               : print "The leery owner whistles. \"I can't give any big guidelines, but I'll tell you what I know about artifacts like that." ;
+               : print "The leery owner whistles. \"I can't give any big guidelines, but I'll tell you what I know about artifacts like that.\"" ;
                : print "It takes a while. Once you're done, the eerie loner pops back in to complain about how terrible things are outside." ;
                : print "\"Boy,\" says the owner. \"Usually the loner just grouses quietly about the state of the world these days. But if they actually spoke up, things must be bad. Better go check." ;
-               : print "Or, if you want first, I can show you a path back somewhere that may ... help you a bit. Or not. It's off to the south.\"" ;
+               : print "\"Or, if you want first, I can show you a path back somewhere that may ... help you a bit. Or not. It's off to the south.\"" ;
                : set_true "point_tight_rules" ;
                : gosub "add_point" ;
                : destroy "wrench" ;
@@ -2304,7 +2304,7 @@ locations {
             : done ;
          }
          : match "_ hole" {
-            : print {( point_chop_drain ? "Now you know the hole can shred metal, you REALLY don't want to mess with it." : "You watch the hole a bit. Leaves and tumbleweeds and such get torn apart as they are sucked in, with some finer particles being thrown back up after." )} ;
+            : print {( point_chop_drain ? "Now you know the hole can shred metal, you REALLY don't want to mess with it." : "You watch the hole a bit. Leaves and tumbleweeds and such get torn apart as they are sucked in, with some finer particles being thrown back up after.\nLooking at the hole, you wonder if you might be able to operate it if you knew its real name." )} ;
             : done ;
          }
       }
@@ -3977,7 +3977,8 @@ on_command {
    # the 4 below here are point scoring events that need general rejects
    : if (is_carried "chain") {
       : match "drop chain" {
-         : print {( "You fling the chain on the ground, but it " + (is_at "yankin_canyon" ? "hurls you away from the hole and " : "") + "snakes back onto your wrist. You need stronger measures. Help from someone, or something, else." )} ;
+         : print {( "You fling the chain on the ground, but it " + (is_at "yankin_canyon" ? "hurls you away from the hole and " : "") + "snakes back onto your wrist." )} ;
+         : print "You must be close, though. You need to mix things up a bit here. Help from someone, or something, else." ;
          : done ;
       }
    }
