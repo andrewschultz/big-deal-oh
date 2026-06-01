@@ -64,6 +64,7 @@ strings {
       is_at "gnawing_awning" ? "{only_south}." :
       is_at "oopster_stupor" ? ( point_hard_maze ? "{only_north_south}." : "{only_south}." ) :
       is_at "taller_altar" ? "{only_south}." :
+      is_at "sappage_passage" ? "You're not going anywhere until you deal with the {puz_point_rumbling_fist}." :
       is_at "foldin_gate" ? ( bonus_point_golden_fate ? "{only_north_south}." : "{only_south}." ) : "You can't go that way."
    )} ;
 
@@ -2326,7 +2327,7 @@ zones {
       locations = [ chattin_em_plain, streaky_cove, cache_shack, newbies_boonies, backin_cabin, yankin_canyon, moldin_dolmen, collation_location ]
    }
    end_zone : zone {
-      locations = [ outer_tower, ailer_lair, tenser_center, jeerin_region, gnawing_awning, oopster_stupor, taller_altar, foldin_gate ]
+      locations = [ outer_tower, ailer_lair, tenser_center, jeerin_region, gnawing_awning, oopster_stupor, taller_altar, sappage_passage, foldin_gate ]
    }
 }
 connections {
