@@ -5,7 +5,7 @@ start_theme = my_theme
 
 game_information {
    game_name                    = Big Deal, Oh!
-   game_version                 = 1.1.1
+   game_version                 = 1.2.0
    game_shortname               = BDO
    written_by                   = Andrew Schultz
    uuid                         = b3c1f8e2-5d4a-4f9b-8c3d-2a7e5f6a9b1c
@@ -886,6 +886,7 @@ booleans {
    # debug variables
    track_digits : boolean "false" ;
    track_hints : boolean "false" ;
+   track_anything : dynamic_boolean {( track_digits || track_hints )} ;
 }
 
 vocabulary {
@@ -2806,7 +2807,8 @@ subroutines {
       }
 
       : match "history _;version _;versions _" {
-         : print "So far there has been only one release, for {l_talp_2026}." ;
+         : print "The initial release was April 30, 2026, for {l_talp_2026}." ;
+         : print "Version 1.2.0 was released quickly after {l_talp_2026} ended, on June 1, 2026. It concentrated on bug fixes in the hinting code, though I also punched up a lot of game text." ;
          : done ;
       }
 
@@ -4029,11 +4031,15 @@ on_tick {
    }
 
    # debug stuff here
-   : if (track_digits) {
-      : gosub "widget_function" ;
-   }
-   : if (track_hints) {
-      : gosub "hint_function" ;
+   : if (track_anything) {
+      : print "======start tracking";
+      : if (track_digits) {
+         : gosub "widget_function" ;
+      }
+      : if (track_hints) {
+         : gosub "hint_function" ;
+      }
+      : print "======end tracking";
    }
 }
 
