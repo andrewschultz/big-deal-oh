@@ -248,6 +248,7 @@ strings {
    tht_great_book : string "<GREAT BOOK<#f80>>" ;
    tht_grow_dupes : string "<GROW DUPES<#f80>>" ;
    tht_leery_owner : string "<LEERY OWNER<#f80>>" ;
+   tht_sold_guide : string "<SOLD GUIDE<#f80>>" ;
    tht_written_specs : string "<WRITTEN SPECS<#f80>>" ;
    already_got_check : dynamic_string {( already_got_command ? " Though you already got the full command, which you can revisit with {vd_think}." : "" )} ;
    for_bonus : dynamic_string {( half_bonus ? " for a bonus point" : "" )} ;
@@ -1115,7 +1116,7 @@ locations {
                : done ;
             }
             : collection_modify { collection = "tried_combo_bonus" index -> (6) content -> ("true") } ;
-            : print "You listen to the beery whiz for a bit, almost convincing yourself they're not as interesting as they think they are. Then they look at you and ask what's the matter. Why hadn;t you offered any proper feedback? They are bringing all the energy to the conversation, here!\nYou have nothing to say. They go back to mumbling a bit softer, because you don't deserve to hear their wisdom. (Which is true. Just not in the way they think.)" ;
+            : print "You listen to the beery whiz for a bit, almost convincing yourself they're not as interesting as they think they are. Then they look at you and ask what's the matter. Why hadn't you offered any proper feedback? They are bringing all the energy to the conversation, here!\nYou have nothing to say. They go back to mumbling a bit softer, because you don't deserve to hear their wisdom. (Which is true. Just not in the way they think.)" ;
             : set_true "bonus_point_weary_biz" ;
             : gosub "add_bonus" ;
             : done ;
@@ -2785,7 +2786,7 @@ subroutines {
             : print "You tried to put the chain into a {tht_chop_drain} when one wasn't nearby." ;
          }
          : if (think_sold_guide) {
-            : print "You tried to buy a sold guide {here_gnawing_awning} but had no collateral." ;
+            : print "You tried to buy a {tht_sold_guide} {here_gnawing_awning} but had no collateral." ;
          }
          : if (think_written_specs) {
             : print "You tried to help prepare {tht_written_specs} without any documents that might help {here_jeerin_region}." ;
@@ -3486,7 +3487,7 @@ subroutines {
             : return ;
          }
       } : else_if (is_at "tenser_center") {
-         : if (!point_hard_maze) {
+         : if (!point_minister_south) {
             : cycle key = "hint_16_minister_south" predictable_order = "true" skip_interval = "0" {
                : print "The {puz_point_sinister_mouth} may not be fully evil, but you may need something powerful to dispel it." ;
                : print "Perhaps you can call on someone to come a certain direction." ;
