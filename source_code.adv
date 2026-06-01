@@ -1766,7 +1766,7 @@ locations {
             }
          }
          : match "_ tower" {
-            : print {( "You step back and appreciate what an impressive tower it is. " + (key_used ? "You have free passage through it now." : "Perhaps the keyhole provides a clue how to get through.") )}
+            : print {( "You step back and appreciate what an impressive tower it is. " + (key_used ? "You have free passage through it now." : ever_keyhole ? "Now to unlock it." : "Perhaps the keyhole provides a clue how to get through.") )}
             : done ;
          }
          : if (porch_in_tower) {
@@ -1835,8 +1835,9 @@ locations {
       }
       on_describe {
           : if (key_duplicated && !key_used) {
-             : print "You hope the key works. It'd better. You'd hate to have to back and forth to the trove. All those trips, and no detour to bound rocks to find a round box." ;
-             : print "There's always that nervous moment. Then, CLICK!" ;
+             : print "You hope the key works. It'd better. You'd hate to have to run back and forth to the trove. All those trips, and no detour to bound rocks to find a round box." ;
+             : print "Nervy moments, nervy moments. Then, CLICK!" ;
+             : print "You can now go north." ;
              : set_true "key_used" ;
              : update_graphic ;
           }
