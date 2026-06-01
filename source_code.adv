@@ -1357,8 +1357,12 @@ locations {
             : print {( bonus_point_golden_fate ? "It leads to a shining city. So shining, you wonder if it should be toned down." : "No obvious lock on the gate. Perhaps you need a magic word or something." )} ;
             : done ;
          }
+         : match "bait _" {
+            : print "Yes and no. Bait would make sense by a body of water, but nothing seems to go with bait, and besides, you see no fish in the brook.\nPerhaps look at things slightly differently?" ;
+            : done ;
+         }
          : match "_ brook" {
-            : print {( think_great_book ? "You think of how to get a great book from the gate brook. Surely there must be a way." : "The brook puts you in the mood to think about the bigger things in life for a while. And the little things. And the middle things that link up said bigger and little things. It would feel like sacrilege to actually enter the brook, though. What secrets might it be waiting to reveal to you?" )} ;
+            : print {( think_great_book ? "You think of how to get a great book from the gate brook. Surely there must be a way." : "The brook puts you in the mood to think about the bigger things in life for a while. And the little things. And the middle things that link up said bigger and little things. It would feel like sacrilege to actually enter the brook, though. What secrets might it be waiting to reveal to you?\nYou sense that finding what lies beneath the gate brook is the culmination of your journey, and perhaps a slightly different approach is needed here. Nothing too radical, just maybe slightly outside the box." )} ;
             : done ;
          }
          : match "great book" {
@@ -1369,7 +1373,7 @@ locations {
                : done ;
             }
             : print "With your hold card, you have some right to find the great book. You think. You hope. You look at the trowel. It is glowing brightly now. It seems to know where to dig. Next to the gate brook is a great book! Not a great thriller, but one explaining secrets of spirituality and wisdom, never to bue used for profit." ;
-            : print "You read it once. You read it twice. You learn the way to the Kind Gritty Grind City. It's not behind the foldin' gate. In there you learn many secrets-which-are-not-secrets. Or stuff it's sad that it's a secret. You meet people who have internalized the wisdom. And yet they seem more impressed by you than you are of them. To have to grind like that in your world, without people teaching what matters! And yet you still made it here!" ;
+            : print "You read it once. You read it twice. You learn the way to the {kggc}. It's not behind the foldin' gate. In there you learn many secrets-which-are-not-secrets. Or stuff it's sad that it's a secret. You meet people who have internalized the wisdom. And yet they seem more impressed by you than you are of them. To have to grind like that in your world, without people teaching what matters! And yet you still made it here!" ;
             : print "You can't tell if you've been there years or hours, but you realize you have no more to learn, or at least no more to learn without life experience. You know what you must do. You hand over the trowel to whoever seems to be the leader. There are at least one hundred similar trowels behind them. You immediately feel less special, but you also feel optimistic there may be other people who've been here and will have the perspective you do, and you just haven't met them yet. But for now, back home." ;
             : set_false "think_great_book" ;
             : set_true "point_great_book" ;
