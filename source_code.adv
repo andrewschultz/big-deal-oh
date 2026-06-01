@@ -960,6 +960,27 @@ locations {
                : done ;
             }
          }
+         : match "_ clerk" {
+            : if (!bonus_point_map_all) {
+               : print "The clerk encourages you to look for an app that suits you." ;
+            } : else {
+               : print "You thank the clerk for the complimentary map-all app." ;
+            }
+            : if (!bonus_point_map_all) {
+               : print "The clerk looks slightly sad. It's not critical, but ... someone keeps spreading lies here that every app is worthless. It's bad for business." ;
+            } : else {
+               : print "The clerk thanks you for helping get rid of the jerk." ;
+            }
+            : done ;
+         }
+         : match "listen _" {
+            : if (!bonus_point_clock_jerk) {
+               : print "Kvetching seeps through. You're not sure where from. But it definitely ruins the atmosphere of the place. It's generally about how everything here is too basic if you're actually sophisticated." ;
+            } : else {
+               : print "Much more quiet with the jerk clocked." ;
+            }
+            : done ;
+         }
          : match "clock jerk" {
             : if (bonus_point_clock_jerk) {
                : print "You already alerted the clerk to the riff-raff. They will know what to do if said riff-raff return." ;
@@ -985,6 +1006,11 @@ locations {
                : gosub "say_half" ;
                : done ;
             }
+         }
+      }
+      on_describe {
+         : if (is_first_entered()) {
+            : print "The jock clerk inspects you, then hears a \"They're good\" from back north. \nThe jock clerk nods. \"Browse as you need.\"" ;
          }
       }
    }
