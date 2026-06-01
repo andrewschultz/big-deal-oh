@@ -155,7 +155,7 @@ strings {
    meadow_status : dynamic_string {( point_taming_flowers ? "it's peaceful again with the flaming towers subdued" : placed_flaming_towers ? "the flaming towers have interrupted the tranquility" : point_tight_rules ? "you see what the eerie loner was worried about" : point_rocky_caves ? "it's quiet again after you got rid of the cocky raves" : listen_demo_meadow ? "you hear some {puz_point_cocky_raves_l}" : "it feels relatively quiet, and yet, not as quiet and peaceful as it should be" )} ;
    meadow_stool : dynamic_string {( point_tool_stall ? "" : ". A {puz_point_stool_tall} sits inexplicably here" )} ;
    header_demo_meadow : string "<Demo Meadow<#ff0>>" ;
-   meadow_passages: dynamic_string {( point_taming_flowers ? "You've found passages {dir_n}, {dir_e} and {dir_w} that lead away. You probably don't need to go back {dir_s} or in" : (!point_rocky_caves && !point_tool_stall) ? "You haven't found anywhere to go from here yet" : !point_rocky_caves ? "You can go {dir_s} to the tool stall" : !point_tool_stall ? "You can go {dir_d} to the rocky caves" : "You can go {dir_s} to the tool stall and {dir_d} to the rocky caves" )} ;
+   meadow_passages: dynamic_string {( point_taming_flowers ? "You've found passages {dir_n}, {dir_e} and {dir_w} that lead away. You probably don't need to go back {dir_s} or {dir_d}" : (!point_rocky_caves && !point_tool_stall) ? "You haven't found anywhere to go from here yet" : !point_rocky_caves ? "You can go {dir_s} to the tool stall" : !point_tool_stall ? "You can go {dir_d} to the rocky caves" : "You can go {dir_s} to the tool stall and {dir_d} to the rocky caves" )} ;
 
    loc_foldin_gate : dynamic_string {( "A big foldin' gate is to the north. It is " + (bonus_point_golden_fate ? "open, with goldness gleaming behind it" : "closed" ) + ". There's always passage south. Also, a {puz_point_gate_brook} runs by the gate." )} ;
    header_foldin_gate : string "<Foldin' Gate<#ff0>>" ;
@@ -2174,7 +2174,7 @@ locations {
                : done ;
          }
             : match "_ leery;_ owner" {
-               : print {( point_tight_rules ? "The owner seems more trusting of you now you showed you cared about rules." : "The owner doesn't seem to trust you yet. Perhaps you need to show you're willing to learn to use the right tools." )} ;
+               : print {( point_tight_rules ? "The owner seems more trusting of you now you showed you cared about rules." : "The owner doesn't seem to trust you yet. From what they're wearing, they'd like to make a profit, but they probably want to be shielded from liability, too.\nPerhaps you need to show you're willing to learn to use the right tools." )} ;
                : done ;
             }
          } : else {
@@ -3607,7 +3607,7 @@ subroutines {
          : done ;
       }
       : match "hinttrack _" {
-         : print "Must HINTTRACK digits, hints, neither, or both." ;
+         : print "<HINTTRACK<#f80>> requires <DIGITS<#f80>>, <HINTS<#f80>>, <NEITHER<#f80>>, or <BOTH<#f80>>." ;
          : done ;
       }
       : if (score == 0) {
@@ -3733,7 +3733,7 @@ on_startup {
    }
    : print "One day, when you're at the hardware store buying insulation, you happen on a weird item called the trudge-now'll-nudge trowel. You feel compelled to buy it. It's on sale. Sales are always good!" ;
    : print "It just sits there for a year. Yet when you pass it, you find yourself muttering \"New bummer. Boo, number.\" What is up with that?" ;
-   : print "You always intend to give the trowel away, but you ave no clue who would want it. Every few months you look at it, and some writing clears up. Eventually you can read it: Please return this to Kind Gritty Grind City if found." ;
+   : print "You always intend to give the trowel away, but you ave no clue who would want it. Every few months you look at it, and some writing clears up. Eventually you can read the whole message: <Please return this to<#0f0>> {kggc}<, where hard work, imagination and deep thought are rewardedm if found<#0f0>>." ;
    : print "You barely ever leave your neighborhood of Sleeping Heights. And yet you want to. It's low-crime, but boy oh boy, you find yourself muttering \"heaping slights\" to every small thing rude people do. It's high class rudeness, too, stuff you can't prove is rude. Every time you suffer such a slight, your trowel glows when you return home. You decide to take it back to the hardware store you bought it from." ;
    : print "But the hardware store is closed. A vile tent stands where it was. It seems to flap its openings at you, and you are powerless to resist. Is this the end? You pull out the trowel ..." ;
    : print "The tent screams and disintegrates. Beneath is a tile vent - obviously not completely tiled. But you are curious what is below. You walk a ways and come out above ground. You shut the vent and see no trace it was ever there..." ;
