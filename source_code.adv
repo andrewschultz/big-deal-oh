@@ -3180,6 +3180,10 @@ subroutines {
       : gosub "awning_hint_check" ;
       : gosub "widget_adjust" ;
       : if (is_at "ailer_lair") {
+         : if (!point_sail_tide) {
+            : print "You need to change something elsewhere before knowing what to ask the babblers and blabbers for." ;
+            : return ;
+         }
          : if (!point_best_notes) {
             : cycle key = "hint_23_best_notes" predictable_order = "true" skip_interval = "0" {
                : print "The {puz_point_nest_boats} are what you need to look at." ;
@@ -3260,11 +3264,16 @@ subroutines {
             : return ;
          }
       } : else_if (is_at "foldin_gate") {
-         : if (point_help_card && !point_great_book) {
+         : if (!point_help_card) {
+            : print "You have one last thing to do here, but you need to find something that has appeared south of the hard maze." ;
+            : return ;
+         }
+         : if (!point_great_book) { # this should always be the case, but let's make sure!
             : cycle key = "hint_28_great_book" predictable_order = "true" skip_interval = "0" {
                : print "The {puz_point_gate_brook} holds wisdom and secrets and all that sort of thing." ;
                : print "You have an item that can help you reserve such a book." ;
                : print "The cold hard hold card." ;
+               : print "This being the last puzzle, perhaps you need to tweak things slightly." ;
                : print "You need to ask for the <GREAT BOOK<#f0f>>." ;
             }
             : return ;
@@ -3291,8 +3300,15 @@ subroutines {
                : print "You will find a <SICK BRIDE<#f0f>>." ;
             }
             : return ;
+         } : else_if (!point_sold_guide) {
+            : print "You need an item from elsewhere to take care of the gold side." ;
+            : return ;
          }
       } : else_if (is_at "jeerin_region") {
+         : if (!point_best_notes) {
+            : print "You can guess what to ask the {puz_point_spittin_wrecks} for here, but you haven't found what to offer them, yet." ;
+            : return ;
+         }
          : if (!point_written_specs) {
             : cycle key = "hint_24_written_specs" predictable_order = "true" skip_interval = "0" {
                : print "The best notes help here." ;
@@ -3323,7 +3339,14 @@ subroutines {
             : return ;
          }
          : if (!key_found && !point_chop_drain) {
-            : print "You need two more things in addition to the wax for the dolmen to do its thing. I should clue what you have but I had a release day crunch." ;
+            : print "The dolmen should work automaticaly once you have three items. You already have the wax." ;
+            : if (key_found) {
+               : print "You have the key and now need to find a chunk of stronger metal." ;
+            } : else_if (point_chop_drain) {
+               : print "The chunk of platinum may be useful, but you don't have a final shape to mold it into." ;
+            } : else {
+               : print "However, you don't have either of the other two items you need." ;
+            }
             : return ;
          }
 
@@ -3358,12 +3381,19 @@ subroutines {
             : return ;
          }
       } : else_if (is_at "outer_tower") {
+         : if (!ever_keyhole) {
+            : print "You should examine the keyhole." ;
+            : return ;
+         }
          : if (!point_lodging_doc) {
             : cycle key = "hint_14_lodging_dock" predictable_order = "true" skip_interval = "0" {
                : print "If you've examined the keyhole, you may notice it's not any old lock." ;
                : print "It's a {puz_point_dodging_lock_l}." ;
                : print "Thus, you need to request a <LODGING DOCK<#f0f>> or say <LODGING DOC<#f0f>>. It works either way." ;
             }
+            : return ;
+         } : else_if (!key_used) {
+            : print "Once you acquire a key elsewhere that can unlock the dodging lock, you won't need any special command." ;
             : return ;
          } : else_if (point_sold_guide && !porch_in_tower) {
             : cycle key = "hint_tower_porch" predictable_order = "true" skip_interval = "0" {
@@ -3412,6 +3442,12 @@ subroutines {
                : print "Something useful is hidden in the grey. A helpful appliance." ;
                : print "It is a <CREAKY STOVE<#f0f>>." ;
             }
+            : return ;
+         } : else_if (!buns_taken) {
+            : print "You'll need to find something to put in the stove. Something edible." ;
+            : return ;
+         } : else_if (!point_grow_dupes) {
+            : print "You have what you need for the stove. However, it isn't prepared yet." ;
             : return ;
          } : else_if (buns_taken && !point_bake_tons) {
             : cycle key = "hint_10_bake_tons" predictable_order = "true" skip_interval = "0" {
