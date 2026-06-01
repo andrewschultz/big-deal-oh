@@ -3174,8 +3174,8 @@ subroutines {
                : print "The full pile is in your way. It has something you might want, but what?" ;
                : print "You can reduce the clutter a bit. It helps to focus on something you need." ;
                : print "You could <PULL FILE<#f0f>>." ;
-               : return ;
             }
+            : return ;
          }
       } : else_if (is_at "cache_shack") {
          : if (!buns_taken) {
@@ -3188,8 +3188,8 @@ subroutines {
                : print "Half the chatter says there's an item you don't want to pick up, and half says you do." ;
                : print "But what could the item be?" ;
                : print "It is a <PLATINUM CHAIN<#f0f>>." ;
-               : return ;
             }
+            : return ;
          }
       } : else_if (is_at "collation_location") {
          : if (buns_taken && !point_grow_dupes) {
@@ -3197,8 +3197,8 @@ subroutines {
                : print "Now you have the buns, you have material that can help the dough groups repopulate." ;
                : print "In the collation location, you make copies of things." ;
                : print "You can <GROW DUPES<#f0f>>." ;
-               : return ;
             }
+            : return ;
          }
       } : else_if (is_at "demo_meadow") {
          : if (!point_tool_stall) {
@@ -3209,8 +3209,8 @@ subroutines {
                : print "Spoonerisms are the mechanic." ;
                : print "Flip the sounds at the start of the words to get a..." ;
                : print "<TOOL STALL<#f0f>>." ;
-               : return ;
             }
+            : return ;
          }
          : if (!listen_demo_meadow) {
             : print "{v_listen} for what to do next." ;
@@ -3221,16 +3221,16 @@ subroutines {
                : print "The {puz_point_cocky_raves_l} sure find it funny you can't find a way out." ;
                : print "But of course the {puz_point_cocky_raves_l} are hiding something you may be able to figure out." ;
                : print "You will hear <COCKY RAVES<#f0f>> are nearby." ;
-               : return ;
             }
+            : return ;
          }
          : if (placed_flaming_towers && !point_taming_flowers) {
             : cycle key = "hint_05_taming_flowers" predictable_order = "true" skip_interval = "0" {
                : print "The flaming towers are certainly a menace." ;
                : print "How could you find something nicer that makes them less of a menace?" ;
                : print "Find some <TAMING FLOWERS<#f0f>>." ;
-               : return ;
             }
+            : return ;
          }
       } : else_if (is_at "foldin_gate") {
          : if (point_help_card && !point_great_book) {
@@ -3239,8 +3239,8 @@ subroutines {
                : print "You have an item that can help you reserve such a book." ;
                : print "The cold hard hold card." ;
                : print "You need to ask for the <GREAT BOOK<#f0f>>." ;
-               : return ;
             }
+            : return ;
          }
       } : else_if (is_at "gnawing_awning") {
          : if (!point_sail_tide) {
@@ -3248,22 +3248,22 @@ subroutines {
                : print "The {puz_point_tail_side} is helping adjust wind patterns, or something." ;
                : print "What can it help, to make things more comfortable for people to pass by?" ;
                : print "You need to start the <SAIL TIDE<#f0f>>." ;
-               : return ;
             }
+            : return ;
          } : else_if (!point_sold_guide && point_penny_mounds) {
             : cycle key = "hint_20_sold_guide" predictable_order = "true" skip_interval = "0" {
                : print "The {puz_point_gold_side} hides something valuable." ;
                : print "Something you should have the money to pay for." ;
                : print "You need to claim a <SOLD GUIDE<#f0f>>. You'll buy it automatically." ;
-               : return ;
             }
+            : return ;
          } : else_if (!point_sick_bride) {
             : cycle key = "hint_21_sick_bride" predictable_order = "true" skip_interval = "0" {
                : print "Something or someone is bricked up behind the {puz_point_brick_side}." ;
                : print "Who would want to run?" ;
                : print "You will find a <SICK BRIDE<#f0f>>." ;
-               : return ;
             }
+            : return ;
          }
       } : else_if (is_at "jeerin_region") {
          : if (!point_written_specs) {
@@ -3279,8 +3279,8 @@ subroutines {
                : print "The {puz_point_kelp_hard} has just gotten washed up." ;
                : print "It may get stuff lost in it." ;
                : print "A <HELP CARD<#f0f>>." ;
-               : return ;
             }
+            : return ;
          }
       } : else_if (is_at "moldin_dolmen") {
          : if (!fax_examined) {
@@ -3292,8 +3292,8 @@ subroutines {
                : print "You keep seeing a {puz_point_warmed_fax} appear from the wall, then vanish." ;
                : print "Maybe you could catch one and change it into something else quickly." ;
                : print "You need to grab or create some <FORMED WAX<#f0f>>." ;
-               : return ;
             }
+            : return ;
          }
          : if (!key_found && !point_chop_drain) {
             : print "You need two more things in addition to the wax for the dolmen to do its thing. I should clue what you have but I had a release day crunch." ;
@@ -3306,8 +3306,8 @@ subroutines {
                : print "The {puz_point_bush_pest} wants a fight, but it's surprisingly good at getting in your way." ;
                : print "What sort of move could you pull on it to get by?" ;
                : print "You could <PUSH BEST<#f0f>>." ;
-               : return ;
             }
+            : return ;
          }
       } : else_if (is_at "oopster_stupor") {
          : if (!point_hard_maze) {
@@ -3315,8 +3315,8 @@ subroutines {
                : print "The {puz_point_marred_haze} blocks you. It can become something slightly more solvable." ;
                : print "Not fun to solve, mind, but solvable." ;
                : print "You could discover a <HARD MAZE<#f0f>>." ;
-               : return ;
             }
+            : return ;
          }
          : if (!can_pass_maze) {
             : print {( "You have currently found " + ( collection_get { collection -> ("num_to_word") index -> ( hard_maze_solve_progress ) } ) + " of three items needed to pass the hard maze to the north. They're all located in this endgame area." )} ;
@@ -3336,16 +3336,16 @@ subroutines {
                : print "If you've examined the keyhole, you may notice it's not any old lock." ;
                : print "It's a {puz_point_dodging_lock_l}." ;
                : print "Thus, you need to request a <LODGING DOCK<#f0f>> or say <LODGING DOC<#f0f>>. It works either way." ;
-               : return ;
             }
+            : return ;
          } : else_if (point_sold_guide && !porch_in_tower) {
             : cycle key = "hint_tower_porch" predictable_order = "true" skip_interval = "0" {
                : print "Refer to the sold guide for something you need to do." ;
                : print "You need to find a porch. You're not told what the item is, but since spoonerisms are what's here, it's probably -orch." ;
                : print "Which means the location of the porch has a word that starts with T." ;
                : print "X PORCH." ;
-               : return ;
             }
+            : return ;
          } : else_if (porch_in_tower && !point_power_torch) {
             : cycle key = "hint_22_power_torch" predictable_order = "true" skip_interval = "0" {
                : print "Hmm, you've found where the porch is. What does that make it?" ;
@@ -3358,17 +3358,17 @@ subroutines {
          : if (!smell_rocky_caves) {
             : cycle key = "hint_rocky_caves_smell" predictable_order = "true" skip_interval = "0" {
                : print "Time to use a different sense. It's damp and dark here. You can't really see and don't want to taste, but what other sense can you use?" ;
-               : print "You can SMELL." ;
-               : return ;
+               : print "You can {v_smell}." ;
             }
+            : return ;
          }
          : if (!point_steel_wrench) {
             : cycle key = "hint_01_steel_wrench" predictable_order = "true" skip_interval = "0" {
                : print "That {puz_point_real_stench} may prevent less hardy adventurers from finding something, but maybe if you looked for something specific, you'd find it." ;
                : print {( point_tool_stall ? "The tool stall you unveiled needs an item." : "The {puz_point_stool_tall} back in the meadow leads somewhere that could give you a clue." )} ;
                : print "Hidden behind the {puz_point_real_stench} is a <STEEL WRENCH<#f0f>>." ;
-               : return ;
             }
+            : return ;
          }
       } : else_if (is_at "sappage_passage") {
          : cycle key = "hint_26_fumbling_wrist" predictable_order = "true" skip_interval = "0" {
@@ -3376,31 +3376,31 @@ subroutines {
             : print "The {puz_point_rumbling_fist} seems quite stable and sturdy, but is it that way on its own? Or with something?" ;
             : print "In any case, linking the {puz_point_rumbling_fist} to something less solid might mess it up." ;
             : print "A <FUMBLING WRIST<#f0f>>." ;
-            : return ;
          }
+         : return ;
       } : else_if (is_at "streaky_cove") {
          : if (!point_creaky_stove) {
             : cycle key = "hint_09_creaky_stove" predictable_order = "true" skip_interval = "0" {
                : print "The {puz_point_streaky_cove}'s right side is a plain grey, almost too grey." ;
                : print "Something useful is hidden in the grey. A helpful appliance." ;
                : print "It is a <CREAKY STOVE<#f0f>>." ;
-               : return ;
             }
+            : return ;
          } : else_if (buns_taken && !point_bake_tons) {
             : cycle key = "hint_10_bake_tons" predictable_order = "true" skip_interval = "0" {
                : print "So you have a stove. Do you have anything you could cook or heat up?" ;
                : print "The buns. If you take inventory, you notice something." ;
                : print "You had to <TAKE BUNS<#f0f>>." ;
                : print "You thus need to <BAKE TONS<#f0f>>." ;
-               : return ;
             }
+            : return ;
          } : else_if (point_bake_tons && !point_key_trove) {
             : cycle key = "hint_11_key_trove" predictable_order = "true" skip_interval = "0" {
                : print "Something is hidden behind the {puz_point_tree_cove}." ;
                : print "Perhaps something of value." ;
                : print "There is a <KEY TROVE<#f0f>>." ;
-               : return ;
             }
+            : return ;
          } : else_if (point_key_trove && !key_found) {
             : print "You just need to examine the trove to get a key." ;
             : return ;
@@ -3412,15 +3412,15 @@ subroutines {
                : print "Neither seem terribly spiritual. They don't belong here. Perhaps they can be replaced?" ;
                : print "What you get isn't terribly spiritual, but it is less damaging to the soul or body, and it's enough for what you need." ;
                : print "<PENNY MOUNDS<#f0f>>." ;
-               : return ;
             }
+            : return ;
          } : else_if (point_sick_bride && !point_cool_plan) {
             : cycle key = "hint_25_cool_plan" predictable_order = "true" skip_interval = "0" {
                : print "The {puz_point_pool_clan} has something to offer you." ;
                : print "Nothing concrete, just some help." ;
                : print "They could construct a <COOL PLAN<#f0f>>." ;
-               : return ;
             }
+            : return ;
          }
       } : else_if (is_at "tenser_center") {
          : if (!point_hard_maze) {
@@ -3428,8 +3428,8 @@ subroutines {
                : print "The {puz_point_sinister_mouth} may not be fully evil, but you may need something powerful to dispel it." ;
                : print "Perhaps you can call on someone to come a certain direction." ;
                : print "You could call out <MINISTER SOUTH<#f0f>>." ;
-               : return ;
             }
+            : return ;
          }
       } : else_if (is_at "tool_stall") {
          : if (!point_steel_wrench && !tutorial_0_in_tutorial) {
@@ -3445,8 +3445,8 @@ subroutines {
                : print "But the {puz_point_eerie_loner} is suspicious of you." ;
                : print "LEERY, in other words." ;
                : print "Ask for the {tht_leery_owner}." ;
-               : return ;
             }
+            : return ;
          }
          : if (point_leery_owner && !point_tight_rules) {
             : cycle key = "hint_04_tight_rules" predictable_order = "true" skip_interval = "0" {
@@ -3454,8 +3454,8 @@ subroutines {
                : print "You need advice and guidance." ;
                : print "Pretty clear advice and guidance." ;
                : print "Ask for <TIGHT RULES<#f0f>>." ;
-               : return ;
             }
+            : return ;
          }
       } : else_if (is_at "yankin_canyon") {
          : if (point_platinum_chain && !point_chop_drain) {
@@ -3464,9 +3464,9 @@ subroutines {
                : print "Look in your inventory. There's something cursed, something you want to get rid of." ;
                : print "Have you tried to <DROP<#f0f>> it?" ;
                : print "It doesn't work. You need the right thing to destroy it, or its essence." ;
-               : print "You need to call the <CHOP DRAIN<#f0f>>." ;
-               : return ;
+               : print "You need to call the hole the <CHOP DRAIN<#f0f>>." ;
             }
+            : return ;
          }
       }
       : if (widget_num == -1) {
