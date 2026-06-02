@@ -1601,6 +1601,7 @@ locations {
             : set_true "point_sold_guide" ;
             : gosub "add_point" ;
             : pocket "sold_guide" ;
+            : destroy "penny_mound" ;
             : done ;
          }
          : if (!point_sold_guide) {
@@ -2169,6 +2170,7 @@ locations {
                : print "The pool clan the sick bride told you about comes into view, now things have cleared up a bit. They are discussing the next pool they would be installing in that city with more money than sense. Once you explain to them about the sick bride, they seem about ready to offer something." ;
                : set_true "pool_clan_intro" ;
             }
+            : pocket "penny_mound" ;
             : gosub "add_point" ;
             : done ;
          }
@@ -2396,6 +2398,7 @@ objects {
    chain : object "the platinum CHAIN that snapped onto you that you want to get rid of. Oh, what's the word?" ;
    hold_card : object "the cold hard hold card from the hard kelp" ;
    slab : object "the slender fab fender slab that was inside the platinum chain" conspicuous="false" ;
+   penny_mound : object "a single penny mound from beneath the pounds" ;
    power_torch : object "the power torch you found on the tower porch. It has enough for one charge." ;
    seek_key : object "the reconstructed key from the dolmen" ;
    sold_guide : object "the sold guide you bought with the penny mounds" ;
@@ -3905,6 +3908,12 @@ on_command {
    : if (is_carried("best_notes")) {
       : match "_ best;_ notes" {
          : print "You understand them in a general sense, but the important details are well beyond you. You could use some help, here." ;
+         : done ;
+      }
+   }
+   : if (is_carried("penny_mound")) {
+      : match "_ penny;_ mounds" {
+         : print "Not exactly a fortune but probably enough to buy something moderately useful." ;
          : done ;
       }
    }
