@@ -1193,7 +1193,7 @@ locations {
          }
          : if (point_taming_flowers) {
              : match "mating *;* mating" {
-                : print "Only MATING is needed for the bonus point." ;
+                : print {( bonus_point_mating ? "You thought up all you can on the matter." : "Only MATING is needed for the bonus point." )} ;
                 : done ;
              }
              : match "mating -" {
@@ -1441,7 +1441,7 @@ locations {
          : if (three_awning_sides_done) {
             : match "white side" {
                : if (bonus_point_white_side) {
-                  : print "Already done!" ;
+                  : print "But you already discovered the white side!" ;
                   : done ;
                }
                : collection_modify { collection = "tried_combo_bonus" index -> (8) content -> ("true") } ;
@@ -1925,8 +1925,8 @@ locations {
          }
          : match "fumbling wrist" {
             : if (point_fumbling_wrist) {
-               : print "Already done! But you should never get here." ;
-               : done ;
+               : print "You shouldn't be able to do this twice, but I'll fall through so you aren't stuck." ;
+               : press_any_key ;
             }
             : print "You decide to ask the fist what could be attached to it. Surely it can't propel itself all alone, can it? Perhaps this wouldn't work elsewhere, but the sappage passage--well, it doesn't just affect you. It's particularly harsh on beings who act, act, act and don't think. And you've certainly been doing some thinking this game!" ;
             : print "The fist crash-lands, sputters into the air a few times, then finally punches the ground weakly and rolls off to the side." ;
@@ -3685,7 +3685,7 @@ subroutines {
          }
       }
       : match "testjump _" {
-         : print "Score must be 0 and you must TESTJUMP FLAMING or TESTJUMP OUTER or TESTJUMP PERCH." ;
+         : print "Score must be 0 and you must <TESTJUMP FLAMING<#f80>> or <TESTJUMP OUTER<#f80>> or <TESTJUMP PERCH<#f80>>." ;
       }
    }
 
