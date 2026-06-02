@@ -4160,28 +4160,44 @@ on_tick {
 on_render {
    : if (drawing_map) {
       : if (has_visited("rocky_caves")) {
-         : overlay "m_0_visited" x="41" y="127" ;
+         : if (doneblock_10_rocky_caves) {
+            : overlay "m_0_closed" x="41" y="127" ;
+         } : else {
+            : overlay "m_0_visited" x="41" y="127" ;
+         }
          : overlay "m_rocky_caves" x="41" y="127" ;
       }
       : if (is_at "rocky_caves") {
          : overlay "m_you_are_here" x="41" y="127" ;
       }
       : if (has_visited("app_mall")) {
-         : overlay "m_0_visited" x="81" y="127" ;
+         : if (doneblock_20_app_mall) {
+            : overlay "m_0_closed" x="81" y="127" ;
+         } : else {
+             : overlay "m_0_visited" x="81" y="127" ;
+         }
          : overlay "m_app_mall" x="81" y="127" ;
       }
       : if (is_at "app_mall") {
          : overlay "m_you_are_here" x="81" y="127" ;
       }
       : if (has_visited("chattin_em_plain")) {
-         : overlay "m_0_visited" x="41" y="106" ;
+         : if (doneblock_11_chattin_em_plain) {
+            : overlay "m_0_closed" x="41" y="106" ;
+         } : else {
+            : overlay "m_0_visited" x="41" y="106" ;
+         }
          : overlay "m_chattin_em_plain" x="41" y="106" ;
       }
       : if (is_at "chattin_em_plain") {
          : overlay "m_you_are_here" x="41" y="106" ;
       }
       : if (has_visited("tool_stall")) {
-         : overlay "m_0_visited" x="81" y="106" ;
+         : if (doneblock_21_tool_stall) {
+            : overlay "m_0_closed" x="81" y="106" ;
+         } : else {
+            : overlay "m_0_visited" x="81" y="106" ;
+         }
          : overlay "m_tool_stall" x="81" y="106" ;
          : if (point_leery_owner) {
             : overlay "m_1_vertical" x="96" y="119" ;
@@ -4191,21 +4207,33 @@ on_render {
          : overlay "m_you_are_here" x="81" y="106" ;
       }
       : if (has_visited("streaky_cove")) {
-         : overlay "m_0_visited" x="121" y="106" ;
+         : if (doneblock_31_streaky_cove) {
+            : overlay "m_0_closed" x="121" y="106" ;
+         } : else {
+            : overlay "m_0_visited" x="121" y="106" ;
+         }
          : overlay "m_streaky_cove" x="121" y="106" ;
       }
       : if (is_at "streaky_cove") {
          : overlay "m_you_are_here" x="121" y="106" ;
       }
       : if (has_visited("cache_shack")) {
-         : overlay "m_0_visited" x="1" y="85" ;
+         : if (doneblock_02_cache_shack) {
+            : overlay "m_0_closed" x="1" y="85" ;
+         } : else {
+            : overlay "m_0_visited" x="1" y="85" ;
+         }
          : overlay "m_cache_shack" x="1" y="85" ;
       }
       : if (is_at "cache_shack") {
          : overlay "m_you_are_here" x="1" y="85" ;
       }
       : if (has_visited("newbies_boonies")) {
-         : overlay "m_0_visited" x="41" y="85" ;
+         : if (doneblock_12_newbies_boonies) {
+            : overlay "m_0_closed" x="41" y="85" ;
+         } : else {
+            : overlay "m_0_visited" x="41" y="85" ;
+         }
          : overlay "m_newbies_boonies" x="41" y="85" ;
          : if (point_push_best) {
             : overlay "m_1_horizontal" x="33" y="91" ;
@@ -4217,7 +4245,11 @@ on_render {
          : overlay "m_you_are_here" x="41" y="85" ;
       }
       : if (has_visited("demo_meadow")) {
-         : overlay "m_0_visited" x="81" y="85" ;
+         : if (doneblock_22_demo_meadow) {
+            : overlay "m_0_closed" x="81" y="85" ;
+         } : else {
+            : overlay "m_0_visited" x="81" y="85" ;
+         }
          : overlay "m_demo_meadow" x="81" y="85" ;
          : if (point_rocky_caves) {
             : overlay "m_1_diag" x="73" y="98" ;
@@ -4235,7 +4267,11 @@ on_render {
          : overlay "m_you_are_here" x="81" y="85" ;
       }
       : if (has_visited("backin_cabin")) {
-         : overlay "m_0_visited" x="121" y="85" ;
+         : if (doneblock_32_backin_cabin) {
+            : overlay "m_0_closed" x="121" y="85" ;
+         } : else {
+            : overlay "m_0_visited" x="121" y="85" ;
+         }
          : overlay "m_backin_cabin" x="121" y="85" ;
          : if (point_pull_file) {
             : overlay "m_1_horizontal" x="153" y="91" ;
@@ -4247,21 +4283,33 @@ on_render {
          : overlay "m_you_are_here" x="121" y="85" ;
       }
       : if (has_visited("yankin_canyon")) {
-         : overlay "m_0_visited" x="161" y="85" ;
+         : if (doneblock_42_yankin_canyon) {
+            : overlay "m_0_closed" x="161" y="85" ;
+         } : else {
+            : overlay "m_0_visited" x="161" y="85" ;
+         }
          : overlay "m_yankin_canyon" x="161" y="85" ;
       }
       : if (is_at "yankin_canyon") {
          : overlay "m_you_are_here" x="161" y="85" ;
       }
       : if (has_visited("moldin_dolmen")) {
-         : overlay "m_0_visited" x="41" y="64" ;
+         : if (doneblock_13_moldin_dolmen) {
+            : overlay "m_0_closed" x="41" y="64" ;
+         } : else {
+            : overlay "m_0_visited" x="41" y="64" ;
+         }
          : overlay "m_moldin_dolmen" x="41" y="64" ;
       }
       : if (is_at "moldin_dolmen") {
          : overlay "m_you_are_here" x="41" y="64" ;
       }
       : if (has_visited("outer_tower")) {
-         : overlay "m_0_visited" x="81" y="64" ;
+         : if (doneblock_23_outer_tower) {
+            : overlay "m_0_closed" x="81" y="64" ;
+         } : else {
+            : overlay "m_0_visited" x="81" y="64" ;
+         }
          : overlay "m_outer_tower" x="81" y="64" ;
          : if (key_used) {
             : overlay "m_1_vertical" x="96" y="56" ;
@@ -4271,14 +4319,22 @@ on_render {
          : overlay "m_you_are_here" x="81" y="64" ;
       }
       : if (has_visited("collation_location")) {
-         : overlay "m_0_visited" x="121" y="64" ;
+         : if (doneblock_33_collation_location) {
+            : overlay "m_0_closed" x="121" y="64" ;
+         } : else {
+            : overlay "m_0_visited" x="121" y="64" ;
+         }
          : overlay "m_collation_location" x="121" y="64" ;
       }
       : if (is_at "collation_location") {
          : overlay "m_you_are_here" x="121" y="64" ;
       }
       : if (has_visited("ailer_lair")) {
-         : overlay "m_0_visited" x="41" y="43" ;
+         : if (doneblock_14_ailer_lair) {
+            : overlay "m_0_closed" x="41" y="43" ;
+         } : else {
+            : overlay "m_0_visited" x="41" y="43" ;
+         }
          : overlay "m_ailer_lair" x="41" y="43" ;
          : overlay "m_1_vertical" x="56" y="35" ;
       }
@@ -4286,7 +4342,11 @@ on_render {
          : overlay "m_you_are_here" x="41" y="43" ;
       }
       : if (has_visited("tenser_center")) {
-         : overlay "m_0_visited" x="81" y="43" ;
+         : if (doneblock_24_tenser_center) {
+            : overlay "m_0_closed" x="81" y="43" ;
+         } : else {
+            : overlay "m_0_visited" x="81" y="43" ;
+         }
          : overlay "m_tenser_center" x="81" y="43" ;
          : if (point_minister_south) {
             : overlay "m_1_horizontal" x="113" y="49" ;
@@ -4298,7 +4358,11 @@ on_render {
          : overlay "m_you_are_here" x="81" y="43" ;
       }
       : if (has_visited("jeerin_region")) {
-         : overlay "m_0_visited" x="121" y="43" ;
+         : if (doneblock_34_jeerin_region) {
+            : overlay "m_0_closed" x="121" y="43" ;
+         } : else {
+            : overlay "m_0_visited" x="121" y="43" ;
+         }
          : overlay "m_jeerin_region" x="121" y="43" ;
          : overlay "m_1_vertical" x="136" y="35" ;
       }
@@ -4306,14 +4370,22 @@ on_render {
          : overlay "m_you_are_here" x="121" y="43" ;
       }
       : if (has_visited("gnawing_awning")) {
-         : overlay "m_0_visited" x="41" y="22" ;
+         : if (doneblock_15_gnawing_awning) {
+            : overlay "m_0_closed" x="41" y="22" ;
+         } : else {
+            : overlay "m_0_visited" x="41" y="22" ;
+         }
          : overlay "m_gnawing_awning" x="41" y="22" ;
       }
       : if (is_at "gnawing_awning") {
          : overlay "m_you_are_here" x="41" y="22" ;
       }
       : if (has_visited("oopster_stupor")) {
-         : overlay "m_0_visited" x="81" y="22" ;
+         : if (doneblock_25_oopster_stupor) {
+            : overlay "m_0_closed" x="81" y="22" ;
+         } : else {
+            : overlay "m_0_visited" x="81" y="22" ;
+         }
          : overlay "m_oopster_stupor" x="81" y="22" ;
          : if (point_written_specs && point_power_torch && point_cool_plan) {
             : overlay "m_1_vertical" x="96" y="14" ;
@@ -4323,7 +4395,11 @@ on_render {
          : overlay "m_you_are_here" x="81" y="22" ;
       }
       : if (has_visited("taller_altar")) {
-         : overlay "m_0_visited" x="121" y="22" ;
+         : if (doneblock_35_taller_altar) {
+            : overlay "m_0_closed" x="121" y="22" ;
+         } : else {
+            : overlay "m_0_visited" x="121" y="22" ;
+         }
          : overlay "m_taller_altar" x="121" y="22" ;
       }
       : if (is_at "taller_altar") {
