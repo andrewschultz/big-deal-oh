@@ -793,6 +793,7 @@ booleans {
 
    smelled_soapy : boolean "false" ;
    heard_choking : boolean "false" ;
+   heard_hey_stumble : boolean "false" ;
    felt_hollow_feeling : boolean "false" ;
 
    # game state (bonus-related)
@@ -4108,6 +4109,32 @@ on_command {
       }
    }
 
+   : if (heard_hey_stumble) {
+      : match "stay humble" {
+         : if (bonus_point_stay_humble) {
+            : print "110%% stuff doesn't apply to humility. We don't want to try to be more humble than the next person." ;
+            : done ;
+         }
+         : print {( "You " + (in_endgame_area ? "listen again for" : "recall") + "the \"hey, stumble\" voice." )} ;
+         : print "It's annoying, but you don't let it get to your head. Sure, you're worth saying that to, and you know it could happen. You know there's more excuse of it happening if you try to lash out and prove you're too good to stumble. You feel inner peace at this decision." ;
+         : collection_modify { collection = "tried_combo_bonus" index -> (11) content -> ("true") } ;
+         : set_true "bonus_point_stay_humble" ;
+         : gosub "add_bonus" ;
+         : done ;
+      }
+      : if (!bonus_point_stay_humble) {
+         : match "stay _;_ humble" {
+            : set_integer var="tempint" "11" ;
+            : set_false "first_half" ;
+            : match "stay _" {
+               : set_true "first_half" ;
+            }
+            : gosub "say_half_b" ;
+            : done ;
+         }
+      }
+   }
+
    : match "dig below" {
       : if (bonus_point_dig_below) {
          : print "You already looked forward to what you needed to do." ;
@@ -4190,6 +4217,11 @@ on_command {
    }
 
    : match "listen _" {
+      : if (in_endgame_area && !bonus_point_stay_humble) {
+         : print "A mocking voice whispers \"Hey! Stumble!\" It's probably not important, but it's a bit annoying." ;
+         : set_true "heard_hey_stumble" ;
+         : done ;
+      }
       : if (in_middlegame_area && !bonus_point_coaching) {
          : print "You hear an excessive choking noise, the sort people make when their least favorite team is at risk of messing up. You probably don't need to deal with taunting, but hey, if there's a quick way..." ;
          : set_true "heard_choking" ;
