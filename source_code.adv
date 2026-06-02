@@ -4163,7 +4163,7 @@ on_render {
          : if (doneblock_10_rocky_caves) {
             : overlay "m_0_closed" x="41" y="127" ;
          } : else {
-            : overlay "m_0_visited" x="41" y="127" ;
+            : overlay "m_0_visited_r" x="41" y="127" ;
          }
          : overlay "m_rocky_caves" x="41" y="127" ;
       }
@@ -4174,7 +4174,7 @@ on_render {
          : if (doneblock_20_app_mall) {
             : overlay "m_0_closed" x="81" y="127" ;
          } : else {
-             : overlay "m_0_visited" x="81" y="127" ;
+             : overlay "m_0_visited_o" x="81" y="127" ;
          }
          : overlay "m_app_mall" x="81" y="127" ;
       }
@@ -4185,7 +4185,7 @@ on_render {
          : if (doneblock_11_chattin_em_plain) {
             : overlay "m_0_closed" x="41" y="106" ;
          } : else {
-            : overlay "m_0_visited" x="41" y="106" ;
+            : overlay "m_0_visited_y" x="41" y="106" ;
          }
          : overlay "m_chattin_em_plain" x="41" y="106" ;
       }
@@ -4196,7 +4196,7 @@ on_render {
          : if (doneblock_21_tool_stall) {
             : overlay "m_0_closed" x="81" y="106" ;
          } : else {
-            : overlay "m_0_visited" x="81" y="106" ;
+            : overlay "m_0_visited_o" x="81" y="106" ;
          }
          : overlay "m_tool_stall" x="81" y="106" ;
          : if (point_leery_owner) {
@@ -4210,7 +4210,7 @@ on_render {
          : if (doneblock_31_streaky_cove) {
             : overlay "m_0_closed" x="121" y="106" ;
          } : else {
-            : overlay "m_0_visited" x="121" y="106" ;
+            : overlay "m_0_visited_g" x="121" y="106" ;
          }
          : overlay "m_streaky_cove" x="121" y="106" ;
       }
@@ -4221,7 +4221,7 @@ on_render {
          : if (doneblock_02_cache_shack) {
             : overlay "m_0_closed" x="1" y="85" ;
          } : else {
-            : overlay "m_0_visited" x="1" y="85" ;
+            : overlay "m_0_visited_y" x="1" y="85" ;
          }
          : overlay "m_cache_shack" x="1" y="85" ;
       }
@@ -4232,7 +4232,7 @@ on_render {
          : if (doneblock_12_newbies_boonies) {
             : overlay "m_0_closed" x="41" y="85" ;
          } : else {
-            : overlay "m_0_visited" x="41" y="85" ;
+            : overlay "m_0_visited_y" x="41" y="85" ;
          }
          : overlay "m_newbies_boonies" x="41" y="85" ;
          : if (point_push_best) {
@@ -4248,7 +4248,7 @@ on_render {
          : if (doneblock_22_demo_meadow) {
             : overlay "m_0_closed" x="81" y="85" ;
          } : else {
-            : overlay "m_0_visited" x="81" y="85" ;
+            : overlay "m_0_visited_r" x="81" y="85" ;
          }
          : overlay "m_demo_meadow" x="81" y="85" ;
          : if (point_rocky_caves) {
@@ -4270,7 +4270,7 @@ on_render {
          : if (doneblock_32_backin_cabin) {
             : overlay "m_0_closed" x="121" y="85" ;
          } : else {
-            : overlay "m_0_visited" x="121" y="85" ;
+            : overlay "m_0_visited_g" x="121" y="85" ;
          }
          : overlay "m_backin_cabin" x="121" y="85" ;
          : if (point_pull_file) {
@@ -4286,7 +4286,7 @@ on_render {
          : if (doneblock_42_yankin_canyon) {
             : overlay "m_0_closed" x="161" y="85" ;
          } : else {
-            : overlay "m_0_visited" x="161" y="85" ;
+            : overlay "m_0_visited_g" x="161" y="85" ;
          }
          : overlay "m_yankin_canyon" x="161" y="85" ;
       }
@@ -4297,7 +4297,7 @@ on_render {
          : if (doneblock_13_moldin_dolmen) {
             : overlay "m_0_closed" x="41" y="64" ;
          } : else {
-            : overlay "m_0_visited" x="41" y="64" ;
+            : overlay "m_0_visited_y" x="41" y="64" ;
          }
          : overlay "m_moldin_dolmen" x="41" y="64" ;
       }
@@ -4308,7 +4308,7 @@ on_render {
          : if (doneblock_23_outer_tower) {
             : overlay "m_0_closed" x="81" y="64" ;
          } : else {
-            : overlay "m_0_visited" x="81" y="64" ;
+            : overlay "m_0_visited_b" x="81" y="64" ;
          }
          : overlay "m_outer_tower" x="81" y="64" ;
          : if (key_used) {
@@ -4322,7 +4322,7 @@ on_render {
          : if (doneblock_33_collation_location) {
             : overlay "m_0_closed" x="121" y="64" ;
          } : else {
-            : overlay "m_0_visited" x="121" y="64" ;
+            : overlay "m_0_visited_g" x="121" y="64" ;
          }
          : overlay "m_collation_location" x="121" y="64" ;
       }
@@ -4333,7 +4333,7 @@ on_render {
          : if (doneblock_14_ailer_lair) {
             : overlay "m_0_closed" x="41" y="43" ;
          } : else {
-            : overlay "m_0_visited" x="41" y="43" ;
+            : overlay "m_0_visited_p" x="41" y="43" ;
          }
          : overlay "m_ailer_lair" x="41" y="43" ;
          : overlay "m_1_vertical" x="56" y="35" ;
@@ -4345,7 +4345,7 @@ on_render {
          : if (doneblock_24_tenser_center) {
             : overlay "m_0_closed" x="81" y="43" ;
          } : else {
-            : overlay "m_0_visited" x="81" y="43" ;
+            : overlay "m_0_visited_b" x="81" y="43" ;
          }
          : overlay "m_tenser_center" x="81" y="43" ;
          : if (point_minister_south) {
@@ -4361,7 +4361,7 @@ on_render {
          : if (doneblock_34_jeerin_region) {
             : overlay "m_0_closed" x="121" y="43" ;
          } : else {
-            : overlay "m_0_visited" x="121" y="43" ;
+            : overlay "m_0_visited_p" x="121" y="43" ;
          }
          : overlay "m_jeerin_region" x="121" y="43" ;
          : overlay "m_1_vertical" x="136" y="35" ;
@@ -4373,7 +4373,7 @@ on_render {
          : if (doneblock_15_gnawing_awning) {
             : overlay "m_0_closed" x="41" y="22" ;
          } : else {
-            : overlay "m_0_visited" x="41" y="22" ;
+            : overlay "m_0_visited_p" x="41" y="22" ;
          }
          : overlay "m_gnawing_awning" x="41" y="22" ;
       }
@@ -4384,7 +4384,7 @@ on_render {
          : if (doneblock_25_oopster_stupor) {
             : overlay "m_0_closed" x="81" y="22" ;
          } : else {
-            : overlay "m_0_visited" x="81" y="22" ;
+            : overlay "m_0_visited_p" x="81" y="22" ;
          }
          : overlay "m_oopster_stupor" x="81" y="22" ;
          : if (point_written_specs && point_power_torch && point_cool_plan) {
@@ -4398,7 +4398,7 @@ on_render {
          : if (doneblock_35_taller_altar) {
             : overlay "m_0_closed" x="121" y="22" ;
          } : else {
-            : overlay "m_0_visited" x="121" y="22" ;
+            : overlay "m_0_visited_p" x="121" y="22" ;
          }
          : overlay "m_taller_altar" x="121" y="22" ;
       }
@@ -4406,7 +4406,7 @@ on_render {
          : overlay "m_you_are_here" x="121" y="22" ;
       }
       : if (has_visited("foldin_gate")) {
-         : overlay "m_0_visited" x="81" y="1" ;
+         : overlay "m_0_visited_p" x="81" y="1" ;
          : overlay "m_foldin_gate" x="81" y="1" ;
       }
       : if (is_at "foldin_gate") {
@@ -4579,7 +4579,12 @@ assets {
       # mapping basics
       m_0_blank : base64_png "iVBORw0KGgoAAAANSUhEUgAAAMIAAACNAQMAAADfITfLAAAAA1BMVEXStIxN0HgzAAAAGklEQVR4Xu3AMQEAAADCIPuntsNuWAIAAAAHDlIAAaEwo0sAAAAASUVORK5CYII=" ;
       m_0_closed : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAAA1BMVEWAgICQdD0xAAAAC0lEQVR4XmOgFAAAAEEAAdV4Dl4AAAAASUVORK5CYII=" ;
-      m_0_visited : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAAA1BMVEUAAACnej3aAAAAC0lEQVR4XmOgFAAAAEEAAdV4Dl4AAAAASUVORK5CYII=" ;
+      m_0_visited_b : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAAA1BMVEUAAP+KeNJXAAAAC0lEQVR4XmOgFAAAAEEAAdV4Dl4AAAAASUVORK5CYII=" ;
+      m_0_visited_g : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAAA1BMVEUA/wA0XsCoAAAAC0lEQVR4XmOgFAAAAEEAAdV4Dl4AAAAASUVORK5CYII=" ;
+      m_0_visited_o : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAAA1BMVEX/gAAiYZF8AAAAC0lEQVR4XmOgFAAAAEEAAdV4Dl4AAAAASUVORK5CYII=" ;
+      m_0_visited_p : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAAA1BMVEX/AP804Oa6AAAAC0lEQVR4XmOgFAAAAEEAAdV4Dl4AAAAASUVORK5CYII=" ;
+      m_0_visited_r : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAAA1BMVEX/AAAZ4gk3AAAAC0lEQVR4XmOgFAAAAEEAAdV4Dl4AAAAASUVORK5CYII=" ;
+      m_0_visited_y : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAAA1BMVEX//wCKxvRFAAAAC0lEQVR4XmOgFAAAAEEAAdV4Dl4AAAAASUVORK5CYII=" ;
 
       # mapping passages
       m_1_diag : base64_png "iVBORw0KGgoAAAANSUhEUgAAAAgAAAAdAQMAAACt2r/gAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAAB1JREFUCFtjZAQCJihkgUIOKBSAQgUodIDCBhAEACqAA5g9OoqqAAAAAElFTkSuQmCC" ;
@@ -4587,28 +4592,27 @@ assets {
       m_1_vertical : base64_png "iVBORw0KGgoAAAANSUhEUgAAAAIAAAAIAQMAAADp47wBAAAAA1BMVEUAAACnej3aAAAACklEQVR4XmNAAwAAEAABiBWzkwAAAABJRU5ErkJggg==" ;
 
       # mapping, room text
-      m_ailer_lair : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAACNJREFUCFtjYACDV2VAYpUrCmt1KQMUqEcACdUQFJZpCEQOAD73CDjs3u03AAAAAElFTkSuQmCC" ;
-      m_app_mall : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAACdJREFUCFtjYAAD2TtAQjQEzhKAEWCgeQlIhAaBCBDLFcRyjYbIAQDP3Aam3H7MQAAAAABJRU5ErkJggg==" ;
-      m_backin_cabin : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADNJREFUCB1jYAABtuLQCwysIaEBDGwlqQ4glgMDWzCQgIC80w0MDF2rgETfKRgrC8QCAgCiHA5FAtA0sAAAAABJRU5ErkJggg==" ;
-      m_cache_shack : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADNJREFUCB1jYACDO1cbGBhFRRkYGGVloSyGK0AxMGBcPQsoprUISOxeDBRZBWKtAoqBAACGcA1vHnIRzwAAAABJRU5ErkJggg==" ;
-      m_chattin_em_plain : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADtJREFUCB1jYAABqdi7JQxKIZ0hDMp3OgNArAAGKRABBpHOy2MYghYtDWGQWrw8hEFISRXIUjINAUsCAOwkDkDo9UhdAAAAAElFTkSuQmCC" ;
-      m_collation_location : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADlJREFUCFtjZAACRr1UdRNGLw8GCUYvz/8SEJbemh0RjGBZ4ZZ76YxCkxv0GYWm1ulDWNJVE9aDZQGSrQ2QYMt02AAAAABJRU5ErkJggg==" ;
-      m_demo_meadow : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADZJREFUCB1jYACDM8uB1MpQILEWRKwUBRJnxYEECHDlnVvBIOq1CkjkAQlBr1UBDIJZ5wLAkgCNJw149Tf9/gAAAABJRU5ErkJggg==" ;
-      m_foldin_gate : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADRJREFUCFtjYAABtpfTHRhYVoY6MLCtDGUAsYDE26kMUJBeBiRaVYDEdjUgMRXESlWDyAEAgFUKPG/wiHMAAAAASUVORK5CYII=" ;
-      m_gnawing_awning : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAAEBJREFUCB1jZAACRuN4ybeMThkM3xijEj4wMXrFL4xiNCpf6McIlmVZzryJkWsBwzVGvjkMbIxcHhHPQMQ2sCwA78IOrvRx8n8AAAAASUVORK5CYII=" ;
-      m_jeerin_region : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADhJREFUCB1jYAABxtzpDgyMnqFAIncqkOsZysDAnAskwIAtLe4BA6tH0AIGtmwgweoJItLiFoAlAVTkC4F+l+W6AAAAAElFTkSuQmCC" ;
-      m_moldin_dolmen : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADhJREFUCB1jYAABVqvUCwxcq0IDQIQDAweY2J3qAJZk4HmxvICBa2UIUHZlOIgQCWDgeSseAJYFAMWPDfmjrZ2wAAAAAElFTkSuQmCC" ;
-      m_newbies_boonies : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADtJREFUCFtjYAAB2VWnMxhEtVZ5MIiuOp3AICqySoFBdAqQBQY8714nMHCtWuXAwLNqNZilABQDskAAABduEQTCzslxAAAAAElFTkSuQmCC" ;
-      m_oopster_stupor : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAAD9JREFUCB1jYAAB2bu7NzCIhgppMIjGTgayAiZpMMhenLwCLMnA9urdAQYWr1ULGNi8Xh1gYPLqArL8+haAZQEhBBEv5KFSdwAAAABJRU5ErkJggg==" ;
-      m_outer_tower : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADJJREFUCB1jYAABxqu3gUTIpAYgMRvGujOrASzJwLxrLVBCa6UDkACxND2BLEtfB7AsAMpWDTed+6xtAAAAAElFTkSuQmCC" ;
-      m_pricked_crypt : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADlJREFUCFtjYAAB2cnhCQyiISEBDLJT0gMYBEEswWCgGBgwbtrdwMCktZKBgcnQEkhoKgLFVipCJAF20ApHqfnlHQAAAABJRU5ErkJggg==" ;
-      m_rocky_caves : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADpJREFUCFtjYAABZomrDgxMS0UdGJhVJRqALBEgMeNKAwME3I1tYGAUDWRgYJSNBLJEJgAlrsyFyAIAeOoMRLF23PgAAAAASUVORK5CYII=" ;
-      m_streaky_cove : base64_png "iVBORw0KGgoAAAANSUhEUgAAABwAAAANAQMAAACASZzpAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADhJREFUCB1jYACBvHOvFjC4rFi1gCHl3BsHBpUVqxwYUtYBCQi4G8HAwCgaACJALJEJQOE7MyByAFtbDy+9uFopAAAAAElFTkSuQmCC" ;
-      m_taller_altar : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAAC1JREFUCFtjYAAB9pK5DQxMIRMdGJgQrLC7DmBJBsbrZUAiKBRIXIKzokIhkgCeiAuG8CanZAAAAABJRU5ErkJggg==" ;
-      m_tenser_center : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADJJREFUCB1jYAAB5u25DQyMqp4ODIymYJYmmOUAlmRgzHvbwMDkBZRlyvKFshizfCGyAFmrCqNwYj8rAAAAAElFTkSuQmCC" ;
-      m_tool_stall : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANCAYAAADISGwcAAAAbklEQVR4nNWTUQrAIAxDm+H9r5x9OcvGaiqTsn5Z0PhSDUhaZTVpFzAoSUg9CUX6kAC6mBe9XyBeuAawsX4M4N9d6d9kqlMwnwDAy01fR70/9wmA2TMFURqSpQFEbkSn6wAzh9snkHWY/AflKTgBoXU7GaMhmi8AAAAASUVORK5CYII=" ;
-      m_yankin_canyon : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX/////AADrWueTAAAAAXRSTlMAQObYZgAAADVJREFUCFtjYAAB1vLQCwysoaEBDEylqQ4MTKGhUAIMmMvDCxhYQLIspapAIhRIMIeqB4AlAWVFCl8+sxhFAAAAAElFTkSuQmCC" ;
-      m_you_are_here : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANCAYAAADISGwcAAAAMUlEQVR4nO3VMREAMADCwNCrf8t0rYMsxAC/EUoRuwClMcZDeozhvwEGGGAAHRD7Cx4CpQcXBMl6UAAAAABJRU5ErkJggg==" ;
+      m_ailer_lair : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAACNJREFUCFtjYACDV2VAYpUrCmt1KQMUqEcACdUQFJZpCEQOAD73CDjs3u03AAAAAElFTkSuQmCC" ;
+      m_app_mall : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAACdJREFUCFtjYAAD2TtAQjQEzhKAEWCgeQlIhAaBCBDLFcRyjYbIAQDP3Aam3H7MQAAAAABJRU5ErkJggg==" ;
+      m_backin_cabin : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAADNJREFUCB1jYAABtuLQCwysIaEBDGwlqQ4glgMDWzCQgIC80w0MDF2rgETfKRgrC8QCAgCiHA5FAtA0sAAAAABJRU5ErkJggg==" ;
+      m_cache_shack : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAADNJREFUCB1jYACDO1cbGBhFRRkYGGVloSyGK0AxMGBcPQsoprUISOxeDBRZBWKtAoqBAACGcA1vHnIRzwAAAABJRU5ErkJggg==" ;
+      m_chattin_em_plain : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAADtJREFUCB1jYAABqdi7JQxKIZ0hDMp3OgNArAAGKRABBpHOy2MYghYtDWGQWrw8hEFISRXIUjINAUsCAOwkDkDo9UhdAAAAAElFTkSuQmCC" ;
+      m_collation_location : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAADlJREFUCFtjZAACRr1UdRNGLw8GCUYvz/8SEJbemh0RjGBZ4ZZ76YxCkxv0GYWm1ulDWNJVE9aDZQGSrQ2QYMt02AAAAABJRU5ErkJggg==" ;
+      m_demo_meadow : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAADZJREFUCB1jYACDM8uB1MpQILEWRKwUBRJnxYEECHDlnVvBIOq1CkjkAQlBr1UBDIJZ5wLAkgCNJw149Tf9/gAAAABJRU5ErkJggg==" ;
+      m_foldin_gate : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAADRJREFUCFtjYAABtpfTHRhYVoY6MLCtDGUAsYDE26kMUJBeBiRaVYDEdjUgMRXESlWDyAEAgFUKPG/wiHMAAAAASUVORK5CYII=" ;
+      m_gnawing_awning : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAAEBJREFUCB1jZAACRuN4ybeMThkM3xijEj4wMXrFL4xiNCpf6McIlmVZzryJkWsBwzVGvjkMbIxcHhHPQMQ2sCwA78IOrvRx8n8AAAAASUVORK5CYII=" ;
+      m_jeerin_region : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAADhJREFUCB1jYAABxtzpDgyMnqFAIncqkOsZysDAnAskwIAtLe4BA6tH0AIGtmwgweoJItLiFoAlAVTkC4F+l+W6AAAAAElFTkSuQmCC" ;
+      m_moldin_dolmen : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAADhJREFUCB1jYAABVqvUCwxcq0IDQIQDAweY2J3qAJZk4HmxvICBa2UIUHZlOIgQCWDgeSseAJYFAMWPDfmjrZ2wAAAAAElFTkSuQmCC" ;
+      m_newbies_boonies : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAADtJREFUCFtjYAAB2VWnMxhEtVZ5MIiuOp3AICqySoFBdAqQBQY8714nMHCtWuXAwLNqNZilABQDskAAABduEQTCzslxAAAAAElFTkSuQmCC" ;
+      m_oopster_stupor : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAAD9JREFUCB1jYAAB2bu7NzCIhgppMIjGTgayAiZpMMhenLwCLMnA9urdAQYWr1ULGNi8Xh1gYPLqArL8+haAZQEhBBEv5KFSdwAAAABJRU5ErkJggg==" ;
+      m_outer_tower : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAADJJREFUCB1jYAABxqu3gUTIpAYgMRvGujOrASzJwLxrLVBCa6UDkACxND2BLEtfB7AsAMpWDTed+6xtAAAAAElFTkSuQmCC" ;
+      m_rocky_caves : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAADpJREFUCFtjYAABZomrDgxMS0UdGJhVJRqALBEgMeNKAwME3I1tYGAUDWRgYJSNBLJEJgAlrsyFyAIAeOoMRLF23PgAAAAASUVORK5CYII=" ;
+      m_streaky_cove : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAADVJREFUCFtjYAAB6c27VjAIammtYJA03i3AwKmlNYFBUnvVBAYIMA8DEq4hIALMUgGJqUHkAHOsCUegWjxLAAAAAElFTkSuQmCC" ;
+      m_taller_altar : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAAC1JREFUCFtjYAAB9pK5DQxMIRMdGJgQrLC7DmBJBsbrZUAiKBRIXIKzokIhkgCeiAuG8CanZAAAAABJRU5ErkJggg==" ;
+      m_tenser_center : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAADJJREFUCB1jYAAB5u25DQyMqp4ODIymYJYmmOUAlmRgzHvbwMDkBZRlyvKFshizfCGyAFmrCqNwYj8rAAAAAElFTkSuQmCC" ;
+      m_tool_stall : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAACdJREFUCFtjYACD8hIgoRqCQqiXMUDB3UtAojMISJwEsTzBrGiIHAD9CgjY8pojyQAAAABJRU5ErkJggg==" ;
+      m_yankin_canyon : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANAQMAAADyhv5fAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAADVJREFUCFtjYAAB1vLQCwysoaEBDEylqQ4MTKGhUAIMmMvDCxhYQLIspapAIhRIMIeqB4AlAWVFCl8+sxhFAAAAAElFTkSuQmCC" ;
+      m_you_are_here : base64_png "iVBORw0KGgoAAAANSUhEUgAAACAAAAANCAYAAADISGwcAAAALElEQVR4nO3VMQEAAAjDMIZ/z+VCQ5/VwPItAGNmAgDWGv8KKKCAAnRA7C84iPMQB7Ng4tgAAAAASUVORK5CYII=" ;
 
       # rooms
       r_0_blank : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAAAYAQMAAAAvTrFnAAAAA1BMVEX//wCKxvRFAAAAD0lEQVR4XmPAAKNgFIwCAAMYAAFrMpCEAAAAAElFTkSuQmCC" ;
