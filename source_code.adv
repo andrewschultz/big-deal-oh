@@ -305,7 +305,7 @@ integers {
    max_tutorial_score : integer "17" ;
 
    bonus_score : integer "0" scope="survivor" ;
-   max_bonus_score : integer "10" ;
+   max_bonus_score : integer "15" ;
 
    # hinting. Magic numbers are 1 = do later, 0 = done, -1 = nothing to do
    # note items are listed in backwards order of how we do things
@@ -621,6 +621,11 @@ collections {
          "false",
          "false",
          "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
          "false"
       ]
    }
@@ -629,12 +634,17 @@ collections {
       items = [
          "anywhere",
          "anywhere",
+         "anywhere",
+         "in the first half",
+         "in the first half",
          "{here_tool_stall}",
          "{here_app_mall}",
          "{here_app_mall}",
          "{here_demo_meadow}",
          "{here_chattin_em_plain}",
          "{here_outer_tower}",
+         "past the tower",
+         "past the tower",
          "{here_gnawing_awning}",
          "{here_foldin_gate}"
       ]
@@ -651,6 +661,11 @@ collections {
          "false",
          "false",
          "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
          "false"
       ]
    }
@@ -658,13 +673,18 @@ collections {
    think_first_bonus : list {
       items = [
          "<DIG<#f80>>",
+         "<GRIM<#f80>>",
          "<REAL<#f80>>",
+         "<COACHING<#f80>>",
+         "<POSEY<#f80>>",
          "<REALLY<#f80>>",
          "<MAP<#f80>>",
          "<CLOCK<#f80>>",
          "<MATING<#f80>>",
          "<WEARY<#f80>>",
          "<TOUTER<#f80>>",
+         "<STAY<#f80>>",
+         "<FOLLOW<#f80>>",
          "<WHITE<#f80>>",
          "<GOLDEN<#f80>>"
       ]
@@ -681,6 +701,11 @@ collections {
          "false",
          "false",
          "false",
+         "false",
+         "false",
+         "false",
+         "false",
+         "false",
          "false"
       ]
    }
@@ -688,6 +713,9 @@ collections {
    think_second_bonus : list {
       items = [
          "<BELOW<#f80>>",
+         "<GROWL<#f80>>",
+         "<PHASE<#f80>>",
+         "(none)",
          "(none)",
          "(none)",
          "<ALL<#f80>>",
@@ -695,6 +723,8 @@ collections {
          "(none)",
          "<BIZ<#f80>>",
          "<HOUR<#f80>>",
+         "<HUMBLE<#f80>>",
+         "<FEELING<#f80>>",
          "<SIDE<#f80>>",
          "<FATE<#f80>>"
       ]
@@ -702,6 +732,11 @@ collections {
 
    bonus_status : list {
       items = [
+         0,
+         0,
+         0,
+         0,
+         0,
          0,
          0,
          0,
@@ -813,16 +848,21 @@ booleans {
    point_written_specs   : boolean "false" ; # 24
 
    # bonus point(s) (alphabetize)
-   bonus_point_clock_jerk  : boolean "false" scope="survivor" ; # 04
-   bonus_point_dig_below   : boolean "false" scope="survivor" ; # 00
-   bonus_point_golden_fate : boolean "false" scope="survivor" ; # 09
-   bonus_point_map_all     : boolean "false" scope="survivor" ; # 03
-   bonus_point_mating      : boolean "false" scope="survivor" ; # 05
-   bonus_point_real_phase  : boolean "false" scope="survivor" ; # 01
-   bonus_point_really      : boolean "false" scope="survivor" ; # 02
-   bonus_point_touter_hour : boolean "false" scope="survivor" ; # 07
-   bonus_point_white_side  : boolean "false" scope="survivor" ; # 08
-   bonus_point_weary_biz   : boolean "false" scope="survivor" ; # 06
+   bonus_point_clock_jerk     : boolean "false" scope="survivor" ; # 07
+   bonus_point_coaching       : boolean "false" scope="survivor" ; # 03
+   bonus_point_dig_below      : boolean "false" scope="survivor" ; # 00
+   bonus_point_follow_healing : boolean "false" scope="survivor" ; # 12
+   bonus_point_golden_fate    : boolean "false" scope="survivor" ; # 14
+   bonus_point_map_all        : boolean "false" scope="survivor" ; # 06
+   bonus_point_mating         : boolean "false" scope="survivor" ; # 08
+   bonus_point_posey          : boolean "false" scope="survivor" ; # 04
+   bonus_point_real_phase     : boolean "false" scope="survivor" ; # 02
+   bonus_point_really         : boolean "false" scope="survivor" ; # 05
+   bonus_point_stay_humble    : boolean "false" scope="survivor" ; # 11
+   bonus_point_touter_hour    : boolean "false" scope="survivor" ; # 10
+   bonus_point_trim_growl     : boolean "false" scope="survivor" ; # 01
+   bonus_point_white_side     : boolean "false" scope="survivor" ; # 13
+   bonus_point_weary_biz      : boolean "false" scope="survivor" ; # 09
 
    # think variables
    think_bake_tons     : boolean "false" ;
@@ -972,7 +1012,7 @@ locations {
                : print "You already gained map-all capabilities!" ;
                : done ;
             }
-            : collection_modify { collection = "tried_combo_bonus" index -> (3) content -> ("true") } ;
+            : collection_modify { collection = "tried_combo_bonus" index -> (6) content -> ("true") } ;
             : print "The jock clerk nods. \"Yup, good, practical, simple. I think it'll serve you well. From now on, just say {vd_map} whenever you want to map something.\"" ;
             : set_true "bonus_point_map_all" ;
             : gosub "add_bonus" ;
@@ -1019,7 +1059,7 @@ locations {
                : print "You already alerted the clerk to the riff-raff. They will know what to do if said riff-raff return." ;
                : done ;
             }
-            : collection_modify { collection = "tried_combo_bonus" index -> (4) content -> ("true") } ;
+            : collection_modify { collection = "tried_combo_bonus" index -> (7) content -> ("true") } ;
             : print "You suggest a plan of action to the clerk, to get rid of the marginally audible kvetching. They wonder if it is too drastic. No, no, it is just right." ;
             : print "You locate the source of the kvetching about how apps sold here are too simplistic and dumb people shouldn't have luxuries that make their lives simple. The jock clerk looks determined before pulling out ..." ;
             : press_any_key ;
@@ -1135,7 +1175,7 @@ locations {
                : print "Don't rub it in." ;
                : done ;
             }
-            : collection_modify { collection = "tried_combo_bonus" index -> (6) content -> ("true") } ;
+            : collection_modify { collection = "tried_combo_bonus" index -> (9) content -> ("true") } ;
             : print "You listen to the beery whiz for a bit, almost convincing yourself they're not as interesting as they think they are. Then they look at you and ask what's the matter. Why hadn't you offered any proper feedback? They are bringing all the energy to the conversation, here!\nYou have nothing to say. They go back to mumbling a bit softer, because you don't deserve to hear their wisdom. (Which is true. Just not in the way they think.)" ;
             : set_true "bonus_point_weary_biz" ;
             : gosub "add_bonus" ;
@@ -1221,7 +1261,7 @@ locations {
                    : print "The experiments in genetics will have to wait." ;
                    : done ;
                 }
-                : collection_modify { collection = "tried_combo_bonus" index -> (5) content -> ("true") } ;
+                : collection_modify { collection = "tried_combo_bonus" index -> (8) content -> ("true") } ;
                 : set_true "bonus_point_mating" ;
                 : print "Wow! Those flowers sure are useful. You think of all they could hybridize with. You think back to your college genetics courses, of Mendeleev's teachings and dominant and recessive genes. You remember enough to know that some neat things could be created, but you don't remember the technical details or any ethical issues. Still, it's a thought." ;
                 : gosub "add_bonus" ;
@@ -1437,7 +1477,7 @@ locations {
                : print "You already opened the foldin' gate!" ;
                : done ;
             }
-            : collection_modify { collection = "tried_combo_bonus" index -> (9) content -> ("true") } ;
+            : collection_modify { collection = "tried_combo_bonus" index -> (14) content -> ("true") } ;
             : print "The foldin' gate opens to reveal a golden fate behind it! What could be better than gold? Lots of it?" ;
             : set_true "bonus_point_golden_fate" ;
             : gosub "add_bonus" ;
@@ -1464,7 +1504,7 @@ locations {
                   : print "But you already discovered the white side!" ;
                   : done ;
                }
-               : collection_modify { collection = "tried_combo_bonus" index -> (8) content -> ("true") } ;
+               : collection_modify { collection = "tried_combo_bonus" index -> (13) content -> ("true") } ;
                : print "Site wide ... white side. Yes, there is another one around out back. It's not VERY exciting, but someone there warns you of a false city ahead. TMYK!" ;
                : set_true "bonus_point_white_side" ;
                : gosub "add_bonus" ;
@@ -1773,7 +1813,7 @@ locations {
                : print "You wouldn't want to tire out anyone around. Or yourself. Or me. You're doing well enough. You'll continue to do well. I believe in you! (And the hints I've provided, if you need them.)" ;
                : done ;
             }
-            : collection_modify { collection = "tried_combo_bonus" index -> (7) content -> ("true") } ;
+            : collection_modify { collection = "tried_combo_bonus" index -> (10) content -> ("true") } ;
             : print "You take some time to feel great and let the world know! This objectively does nothing for your situation, but hey, if you don't believe in yourself, who will? You get tired before an hour of this, but that's not the worst thing, because you realize you didn't need a whole hour of self-encouragement to get going." ;
             : set_true "bonus_point_touter_hour" ;
             : gosub "add_bonus" ;
@@ -2188,7 +2228,7 @@ locations {
                   : print "Your first conversation said all there was to say." ;
                   : done ;
                }
-               : collection_modify { collection = "tried_combo_bonus" index -> (2) content -> ("true") } ;
+               : collection_modify { collection = "tried_combo_bonus" index -> (5) content -> ("true") } ;
                : set_true "bonus_point_really" ;
                : print "\"Oh, man,\" you say. \"REALLY.\" You don't have anything in mind, but the leery owner agrees. \"REALLY.\"\nThere's a back and forth like this for a minute. You feel you understand the universe better, even though you have no better idea how to solve the tasks in front of you." ;
                : gosub "add_bonus" ;
@@ -2981,7 +3021,7 @@ subroutines {
          }
          : print "The rays you feel may or may not be imaginary. They may be fey, or a phase, or they may faze a bit. But the thing is -- that you even imagine feeling them is an excuse to get going so they don't zap ordrain you or whatever. Sometimes we have smart reasons to do silly things or do nothing, but here it may be a case of the reverse. Which is smart in its own way." ;
          : set_true "bonus_point_real_phase" ;
-         : collection_modify { collection = "tried_combo_bonus" index -> (1) content -> ("true") } ;
+         : collection_modify { collection = "tried_combo_bonus" index -> (2) content -> ("true") } ;
          : gosub "add_bonus" ;
          : done ;
       }
