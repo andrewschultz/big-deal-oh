@@ -1,0 +1,6 @@
+--added 5 bonus points with better bonus point cluing (but not everything I want!)
+--redid map so 1) the rooms are different colors based on general region and 2) MAP with the "block done areas" option on shows done rooms as grey. (You can still go through a grey room to get back to a room with color.)
+--no blank text for 3rd time going north in final room
+--implemented 1st item from Region and 1st item from Altar (sorry for being vague! The names are spoilers)
+--game text fixes (errors and also expounding)
+--trivial walkthrough tweaks
