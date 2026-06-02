@@ -4071,6 +4071,29 @@ on_command {
       }
    }
 
+   : match "trim growl" {
+      : if (bonus_point_trim_growl) {
+         : print "But if you kept growling, it wouldn't be trim any more!" ;
+         : done ;
+      }
+      : print "You give a slow, short growl. No aggression. You're pretty sure you have no enemies. Just sight frustration, but not overwhelming. That's the sort of thing that can kick a brain into gear!" ;
+      : collection_modify { collection = "tried_combo_bonus" index -> (0) content -> ("true") } ;
+      : set_true "bonus_point_trim_growl" ;
+      : gosub "add_bonus" ;
+      : done ;
+   }
+   : if (!bonus_point_trim_growl) {
+      : match "trim _;_ growl" {
+         : set_integer var="tempint" "1" ;
+         : set_false "first_half" ;
+         : match "trim _" {
+            : set_true "first_half" ;
+         }
+         : gosub "say_half_b" ;
+         : done ;
+      }
+   }
+
    : if (xme_yet) {
       : match "_ widget;_ digit;_ dialed;_ wild" {
          : gosub "widget_function" ;
