@@ -1,9 +1,8 @@
-Walkthrough for Big Deal, Oh! by Andrew Schultz
+Author's walkthrough for Big Deal, Oh! by Andrew Schultz
 
-You can probably guess one bonus point from the title.
+You can probably guess one bonus point from the title. There are 15. They are not included in this walkthrough. They aren't VERY critical. If you want to look them up, they are in the source. I want to make sure I detail the regular walkthrough properly, but I want the bonus points to leave a bit of mystery. Also, they may be a distraction the first time through.
 
-This walkthrough includes three moves which add extra moves to the tutorial. They are marked with a double cursor.
-
+This walkthrough includes seven moves which add extra moves to the tutorial. They are marked with a double cursor.
 
 >> ABOUT
 
