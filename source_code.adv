@@ -792,6 +792,8 @@ booleans {
    ever_keyhole : boolean "false" ;
 
    smelled_soapy : boolean "false" ;
+   felt_hollow_feeling : boolean "false" ;
+
    # game state (bonus-related)
    feel_yet : boolean "false" ;
 
@@ -4053,6 +4055,31 @@ on_command {
             : set_integer var="tempint" "4" ;
             : set_false "first_half" ;
             : match "posey _" {
+               : set_true "first_half" ;
+            }
+            : gosub "say_half_b" ;
+            : done ;
+         }
+      }
+   }
+
+   : if (felt_hollow_feeling) {
+      : match "follow healing" {
+         : if (bonus_point_follow_healing) {
+            : print "You already did so. Don't want to become a hypochondriac and stuff." ;
+            : done ;
+         }
+         : print "You spend time following healing and realizing the best way to do so is not to try too hard. It gets rid of your hollow feeling." ;
+         : collection_modify { collection = "tried_combo_bonus" index -> (12) content -> ("true") } ;
+         : set_true "bonus_point_follow_healing" ;
+         : gosub "add_bonus" ;
+         : done ;
+      }
+      : if (!bonus_point_follow_healing) {
+         : match "hollow _;_ feeling" {
+            : set_integer var="tempint" "12" ;
+            : set_false "first_half" ;
+            : match "hollow _" {
                : set_true "first_half" ;
             }
             : gosub "say_half_b" ;
