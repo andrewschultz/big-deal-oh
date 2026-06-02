@@ -109,7 +109,7 @@ strings {
    vd_inv : string "<INV<#f80>>" ;
    vd_i_long : string "<INVENTORY<#f80>>" ;
    vd_i_three : string "{vd_i}/{vd_inv}/{vd_i_long}" ;
-   vd_map : string "{vd_i}/{vd_inv}/{vd_i_long}" ;
+   vd_map : string "<MAP<#f80>>" ;
    vd_score : string "<SCORE<#f80>>" ;
    vd_think : string "<THINK<#f80>>" ;
 
@@ -953,7 +953,7 @@ locations {
                : done ;
             }
             : collection_modify { collection = "tried_combo_bonus" index -> (3) content -> ("true") } ;
-            : print "The jock clerk nods. \"Yup, good, practical, simple. I think it'll serve you well. From now on, just say MAP whenever you want to map something.\"" ;
+            : print "The jock clerk nods. \"Yup, good, practical, simple. I think it'll serve you well. From now on, just say {vd_map} whenever you want to map something.\"" ;
             : set_true "bonus_point_map_all" ;
             : gosub "add_bonus" ;
             : done ;
@@ -3699,6 +3699,8 @@ subroutines {
       : set_true "listen_demo_meadow" ;
       : set_true "smell_rocky_caves" ;
       : set_true "placed_flaming_towers" ;
+      : set_true "bonus_point_map_all" ;
+      : set_integer var="bonus_score" "1" ;
    }
 
    test_part_2 : subroutine {
