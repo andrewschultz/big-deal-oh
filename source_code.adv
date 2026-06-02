@@ -791,6 +791,7 @@ booleans {
    key_used : boolean "false" ;
    ever_keyhole : boolean "false" ;
 
+   smelled_soapy : boolean "false" ;
    # game state (bonus-related)
    feel_yet : boolean "false" ;
 
@@ -4018,6 +4019,35 @@ on_command {
    : gosub "check_meta" ;
    : gosub "check_options" ;
 
+   : if (smelled_soapy) {
+      : match "poesy _" {
+         : print "That would go with soapiness but not quite the soapy smell." ;
+         : done ;
+      }
+      : match "posey _" {
+         : if (bonus_point_posey) {
+            : print "You already smelled and found a posey." ;
+            : done ;
+         }
+         : print "You wonder if there is a scent behind the soap and track down a posey. You don't pick it, but it's good to stop and smell the flowers." ;
+         : collection_modify { collection = "tried_combo_bonus" index -> (4) content -> ("true") } ;
+         : set_true "bonus_point_posey" ;
+         : gosub "add_bonus" ;
+         : done ;
+      }
+      : if (!bonus_point_posey) {
+         : match "posey _" {
+            : set_integer var="tempint" "4" ;
+            : set_false "first_half" ;
+            : match "posey _" {
+               : set_true "first_half" ;
+            }
+            : gosub "say_half_b" ;
+            : done ;
+         }
+      }
+   }
+
    : match "dig below" {
       : if (bonus_point_dig_below) {
          : print "You already looked forward to what you needed to do." ;
@@ -4082,6 +4112,15 @@ on_command {
    }
 
    : match "smell _" {
+      : if (point_taming_flowers) {
+         : print "Kinda, well, soapy." ;
+         : set_true "smelled_soapy" ;
+         : if (bonus_point_posey) {
+            : print "But you already figured what to do." ;
+            : done ;
+         }
+         : done ;
+      }
       : print "Nothing smells unusual." ;
       : done ;
    }
@@ -4131,12 +4170,10 @@ on_command {
       : done ;
    }
 
-   : match "clock _;golden _;mating _;real _;really _;touter _;white _;weary _" { #obfuscation of non solutions, bonus points
+   : match "clock _;coaching _;golden _;grim _;hollow _;mating _;poesy _;posey _;real _;really _;stay _;touter _;white _;weary _" { #obfuscation of non solutions, bonus points
       : print "{custom_unknown_verb_error}" ;
       : done ;
    }
-
-
 }
 
 on_tick {
