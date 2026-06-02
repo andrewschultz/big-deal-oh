@@ -792,6 +792,7 @@ booleans {
    ever_keyhole : boolean "false" ;
 
    smelled_soapy : boolean "false" ;
+   heard_choking : boolean "false" ;
    felt_hollow_feeling : boolean "false" ;
 
    # game state (bonus-related)
@@ -4088,6 +4089,25 @@ on_command {
       }
    }
 
+   : if (heard_choking) {
+      : match "coaching *;* coaching" {
+         : if (bonus_point_coaching) {
+            : print "You need no further self-coaching." ;
+            : done ;
+         }
+         : print "Just the one word is all that's needed." ;
+         : done ;
+      }
+      : match "coaching -" {
+         : print {( "You " + (in_middlegame_area ? "listen again for" : "recall") + " the choking noise." )} ;
+         : print "Of course, it's annoying, as all trolling is, but you step back and coach yourself not to let it bug you. Perhaps it is not as good as having an actual life coach nearby, but it works well enough." ;
+         : collection_modify { collection = "tried_combo_bonus" index -> (3) content -> ("true") } ;
+         : set_true "bonus_point_coaching" ;
+         : gosub "add_bonus" ;
+         : done ;
+      }
+   }
+
    : match "dig below" {
       : if (bonus_point_dig_below) {
          : print "You already looked forward to what you needed to do." ;
@@ -4170,6 +4190,11 @@ on_command {
    }
 
    : match "listen _" {
+      : if (in_middlegame_area && !bonus_point_coaching) {
+         : print "You hear an excessive choking noise, the sort people make when their least favorite team is at risk of messing up. You probably don't need to deal with taunting, but hey, if there's a quick way..." ;
+         : set_true "heard_choking" ;
+         : done ;
+      }
       : print "You hear nothing unusual." ;
       : done ;
    }
