@@ -957,6 +957,10 @@ booleans {
    goblock_25_oopster_stupor : dynamic_boolean {( coreblock_25_oopster_stupor && is_at "foldin_gate" )} ;
    goblock_35_taller_altar : dynamic_boolean {( coreblock_35_taller_altar && is_at "foldin_gate" )} ;
 
+   # game progress
+   in_middlegame_area: dynamic_boolean {( (!is_at "end_zone" && point_taming_flowers) || (is_at "outer_tower" && !key_used) )} ; # mid-range after taming flowers and before using key
+   in_endgame_area: dynamic_boolean {( is_at "end_zone" && key_used )} ; #outer tower flips to end zone once you open the tower
+
    # debug variables
    track_digits : boolean "false" ;
    track_hints : boolean "false" ;
@@ -3008,7 +3012,16 @@ subroutines {
 
    feel_real : subroutine {
       : match "feel _" {
-         : print {( bonus_point_real_phase ? "You already dealt with your feelings." : feel_yet ? "You still feel those rays. Well, it could be a ray. Must be several ways to deal with them." : "Maybe it's just you, but you feel rays on your back. You're not sure what sort of rays, but you definitely feel rays." )} ;
+         : if (in_endgame_area) {
+            : if (bonus_point_follow_healing) {
+               : print "You already worked on your feelings enough." ;
+               : done ;
+            }
+            : print "Weird. You suddenly are aware of a hollow feeling. Is that all there is to life? Finding spoonerisms?" ;
+            : set_true "felt_hollow_feeling" ;
+            : done ;
+         }
+         : print {( bonus_point_real_phase ? "You already dealt with your feelings, at least for now." : feel_yet ? "You still feel those rays. Well, it could be a ray. Must be several ways to deal with them." : "Maybe it's just you, but you feel rays on your back. You're not sure what sort of rays, but you definitely feel rays." )} ;
          : set_true "feel_yet" ;
          : done ;
       }
