@@ -1667,6 +1667,7 @@ locations {
             }
             : print "You give the spittin' wrecks the best notes. They nod. After a while, they hand back some written specs, which seem to detail a labyrinth. They note where the walls are thin and that you need to knock down a wall to get through. You wonder if they are pulling your leg, but you don't have much else to work with. They ask if they can keep the notes. They tell you it would be selfish to keep them, which suits you fine for clearing up inventory space, then they find you a bit of a sucker for handing the notes over so quickly." ;
             : destroy "best_notes" ;
+            : pocket "written_specs" ;
             : set_false "think_written_specs" ;
             : set_true "point_written_specs" ;
             : gosub "add_point" ;
@@ -2009,6 +2010,7 @@ locations {
             : gosub "add_point" ;
             : press_any_key ;
             : goto "foldin_gate" ;
+            : destroy "written_specs" ;
             : destroy "sold_guide" ;
             : destroy "cool_plan" ;
             : redescribe ;
@@ -2407,6 +2409,7 @@ objects {
    wax : object "the formed wax from the warmed fax" ;
    widget : object "the {i_widget} you found on your person" ;
    wrench : object "the wrench from the rocky caves" ;
+   written_specs : object "the written specs of a maze" ;
 }
 
 zones {
