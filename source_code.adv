@@ -2223,11 +2223,7 @@ locations {
    tool_stall : location "{loc_tool_stall}" header="{header_tool_stall}" graphic="r_tool_stall" {
       on_command {
          : if (point_leery_owner) {
-            : match "really *;* really" {
-               : print "Only REALLY is needed for the bonus point." ;
-               : done ;
-            }
-            : match "really -" {
+            : match "really _" {
                : if (bonus_point_really) {
                   : print "Your first conversation said all there was to say." ;
                   : done ;
@@ -2236,6 +2232,10 @@ locations {
                : set_true "bonus_point_really" ;
                : print "\"Oh, man,\" you say. \"REALLY.\" You don't have anything in mind, but the leery owner agrees. \"REALLY.\"\nThere's a back and forth like this for a minute. You feel you understand the universe better, even though you have no better idea how to solve the tasks in front of you." ;
                : gosub "add_bonus" ;
+               : done ;
+            }
+            : match "really *;* really" {
+               : print "Only REALLY is needed for the bonus point." ;
                : done ;
             }
             : match "talk leery;talk owner" {
