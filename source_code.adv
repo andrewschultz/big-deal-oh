@@ -47,7 +47,7 @@ strings {
    exits_err : dynamic_string {(
       is_at "demo_meadow" ? "{this_game} uses the four basic directions, along with up and down." :
       is_at "rocky_caves" ? "{only_up}." :
-      is_at "tool_stall" ? ( point_tight_rules ? "{only_north_south}." : "You can only go north here, for now" ) :
+      is_at "tool_stall" ? ( point_tight_rules ? "{only_north_south}." : "You can only go north here, for now." ) :
       is_at "app_mall" ? "{only_north}." :
       is_at "chattin_em_plain" ? "{only_north}." :
       is_at "streaky_cove" ? "{only_north}." :
@@ -152,7 +152,7 @@ strings {
    header_cl : string "<Collation Location<#ff0>>" ;
 
    loc_demo_meadow : string "Here in the Demo Meadow {meadow_status}{meadow_stool}.\n{meadow_passages}." ;
-   meadow_status : dynamic_string {( point_taming_flowers ? "it's peaceful again with the flaming towers subdued" : placed_flaming_towers ? "the flaming towers have interrupted the tranquility" : point_tight_rules ? "you see what the eerie loner was worried about" : point_rocky_caves ? "it's quiet again after you got rid of the cocky raves" : listen_demo_meadow ? "you hear some {puz_point_cocky_raves_l}" : "it feels relatively quiet, and yet, not as quiet and peaceful as it should be" )} ;
+   meadow_status : dynamic_string {( point_taming_flowers ? "it's peaceful again after your spell taming flowers" : placed_flaming_towers ? "the flaming towers have interrupted the tranquility" : point_tight_rules ? "you see what the eerie loner was worried about" : point_rocky_caves ? "it's quiet again after you got rid of the cocky raves" : listen_demo_meadow ? "you hear some {puz_point_cocky_raves_l}" : "it feels relatively quiet, and yet, not as quiet and peaceful as it should be" )} ;
    meadow_stool : dynamic_string {( point_tool_stall ? "" : ". A {puz_point_stool_tall} sits inexplicably here" )} ;
    header_demo_meadow : string "<Demo Meadow<#ff0>>" ;
    meadow_passages: dynamic_string {( point_taming_flowers ? "You've found passages {dir_n}, {dir_e} and {dir_w} that lead away. You probably don't need to go back {dir_s} or {dir_d}" : (!point_rocky_caves && !point_tool_stall) ? "You haven't found anywhere to go from here yet" : !point_rocky_caves ? "You can go {dir_s} to the tool stall" : !point_tool_stall ? "You can go {dir_d} to the rocky caves" : "You can go {dir_s} to the tool stall and {dir_d} to the rocky caves" )} ;
@@ -1466,8 +1466,11 @@ locations {
                : print "You'll need to open the gate first. What could be behind it?" ;
             } : else {
                : cycle key = "thru_gate" predictable_order = "true" skip_interval = "0" max_loops = "1" {
-                  : print "The trowel jiggles and seems to pull you away." ;
-                  : print "You enter and achieve riches beyond your wildest dreams. But your life gets boring that way." ;
+                  : print "The trowel jiggles and seems to pull you away. Maybe what's behind the foldin' gate isn't all it seems." ;
+                  : print "You enter and achieve riches beyond your wildest dreams. But your life gets boring that way. It is a city, and it's a bit gritty, but it's certainly not kind!" ;
+                  on_exhausted {
+                     : print "No. You need something beyond the riches offered behind the foldin' gate." ;
+                  }
                }
             }
             : done ;
@@ -2812,7 +2815,8 @@ subroutines {
                : print "<***FOR POSTERITY ONLY, SINCE YOU ALREADY WON***<#888>>" ;
             }
             : print "WHAT YOU KNOW SO FAR:" ;
-            : print "* you started here in the <Demo Meadow<#888>>" ;
+            : print "* you fell through a tile vent below a vile tent to get here" ;
+            : print "* the <Demo Meadow<#888>> is the first location" ;
             : print "* you said <Fie Moan My Phone<#888>>, which seemed unnatural" ;
             : print "* recently you've been heaping slights a lot in Sleeping Heights" ;
             : print "* you were given the <trudge-now'll-nudge trowel<#888>> at the start" ;
@@ -2960,9 +2964,9 @@ subroutines {
 
       : match "verbs _;verb _" {
          : print "{this_game} uses a reduced parser, though all point-scoring commands require you to guess a phrase." ;
-         : print "Many commands are noun-based, so you don't have to guess the verb for relatively common actions, e.g. PUSH THING and USE THING are the same." ;
+         : print "Many commands are noun-based, so you don't have to guess the verb for relatively common actions, e.g. <PUSH THING<#f80>> and <USE THING<#f80>> are the same." ;
          : print "You can use the basic directions {dir_n}, {dir_s}, {dir_e}, {dir_w}, {dir_u} and {dir_d}, abbreviated to a single letter e,g, <N<#f80>>/<S<#f80>>/<E<#f80>>/<W<#f80>>/<U<#f80>>/<D<#f80>>." ;
-         : print "You will also want to use the senses, including {v_listen}, {v_smell} and {v_feel}." ;
+         : print "Using the senses also helps you notice important things, with {v_listen} and {v_smell} being most important. Well, <LOOK<#f80>> counts as sight." ;
          : print "You can <X<#f80>> something to <EXAMINE<#f80>> it. Sometimes this is necessary to uncover something else." ;
          : print "<L<#f80>> (for look) refreshes the screen." ;
          : print "For the most part, <TAKE<#f80>> and <DROP<#f80>> aren't used, as the game automatically picks up what you need and destroys it when done. But they may be part of a puzzle." ;
@@ -3843,7 +3847,7 @@ on_startup {
    }
    : print "One day, when you're at the hardware store buying insulation, you happen on a weird item called the trudge-now'll-nudge trowel. You feel compelled to buy it. It's on sale. Sales are always good!" ;
    : print "It just sits there for a year. Yet when you pass it, you find yourself muttering \"New bummer. Boo, number.\" What is up with that?" ;
-   : print "You always intend to give the trowel away, but you ave no clue who would want it. Every few months you look at it, and some writing clears up. Eventually you can read the whole message: <Please return this to<#0f0>> {kggc}<, where hard work, imagination and deep thought are rewardedm if found<#0f0>>." ;
+   : print "You always intend to give the trowel away, but you have no clue who would want it. Every few months you look at it, and some writing clears up. Eventually you can read the whole message: <Please return this to<#0f0>> {kggc}<, where hard work, imagination and deep thought are rewardedm if found<#0f0>>." ;
    : print "You barely ever leave your neighborhood of Sleeping Heights. And yet you want to. It's low-crime, but boy oh boy, you find yourself muttering \"heaping slights\" to every small thing rude people do. It's high class rudeness, too, stuff you can't prove is rude. Every time you suffer such a slight, your trowel glows when you return home. You decide to take it back to the hardware store you bought it from." ;
    : print "But the hardware store is closed. A vile tent stands where it was. It seems to flap its openings at you, and you are powerless to resist. Is this the end? You pull out the trowel ..." ;
    : print "The tent screams and disintegrates. Beneath is a tile vent - obviously not completely tiled. But you are curious what is below. You walk a ways and come out above ground. You shut the vent and see no trace it was ever there..." ;
