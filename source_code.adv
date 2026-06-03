@@ -1261,21 +1261,21 @@ locations {
             }
          }
          : if (point_taming_flowers) {
-             : match "mating *;* mating" {
-                : print {( bonus_point_mating ? "You thought up all you can on the matter." : "Only MATING is needed for the bonus point." )} ;
-                : done ;
-             }
-             : match "mating -" {
-                : if (bonus_point_mating) {
-                   : print "The experiments in genetics will have to wait." ;
-                   : done ;
-                }
-                : collection_modify { collection = "tried_combo_bonus" index -> (8) content -> ("true") } ;
-                : set_true "bonus_point_mating" ;
-                : print "Wow! Those flowers sure are useful. You think of all they could hybridize with. You think back to your college genetics courses, of Mendeleev's teachings and dominant and recessive genes. You remember enough to know that some neat things could be created, but you don't remember the technical details or any ethical issues. Still, it's a thought." ;
-                : gosub "add_bonus" ;
-                : done ;
-             }
+            : match "mating *;* mating" {
+               : print {( bonus_point_mating ? "You thought up all you can on the matter." : "Only MATING is needed for the bonus point." )} ;
+               : done ;
+            }
+            : match "mating -" {
+               : if (bonus_point_mating) {
+                  : print "The experiments in genetics will have to wait." ;
+                  : done ;
+               }
+               : set_true "bonus_point_mating" ;
+               : print "Wow! Those flowers sure are useful. You think of all they could hybridize with. You think back to your college genetics courses, of Mendeleev's teachings and dominant and recessive genes. You remember enough to know that some neat things could be created, but you don't remember the technical details or any ethical issues. Still, it's a thought." ;
+               : set_integer var="tempint" "8" ;
+               : gosub "add_bonus" ;
+               : done ;
+            }
          }
          : if (!demo_or_meadow_tried) {
             : match "_ demo;_ meadow" {
@@ -1456,6 +1456,7 @@ locations {
             : if (!have_won) {
                : print "Congratulations on finishing, and thanks for making it! While I encourage you to try the other TALP entries first if you haven't already, I'd like to note that you have unlocked graphics explanation mode if you wish to replay. Just type GR in any room.\nAnd if you wish to come back later, you don't have to win. You can type GR in any room, and you will get a warning first, because there are spoilers." ;
             }
+            : set_true "have_won" ;
             : win_game ;
             : done ;
          }
