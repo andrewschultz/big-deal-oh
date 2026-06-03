@@ -305,7 +305,7 @@ integers {
    max_tutorial_score : integer "17" ;
 
    bonus_score : integer "0" scope="survivor" ;
-   max_bonus_score : integer "15" ;
+   max_bonus_score : integer "16" ;
 
    # hinting. Magic numbers are 1 = do later, 0 = done, -1 = nothing to do
    # note items are listed in backwards order of how we do things
@@ -627,6 +627,7 @@ collections {
          0,
          0,
          0,
+         0,
          0
       ]
    }
@@ -643,6 +644,7 @@ collections {
          "{here_app_mall}",
          "{here_demo_meadow}",
          "{here_chattin_em_plain}",
+         "{here_yankin_canyon}",
          "{here_outer_tower}",
          "past the tower",
          "past the tower",
@@ -653,6 +655,7 @@ collections {
 
    got_first_bonus : list {
       items = [
+         "false",
          "false",
          "false",
          "false",
@@ -683,6 +686,7 @@ collections {
          "<CLOCK<#f80>>",
          "<MATING<#f80>>",
          "<WEARY<#f80>>",
+         "<SCUMMY<#f80>>",
          "<TOUTER<#f80>>",
          "<STAY<#f80>>",
          "<FOLLOW<#f80>>",
@@ -693,6 +697,7 @@ collections {
 
    got_second_bonus : list {
       items = [
+         "false",
          "false",
          "false",
          "false",
@@ -723,6 +728,7 @@ collections {
          "<JERK<#f80>>",
          "(none)",
          "<BIZ<#f80>>",
+         "(none)",
          "<HOUR<#f80>>",
          "<HUMBLE<#f80>>",
          "<HEALING<#f80>>",
@@ -743,6 +749,7 @@ collections {
          "<(unfound yet)<#f80>>",
          "<(unfound yet)<#f00>>",
          "<(unfound yet)<#ff0>>",
+         "<(unfound yet)<#0f0>>",
          "<(unfound yet)<#00f>>",
          "<(unfound yet)<#80f>>",
          "<(unfound yet)<#80f>>",
@@ -819,6 +826,7 @@ booleans {
 
    # game state (bonus-related)
    feel_yet : boolean "false" ;
+   heard_some_key : boolean "false" ;
 
    # game state (tutorials)
    skip_tutorial_cue : boolean "false" ; # not a tutorial but skip every-turn note when it is implied
@@ -877,17 +885,18 @@ booleans {
    bonus_point_clock_jerk     : boolean "false" scope="survivor" ; # 07
    bonus_point_coaching       : boolean "false" scope="survivor" ; # 03
    bonus_point_dig_below      : boolean "false" scope="survivor" ; # 00
-   bonus_point_follow_healing : boolean "false" scope="survivor" ; # 12
-   bonus_point_golden_fate    : boolean "false" scope="survivor" ; # 14
+   bonus_point_follow_healing : boolean "false" scope="survivor" ; # 13
+   bonus_point_golden_fate    : boolean "false" scope="survivor" ; # 15
    bonus_point_map_all        : boolean "false" scope="survivor" ; # 06
    bonus_point_mating         : boolean "false" scope="survivor" ; # 08
    bonus_point_posey          : boolean "false" scope="survivor" ; # 04
    bonus_point_real_phase     : boolean "false" scope="survivor" ; # 02
    bonus_point_really         : boolean "false" scope="survivor" ; # 05
-   bonus_point_stay_humble    : boolean "false" scope="survivor" ; # 11
-   bonus_point_touter_hour    : boolean "false" scope="survivor" ; # 10
+   bonus_point_scummy         : boolean "false" scope="survivor" ; # 10
+   bonus_point_stay_humble    : boolean "false" scope="survivor" ; # 12
+   bonus_point_touter_hour    : boolean "false" scope="survivor" ; # 11
    bonus_point_trim_growl     : boolean "false" scope="survivor" ; # 01
-   bonus_point_white_side     : boolean "false" scope="survivor" ; # 13
+   bonus_point_white_side     : boolean "false" scope="survivor" ; # 14
    bonus_point_weary_biz      : boolean "false" scope="survivor" ; # 09
 
    # think variables
@@ -1513,13 +1522,13 @@ locations {
             }
             : print "The foldin' gate opens to reveal a golden fate behind it! What could be better than gold? Lots of it?" ;
             : set_true "bonus_point_golden_fate" ;
-            : set_integer var="tempint" "14" ;
+            : set_integer var="tempint" "15" ;
             : gosub "add_bonus" ;
             : done ;
          }
          : if (!bonus_point_golden_fate) {
             : match "golden _;_ fate" {
-               : set_integer var="tempint" "14" ;
+               : set_integer var="tempint" "15" ;
                : set_false "first_half" ;
                : match "golden _" {
                   : set_true "first_half" ;
@@ -1540,13 +1549,13 @@ locations {
                }
                : print "Site wide ... white side. Yes, there is another one around out back. It's not VERY exciting, but someone there warns you of a false city ahead. TMYK!" ;
                : set_true "bonus_point_white_side" ;
-               : set_integer var="tempint" "13" ;
+               : set_integer var="tempint" "14" ;
                : gosub "add_bonus" ;
                : done ;
             }
             : if (!bonus_point_white_side) {
                : match "white _;_ side" {
-                  : set_integer var="tempint" "13" ;
+                  : set_integer var="tempint" "14" ;
                   : set_false "first_half" ;
                   : match "white _" {
                      : set_true "first_half" ;
@@ -1851,13 +1860,13 @@ locations {
             }
             : print "You take some time to feel great and let the world know! This objectively does nothing for your situation, but hey, if you don't believe in yourself, who will? You get tired before an hour of this, but that's not the worst thing, because you realize you didn't need a whole hour of self-encouragement to get going." ;
             : set_true "bonus_point_touter_hour" ;
-            : set_integer var="tempint" "10" ;
+            : set_integer var="tempint" "11" ;
             : gosub "add_bonus" ;
             : done ;
          }
          : if (!bonus_point_touter_hour) {
             : match "touter _;_ hour" {
-               : set_integer var="tempint" "10" ;
+               : set_integer var="tempint" "11" ;
                : set_false "first_half" ;
                : match "touter _" {
                   : set_true "first_half" ;
@@ -2403,12 +2412,38 @@ locations {
             }
          }
          : match "listen _" {
-            : print {( point_chop_drain ? "No whirring now." : "There's a whirring from the hole." )} ;
+            : if (!point_chop_drain) {
+               : print "There's a whirring from the hole." ;
+            } : else_if (!bonus_point_scummy) {
+               : print "A voice from the hole below says \"SOME KEY! Come see!\"" ;
+               : set_true "heard_some_key" ;
+            } : else {
+               : print "No more noise from the hole." ;
+            }
             : done ;
          }
-         : match "_ hole" {
+         : match "_ hole;_ drain" {
             : print {( point_chop_drain ? "Now you know the hole can shred metal, you REALLY don't want to mess with it." : "You watch the hole a bit. Leaves and tumbleweeds and such get torn apart as they are sucked in, with some finer particles being thrown back up after.\nLooking at the hole, you wonder if you might be able to operate it if you knew its real name." )} ;
             : done ;
+         }
+         : if (heard_some_key) {
+            : if (!bonus_point_scummy) {
+               : match "scummy *;* scummy" {
+                  : print "Just the one word." ;
+                  : done ;
+               }
+            }
+            : match "scummy -" {
+               : if (bonus_point_scummy) {
+                  : print "The tempting voice is long gone." ;
+                  : done ;
+               }
+               : print "\"Scummy,\" you say to yourself, loud enough for the voice to overhear. It redoubles its efforts.\n\"COME SEIZE SOME KEYS!\"\nFor a split second, you're tempted. Then you slowly look away. The voice gets more pleading, but eventually it dies down. Hooray for evading temptation!\nYou worry briefly afterwards you called the voice a mean name, but then you realize you were attacking the behavior and not the person. Or entity. Whatever. So that's a relief!" ;
+               : set_integer var="tempint" "10" ;
+               : set_true "bonus_point_scummy" ;
+               : gosub "add_bonus" ;
+               : done ;
+            }
          }
       }
    }
@@ -4127,14 +4162,14 @@ on_command {
             : done ;
          }
          : print "You spend time following healing and realizing the best way to do so is not to try too hard. It gets rid of your hollow feeling." ;
-         : set_integer var="tempint" "12" ;
+         : set_integer var="tempint" "13" ;
          : set_true "bonus_point_follow_healing" ;
          : gosub "add_bonus" ;
          : done ;
       }
       : if (!bonus_point_follow_healing) {
          : match "hollow _;_ feeling" {
-            : set_integer var="tempint" "12" ;
+            : set_integer var="tempint" "13" ;
             : set_false "first_half" ;
             : match "hollow _" {
                : set_true "first_half" ;
@@ -4172,14 +4207,14 @@ on_command {
          }
          : print {( "You " + (in_endgame_area ? "listen again for" : "recall") + "the \"hey, stumble\" voice." )} ;
          : print "It's annoying, but you don't let it get to your head. Sure, you're worth saying that to, and you know it could happen. You know there's more excuse of it happening if you try to lash out and prove you're too good to stumble. You feel inner peace at this decision." ;
-         : set_integer var="tempint" "11" ;
+         : set_integer var="tempint" "12" ;
          : set_true "bonus_point_stay_humble" ;
          : gosub "add_bonus" ;
          : done ;
       }
       : if (!bonus_point_stay_humble) {
          : match "stay _;_ humble" {
-            : set_integer var="tempint" "11" ;
+            : set_integer var="tempint" "12" ;
             : set_false "first_half" ;
             : match "stay _" {
                : set_true "first_half" ;
