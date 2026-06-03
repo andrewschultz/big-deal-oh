@@ -2411,6 +2411,20 @@ locations {
                : done ;
             }
          }
+         : match "d _" {
+            : if (is_carried "chain") {
+               : print "That'd get the chain of your wrist, mainly because you wouldn't have a wrist. Or, well, a body." ;
+            } : else_if (bonus_point_scummy) {
+               : print "But you already shooed the voices that tried to sucker you to jump in. It'd be just as fatal now as before." ;
+            } : else_if (heard_some_key) {
+               : print "Whether or not there's a key down there, you wouldn't be alive to take it, and there's no way back up. Well, you could probably float back up as a ghost, but that doesn't count!" ;
+            } : else_if (point_chop_drain) {
+               : print "The fall is too far. There's no way, or need, to go down." ;
+            } : else {
+               : print "With those blades? Bad idea. Bad idea without those blades." ;
+            }
+            : done ;
+         }
          : match "listen _" {
             : if (!point_chop_drain) {
                : print "There's a whirring from the hole." ;
