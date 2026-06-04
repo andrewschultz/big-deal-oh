@@ -1,0 +1,8 @@
+Released 6/3/2026
+
+--two new bonus points
+--BONUS command works and results are rolled over to next playthrough
+--slab item and cove scenery are now implemented
+--ubiquitous game text tuneup (including GR for one roo I missed)
+--DOWN in canyon now notes this is a bad, bad idea
+--added new TESTJUMP semi-hidden command (if you lost save state etc.)

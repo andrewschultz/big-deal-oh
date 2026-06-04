@@ -1,3 +1,5 @@
+Released 6/1/2026
+
 --HINT code fixed (placing RETURN; outside Cycle loop on multiple occasions)
   --many non-special command cases added to HINT code, ran through with HINTTRACK
   --Center location had wrong hint condition
