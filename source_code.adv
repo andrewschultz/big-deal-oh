@@ -1494,7 +1494,9 @@ locations {
             : gosub "add_point" ;
             : press_any_key ;
             : if (!have_won) {
-               : print "Congratulations on finishing, and thanks for making it! While I encourage you to try the other TALP entries first if you haven't already, I'd like to note that you have unlocked graphics explanation mode if you wish to replay. Just type GR in any room.\nAnd if you wish to come back later, you don't have to win. You can type GR in any room, and you will get a warning first, because there are spoilers." ;
+               : print "Congratulations on finishing, and thanks for making it!" ;
+               : print "While I encourage you to try the other {l_talp_2026} entries first if you haven't already, I'd like to note that you have unlocked graphics explanation mode if you wish to replay. Just type {vm_gr} in any room. (If you restart, you still can, but you can get a warning first.)" ;
+               : print "Also, the {vd_bonus} command is now available to track bonus points. Any ones you found are saved." ;
             }
             : set_true "have_won" ;
             : win_game ;
@@ -3265,8 +3267,9 @@ subroutines {
       } : else_if (current_location() == "tool_stall") {
          : print "The tools were fun to draw. Near release I realized I'd never put the owner into the graphic. Then they were too big to fit behind the counter, so I slipped in the longer tools on the left. Which took a while, but it made the place more cheery. I'm also pleased with the brevity of the t-shirt messages. I hope I can find more for my next game." ;
       } : else_if (current_location() == "yankin_canyon") {
+         : print "The hole with the teeth was fun to draw. This was last in alphabetical order so it got done last. I'd gotten a bit tired of drawing dunes, or at any rate, a ground with one color and the walls/scenery with a darker version of that color." ;
       } : else {
-         : print "I don't have any author narrative for this location, but I should." ;
+         : print "I don't have any author narrative for this location, but I should. Let me know, and I'll add it." ;
       }
    }
 
@@ -4290,7 +4293,7 @@ on_command {
             : print "110%% stuff doesn't apply to humility. We don't want to try to be more humble than the next person." ;
             : done ;
          }
-         : print {( "You " + (in_endgame_area ? "listen again for" : "recall") + "the \"hey, stumble\" voice." )} ;
+         : print {( "You " + (in_endgame_area ? "listen again for" : "recall") + " the \"hey, stumble\" voice." )} ;
          : print "It's annoying, but you don't let it get to your head. Sure, you're worth saying that to, and you know it could happen. You know there's more excuse of it happening if you try to lash out and prove you're too good to stumble. You feel inner peace at this decision." ;
          : set_integer var="tempint" "12" ;
          : set_true "bonus_point_stay_humble" ;
