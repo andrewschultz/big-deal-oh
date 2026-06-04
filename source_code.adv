@@ -3986,9 +3986,19 @@ subroutines {
             : redescribe ;
             : done ;
          }
+         : match "testjump final" {
+            : gosub "test_part_1" ;
+            : gosub "test_part_2" ;
+            : gosub "test_part_3" ;
+            : gosub "test_part_4" ;
+            : goto "foldin_gate" ;
+            : set_integer var="score" "28" ;
+            : redescribe ;
+            : done ;
+         }
       }
       : match "testjump _" {
-         : print "Score must be 0 and you must <TESTJUMP FLAMING<#f80>> or <TESTJUMP OUTER<#f80>> or <TESTJUMP PERCH<#f80>>." ;
+         : print "Score must be 0 and you must <TESTJUMP FLAMING<#f80>> or <TESTJUMP OUTER<#f80>> or <TESTJUMP PERCH<#f80>> or <TESTJUMP FINAL<#f80>>." ;
       }
    }
 
@@ -4004,6 +4014,7 @@ subroutines {
       : set_true "placed_flaming_towers" ;
       : set_true "bonus_point_map_all" ;
       : set_integer var="bonus_score" "1" ;
+      : collection_modify { collection = "tried_combo_bonus" index -> (6) content -> ("1") } ;
    }
 
    test_part_2 : subroutine {
@@ -4023,7 +4034,6 @@ subroutines {
       : set_true "key_used" ;
       : set_true "ever_keyhole" ;
       : set_integer var="newbies_cutscene" "2" ;
-
    }
 
    test_part_3 : subroutine {
@@ -4040,6 +4050,10 @@ subroutines {
       : set_true "point_cool_plan" ;
    }
 
+   test_part_4 : subroutine {
+      : set_true "point_fumbling_wrist" ;
+      : set_true "point_help_card" ;
+   }
 }
 
 themes {
