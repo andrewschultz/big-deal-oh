@@ -4035,30 +4035,16 @@ on_describe {
 ## Test VERB NOUN that the player types and executes conditional actions
 
 on_command {
-   : if (is_carried("wax")) {
-      : match "_ formed;_ wax" {
-         : print "You poke at the formed wax for a bit. It could be formed into a more useful shape. And then, as wax imprints often do, help something else form." ;
+   # start item/parser stuff, organized alphabetically why not
+   : if (is_carried("best_notes")) {
+      : match "_ best;_ notes" {
+         : print "You understand them in a general sense, but the important details are well beyond you. You could use some help, here." ;
          : done ;
       }
-   }
-   : match "_ trowel" {
-      : print "Though it's more readable than when you first got it, it's awfully dingy. Why, you could call it a grim trowel." ;
-      : print "Soon, you hope, you will return it to the {kggc}." ;
-      : done ;
-   }
-   : match "talk _" {
-      : print "You see nobody here like that. TALKing is not necessary to win {this_game}, though it may provide clues and give flavor." ;
-      : done ;
    }
    : if (is_carried("cool_plan")) {
       : match "_ cool;_ plan" {
          : print "It's pretty cool, all right. You have another overview of it. That'll help things go smoothly when the time comes." ;
-         : done ;
-      }
-   }
-   : if (is_carried("best_notes")) {
-      : match "_ best;_ notes" {
-         : print "You understand them in a general sense, but the important details are well beyond you. You could use some help, here." ;
          : done ;
       }
    }
@@ -4068,12 +4054,36 @@ on_command {
          : done ;
       }
    }
+   : if (is_carried("slab")) {
+      : match "_ slender;_ fab;_ fender;_slab" {
+         : print "The slab feels malleable, but what to turn it into?" ;
+         : done ;
+      }
+   }
    : if (is_carried("trove_key")) {
       : match "_ rusty;_ key" {
          : print "It's not strong enough to open a lock without breaking off. You'll have to find a way to make a sturdier copy." ;
          : done ;
       }
    }
+   : match "_ trowel" { # is_carried trowel is always true
+      : print "Though it's more readable than when you first got it, it's awfully dingy. Why, you could call it a grim trowel." ;
+      : print "Soon, you hope, you will return it to the {kggc}." ;
+      : done ;
+   }
+   : if (is_carried("wax")) {
+      : match "_ formed;_ wax" {
+         : print "You poke at the formed wax for a bit. It could be formed into a more useful shape. And then, as wax imprints often do, help something else form." ;
+         : done ;
+      }
+   }
+   : if (is_carried "wrench") {
+      : match "_ wrench" {
+         : print "You're not very handy with tools, so you may need help with how to use it and where. It looks really sturdy, though." ;
+      }
+   }
+   # end item/parser stuff
+
    : match "gr _" {
       : if (!have_won && !graphics_unwon_warn) {
          : print "{one_time}author's notes on graphics may spoil some puzzles the first time through. If that's okay, or you've won in a previous session, type {vm_graphics} again." ;
@@ -4085,11 +4095,6 @@ on_command {
    : match "undo _;rewind _" {
       : print "You need to use ctrl-shift-left to undo a move. Ctrl-shift-right can redo it, if you change your mind." ;
       : done ;
-   }
-   : if (is_carried "wrench") {
-      : match "_ wrench" {
-         : print "You're not very handy with tools, so you may need help with how to use it and where. It looks really sturdy, though." ;
-      }
    }
    : match "xyzzy _" {
       : print "A low voice booms \"Vexing howls? Hexing?! VOWELS!\"";
