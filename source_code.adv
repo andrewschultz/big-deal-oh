@@ -2072,6 +2072,16 @@ locations {
    }
    streaky_cove : location "{loc_streaky_cove}" header="{header_streaky_cove}" graphic="r_streaky_cove" {
       on_command {
+         : match "_ cove" {
+            : if (!point_bake_tons) {
+               : print "You sense the cove hides secrets." ;
+            } : else_if (!point_key_trove) {
+               : print "Surely the key trove must hide something!" ;
+            } : else {
+               : print "There are no other secrets in the tree cove besides the key trove." ;
+            }
+            : done ;
+         }
          : match "creaky stove" {
             : if (point_creaky_stove) {
                : print {( point_bake_tons ? "The stove is blown to bits. You can't get it back." : "You already revealed the stove!" )} ;
