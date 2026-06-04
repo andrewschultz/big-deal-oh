@@ -2892,6 +2892,60 @@ subroutines {
       : done ;
    }
 
+   bonus_to_array : subroutine {
+      : if (bonus_point_clock_jerk) {
+         : collection_modify { collection = "tried_combo_bonus" index -> (7) content -> ("1") } ;
+      }
+      : if (bonus_point_coaching) {
+         : collection_modify { collection = "tried_combo_bonus" index -> (3) content -> ("1") } ;
+      }
+      : if (bonus_point_dig_below) {
+         : collection_modify { collection = "tried_combo_bonus" index -> (0) content -> ("1") } ;
+      }
+      : if (bonus_point_follow_healing) {
+         : collection_modify { collection = "tried_combo_bonus" index -> (13) content -> ("1") } ;
+      }
+      : if (bonus_point_golden_fate) {
+         : collection_modify { collection = "tried_combo_bonus" index -> (16) content -> ("1") } ;
+      }
+      : if (bonus_point_map_all) {
+         : collection_modify { collection = "tried_combo_bonus" index -> (6) content -> ("1") } ;
+      }
+      : if (bonus_point_mating) {
+         : collection_modify { collection = "tried_combo_bonus" index -> (8) content -> ("1") } ;
+      }
+      : if (bonus_point_odd_prose) {
+         : collection_modify { collection = "tried_combo_bonus" index -> (15) content -> ("1") } ;
+      }
+      : if (bonus_point_posey) {
+         : collection_modify { collection = "tried_combo_bonus" index -> (4) content -> ("1") } ;
+      }
+      : if (bonus_point_real_phase) {
+         : collection_modify { collection = "tried_combo_bonus" index -> (2) content -> ("1") } ;
+      }
+      : if (bonus_point_really) {
+         : collection_modify { collection = "tried_combo_bonus" index -> (5) content -> ("1") } ;
+      }
+      : if (bonus_point_scummy) {
+         : collection_modify { collection = "tried_combo_bonus" index -> (10) content -> ("1") } ;
+      }
+      : if (bonus_point_stay_humble) {
+         : collection_modify { collection = "tried_combo_bonus" index -> (12) content -> ("1") } ;
+      }
+      : if (bonus_point_touter_hour) {
+         : collection_modify { collection = "tried_combo_bonus" index -> (11) content -> ("1") } ;
+      }
+      : if (bonus_point_trim_growl) {
+         : collection_modify { collection = "tried_combo_bonus" index -> (1) content -> ("1") } ;
+      }
+      : if (bonus_point_white_side) {
+         : collection_modify { collection = "tried_combo_bonus" index -> (14) content -> ("1") } ;
+      }
+      : if (bonus_point_weary_biz) {
+         : collection_modify { collection = "tried_combo_bonus" index -> (9) content -> ("1") } ;
+      }
+   }
+
    say_half : subroutine {
       : match "* -;- *" {
          : print "Feels right, but what to pair that word with?" ;
@@ -4026,6 +4080,7 @@ on_startup {
       : print "Thanks for replaying, but this is a reminder to look at the other {l_talp_2026} entries, too! The only reason to replay is to figure out bonus points." ;
       : press_any_key ;
       : clear_screen ;
+      : gosub "bonus_to_array" ;
    } : else {
       : gosub "tutorial_choice" ;
       : gosub "colorclue_choice" ;
